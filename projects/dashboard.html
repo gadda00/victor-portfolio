@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects Dashboard | Victor Ndunda</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Dashboard-specific styles */
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .dashboard-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .dashboard-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-color-light);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .category-tab {
+            padding: 0.8rem 1.5rem;
+            background-color: var(--bg-light);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            border: 2px solid transparent;
+        }
+        
+        .category-tab:hover {
+            background-color: var(--bg-accent-light);
+        }
+        
+        .category-tab.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .project-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        .project-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .project-category {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .project-content {
+            padding: 1.5rem;
+        }
+        
+        .project-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .project-description {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-tag {
+            background-color: var(--bg-light);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            color: var(--text-color-light);
+        }
+        
+        .project-links {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .project-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .project-link:hover {
+            color: var(--accent-color);
+        }
+        
+        .search-container {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        
+        .search-box {
+            display: flex;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            border-radius: 30px;
+            border: 2px solid var(--bg-light);
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+            padding-left: 3rem;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-color-light);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-color-light);
+            font-size: 1.2rem;
+        }
+        
+        /* Modal styles for project viewing */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            width: 90%;
+            max-width: 1200px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            position: relative;
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            margin-right: 2rem;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--accent-color);
+        }
+        
+        .modal-body {
+            padding: 2rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        
+        .modal-footer {
+            padding: 1.5rem;
+            background-color: var(--bg-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .modal-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .notebook-container {
+            width: 100%;
+            height: 600px;
+            border: none;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .projects-grid {
+                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 10% auto;
+            }
+            
+            .modal-body {
+                max-height: 60vh;
+            }
+            
+            .notebook-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="../index.html" class="navbar-logo">Victor Ndunda</a>
+            <div class="navbar-menu">
+                <a href="../index.html#about" class="navbar-link">About</a>
+                <a href="../index.html#skills" class="navbar-link">Skills</a>
+                <a href="../index.html#projects" class="navbar-link">Projects</a>
+                <a href="dashboard.html" class="navbar-link active">Dashboard</a>
+                <a href="../index.html#experience" class="navbar-link">Experience</a>
+                <a href="../index.html#contact" class="navbar-link">Contact</a>
+            </div>
+            <div class="navbar-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <header class="dashboard-header">
+        <h1 class="dashboard-title">Projects Dashboard</h1>
+        <p class="dashboard-subtitle">Explore my data science, machine learning, and financial analytics projects. Filter by category or search for specific technologies and topics.</p>
+    </header>
+
+    <!-- Dashboard Content -->
+    <div class="dashboard-container">
+        <!-- Search Bar -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search projects by title, description, or technology..." id="projectSearch">
+            </div>
+        </div>
+
+        <!-- Category Tabs -->
+        <div class="category-tabs">
+            <div class="category-tab active" data-category="all">All Projects</div>
+            <div class="category-tab" data-category="data-analysis">Data Analysis</div>
+            <div class="category-tab" data-category="financial">Financial Analytics</div>
+            <div class="category-tab" data-category="machine-learning">Machine Learning</div>
+            <div class="category-tab" data-category="security">Security & Compliance</div>
+            <div class="category-tab" data-category="automation">Automation & Reporting</div>
+        </div>
+
+        <!-- Projects Grid -->
+        <div class="projects-grid" id="projectsGrid">
+            <!-- Data Analysis Projects -->
+            <div class="project-card" data-category="data-analysis">
+                <div class="project-image" style="background-image: url('../assets/images/projects/customer-segmentation.jpg');">
+                    <span class="project-category">Data Analysis</span>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Customer Segmentation Analysis</h3>
+                    <p class="project-description">Applied clustering algorithms to segment customers based on purchasing behavior, demographics, and engagement metrics.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">K-Means</span>
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">Pandas</span>
+                        <span class="project-tag">Scikit-learn</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link view-project" data-project="customer-segmentation">
+                            <i class="fas fa-eye"></i> View Project
+                        </a>
+                        <a href="https://github.com/gadda00/data-analysis-visualization" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Analytics Projects -->
+            <div class="project-card" data-category="financial">
+                <div class="project-image" style="background-image: url('../assets/images/projects/financial-forecasting.jpg');">
+                    <span class="project-category">Financial Analytics</span>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Financial Time Series Forecasting</h3>
+                    <p class="project-description">Developed time series models to predict financial market trends and asset performance for informed investment decisions.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">ARIMA</span>
+                        <span class="project-tag">Prophet</span>
+                        <span class="project-tag">LSTM</span>
+                        <span class="project-tag">Python</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link view-project" data-project="financial-forecasting">
+                            <i class="fas fa-eye"></i> View Project
+                        </a>
+                        <a href="https://github.com/gadda00/financial-analytics" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Machine Learning Projects -->
+            <div class="project-card" data-category="machine-learning">
+                <div class="project-image" style="background-image: url('../assets/images/projects/fraud-detection.jpg');">
+                    <span class="project-category">Machine Learning</span>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Fraud Detection in Financial Transactions</h3>
+                    <p class="project-description">Implemented machine learning algorithms to identify potentially fraudulent transactions in financial systems.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Random Forest</span>
+                        <span class="project-tag">XGBoost</span>
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">Scikit-learn</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link view-project" data-project="fraud-detection">
+                            <i class="fas fa-eye"></i> View Project
+                        </a>
+                        <a href="https://github.com/gadda00/machine-learning" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security & Compliance Projects -->
+            <div class="project-card" data-category="security">
+                <div class="project-image" style="background-image: url('../assets/images/projects/pension-security.jpg');">
+                    <span class="project-category">Security</span>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Pension Data Security Framework</h3>
+                    <p class="project-description">Designed and implemented a comprehensive security framework for protecting sensitive pension data.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Encryption</span>
+                        <span class="project-tag">Access Control</span>
+                        <span class="project-tag">Audit Logging</span>
+                        <span class="project-tag">Python</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link view-project" data-project="pension-security">
+                            <i class="fas fa-eye"></i> View Project
+                        </a>
+                        <a href="https://github.com/gadda00/security-compliance" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Automation & Reporting Projects -->
+            <div class="project-card" data-category="automation">
+                <div class="project-image" style="background-image: url('../assets/images/projects/automated-reporting.jpg');">
+                    <span class="project-category">Automation</span>
+                </div>
+                <div class="project-content">
+                    <h3 class="project-title">Automated Reporting System</h3>
+                    <p class="project-description">Developed a Python-based system to automate the generation of financial reports, reducing report generation time by 75%.</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">Pandas</span>
+                        <span class="project-tag">Matplotlib</span>
+                        <span class="project-tag">PDF Generation</span>
+                    </div>
+                    <div class="project-links">
+                        <a href="#" class="project-link view-project" data-project="automated-reporting">
+                            <i class="fas fa-eye"></i> View Project
+                        </a>
+                        <a href="https://github.com/gadda00/automation-reporting" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- More projects can be added here -->
+        </div>
+    </div>
+
+    <!-- Project Viewing Modal -->
+    <div class="modal" id="projectModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalTitle">Project Title</h2>
+                <span class="close-modal">&times;</span>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Content will be loaded dynamically -->
+            </div>
+            <div class="modal-footer">
+                <div class="modal-tags" id="modalTags">
+                    <!-- Tags will be loaded dynamically -->
+                </div>
+                <div class="modal-links" id="modalLinks">
+                    <!-- Links will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">Victor Ndunda</h3>
+                    <p class="footer-description">Data Analyst & Technology Professional specializing in financial data analysis, cybersecurity, and creative design.</p>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="../index.html">Home</a></li>
+                        <li><a href="../index.html#about">About</a></li>
+                        <li><a href="../index.html#projects">Projects</a></li>
+                        <li><a href="../index.html#experience">Experience</a></li>
+                        <li><a href="../index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Connect</h3>
+                    <div class="footer-social">
+                        <a href="https://www.linkedin.com/in/viccc090909/" target="_blank"><i class="fab fa-linkedin"></i></a>
+                        <a href="https://github.com/gadda00" target="_blank"><i class="fab fa-github"></i></a>
+                        <a href="mailto:torv54@gmail.com"><i class="fas fa-envelope"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Victor Ndunda. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.navbar-toggle');
+            const navbarMenu = document.querySelector('.navbar-menu');
+            
+            menuToggle.addEventListener('click', function() {
+                navbarMenu.classList.toggle('active');
+                menuToggle.classList.toggle('active');
+            });
+            
+            // Category filtering
+            const categoryTabs = document.querySelectorAll('.category-tab');
+            const projectCards = document.querySelectorAll('.project-card');
+            
+            categoryTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    // Remove active class from all tabs
+                    categoryTabs.forEach(t => t.classList.remove('active'));
+                    // Add active class to clicked tab
+                    this.classList.add('active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // Show/hide projects based on category
+                    projectCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                    
+                    // Check if no projects are visible
+                    checkNoResults();
+                });
+            });
+            
+            // Search functionality
+            const searchInput = document.getElementById('projectSearch');
+            
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                projectCards.forEach(card => {
+                    const title = card.querySelector('.project-title').textContent.toLowerCase();
+                    const description = card.querySelector('.project-description').textContent.toLowerCase();
+                    const tags = Array.from(card.querySelectorAll('.project-tag')).map(tag => tag.textContent.toLowerCase());
+                    
+                    // Check if search term is in title, description, or tags
+                    if (title.includes(searchTerm) || description.includes(searchTerm) || tags.some(tag => tag.includes(searchTerm))) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+                
+                // Check if no projects are visible
+                checkNoResults();
+            });
+            
+            // Check if no results are found
+            function checkNoResults() {
+                const visibleProjects = Array.from(projectCards).filter(card => card.style.display !== 'none');
+                const projectsGrid = document.getElementById('projectsGrid');
+                
+                // Remove existing "no results" message if it exists
+                const existingNoResults = projectsGrid.querySelector('.no-results');
+                if (existingNoResults) {
+                    projectsGrid.removeChild(existingNoResults);
+                }
+                
+                // Add "no results" message if no projects are visible
+                if (visibleProjects.length === 0) {
+                    const noResults = document.createElement('div');
+                    noResults.className = 'no-results';
+                    noResults.textContent = 'No projects found matching your search criteria.';
+                    projectsGrid.appendChild(noResults);
+                }
+            }
+            
+            // Modal functionality
+            const modal = document.getElementById('projectModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalBody = document.getElementById('modalBody');
+            const modalTags = document.getElementById('modalTags');
+            const modalLinks = document.getElementById('modalLinks');
+            const closeModal = document.querySelector('.close-modal');
+            const viewProjectButtons = document.querySelectorAll('.view-project');
+            
+            // Project data (would be loaded from a database in a real application)
+            const projectData = {
+                'customer-segmentation': {
+                    title: 'Customer Segmentation Analysis',
+                    content: `
+                        <h3>Project Overview</h3>
+                        <p>This project applies clustering algorithms to segment customers based on purchasing behavior, demographics, and engagement metrics, enabling targeted marketing strategies and personalized service offerings.</p>
+                        
+                        <h3>Methodology</h3>
+                        <p>The analysis uses K-Means clustering to identify natural groupings in customer data. Feature engineering was performed to extract meaningful attributes from raw transaction data, and dimensionality reduction techniques were applied to visualize the clusters.</p>
+                        
+                        <h3>Key Findings</h3>
+                        <ul>
+                            <li>Identified 5 distinct customer segments with unique purchasing patterns</li>
+                            <li>Discovered high-value customer segment representing 15% of customers but 40% of revenue</li>
+                            <li>Found correlation between engagement frequency and customer lifetime value</li>
+                            <li>Developed targeted marketing recommendations for each segment</li>
+                        </ul>
+                        
+                        <h3>Technologies Used</h3>
+                        <p>Python, Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn</p>
+                        
+                        <h3>Notebook Preview</h3>
+                        <iframe class="notebook-container" src="../assets/data_science_projects/customer_segmentation/customer_segmentation_analysis.html"></iframe>
+                    `,
+                    tags: ['K-Means', 'Python', 'Pandas', 'Scikit-learn', 'Data Analysis'],
+                    links: [
+                        { text: 'GitHub Repository', url: 'https://github.com/gadda00/data-analysis-visualization', icon: 'fab fa-github' },
+                        { text: 'View Full Notebook', url: '../assets/data_science_projects/customer_segmentation/customer_segmentation_analysis.html', icon: 'fas fa-external-link-alt' }
+                    ]
+                },
+                'financial-forecasting': {
+                    title: 'Financial Time Series Forecasting',
+                    content: `
+                        <h3>Project Overview</h3>
+                        <p>This project develops time series models to predict financial market trends and asset performance, enabling more informed investment decisions and risk management strategies.</p>
+                        
+                        <h3>Methodology</h3>
+                        <p>The analysis employs multiple time series forecasting techniques including ARIMA, Prophet, and LSTM neural networks. Historical financial data was preprocessed to handle seasonality, trends, and outliers before model training.</p>
+                        
+                        <h3>Key Findings</h3>
+                        <ul>
+                            <li>LSTM models outperformed traditional ARIMA models for long-term forecasting</li>
+                            <li>Identified seasonal patterns in market volatility</li>
+                            <li>Developed ensemble approach combining multiple models for improved accuracy</li>
+                            <li>Created interactive dashboard for visualizing predictions and confidence intervals</li>
+                        </ul>
+                        
+                        <h3>Technologies Used</h3>
+                        <p>Python, Pandas, NumPy, TensorFlow, Keras, Statsmodels, Prophet, Plotly</p>
+                        
+                        <h3>Notebook Preview</h3>
+                        <iframe class="notebook-container" src="../assets/data_science_projects/financial_forecasting/financial_time_series_forecasting.html"></iframe>
+                    `,
+                    tags: ['ARIMA', 'Prophet', 'LSTM', 'Python', 'Time Series', 'Financial Analytics'],
+                    links: [
+                        { text: 'GitHub Repository', url: 'https://github.com/gadda00/financial-analytics', icon: 'fab fa-github' },
+                        { text: 'View Full Notebook', url: '../assets/data_science_projects/financial_forecasting/financial_time_series_forecasting.html', icon: 'fas fa-external-link-alt' }
+                    ]
+                },
+                'fraud-detection': {
+                    title: 'Fraud Detection in Financial Transactions',
+                    content: `
+                        <h3>Project Overview</h3>
+                        <p>This project implements machine learning algorithms to identify potentially fraudulent transactions in financial systems, enhancing security measures and reducing financial losses due to fraud.</p>
+                        
+                        <h3>Methodology</h3>
+                        <p>The analysis uses ensemble methods including Random Forest and XGBoost to classify transactions as legitimate or fraudulent. SMOTE was applied to address class imbalance, and feature importance analysis was performed to identify key fraud indicators.</p>
+                        
+                        <h3>Key Findings</h3>
+                        <ul>
+                            <li>Achieved 97% precision and 94% recall in fraud detection</li>
+                            <li>Identified key transaction patterns associated with fraudulent activity</li>
+                            <li>Developed real-time scoring system for transaction risk assessment</li>
+                            <li>Created cost-benefit analysis framework for threshold optimization</li>
+                        </ul>
+                        
+                        <h3>Technologies Used</h3>
+                        <p>Python, Pandas, NumPy, Scikit-learn, XGBoost, Imbalanced-learn, Matplotlib, Seaborn</p>
+                        
+                        <h3>Notebook Preview</h3>
+                        <iframe class="notebook-container" src="../assets/data_science_projects/fraud_detection/fraud_detection_financial_transactions.html"></iframe>
+                    `,
+                    tags: ['Random Forest', 'XGBoost', 'Python', 'Scikit-learn', 'Machine Learning', 'Fraud Detection'],
+                    links: [
+                        { text: 'GitHub Repository', url: 'https://github.com/gadda00/machine-learning', icon: 'fab fa-github' },
+                        { text: 'View Full Notebook', url: '../assets/data_science_projects/fraud_detection/fraud_detection_financial_transactions.html', icon: 'fas fa-external-link-alt' }
+                    ]
+                },
+                'pension-security': {
+                    title: 'Pension Data Security Framework',
+                    content: `
+                        <h3>Project Overview</h3>
+                        <p>This project designs and implements a comprehensive security framework for protecting sensitive pension data, addressing data protection requirements while ensuring regulatory compliance.</p>
+                        
+                        <h3>Methodology</h3>
+                        <p>The framework incorporates encryption, access control, audit logging, and data masking techniques. A risk-based approach was used to prioritize security controls, and compliance requirements were mapped to technical implementations.</p>
+                        
+                        <h3>Key Components</h3>
+                        <ul>
+                            <li>End-to-end encryption for sensitive personal and financial data</li>
+                            <li>Role-based access control system with principle of least privilege</li>
+                            <li>Comprehensive audit logging and monitoring solution</li>
+                            <li>Data masking for development and testing environments</li>
+                            <li>Automated compliance reporting and documentation</li>
+                        </ul>
+                        
+                        <h3>Technologies Used</h3>
+                        <p>Python, SQL, Encryption Libraries, Access Control Systems, Audit Logging Frameworks</p>
+                        
+                        <h3>Implementation Preview</h3>
+                        <div class="code-preview">
+                            <pre><code>
+# Sample code for data encryption module
+import cryptography
+from cryptography.fernet import Fernet
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+import base64
+import os
+
+class PensionDataEncryptor:
+    def __init__(self, master_key_path):
+        self.master_key_path = master_key_path
+        self._load_or_generate_key()
+        
+    def _load_or_generate_key(self):
+        if os.path.exists(self.master_key_path):
+            with open(self.master_key_path, 'rb') as key_file:
+                self.master_key = key_file.read()
+        else:
+            self.master_key = Fernet.generate_key()
+            with open(self.master_key_path, 'wb') as key_file:
+                key_file.write(self.master_key)
+        
+        self.cipher = Fernet(self.master_key)
+    
+    def encrypt_personal_data(self, data):
+        """Encrypt sensitive personal data"""
+        if isinstance(data, str):
+            data = data.encode()
+        return self.cipher.encrypt(data)
+    
+    def decrypt_personal_data(self, encrypted_data):
+        """Decrypt sensitive personal data"""
+        return self.cipher.decrypt(encrypted_data).decode()
+    
+    def derive_field_key(self, field_name, record_id):
+        """Derive a unique key for a specific field in a specific record"""
+        kdf = PBKDF2HMAC(
+            algorithm=hashes.SHA256(),
+            length=32,
+            salt=field_name.encode(),
+            iterations=100000,
+        )
+        field_key = base64.urlsafe_b64encode(
+            kdf.derive(f"{self.master_key.decode()}{record_id}".encode())
+        )
+        return Fernet(field_key)
+                            </code></pre>
+                        </div>
+                    `,
+                    tags: ['Encryption', 'Access Control', 'Audit Logging', 'Python', 'Security', 'Compliance'],
+                    links: [
+                        { text: 'GitHub Repository', url: 'https://github.com/gadda00/security-compliance', icon: 'fab fa-github' },
+                        { text: 'Documentation', url: '#', icon: 'fas fa-file-alt' }
+                    ]
+                },
+                'automated-reporting': {
+                    title: 'Automated Reporting System',
+                    content: `
+                        <h3>Project Overview</h3>
+                        <p>This project develops a Python-based system to automate the generation of financial reports, streamlining the ETL process and reducing report generation time by 75%.</p>
+                        
+                        <h3>Methodology</h3>
+                        <p>The system implements an ETL pipeline to extract data from multiple sources, transform it according to business rules, and load it into a reporting database. Automated report generation uses templates and scheduling to produce consistent, timely reports.</p>
+                        
+                        <h3>Key Features</h3>
+                        <ul>
+                            <li>Automated data extraction from multiple sources (databases, APIs, files)</li>
+                            <li>Configurable data transformation rules and validation</li>
+                            <li>Template-based report generation in multiple formats (PDF, Excel, HTML)</li>
+                            <li>Scheduled execution and email distribution</li>
+                            <li>Error handling and notification system</li>
+                        </ul>
+                        
+                        <h3>Technologies Used</h3>
+                        <p>Python, Pandas, SQLAlchemy, Jinja2, ReportLab, Matplotlib, Seaborn, APScheduler</p>
+                        
+                        <h3>Implementation Preview</h3>
+                        <div class="code-preview">
+                            <pre><code>
+# Sample code for automated report generation
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from reportlab.lib.pagesizes import letter
+from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Image, Table, TableStyle
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.lib import colors
+import datetime
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email.mime.text import MIMEText
+from email.utils import formatdate
+from email import encoders
+
+class FinancialReportGenerator:
+    def __init__(self, data_source, template_path, output_dir):
+        self.data_source = data_source
+        self.template_path = template_path
+        self.output_dir = output_dir
+        self.styles = getSampleStyleSheet()
+        
+    def extract_data(self):
+        """Extract data from source"""
+        if self.data_source.endswith('.csv'):
+            return pd.read_csv(self.data_source)
+        elif self.data_source.endswith('.xlsx'):
+            return pd.read_excel(self.data_source)
+        else:
+            # Connect to database and extract data
+            # This is a simplified example
+            conn = create_connection()
+            query = "SELECT * FROM financial_data WHERE date >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)"
+            return pd.read_sql(query, conn)
+    
+    def transform_data(self, data):
+        """Apply transformations to the data"""
+        # Calculate key metrics
+        data['roi'] = data['revenue'] / data['investment'] * 100
+        data['profit_margin'] = data['profit'] / data['revenue'] * 100
+        
+        # Aggregate by category
+        category_summary = data.groupby('category').agg({
+            'revenue': 'sum',
+            'profit': 'sum',
+            'roi': 'mean',
+            'profit_margin': 'mean'
+        }).reset_index()
+        
+        # Time series analysis
+        time_series = data.groupby('date').agg({
+            'revenue': 'sum',
+            'profit': 'sum'
+        }).reset_index()
+        
+        return {
+            'raw_data': data,
+            'category_summary': category_summary,
+            'time_series': time_series
+        }
+    
+    def generate_visualizations(self, transformed_data):
+        """Generate visualizations for the report"""
+        # Create directory for visualizations
+        viz_dir = f"{self.output_dir}/visualizations"
+        os.makedirs(viz_dir, exist_ok=True)
+        
+        # Category comparison chart
+        plt.figure(figsize=(10, 6))
+        sns.barplot(x='category', y='revenue', data=transformed_data['category_summary'])
+        plt.title('Revenue by Category')
+        plt.tight_layout()
+        category_chart_path = f"{viz_dir}/category_revenue.png"
+        plt.savefig(category_chart_path)
+        plt.close()
+        
+        # Time series chart
+        plt.figure(figsize=(12, 6))
+        plt.plot(transformed_data['time_series']['date'], transformed_data['time_series']['revenue'], marker='o', label='Revenue')
+        plt.plot(transformed_data['time_series']['date'], transformed_data['time_series']['profit'], marker='s', label='Profit')
+        plt.title('Revenue and Profit Over Time')
+        plt.xlabel('Date')
+        plt.ylabel('Amount ($)')
+        plt.legend()
+        plt.grid(True)
+        plt.tight_layout()
+        time_series_chart_path = f"{viz_dir}/time_series.png"
+        plt.savefig(time_series_chart_path)
+        plt.close()
+        
+        return {
+            'category_chart': category_chart_path,
+            'time_series_chart': time_series_chart_path
+        }
+                            </code></pre>
+                        </div>
+                    `,
+                    tags: ['Python', 'Pandas', 'Matplotlib', 'PDF Generation', 'Automation', 'ETL'],
+                    links: [
+                        { text: 'GitHub Repository', url: 'https://github.com/gadda00/automation-reporting', icon: 'fab fa-github' },
+                        { text: 'Documentation', url: '#', icon: 'fas fa-file-alt' }
+                    ]
+                }
+            };
+            
+            // Open modal with project content
+            viewProjectButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const projectId = this.getAttribute('data-project');
+                    const project = projectData[projectId];
+                    
+                    if (project) {
+                        // Set modal content
+                        modalTitle.textContent = project.title;
+                        modalBody.innerHTML = project.content;
+                        
+                        // Set modal tags
+                        modalTags.innerHTML = '';
+                        project.tags.forEach(tag => {
+                            const tagSpan = document.createElement('span');
+                            tagSpan.className = 'project-tag';
+                            tagSpan.textContent = tag;
+                            modalTags.appendChild(tagSpan);
+                        });
+                        
+                        // Set modal links
+                        modalLinks.innerHTML = '';
+                        project.links.forEach(link => {
+                            const linkAnchor = document.createElement('a');
+                            linkAnchor.href = link.url;
+                            linkAnchor.className = 'project-link';
+                            linkAnchor.target = '_blank';
+                            linkAnchor.innerHTML = `<i class="${link.icon}"></i> ${link.text}`;
+                            modalLinks.appendChild(linkAnchor);
+                        });
+                        
+                        // Show modal
+                        modal.style.display = 'block';
+                        document.body.style.overflow = 'hidden'; // Prevent scrolling behind modal
+                    }
+                });
+            });
+            
+            // Close modal
+            closeModal.addEventListener('click', function() {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            });
+            
+            // Close modal when clicking outside of it
+            window.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto'; // Re-enable scrolling
+                }
+            });
+        });
+    </script>
+</body>
+</html>
