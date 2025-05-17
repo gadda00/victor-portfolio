@@ -1,0 +1,55 @@
+/* Generate placeholder images for portfolio */
+.placeholder-image {
+  background-color: #f0f0f0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #666;
+  font-size: 14px;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.placeholder-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.2) 0%, rgba(44, 62, 80, 0.2) 100%);
+}
+
+.placeholder-image i {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #3498db;
+}
+
+.placeholder-content {
+  text-align: center;
+  z-index: 1;
+  padding: 20px;
+}
+
+/* Profile image placeholder */
+.profile-placeholder {
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  background: linear-gradient(135deg, rgba(52, 152, 219, 0.2) 0%, rgba(44, 62, 80, 0.2) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #666;
+  font-size: 14px;
+  height: 200px;
+  width: 200px;
+  margin: 0 auto;
+}
+
+.profile-placeholder i {
+  font-size: 3rem;
+  color: #3498db;
+}
