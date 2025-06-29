@@ -25,6 +25,13 @@ import {
 import victorHeadshot from './assets/victor_headshot.jpg'
 import intelliflowMockup from './assets/intelliflow_mockup.jpg'
 import dataVisualizationMockup from './assets/data_visualization_mockup.jpg'
+import financialDashboardMockup from './assets/financial_dashboard_mockup.jpg'
+import salesAnalyticsMockup from './assets/sales_analytics_mockup.jpg'
+import heroBackground from './assets/hero_background.jpg'
+import TestimonialSection from './components/TestimonialSection.jsx'
+import BlogSection from './components/BlogSection.jsx'
+import StatsSection from './components/StatsSection.jsx'
+import InteractiveSkillsChart from './components/InteractiveSkillsChart.jsx'
 import './App.css'
 
 function App() {
@@ -60,9 +67,9 @@ function App() {
     },
     {
       id: 2,
-      title: "Retirement Benefits Dashboard",
-      description: "Interactive dashboard using Google Looker Studio to visualize retirement benefits data for NSSF stakeholders, enabling management to track benefit processing efficiency and make data-driven decisions.",
-      image: dataVisualizationMockup,
+      title: "Financial Analytics Dashboard",
+      description: "Comprehensive financial dashboard featuring real-time KPI tracking, revenue analysis, and expense categorization. Built with modern data visualization techniques to provide actionable business insights.",
+      image: financialDashboardMockup,
       technologies: ["Google Looker Studio", "Data Visualization", "SQL", "Business Intelligence"],
       github: "#",
       demo: "#",
@@ -70,9 +77,9 @@ function App() {
     },
     {
       id: 3,
-      title: "Financial Data Analysis Suite",
-      description: "Comprehensive analysis of financial datasets including trauma screening analysis, house price prediction, diabetes prediction using machine learning, and time series forecasting.",
-      image: dataVisualizationMockup,
+      title: "Sales Analytics Platform",
+      description: "Advanced sales analytics platform with conversion funnel analysis, regional performance tracking, and revenue forecasting. Enables data-driven sales strategy optimization.",
+      image: salesAnalyticsMockup,
       technologies: ["Python", "Pandas", "Scikit-learn", "Matplotlib", "Statistical Analysis"],
       github: "#",
       demo: "#",
@@ -80,6 +87,16 @@ function App() {
     },
     {
       id: 4,
+      title: "Retirement Benefits Dashboard",
+      description: "Interactive dashboard using Google Looker Studio to visualize retirement benefits data for NSSF stakeholders, enabling management to track benefit processing efficiency and make data-driven decisions.",
+      image: dataVisualizationMockup,
+      technologies: ["Google Looker Studio", "Data Visualization", "SQL", "Business Intelligence"],
+      github: "#",
+      demo: "#",
+      category: "Business Intelligence"
+    },
+    {
+      id: 5,
       title: "Automated Reporting System",
       description: "Python-based system to automate financial report generation for Enwealth Financial Services, streamlining ETL processes and reducing report generation time by 75%.",
       image: dataVisualizationMockup,
@@ -187,7 +204,7 @@ function App() {
               Victor Ndunda
             </motion.div>
             <div className="hidden md:flex space-x-8">
-              {['home', 'about', 'skills', 'projects', 'experience', 'contact'].map((section) => (
+              {['home', 'about', 'skills', 'projects', 'experience', 'testimonials', 'blog', 'contact'].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -537,12 +554,22 @@ function App() {
               </motion.div>
             ))}
           </div>
-        </div>
-      </section>
+        </div>      </section>
+
+      {/* Stats Section */}
+      <StatsSection />
+
+      {/* Interactive Skills Chart */}
+      <InteractiveSkillsChart />
+
+      {/* Testimonials Section */}
+      <TestimonialSection />
+
+      {/* Blog Section */}
+      <BlogSection />
 
       {/* Contact Section */}
-      <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
+      <section id="contact" className="py-20 bg-gray-50 px-4 sm:px-6 lg:px-8">        <div className="max-w-7xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
