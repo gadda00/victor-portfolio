@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion'
 import { Card, CardContent } from '@/components/ui/card.jsx'
 import { Star, Quote } from 'lucide-react'
+import avatarSarah from '../assets/avatar_sarah.jpg'
+import avatarMichael from '../assets/avatar_michael.jpg'
+import avatarEmily from '../assets/avatar_emily.jpg'
 
 const TestimonialSection = () => {
   const testimonials = [
@@ -11,7 +14,7 @@ const TestimonialSection = () => {
       company: "NSSF",
       content: "Victor's analytical skills and attention to detail have been instrumental in improving our retirement benefits processing efficiency. His dashboard solutions have transformed how we make data-driven decisions.",
       rating: 5,
-      avatar: "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face"
+      avatar: avatarSarah
     },
     {
       id: 2,
@@ -20,7 +23,7 @@ const TestimonialSection = () => {
       company: "Enwealth Financial Services",
       content: "The automated reporting system Victor developed reduced our report generation time by 75%. His expertise in Python and ETL processes is exceptional.",
       rating: 5,
-      avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
+      avatar: avatarMichael
     },
     {
       id: 3,
@@ -29,7 +32,7 @@ const TestimonialSection = () => {
       company: "FinTech Innovations",
       content: "Victor's multi-agent AI platform showcases his forward-thinking approach to data analysis. His combination of technical skills and business acumen is rare in the industry.",
       rating: 5,
-      avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face"
+      avatar: avatarEmily
     }
   ]
 

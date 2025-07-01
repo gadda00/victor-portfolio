@@ -23,11 +23,15 @@ import {
   ChevronDown
 } from 'lucide-react'
 import victorHeadshot from './assets/victor_headshot.jpg'
+import victorAvatar from './assets/victor_avatar.jpg'
 import intelliflowMockup from './assets/intelliflow_mockup.jpg'
 import dataVisualizationMockup from './assets/data_visualization_mockup.jpg'
 import financialDashboardMockup from './assets/financial_dashboard_mockup.jpg'
 import salesAnalyticsMockup from './assets/sales_analytics_mockup.jpg'
 import heroBackground from './assets/hero_background.jpg'
+import avatarSarah from './assets/avatar_sarah.jpg'
+import avatarMichael from './assets/avatar_michael.jpg'
+import avatarEmily from './assets/avatar_emily.jpg'
 import TestimonialSection from './components/TestimonialSection.jsx'
 import BlogSection from './components/BlogSection.jsx'
 import StatsSection from './components/StatsSection.jsx'
@@ -289,7 +293,7 @@ function App() {
               <div className="relative w-full max-w-md mx-auto">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full blur-3xl opacity-20 animate-pulse"></div>
                 <img
-                  src={victorHeadshot}
+                  src={victorAvatar}
                   alt="Victor Ndunda"
                   className="relative w-full rounded-2xl shadow-2xl"
                 />
