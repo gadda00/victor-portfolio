@@ -27,10 +27,10 @@ function App() {
   const textY = useTransform(scrollYProgress, [0, 1], ['0%', '200%'])
 
   const roles = [
-    'Data Analyst',
-    'Technology Professional', 
-    'AI/ML Specialist',
-    'Financial Data Expert',
+    'AI-Driven Strategic Analyst',
+    'Multi-Agent Systems Engineer',
+    'Geopolitical Intelligence Expert',
+    'Financial Data Scientist',
     'Business Intelligence Developer'
   ]
 
@@ -366,9 +366,11 @@ function App() {
               whileHover={{ scale: 1.05, boxShadow: '0 10px 30px rgba(239, 68, 68, 0.4)' }}
               whileTap={{ scale: 0.95 }}
             >
-              Download CV
-              <span className="btn-icon">📄</span>
-            </motion.button>
+              <a href="/Victor_Ndunda_Resume.pdf" target="_blank" rel="noopener noreferrer" className="btn-secondary">
+                Download CV
+                <span className="btn-icon">📄</span>
+              </a>
+            
           </motion.div>
           
           <motion.div
