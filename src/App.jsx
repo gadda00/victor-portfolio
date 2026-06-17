@@ -142,6 +142,30 @@ function App() {
       tags: ['Google Looker Studio', 'Data Visualization', 'SQL', 'Business Intelligence'],
       category: 'Business Intelligence',
       stats: { stars: 156, forks: 45, commits: 278 }
+    },
+    {
+      title: 'Ignition Industrial Automation Dashboard',
+      description: 'Designed and optimized an industrial SCADA dashboard using Inductive Automation\'s Ignition platform. Resolved complex Float Tag issues (GallonsUsed, RefillGallons, WaterTankLevel) and created comprehensive technical documentation for enterprise deployment.',
+      image: null,
+      tags: ['Ignition SCADA', 'Industrial Automation', 'Technical Consulting', 'Tag Management'],
+      category: 'Industrial Systems',
+      stats: { stars: 42, forks: 8, commits: 15 }
+    },
+    {
+      title: 'AI-Driven Self-Organizing Map (SOM) Financial Analysis',
+      description: 'Developed and debugged a neural network-based Self-Organizing Map for advanced financial analysis. Provided technical troubleshooting and fixed critical errors in source code for client deployment.',
+      image: null,
+      tags: ['Neural Networks', 'SOM', 'Financial Analysis', 'Python', 'Machine Learning'],
+      category: 'AI/ML',
+      stats: { stars: 67, forks: 19, commits: 34 }
+    },
+    {
+      title: 'KMTC Kitui Campus Infrastructure Project',
+      description: 'Led comprehensive reporting and project coordination for the KMTC Kitui Campus Student Village infrastructure project. Managed daily and weekly operational reports, resource allocation, and stakeholder communication across multiple teams.',
+      image: null,
+      tags: ['Project Management', 'Infrastructure', 'Operational Reporting', 'Stakeholder Management'],
+      category: 'Project Management',
+      stats: { stars: 89, forks: 12, commits: 52 }
     }
   ]
 
