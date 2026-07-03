@@ -58,10 +58,21 @@ Each article includes:
 #### 2. X (Twitter) API v2
 - **API**: X API v2
 - **Endpoint**: `POST https://api.twitter.com/2/tweets`
-- **Auth**: OAuth 1.0a User Context (HMAC-SHA256 signing)
-- **Rate limit**: 17 posts per 24 hours (Free tier)
-- **Secrets stored**: `X_API_KEY`, `X_API_SECRET`, `X_ACCESS_TOKEN`, `X_ACCESS_SECRET`
-- **To get OAuth 1.0a tokens**: Visit https://developer.x.com/ > App > Keys and Tokens > Generate Access Token & Secret
+- **Auth**: OAuth 2.0 with refresh token (preferred) OR OAuth 1.0a User Context (fallback)
+- **Rate limit**: 17 posts per 24 hours (Free tier), 50 posts/24h (Basic tier)
+- **Secrets stored (OAuth 2.0)**:
+  - `X_OAUTH2_CLIENT_ID` — OAuth 2.0 Client ID
+  - `X_OAUTH2_CLIENT_SECRET` — OAuth 2.0 Client Secret (for confidential clients only)
+  - `X_OAUTH2_REFRESH_TOKEN` — Refresh token (valid 6 months)
+  - `X_OAUTH2_ACCESS_TOKEN` — Access token (valid 2 hours, auto-refreshed)
+- **Secrets stored (OAuth 1.0a legacy)**:
+  - `X_API_KEY`, `X_API_SECRET` — Consumer Key + Secret
+  - `X_ACCESS_TOKEN`, `X_ACCESS_SECRET` — User Access Token + Secret
+- **To get OAuth 2.0 tokens**: Visit https://developer.x.com/ > App > OAuth 2.0 > Generate tokens
+  - **Important**: The app must be configured as a **Public Client** (PKCE) for refresh to work without a Client Secret
+  - If the app is a **Confidential Client**, you MUST also set `X_OAUTH2_CLIENT_SECRET`
+  - The tokens must be **User Context** tokens (not App-Only) — app-only tokens cannot post tweets
+- **To get OAuth 1.0a tokens (simpler, recommended for automation)**: Visit https://developer.x.com/ > App > Keys and Tokens > Authentication Tokens > Generate Access Token & Secret
 
 #### 3. TikTok Content Posting API (Staged)
 - **API**: TikTok Content Posting API
