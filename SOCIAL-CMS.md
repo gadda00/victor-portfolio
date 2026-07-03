@@ -52,11 +52,8 @@ The social media automation system auto-posts blog articles to:
 
 #### 2. LinkedIn API
 - **API**: LinkedIn Share API (w_member_social scope)
-- **Setup**:
-  1. Create a LinkedIn Developer app at developer.linkedin.com
-  2. Add `w_member_social` scope
-  3. Generate access token (OAuth 2.0)
-  4. Set environment variable: `LINKEDIN_ACCESS_TOKEN`
+- **Status**: ✅ Token obtained and stored as GitHub repository secret `LINKEDIN_ACCESS_TOKEN`
+- **Setup**: Complete — add the token as a repository secret in GitHub Settings > Secrets and Variables > Actions
 
 #### 3. Facebook Graph API
 - **API**: Facebook Graph API v25.0 (Page Posts)

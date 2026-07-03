@@ -1,0 +1,139 @@
+name: Auto-Post to Social Media
+
+on:
+  push:
+    branches: [main]
+    paths: ['blog/articles/**']
+  workflow_dispatch:
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Detect new/modified articles
+        id: detect
+        run: |
+          FILES=$(git diff --name-only HEAD~1 HEAD -- 'blog/articles/' 2>/dev/null | grep '\.html$' || true)
+          echo "files=$FILES" >> $GITHUB_OUTPUT
+          if [ -n "$FILES" ]; then
+            echo "New articles detected:"
+            echo "$FILES"
+          else
+            echo "No new articles detected."
+          fi
+
+      - name: Post to LinkedIn
+        if: steps.detect.outputs.files != ''
+        env:
+          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
+        run: |
+          for FILE in ${{ steps.detect.outputs.files }}; do
+            FILENAME=$(basename "$FILE")
+            # Extract title from HTML
+            TITLE=$(grep -oP '<title>\K[^<]+' "$FILE" || echo "New Article")
+            
+            echo "Posting to LinkedIn: $TITLE"
+            
+            # Get LinkedIn person ID from the token
+            PERSON_ID=$(curl -s -H "Authorization: Bearer $LINKEDIN_TOKEN" \
+              "https://api.linkedin.com/v2/userinfo" | python3 -c "import json,sys; print(json.load(sys.stdin).get('sub',''))" 2>/dev/null || echo "")
+            
+            if [ -n "$PERSON_ID" ]; then
+              # Post to LinkedIn
+              curl -s -X POST "https://api.linkedin.com/v2/ugcPosts" \
+                -H "Authorization: Bearer $LINKEDIN_TOKEN" \
+                -H "Content-Type: application/json" \
+                -H "X-Restli-Protocol-Version: 2.0.0" \
+                -d "{
+                  \"author\": \"urn:li:person:$PERSON_ID\",
+                  \"lifecycleState\": \"PUBLISHED\",
+                  \"specificContent\": {
+                    \"com.linkedin.ugc.ShareContent\": {
+                      \"shareCommentary\": {
+                        \"text\": \"📝 New article: $TITLE\\n\\nRead it here: https://victorndunda.com/blog/articles/$FILENAME\"
+                      },
+                      \"shareMediaCategory\": \"ARTICLE\",
+                      \"media\": [{
+                        \"status\": \"READY\",
+                        \"description\": {\"text\": \"$TITLE\"},
+                        \"originalUrl\": \"https://victorndunda.com/blog/articles/$FILENAME\",
+                        \"title\": {\"text\": \"$TITLE\"}
+                      }]
+                    }
+                  },
+                  \"visibility\": {\"com.linkedin.ugc.MemberNetworkVisibility\": \"PUBLIC\"}
+                }"
+              echo "✅ Posted to LinkedIn"
+            else
+              echo "⚠️ Could not get LinkedIn person ID"
+            fi
+          done
+
+      - name: Post to X (Twitter)
+        if: steps.detect.outputs.files != ''
+        env:
+          X_API_KEY: ${{ secrets.X_API_KEY }}
+          X_API_SECRET: ${{ secrets.X_API_SECRET }}
+          X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
+          X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+        run: |
+          for FILE in ${{ steps.detect.outputs.files }}; do
+            FILENAME=$(basename "$FILE")
+            TITLE=$(grep -oP '<title>\K[^<]+' "$FILE" | sed 's/ — Victor Ndunda//' || echo "New Article")
+            
+            if [ -n "$X_API_KEY" ]; then
+              echo "Posting to X: $TITLE"
+              # Install twurl for OAuth 1.0a
+              gem install twurl
+              
+              twurl authorize --consumer-key "$X_API_KEY" --consumer-secret "$X_API_SECRET" --access-token "$X_ACCESS_TOKEN" --token-secret "$X_ACCESS_SECRET" 2>/dev/null || true
+              
+              TWEET_TEXT="📝 New article: $TITLE
+            
+          https://victorndunda.com/blog/articles/$FILENAME
+          
+          #AI #MachineLearning #Tech #Kenya"
+          
+              twurl -X POST -H api.twitter.com "/2/tweets" -d "{\"text\": \"$TWEET_TEXT\"}" 2>/dev/null && echo "✅ Posted to X" || echo "⚠️ X posting failed (check API credentials)"
+            else
+              echo "⚠️ X API credentials not set. Add secrets: X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET"
+            fi
+          done
+
+      - name: Post to Facebook Page
+        if: steps.detect.outputs.files != ''
+        env:
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+        run: |
+          for FILE in ${{ steps.detect.outputs.files }}; do
+            FILENAME=$(basename "$FILE")
+            TITLE=$(grep -oP '<title>\K[^<]+' "$FILE" | sed 's/ — Victor Ndunda//' || echo "New Article")
+            
+            if [ -n "$FB_PAGE_ID" ] && [ -n "$FB_PAGE_TOKEN" ]; then
+              echo "Posting to Facebook: $TITLE"
+              curl -s -X POST "https://graph.facebook.com/v25.0/$FB_PAGE_ID/feed" \
+                -d "message=📝 New article: $TITLE" \
+                -d "link=https://victorndunda.com/blog/articles/$FILENAME" \
+                -d "access_token=$FB_PAGE_TOKEN"
+              echo "✅ Posted to Facebook"
+            else
+              echo "⚠️ Facebook credentials not set. Add secrets: FB_PAGE_ID, FB_PAGE_ACCESS_TOKEN"
+            fi
+          done
+
+      - name: Summary
+        if: steps.detect.outputs.files != ''
+        run: |
+          echo "=== Social Media Auto-Post Summary ==="
+          echo "Articles posted:"
+          echo "${{ steps.detect.outputs.files }}"
+          echo ""
+          echo "LinkedIn: ✅ (token configured)"
+          echo "X/Twitter: Requires secrets (X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET)"
+          echo "Facebook: Requires secrets (FB_PAGE_ID, FB_PAGE_ACCESS_TOKEN)"
+          echo "TikTok: Requires Content Posting API setup (see SOCIAL-CMS.md)"
