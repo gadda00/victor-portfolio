@@ -5,6 +5,86 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>KilimoPRO: AI for 5 Million Kenyan Farmers — Victor Ndunda</title>
 <meta name="description" content="Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data." />
+<link rel="canonical" href="https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html" />
+<meta name="author" content="Victor Ndunda" />
+<meta name="keywords" content="KilimoPRO, agriculture, Flutter, TensorFlow Lite, Kenya" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="KilimoPRO: AI for 5 Million Kenyan Farmers" />
+<meta property="og:description" content="How KilimoPRO delivers AI-powered agricultural intelligence to 5 million Kenyan farmers. Architecture, offline-first design, data source integration, and on-device ML." />
+<meta property="og:url" content="https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html" />
+<meta property="og:image" content="https://victorndunda.com/og-image.png" />
+<meta property="og:site_name" content="Victor Ndunda" />
+<meta property="og:locale" content="en_US" />
+<meta property="article:published_time" content="2026-06-28" />
+<meta property="article:modified_time" content="2026-06-28" />
+<meta property="article:author" content="Victor Ndunda" />
+<meta property="article:tag" content="KilimoPRO, agriculture, Flutter, TensorFlow Lite, Kenya" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="KilimoPRO: AI for 5 Million Kenyan Farmers" />
+<meta name="twitter:description" content="How KilimoPRO delivers AI-powered agricultural intelligence to 5 million Kenyan farmers. Architecture, offline-first design, data source integration, and on-device ML." />
+<meta name="twitter:image" content="https://victorndunda.com/og-image.png" />
+<meta name="twitter:creator" content="@victor_ndunda" />
+
+<!-- Security Headers -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<!-- Structured Data: Article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "KilimoPRO: AI for 5 Million Kenyan Farmers",
+  "description": "How KilimoPRO delivers AI-powered agricultural intelligence to 5 million Kenyan farmers. Architecture, offline-first design, data source integration, and on-device ML.",
+  "image": "https://victorndunda.com/og-image.png",
+  "url": "https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html",
+  "datePublished": "2026-06-28",
+  "dateModified": "2026-06-28",
+  "author": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com",
+    "email": "mututandunda@gmail.com",
+    "jobTitle": "AI Engineer & Founder",
+    "sameAs": [
+      "https://github.com/gadda00",
+      "https://www.linkedin.com/in/victor-ndunda",
+      "https://busaraai.com",
+      "https://kilimo.pro"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html"
+  },
+  "keywords": "KilimoPRO, agriculture, Flutter, TensorFlow Lite, Kenya",
+  "articleSection": "Agriculture",
+  "wordCount": 3000,
+  "timeRequired": "PT15M"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://victorndunda.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://victorndunda.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "KilimoPRO: AI for 5 Million Kenyan Farmers", "item": "https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html" }
+  ]
+}
+</script>
+
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%2300d4ff'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -26,10 +106,12 @@
 </style>
 </head>
 <body>
-<div class="noise-overlay"></div>
-<nav id="nav"><div class="nav-inner"><a href="/" class="logo"><svg width="32" height="32" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><circle cx="50" cy="50" r="14" fill="url(#logoG)"/><circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/><circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/></svg><span>Victor Ndunda</span></a><div class="nav-links" id="navLinks"><a href="/" class="nav-link">Home</a><a href="/#about" class="nav-link">About</a><a href="/#work" class="nav-link">Work</a><a href="/blog/" class="nav-link active">Blog</a><a href="/#contact" class="nav-link">Contact</a></div><div class="nav-actions"><button class="theme-toggle" id="themeToggle"><span>🌙</span></button><button class="mobile-toggle" id="mobileToggle">☰</button></div></div></nav>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="noise-overlay" aria-hidden="true"></div>
+<nav id="nav" aria-label="Main navigation"><div class="nav-inner"><a href="/" class="logo" aria-label="Victor Ndunda home"><svg width="32" height="32" viewBox="0 0 100 100" fill="none" aria-hidden="true"><defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><circle cx="50" cy="50" r="14" fill="url(#logoG)"/><circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/><circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/></svg><span>Victor Ndunda</span></a><div class="nav-links" id="navLinks"><a href="/" class="nav-link">Home</a><a href="/#about" class="nav-link">About</a><a href="/#work" class="nav-link">Work</a><a href="/blog/" class="nav-link active">Blog</a><a href="/#contact" class="nav-link">Contact</a></div><div class="nav-actions"><button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><span>🌙</span></button><button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button></div></div></nav>
+<main id="main">
 <article class="article">
-  <span class="article-tag">Agriculture</span>
+  <span class="article-tag"> style="background:rgba(16,185,129,0.1);color:#10b981"Agriculture</span>
   <h1>KilimoPRO: AI for 5 Million Kenyan Farmers</h1>
   <div class="article-meta">By Victor Ndunda · June 28, 2026 · 15 min read</div>
   <div class="article-body">
@@ -71,5 +153,6 @@
 <script>
 const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.querySelector('span').textContent=isDark?'☀️':'🌙';});themeToggle.querySelector('span').textContent=html.classList.contains('dark')?'🌙':'☀️';document.getElementById('mobileToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
 </script>
+</main>
 </body>
 </html>

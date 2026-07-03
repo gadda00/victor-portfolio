@@ -64,7 +64,7 @@
 .blog-tag.agri { background: rgba(16,185,129,0.1); color: var(--accent-3); }
 .blog-tag.research { background: rgba(168,85,247,0.1); color: var(--accent-2); }
 .blog-tag.engineering { background: rgba(245,158,11,0.1); color: #f59e0b; }
-.blog-card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; line-height: 1.3; }
+.blog-card h2, .blog-card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; line-height: 1.3; }
 .blog-card p { color: var(--text-muted); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 1rem; }
 .blog-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8125rem; color: var(--text-dim); }
 .blog-date { font-weight: 500; }
@@ -74,10 +74,10 @@
 <body>
 <div class="noise-overlay"></div>
 
-<nav id="nav">
+<nav id="nav" aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="/" class="logo">
-      <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
+    <a href="/" class="logo" aria-label="Victor Ndunda home">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" aria-hidden="true">
         <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
         <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
         <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
@@ -93,12 +93,15 @@
       <a href="/#contact" class="nav-link">Contact</a>
     </div>
     <div class="nav-actions">
-      <button class="theme-toggle" id="themeToggle"><span>🌙</span></button>
-      <button class="mobile-toggle" id="mobileToggle">☰</button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><span>🌙</span></button>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button>
     </div>
   </div>
 </nav>
 
+<a href="#main" class="skip-link">Skip to content</a>
+
+<main id="main">
 <section class="blog-hero">
   <div class="container">
     <span class="label" style="display:inline-block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:1rem;">Research & Writing</span>
@@ -107,7 +110,10 @@
   </div>
 </section>
 
-<div class="blog-grid" id="blogGrid"></div>
+<div class="blog-grid" id="blogGrid">
+  <div class="jobs-loading" style="text-align:center;padding:3rem;color:var(--text-muted)">Loading articles...</div>
+</div>
+</main>
 
 <footer>
   <div class="container">
@@ -119,31 +125,34 @@
 </footer>
 
 <script>
-// Blog posts data — single source of truth (mirrored in /blog/index.html)
-const posts = [
-  { tag: 'AI', tagClass: 'ai', title: 'Building a 50-Agent Multi-Agent DAG Pipeline', excerpt: 'How I designed and built Busara AI\'s 7-stage parallel DAG pipeline with 50 specialized agents — from Kahn\'s topological sort to circuit breakers and O(1) LRU caching.', date: '2026-07-01', readTime: '12 min', content: '/blog/articles/building-50-agent-dag.html' },
-  { tag: 'Agriculture', tagClass: 'agri', title: 'KilimoPRO: AI for 5 Million Kenyan Farmers', excerpt: 'Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data.', date: '2026-06-28', readTime: '15 min', content: '/blog/articles/kilimopro-ai-for-farmers.html' },
-  { tag: 'Research', tagClass: 'research', title: 'Lessons from China\'s National Smart Agriculture Action Plan', excerpt: 'What Kenya can learn from China\'s space-air-ground monitoring networks, large agricultural models, and the 2024-2028 smart agriculture framework.', date: '2026-06-25', readTime: '10 min', content: '/blog/articles/chinese-smart-agriculture.html' },
-  { tag: 'Engineering', tagClass: 'engineering', title: 'Real Math, Not Vibes: Statistical Algorithms in TypeScript', excerpt: 'Holt-Winters triple exponential smoothing, OLS regression via normal equation, K-Means++ with silhouette scoring — all from scratch in TypeScript.', date: '2026-06-20', readTime: '18 min', content: '/blog/articles/real-math-not-vibes.html' },
-  { tag: 'AI', tagClass: 'ai', title: 'The Multi-LLM Council: When One AI Isn\'t Enough', excerpt: 'How KilimoPRO uses 5 expert AI personas (agronomist, economist, climate scientist, extension officer, risk manager) to deliberate complex farming decisions.', date: '2026-06-15', readTime: '8 min', content: '/blog/articles/multi-llm-council.html' },
-  { tag: 'Research', tagClass: 'research', title: 'Quantitative Finance for Agricultural Markets', excerpt: 'Applying EWMA volatility, GARCH(1,1), Value at Risk (VaR), and RSI from financial markets to agricultural commodity price forecasting.', date: '2026-06-10', readTime: '14 min', content: '/blog/articles/quant-finance-for-agriculture.html' },
-  { tag: 'Agriculture', tagClass: 'agri', title: '22 Data Sources for Kenyan Agricultural Intelligence', excerpt: 'A comprehensive inventory of verified, operational data APIs: KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, Sentinel-2, CHIRPS, ARDC, and more.', date: '2026-06-05', readTime: '11 min', content: '/blog/articles/22-data-sources.html' },
-  { tag: 'Engineering', tagClass: 'engineering', title: 'On-Device Crop Disease Detection with TensorFlow Lite', excerpt: 'Training MobileNetV3 on the PlantVillage dataset, quantizing to int8, and running inference on low-end Android phones — completely offline.', date: '2026-06-01', readTime: '13 min', content: '/blog/articles/on-device-disease-detection.html' },
-  { tag: 'Agriculture', tagClass: 'agri', title: 'NASIP 2026-2030: The KES 1.08 Trillion Opportunity', excerpt: 'Deep analysis of Kenya\'s National Agri-Food Systems Investment Plan and how technology platforms can operationalize its 9 flagship programs.', date: '2026-05-28', readTime: '16 min', content: '/blog/articles/nasip-2026-2030-opportunity.html' },
-];
+// Load posts from single source of truth: /blog/posts.json
+(async function() {
+  const grid = document.getElementById('blogGrid');
+  try {
+    const resp = await fetch('/blog/posts.json');
+    if (!resp.ok) throw new Error('Failed to load posts.json');
+    const data = await resp.json();
+    const posts = data.posts || [];
 
-const grid = document.getElementById('blogGrid');
-grid.innerHTML = posts.map(p => `
-  <article class="blog-card" onclick="window.location.href='${p.content}'" itemscope itemtype="https://schema.org/Article">
-    <span class="blog-tag ${p.tagClass}">${p.tag}</span>
-    <h3 itemprop="headline">${p.title}</h3>
-    <p>${p.excerpt}</p>
-    <div class="blog-meta">
-      <span class="blog-date"><time itemprop="datePublished" datetime="${p.date}">${p.date}</time> · ${p.readTime} read</span>
-      <span class="blog-read">Read →</span>
-    </div>
-  </article>
-`).join('');
+    grid.innerHTML = posts.map(p => {
+      const url = p.url || (`/blog/articles/${p.slug}.html`);
+      return `
+        <article class="blog-card" tabindex="0" role="article" itemscope itemtype="https://schema.org/Article" onclick="window.location.href='${url}'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='${url}'}">
+          <span class="blog-tag ${p.tagClass}">${p.tag}</span>
+          <h2 itemprop="headline">${p.title}</h2>
+          <p>${p.excerpt}</p>
+          <div class="blog-meta">
+            <span class="blog-date"><time itemprop="datePublished" datetime="${p.date}">${p.date}</time> · ${p.readTime} read</span>
+            <span class="blog-read">Read →</span>
+          </div>
+        </article>
+      `;
+    }).join('');
+  } catch (err) {
+    console.error('Failed to load posts:', err);
+    grid.innerHTML = '<div class="jobs-empty" style="text-align:center;padding:3rem;color:var(--text-muted)">Failed to load articles. <a href="/" style="color:var(--accent)">Return home</a></div>';
+  }
+})();
 
 const themeToggle = document.getElementById('themeToggle');
 const html = document.documentElement;
@@ -153,11 +162,15 @@ themeToggle.addEventListener('click', () => {
   html.className = isDark ? 'light' : 'dark';
   localStorage.setItem('theme', isDark ? 'light' : 'dark');
   themeToggle.querySelector('span').textContent = isDark ? '☀️' : '🌙';
+  themeToggle.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
 });
 themeToggle.querySelector('span').textContent = html.classList.contains('dark') ? '🌙' : '☀️';
 
-document.getElementById('mobileToggle').addEventListener('click', () => {
-  document.getElementById('navLinks').classList.toggle('open');
+const mobileToggle = document.getElementById('mobileToggle');
+mobileToggle.addEventListener('click', () => {
+  const navLinks = document.getElementById('navLinks');
+  const isOpen = navLinks.classList.toggle('open');
+  mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
 });
 
 window.addEventListener('scroll', () => {

@@ -96,7 +96,7 @@ The auto-posting runs as a GitHub Action on every push to `main` that includes n
 
 ## Admin Dashboard (`/admin/`)
 
-A private admin area accessible only to `mututandunda@gmail.com` via Google OAuth with **account selection** (forces the Google account picker so the right account can be chosen from many).
+A private admin area accessible only to authorized emails (`mututandunda@gmail.com`, `torv54@gmail.com`) via Google OAuth with **account selection** (forces the Google account picker so the right account can be chosen from many).
 
 ### Features
 - **Dashboard Overview**: Site stats, recent activity, quick actions
@@ -109,15 +109,15 @@ A private admin area accessible only to `mututandunda@gmail.com` via Google OAut
 
 ### Access
 - URL: `https://victorndunda.com/admin/`
-- Auth: Google OAuth 2.0 (GIS) with `prompt: 'select_account'`
-- Allowed email: `mututandunda@gmail.com`
+- Auth: Google OAuth 2.0 (GIS) with `auto_select: false` + `prompt()`
+- Allowed emails: `mututandunda@gmail.com`, `torv54@gmail.com`
 - Session: 30-minute idle timeout, persisted in `sessionStorage`
 - robots.txt: `Disallow: /admin/`
 - Meta: `noindex, nofollow, noarchive, nosnippet`
 
 ## Job Portal (`/jobs/`)
 
-Private job aggregation portal (existing). Same Google OAuth as admin.
+Private job aggregation portal (existing). Same Google OAuth as admin — allows `mututandunda@gmail.com` and `torv54@gmail.com`.
 
 ## SEO Implementation
 
@@ -161,8 +161,8 @@ The portfolio includes structured data for Google Rich Results:
 
 ### Authentication Security
 - Google OAuth 2.0 via Google Identity Services (GIS)
-- Authorized email allowlist (single user: `mututandunda@gmail.com`)
-- Account selection forced (`prompt: 'select_account'`) — prevents wrong-account lockout
+- Authorized email allowlist (2 users: `mututandunda@gmail.com`, `torv54@gmail.com`)
+- Account selection forced (`auto_select: false` + `prompt()`) — prevents wrong-account lockout
 - Session storage (not localStorage) — cleared on browser close
 - 30-minute idle timeout on admin
 - `noindex, nofollow, noarchive, nosnippet` on all private pages

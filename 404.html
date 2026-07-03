@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 — Page Not Found | Victor Ndunda</title>
+<meta name="description" content="The page you're looking for doesn't exist. Explore Victor Ndunda's portfolio, blog, or get in touch." />
+<meta name="robots" content="noindex, follow" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<link rel="canonical" href="https://victorndunda.com/404.html" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%2300d4ff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+
+<!-- Security Headers -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+
+<style>
+  .error-hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem 2rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .error-content { max-width: 600px; position: relative; z-index: 2; }
+  .error-code {
+    font-size: clamp(6rem, 18vw, 12rem);
+    font-weight: 900;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 1rem;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: -0.05em;
+  }
+  .error-title {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+  }
+  .error-message {
+    color: var(--text-muted);
+    font-size: 1.0625rem;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  .error-actions {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .error-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    text-decoration: none;
+    transition: all 0.2s;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text);
+  }
+  .error-btn:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+    color: var(--accent);
+  }
+  .error-btn.primary {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    border-color: transparent;
+    color: #fff;
+  }
+  .error-btn.primary:hover { color: #fff; box-shadow: 0 8px 25px var(--glow); }
+  .error-btn svg { width: 16px; height: 16px; }
+  .error-suggestions {
+    border-top: 1px solid var(--border);
+    padding-top: 2rem;
+    margin-top: 2rem;
+  }
+  .error-suggestions h3 {
+    font-size: 0.875rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  .error-suggestions ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .error-suggestions a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.9375rem;
+    transition: color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+  }
+  .error-suggestions a:hover { color: var(--accent); }
+  .error-suggestions a svg { width: 14px; height: 14px; opacity: 0.6; }
+
+  /* Floating particles bg */
+  .error-bg-particles {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.3;
+  }
+  .error-bg-particles::before, .error-bg-particles::after {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: float 8s ease-in-out infinite;
+  }
+  .error-bg-particles::before {
+    background: rgba(0,212,255,0.15);
+    top: 10%; left: 10%;
+  }
+  .error-bg-particles::after {
+    background: rgba(168,85,247,0.15);
+    bottom: 10%; right: 10%;
+    animation-delay: -4s;
+  }
+  @keyframes float {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    50% { transform: translate(30px,-30px) scale(1.1); }
+  }
+
+  /* Nav (minimal) */
+  .nav-minimal {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.25rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-minimal a { color: var(--text); text-decoration: none; font-weight: 700; display: flex; align-items: center; gap: 0.5rem; }
+  .nav-minimal .nav-back { color: var(--text-muted); font-size: 0.875rem; font-weight: 500; }
+  .nav-minimal .nav-back:hover { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    .error-actions { flex-direction: column; width: 100%; }
+    .error-btn { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+
+<nav class="nav-minimal">
+  <a href="/">
+    <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+      <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+      <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
+      <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
+      <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
+    </svg>
+    <span>Victor Ndunda</span>
+  </a>
+  <a href="/" class="nav-back">← Back to Home</a>
+</nav>
+
+<section class="error-hero">
+  <div class="error-bg-particles" aria-hidden="true"></div>
+  <div class="error-content">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Page not found</h1>
+    <p class="error-message">
+      The page you're looking for doesn't exist, has been moved, or you may have mistyped the URL.
+      Don't worry — let's get you back on track.
+    </p>
+
+    <div class="error-actions">
+      <a href="/" class="error-btn primary">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        Back to Home
+      </a>
+      <a href="/blog/" class="error-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Read the Blog
+      </a>
+      <a href="/#contact" class="error-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Contact
+      </a>
+    </div>
+
+    <div class="error-suggestions">
+      <h3>Popular pages</h3>
+      <ul>
+        <li><a href="/blog/articles/building-50-agent-dag.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>Building a 50-Agent Multi-Agent DAG Pipeline</a></li>
+        <li><a href="/blog/articles/kilimopro-ai-for-farmers.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>KilimoPRO: AI for 5 Million Kenyan Farmers</a></li>
+        <li><a href="/blog/articles/real-math-not-vibes.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>Real Math, Not Vibes: Statistical Algorithms in TypeScript</a></li>
+        <li><a href="/blog/articles/22-data-sources.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>22 Data Sources for Kenyan Agricultural Intelligence</a></li>
+        <li><a href="/articles/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>All Articles</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<script>
+  // Theme
+  const html = document.documentElement;
+  html.className = localStorage.getItem('theme') || 'dark';
+
+  // Auto-redirect common typos
+  const path = window.location.pathname.toLowerCase();
+  const redirects = {
+    '/home': '/',
+    '/index': '/',
+    '/about': '/#about',
+    '/work': '/#work',
+    '/projects': '/#work',
+    '/contact': '/#contact',
+    '/blog/index.html': '/blog/',
+    '/articles/index.html': '/articles/',
+    '/admin/index.html': '/admin/',
+    '/jobs/index.html': '/jobs/',
+  };
+  if (redirects[path]) {
+    window.location.replace(redirects[path]);
+  }
+</script>
+</body>
+</html>

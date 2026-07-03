@@ -6,7 +6,7 @@
 // ─── Configuration ───────────────────────────────────────────
 const CONFIG = {
   GOOGLE_CLIENT_ID: '794306876985-8v3qsraj7t591oc4jv0p0s056htknjf1.apps.googleusercontent.com',
-  ALLOWED_EMAILS: ['mututandunda@gmail.com'],
+  ALLOWED_EMAILS: ['mututandunda@gmail.com', 'torv54@gmail.com'],
   SESSION_KEY: 'victor_admin_session',
   SESSION_TIMEOUT_MS: 30 * 60 * 1000, // 30 minutes idle
   LOGIN_LOG_KEY: 'victor_admin_login_log',
@@ -135,7 +135,7 @@ async function handleCredentialResponse(response) {
     if (!CONFIG.ALLOWED_EMAILS.includes(email)) {
       logLoginAttempt(email, false);
       const err = $('#authError');
-      err.textContent = `Access denied. ${email} is not authorized. Sign in with mututandunda@gmail.com.`;
+      err.textContent = `Access denied. ${email} is not authorized. Sign in with an authorized account.`;
       err.classList.add('show');
       google.accounts.id.disableAutoSelect();
       // Reset to allow retry
@@ -828,7 +828,7 @@ function renderSecurity() {
             <div class="security-item-icon ok"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div>
             <div class="security-item-content">
               <div class="security-item-title">Email allowlist</div>
-              <div class="security-item-desc">Only mututandunda@gmail.com can access</div>
+              <div class="security-item-desc">2 authorized emails: mututandunda@gmail.com, torv54@gmail.com</div>
             </div>
           </div>
           <div class="security-item">
@@ -978,7 +978,7 @@ function renderSettings() {
           </div>
           <div style="display:flex;justify-content:space-between;padding:0.625rem 0">
             <span style="color:var(--text-dim)">Authorized emails</span>
-            <span>1 (mututandunda@gmail.com)</span>
+            <span>2 (mututandunda@gmail.com, torv54@gmail.com)</span>
           </div>
         </div>
       </div>

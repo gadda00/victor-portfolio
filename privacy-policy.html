@@ -23,18 +23,20 @@
 </style>
 </head>
 <body>
-<div class="noise-overlay"></div>
-<nav id="nav">
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="noise-overlay" aria-hidden="true"></div>
+<nav id="nav" aria-label="Main navigation">
   <div class="nav-inner">
-    <a href="/" class="logo">
-      <svg width="32" height="32" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><circle cx="50" cy="50" r="14" fill="url(#logoG)"/><circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/><circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/></svg>
+    <a href="/" class="logo" aria-label="Victor Ndunda home">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" aria-hidden="true"><defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><circle cx="50" cy="50" r="14" fill="url(#logoG)"/><circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/><circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/></svg>
       <span>Victor Ndunda</span>
     </a>
     <div class="nav-links" id="navLinks"><a href="/" class="nav-link">Home</a><a href="/#about" class="nav-link">About</a><a href="/#work" class="nav-link">Work</a><a href="/blog/" class="nav-link">Blog</a><a href="/#contact" class="nav-link">Contact</a></div>
-    <div class="nav-actions"><button class="theme-toggle" id="themeToggle"><span>🌙</span></button><button class="mobile-toggle" id="mobileToggle">☰</button></div>
+    <div class="nav-actions"><button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><span>🌙</span></button><button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button></div>
   </div>
 </nav>
 
+<main id="main">
 <div class="legal">
   <h1>Privacy Policy</h1>
   <div class="updated">Last updated: July 3, 2026</div>
@@ -122,6 +124,7 @@
     <a href="/" class="btn btn-ghost btn-sm">← Back to Home</a>
   </div>
 </div>
+</main>
 
 <footer><div class="container"><div class="footer-bottom"><p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p><p><a href="/terms-of-service.html" style="color:var(--accent);">Terms of Service</a> · <a href="/privacy-policy.html" style="color:var(--accent);">Privacy Policy</a></p></div></div></footer>
 
