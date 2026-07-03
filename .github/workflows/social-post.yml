@@ -18,7 +18,11 @@ jobs:
         id: detect
         run: |
           FILES=$(git diff --name-only HEAD~1 HEAD -- 'blog/articles/' 2>/dev/null | grep '\.html$' || true)
-          echo "files=$FILES" >> $GITHUB_OUTPUT
+          # Use EOF delimiter for multiline output (GitHub Actions standard)
+          EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
+          echo "files<<$EOF" >> $GITHUB_OUTPUT
+          echo "$FILES" >> $GITHUB_OUTPUT
+          echo "$EOF" >> $GITHUB_OUTPUT
           if [ -n "$FILES" ]; then
             echo "New articles detected:"
             echo "$FILES"
