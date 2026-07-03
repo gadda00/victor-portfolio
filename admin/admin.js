@@ -11,6 +11,14 @@ const CONFIG = {
   SESSION_TIMEOUT_MS: 30 * 60 * 1000, // 30 minutes idle
   LOGIN_LOG_KEY: 'victor_admin_login_log',
   ACTIVITY_LOG_KEY: 'victor_admin_activity',
+  // Fallback credentials (PBKDF2 hashed — safe to commit publicly)
+  // Used when Google OAuth is unavailable (e.g., origin not registered in Cloud Console)
+  FALLBACK_AUTH: {
+    username: 'victor',
+    salt: 'XjM/ry7o546lbe5j/a4qwQ==',
+    hash: '5HcZqnTGEmtDHF0Z1+KiBwKzXHVtgs9EVVw8reCcB9Y=',
+    iterations: 100000,
+  },
 };
 
 // ─── State ───────────────────────────────────────────────────
@@ -173,6 +181,130 @@ function logout() {
   state.user = null;
   try { google.accounts.id.disableAutoSelect(); } catch (e) {}
   location.reload();
+}
+
+// ─── Password-based fallback auth (PBKDF2 via Web Crypto API) ──
+// Used when Google OAuth fails (e.g., "no registered origin" error)
+async function verifyPassword(username, password) {
+  if (username !== CONFIG.FALLBACK_AUTH.username) {
+    return { success: false, error: 'Invalid username or password' };
+  }
+  try {
+    // Decode salt from base64
+    const saltBytes = Uint8Array.from(atob(CONFIG.FALLBACK_AUTH.salt), c => c.charCodeAt(0));
+    // Import password as key material
+    const enc = new TextEncoder();
+    const keyMaterial = await crypto.subtle.importKey(
+      'raw',
+      enc.encode(password),
+      { name: 'PBKDF2' },
+      false,
+      ['deriveBits']
+    );
+    // Derive bits using PBKDF2-HMAC-SHA256
+    const derivedBits = await crypto.subtle.deriveBits(
+      {
+        name: 'PBKDF2',
+        salt: saltBytes,
+        iterations: CONFIG.FALLBACK_AUTH.iterations,
+        hash: 'SHA-256',
+      },
+      keyMaterial,
+      256 // 32 bytes = 256 bits
+    );
+    // Convert to base64 for comparison
+    const derivedB64 = btoa(String.fromCharCode(...new Uint8Array(derivedBits)));
+    // Constant-time comparison
+    const expected = CONFIG.FALLBACK_AUTH.hash;
+    if (derivedB64.length !== expected.length) {
+      return { success: false, error: 'Invalid username or password' };
+    }
+    let diff = 0;
+    for (let i = 0; i < derivedB64.length; i++) {
+      diff |= derivedB64.charCodeAt(i) ^ expected.charCodeAt(i);
+    }
+    if (diff !== 0) {
+      return { success: false, error: 'Invalid username or password' };
+    }
+    return { success: true };
+  } catch (e) {
+    console.error('Password verification error:', e);
+    return { success: false, error: 'Authentication error. Please try again.' };
+  }
+}
+
+async function handlePasswordLogin(event) {
+  event.preventDefault();
+  const username = $('#fallbackUsername').value.trim();
+  const password = $('#fallbackPassword').value;
+  const errorEl = $('#authError');
+  const submitBtn = $('#fallbackSubmitBtn');
+
+  if (!username || !password) {
+    errorEl.textContent = 'Please enter both username and password.';
+    errorEl.classList.add('show');
+    return;
+  }
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Verifying...';
+  errorEl.classList.remove('show');
+
+  const result = await verifyPassword(username, password);
+
+  if (!result.success) {
+    logLoginAttempt(username, false);
+    errorEl.textContent = result.error;
+    errorEl.classList.add('show');
+    submitBtn.disabled = false;
+    submitBtn.textContent = 'Sign In';
+    return;
+  }
+
+  // Success — create session
+  logLoginAttempt(`${username} (password)`, true);
+  state.user = {
+    email: `${username}@victorndunda.local`,
+    name: 'Victor Ndunda',
+    picture: '/admin/avatar.svg',
+  };
+  state.sessionStart = Date.now();
+  state.lastActivity = Date.now();
+  const session = {
+    email: state.user.email,
+    name: state.user.name,
+    picture: state.user.picture,
+    sessionStart: state.sessionStart,
+    lastActivity: state.lastActivity,
+    authMethod: 'password',
+  };
+  sessionStorage.setItem(CONFIG.SESSION_KEY, JSON.stringify(session));
+  logActivity('auth', `Signed in as ${username} (password fallback)`);
+
+  showAdmin();
+  toast(`Welcome back, ${state.user.name.split(' ')[0]}!`, 'success');
+}
+
+// Toggle between Google OAuth and password login
+function toggleAuthMethod(method) {
+  const googleSection = $('#googleAuthSection');
+  const passwordSection = $('#passwordAuthSection');
+  const googleTab = $('#tabGoogle');
+  const passwordTab = $('#tabPassword');
+
+  if (method === 'google') {
+    googleSection.style.display = 'block';
+    passwordSection.style.display = 'none';
+    googleTab.classList.add('active');
+    passwordTab.classList.remove('active');
+  } else {
+    googleSection.style.display = 'none';
+    passwordSection.style.display = 'block';
+    googleTab.classList.remove('active');
+    passwordTab.classList.add('active');
+    // Focus username field
+    setTimeout(() => $('#fallbackUsername')?.focus(), 100);
+  }
 }
 
 function checkSession() {
@@ -1075,6 +1207,18 @@ window.copyArticleUrl = copyArticleUrl;
 window.clearLoginLog = clearLoginLog;
 window.clearAllActivity = clearAllActivity;
 window.logout = logout;
+window.handlePasswordLogin = handlePasswordLogin;
+window.toggleAuthMethod = toggleAuthMethod;
+window.togglePasswordVisibility = function(inputId, btn) {
+  const input = document.getElementById(inputId);
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';
+  } else {
+    input.type = 'password';
+    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+  }
+};
 
 // ─── Init ────────────────────────────────────────────────────
 window.addEventListener('load', () => {

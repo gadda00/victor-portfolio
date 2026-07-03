@@ -127,6 +127,44 @@
   animation: spin 0.8s linear infinite;
 }
 
+/* ─── Auth Tabs (Google / Password) ─────────────────────────── */
+.auth-tabs {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin-bottom: 1.5rem;
+}
+.auth-tab {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border-radius: 9px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  background: transparent;
+  color: var(--text-muted);
+  border: none;
+  transition: all 0.2s;
+}
+.auth-tab:hover {
+  color: var(--text);
+  background: rgba(255,255,255,0.04);
+}
+.auth-tab.active {
+  background: var(--bg-elev);
+  color: var(--accent);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+.auth-tab svg { flex-shrink: 0; }
+
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 

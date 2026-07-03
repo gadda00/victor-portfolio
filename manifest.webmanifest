@@ -1,0 +1,63 @@
+{
+  "name": "Victor Ndunda \u2014 AI Engineer & Founder",
+  "short_name": "Victor Ndunda",
+  "description": "AI Engineer building multi-agent intelligence systems and agricultural AI in Nairobi, Kenya.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0e1a",
+  "theme_color": "#0a0e1a",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/favicon-32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon-16.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "/brand-assets/profile-pic-400.png",
+      "sizes": "400x400",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "education",
+    "productivity",
+    "developer"
+  ],
+  "shortcuts": [
+    {
+      "name": "Blog",
+      "url": "/blog/",
+      "description": "Read latest articles"
+    },
+    {
+      "name": "Articles",
+      "url": "/articles/",
+      "description": "Browse all articles"
+    },
+    {
+      "name": "Admin Dashboard",
+      "url": "/admin/",
+      "description": "Private admin area"
+    }
+  ]
+}
