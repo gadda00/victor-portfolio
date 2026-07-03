@@ -1,0 +1,53 @@
+name: Update Sitemap
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'blog/articles/**'
+      - 'index.html'
+      - 'blog/index.html'
+      - 'articles/index.html'
+      - 'terms-of-service.html'
+      - 'privacy-policy.html'
+  schedule:
+    # Run weekly on Sundays at 00:00 UTC
+    - cron: '0 0 * * 0'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-sitemap:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update sitemap.xml lastmod dates
+        run: |
+          TODAY=$(date -u +%Y-%m-%d)
+          echo "Updating sitemap with date: $TODAY"
+
+          # Update all lastmod dates to today
+          sed -i "s|<lastmod>[^<]*</lastmod>|<lastmod>$TODAY</lastmod>|g" sitemap.xml
+
+          # Show the result
+          echo "Updated sitemap.xml:"
+          cat sitemap.xml
+
+      - name: Commit if changed
+        run: |
+          TODAY=$(date -u +%Y-%m-%d)
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add sitemap.xml
+          if git diff --cached --quiet; then
+            echo "No changes to sitemap.xml"
+          else
+            git commit -m "chore: Auto-update sitemap lastmod dates ($TODAY)"
+            git push
+            echo "✓ Committed and pushed sitemap update"
+          fi

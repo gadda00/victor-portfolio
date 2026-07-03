@@ -425,5 +425,16 @@
 </footer>
 
 <script src="app.js" defer></script>
+
+<!-- Service worker registration (PWA / offline support) -->
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/sw.js', { scope: '/' })
+        .then(reg => console.log('[SW] registered with scope:', reg.scope))
+        .catch(err => console.warn('[SW] registration failed:', err));
+    });
+  }
+</script>
 </body>
 </html>

@@ -1,0 +1,197 @@
+name: Daily Job Digest
+
+on:
+  schedule:
+    # Run daily at 06:00 UTC (09:00 Nairobi time)
+    - cron: '0 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Fetch and score jobs
+        env:
+          # Optional: if set, will email the digest
+          DIGEST_EMAIL_TO: ${{ secrets.DIGEST_EMAIL_TO }}
+          DIGEST_EMAIL_FROM: ${{ secrets.DIGEST_EMAIL_FROM }}
+          DIGEST_EMAIL_PASSWORD: ${{ secrets.DIGEST_EMAIL_PASSWORD }}
+        run: |
+          python3 - << 'PYEOF'
+          import json, urllib.request, urllib.parse, re, os, sys, datetime
+          from email.message import EmailMessage
+          import smtplib
+
+          print("="*60)
+          print("DAILY JOB DIGEST — Victor Ndunda")
+          print(f"Time: {datetime.datetime.now(datetime.timezone.utc).isoformat()}")
+          print("="*60)
+
+          # Victor's profile (simplified — full version in jobs/lib/profile.js)
+          KEYWORDS = ['ai', 'ml', 'machine learning', 'data', 'engineer', 'developer',
+                      'python', 'typescript', 'react', 'node', 'fullstack', 'full-stack',
+                      'backend', 'frontend', 'software', 'agriculture', 'agritech',
+                      'llm', 'deep learning']
+          REMOTE_OK = True
+          LOCATIONS_OK = ['nairobi', 'kenya', 'remote', 'africa']
+
+          def fetch_arbeitnow():
+              try:
+                  r = urllib.request.urlopen('https://www.arbeitnow.com/api/job-board-api', timeout=15)
+                  data = json.loads(r.read())
+                  return data.get('data', [])
+              except Exception as e:
+                  print(f"Arbeitnow failed: {e}")
+                  return []
+
+          def fetch_remoteok():
+              try:
+                  r = urllib.request.urlopen('https://remoteok.com/api?api=1', timeout=15)
+                  data = json.loads(r.read())
+                  return data[1:] if isinstance(data, list) and len(data) > 1 else []
+              except Exception as e:
+                  print(f"RemoteOK failed: {e}")
+                  return []
+
+          def normalise(j, source):
+              title = j.get('title') or j.get('position') or 'Untitled'
+              company = j.get('company_name') or j.get('company') or 'Unknown'
+              location = j.get('location') or 'Remote'
+              tags = j.get('tags') or []
+              desc = (j.get('description') or '').replace('<[^>]*>', '', 1)
+              text = (title + ' ' + company + ' ' + location + ' ' + ' '.join(tags) + ' ' + desc).lower()
+              url = j.get('url') or j.get('apply_url') or '#'
+              created = j.get('created_at') or datetime.datetime.fromtimestamp(j.get('date', 0)).isoformat()
+              return {
+                  'title': title, 'company': company, 'location': location,
+                  'tags': tags, 'url': url, 'created': created, 'source': source,
+                  'text': text, 'remote': 'remote' in location.lower() or j.get('remote') is True,
+              }
+
+          def score(job):
+              """Simple 0-100 score based on keyword + location match."""
+              score = 0
+              reasons = []
+              # Keyword match (40 pts)
+              matched_kw = [k for k in KEYWORDS if k in job['text']]
+              score += min(40, len(matched_kw) * 4)
+              if matched_kw[:3]:
+                  reasons.append(f"Matches: {', '.join(matched_kw[:3])}")
+              # Location (30 pts)
+              loc_lower = job['location'].lower()
+              if any(l in loc_lower for l in LOCATIONS_OK):
+                  score += 30
+                  reasons.append(f"Location: {job['location']}")
+              elif job['remote']:
+                  score += 20
+                  reasons.append("Remote")
+              else:
+                  score += 5
+              # Recency (30 pts) — jobs < 3 days old get full marks
+              try:
+                  age_days = (datetime.datetime.now(datetime.timezone.utc) - datetime.datetime.fromisoformat(job['created'].replace('Z', '+00:00'))).days
+                  if age_days < 1: score += 30
+                  elif age_days < 3: score += 20
+                  elif age_days < 7: score += 10
+              except Exception:
+                  pass
+              return min(100, score), reasons
+
+          # Fetch all
+          jobs = [normalise(j, 'arbeitnow') for j in fetch_arbeitnow()]
+          jobs += [normalise(j, 'remoteok') for j in fetch_remoteok()]
+
+          # Filter for tech relevance
+          jobs = [j for j in jobs if any(k in j['text'] for k in KEYWORDS)]
+
+          # Dedupe
+          seen = set()
+          deduped = []
+          for j in jobs:
+              key = (j['title'] + '|' + j['company']).lower()
+              if key not in seen:
+                  seen.add(key)
+                  deduped.append(j)
+
+          # Score + sort
+          for j in deduped:
+              j['_score'], j['_reasons'] = score(j)
+          deduped.sort(key=lambda x: -x['_score'])
+
+          # Top 10
+          top = deduped[:10]
+          print(f"\nFound {len(deduped)} relevant jobs. Top {len(top)}:")
+
+          digest_lines = []
+          digest_lines.append("DAILY JOB DIGEST — Top 10 new AI/ML/Data roles")
+          digest_lines.append(f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M UTC')}")
+          digest_lines.append(f"Total relevant jobs found: {len(deduped)}")
+          digest_lines.append("")
+          digest_lines.append("View full portal: https://victorndunda.com/jobs/")
+          digest_lines.append("")
+          digest_lines.append("="*60)
+          digest_lines.append("")
+
+          for i, j in enumerate(top, 1):
+              print(f"  {i}. [{j['_score']}] {j['title']} @ {j['company']}")
+              line = f"#{i} — Score: {j['_score']}/100"
+              line += f"\n  {j['title']}"
+              line += f"\n  Company: {j['company']}"
+              line += f"\n  Location: {j['location']} {'(Remote)' if j['remote'] else ''}"
+              if j['tags']:
+                  line += f"\n  Tags: {', '.join(j['tags'][:5])}"
+              line += f"\n  Why: {'; '.join(j['_reasons'])}"
+              line += f"\n  URL: {j['url']}"
+              line += f"\n  Source: {j['source']}"
+              line += ""
+              digest_lines.append(line)
+
+          digest_text = '\n'.join(digest_lines)
+          print("\n" + "="*60)
+          print("DIGEST PREVIEW:")
+          print("="*60)
+          print(digest_text[:2000])
+
+          # Save to file as artifact
+          with open('job-digest.txt', 'w') as f:
+              f.write(digest_text)
+          print("\n✓ Saved to job-digest.txt")
+
+          # Email if configured
+          email_to = os.environ.get('DIGEST_EMAIL_TO')
+          email_from = os.environ.get('DIGEST_EMAIL_FROM')
+          email_pass = os.environ.get('DIGEST_EMAIL_PASSWORD')
+          if email_to and email_from and email_pass:
+              print(f"\nSending digest to {email_to}...")
+              msg = EmailMessage()
+              msg['Subject'] = f"Daily Job Digest — {len(top)} new roles (top score: {top[0]['_score'] if top else 0})"
+              msg['From'] = email_from
+              msg['To'] = email_to
+              msg.set_content(digest_text)
+              try:
+                  with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
+                      smtp.login(email_from, email_pass)
+                      smtp.send_message(msg)
+                  print("✓ Email sent!")
+              except Exception as e:
+                  print(f"✗ Email failed: {e}")
+          else:
+              print("\n(Email not configured — set DIGEST_EMAIL_TO, DIGEST_EMAIL_FROM, DIGEST_EMAIL_PASSWORD secrets to enable)")
+          PYEOF
+
+      - name: Upload digest as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: job-digest-${{ github.run_id }}
+          path: job-digest.txt
+          retention-days: 30

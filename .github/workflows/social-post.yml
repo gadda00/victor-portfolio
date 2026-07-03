@@ -50,6 +50,7 @@ jobs:
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
           X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
           X_OAUTH2_CLIENT_ID: ${{ secrets.X_OAUTH2_CLIENT_ID }}
+          X_OAUTH2_CLIENT_SECRET: ${{ secrets.X_OAUTH2_CLIENT_SECRET }}
           X_OAUTH2_ACCESS_TOKEN: ${{ secrets.X_OAUTH2_ACCESS_TOKEN }}
           X_OAUTH2_REFRESH_TOKEN: ${{ secrets.X_OAUTH2_REFRESH_TOKEN }}
           TIKTOK_CLIENT_ID: ${{ secrets.TIKTOK_CLIENT_ID }}
@@ -131,38 +132,61 @@ jobs:
           # ─── X (Twitter) — OAuth 2.0 with refresh token ───
           x_refresh = os.environ.get('X_OAUTH2_REFRESH_TOKEN', '')
           x_client_id = os.environ.get('X_OAUTH2_CLIENT_ID', '')
+          x_access = os.environ.get('X_OAUTH2_ACCESS_TOKEN', '')
+          x_client_secret = os.environ.get('X_OAUTH2_CLIENT_SECRET', '')  # Optional: confidential clients
 
           if x_refresh and x_client_id:
-              print('🐦 Posting to X (OAuth 2.0 with refresh)...')
+              print('🐦 Posting to X (OAuth 2.0)...')
+              access_token = None
               try:
-                  # Step 1: Refresh the access token (access tokens expire in 2 hours)
-                  # See: https://developer.x.com/en/docs/authentication/oauth-2-0/authorization-code
-                  refresh_data = urllib.parse.urlencode({
+                  # Step 1: Try refreshing the access token
+                  # For public clients (PKCE): only client_id needed
+                  # For confidential clients: client_id + client_secret (use Basic Auth)
+                  refresh_data = {
                       'refresh_token': x_refresh,
                       'grant_type': 'refresh_token',
                       'client_id': x_client_id,
-                  }).encode()
+                  }
+                  refresh_headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+
+                  # If client secret is set, use Basic Auth (confidential client)
+                  if x_client_secret:
+                      basic_auth = base64.b64encode(f'{x_client_id}:{x_client_secret}'.encode()).decode()
+                      refresh_headers['Authorization'] = f'Basic {basic_auth}'
+                      # Don't include client_id in body when using Basic Auth
+                      del refresh_data['client_id']
+
                   refresh_req = urllib.request.Request(
                       'https://api.twitter.com/2/oauth2/token',
-                      data=refresh_data,
-                      headers={
-                          'Content-Type': 'application/x-www-form-urlencoded',
-                      },
+                      data=urllib.parse.urlencode(refresh_data).encode(),
+                      headers=refresh_headers,
                       method='POST'
                   )
                   refresh_resp = urllib.request.urlopen(refresh_req, timeout=15)
                   refresh_json = json.loads(refresh_resp.read().decode())
                   access_token = refresh_json.get('access_token')
-                  new_refresh = refresh_json.get('refresh_token', x_refresh)
-
-                  if not access_token:
-                      print('  ❌ Could not refresh X access token')
-                      print(f'     Response: {refresh_json}')
-                      results['twitter'] = False
-                  else:
+                  if access_token:
                       print('  ✓ Refreshed X access token')
+                  else:
+                      print(f'  ⚠ Refresh returned no access token: {refresh_json}')
+              except urllib.error.HTTPError as e:
+                  body = e.read().decode()[:500]
+                  print(f'  ⚠ Refresh failed (HTTP {e.code}): {body}')
+                  if e.code == 400 and 'invalid_client' in body:
+                      print('  💡 Client ID rejected. If app is a "Confidential Client",')
+                      print('     set X_OAUTH2_CLIENT_SECRET secret too.')
+                  # Fall through to try existing access token
+              except Exception as e:
+                  print(f'  ⚠ Refresh error: {e}')
 
-                      # Step 2: Post the tweet using the fresh access token
+              # Step 2: If refresh failed, try the stored access token (may still be valid < 2hrs)
+              if not access_token and x_access:
+                  print('  → Trying stored access token (may still be valid)...')
+                  access_token = x_access
+
+              # Step 3: Post the tweet
+              if access_token:
+                  try:
                       body = json.dumps({'text': message[:280]}).encode()
                       req = urllib.request.Request(
                           'https://api.twitter.com/2/tweets',
@@ -179,18 +203,23 @@ jobs:
                       print(f'  ✅ X posted! Tweet ID: {tweet_id}')
                       print(f'     URL: https://x.com/victor_ndunda/status/{tweet_id}')
                       results['twitter'] = True
-              except urllib.error.HTTPError as e:
-                  body = e.read().decode()[:500]
-                  print(f'  ❌ X HTTP {e.code}: {body}')
-                  if e.code == 401:
-                      print('  💡 Refresh token expired (6-month limit). Regenerate at:')
-                      print('     https://developer.x.com > App > OAuth 2.0 > Generate tokens')
-                  elif e.code == 403:
-                      print('  💡 App may not have tweet write permission. Check:')
-                      print('     https://developer.x.com > App > App settings > Permissions')
-                  results['twitter'] = False
-              except Exception as e:
-                  print(f'  ❌ X error: {e}')
+                  except urllib.error.HTTPError as e:
+                      body = e.read().decode()[:500]
+                      print(f'  ❌ X post HTTP {e.code}: {body}')
+                      if e.code == 401:
+                          print('  💡 Access token expired AND refresh failed.')
+                          print('     Regenerate OAuth 2.0 tokens at:')
+                          print('     https://developer.x.com > App > OAuth 2.0 > Generate tokens')
+                      elif e.code == 403:
+                          print('  💡 App may not have tweet write permission. Check:')
+                          print('     https://developer.x.com > App > App settings > Permissions')
+                          print('     Required scope: tweet.read + tweet.write (or users.read)')
+                      results['twitter'] = False
+                  except Exception as e:
+                      print(f'  ❌ X post error: {e}')
+                      results['twitter'] = False
+              else:
+                  print('  ❌ No valid access token — cannot post to X')
                   results['twitter'] = False
           else:
               # Fallback: try OAuth 1.0a if old-style tokens are set (legacy)
