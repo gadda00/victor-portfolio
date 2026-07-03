@@ -3,446 +3,315 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Victor Ndunda — AI Engineer & Founder</title>
-<meta name="description" content="Victor Ndunda — AI Engineer & Founder of Busara AI and KilimoPRO. Building multi-agent intelligence systems and agricultural AI in Nairobi, Kenya." />
+<title>Victor Ndunda — AI Engineer, Founder & Researcher</title>
+<meta name="description" content="Victor Ndunda — AI Engineer building multi-agent intelligence systems and agricultural AI. Founder of Busara AI & KilimoPRO. Based in Nairobi, Kenya." />
 <meta name="author" content="Victor Ndunda" />
-<meta name="keywords" content="Victor Ndunda, AI Engineer, Busara AI, KilimoPRO, Multi-Agent Systems, Nairobi, Kenya, AI, Data Intelligence, LLM, TypeScript, Agriculture" />
+<meta name="keywords" content="Victor Ndunda, AI Engineer, Busara AI, KilimoPRO, Multi-Agent Systems, Nairobi, Kenya, Data Intelligence, LLM, TypeScript, Agriculture, Research" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Victor Ndunda — AI Engineer & Founder" />
-<meta property="og:description" content="Building multi-agent intelligence systems and agricultural AI in Nairobi, Kenya. Founder of Busara AI & KilimoPRO." />
+<meta property="og:title" content="Victor Ndunda — AI Engineer, Founder & Researcher" />
+<meta property="og:description" content="Building multi-agent intelligence systems and agricultural AI in Nairobi, Kenya." />
 <meta property="og:url" content="https://victorndunda.com" />
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300d4ff'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='14' fill='url(%23g)'/%3E%3Cg fill='url(%23g)'%3E%3Ccircle cx='20' cy='25' r='5'/%3E%3Ccircle cx='80' cy='25' r='5'/%3E%3Ccircle cx='20' cy='75' r='5'/%3E%3Ccircle cx='80' cy='75' r='5'/%3E%3C/g%3E%3Cg stroke='url(%23g)' stroke-width='2' opacity='0.6'%3E%3Cline x1='50' y1='50' x2='20' y2='25'/%3E%3Cline x1='50' y1='50' x2='80' y2='25'/%3E%3Cline x1='50' y1='50' x2='20' y2='75'/%3E%3Cline x1='50' y1='50' x2='80' y2='75'/%3E%3C/g%3E%3C/svg%3E" />
-
-<style>
-:root {
-  --bg: #0a0a0f; --bg-elevated: #12121a; --bg-card: rgba(255,255,255,0.03);
-  --text: #e2e8f0; --text-muted: #8892b0;
-  --accent: #00d4ff; --accent-2: #a855f7; --accent-3: #f59e0b;
-  --border: rgba(255,255,255,0.08); --glass: rgba(255,255,255,0.05); --glow: rgba(0,212,255,0.15);
-}
-html.light {
-  --bg: #f8fafc; --bg-elevated: #ffffff; --bg-card: rgba(0,0,0,0.03);
-  --text: #0f172a; --text-muted: #64748b;
-  --accent: #0891b2; --accent-2: #7c3aed; --accent-3: #d97706;
-  --border: rgba(0,0,0,0.08); --glass: rgba(0,0,0,0.03); --glow: rgba(8,145,178,0.15);
-}
-* { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; }
-body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; overflow-x: hidden; transition: background 0.5s ease, color 0.5s ease; }
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: linear-gradient(180deg, var(--accent), var(--accent-2)); border-radius: 4px; }
-h1,h2,h3,h4 { font-weight: 700; letter-spacing: -0.02em; }
-.gradient-text { background: linear-gradient(135deg, var(--accent), var(--accent-2), var(--accent-3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.gradient-text-animated { background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3), var(--accent)); background-size: 300% 300%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; animation: gradientShift 4s ease infinite; }
-@keyframes gradientShift { 0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-@keyframes bounce { 0%,20%,50%,80%,100% { transform: translateX(-50%) translateY(0); } 40% { transform: translateX(-50%) translateY(-10px); } 60% { transform: translateX(-50%) translateY(-5px); } }
-@keyframes slideRight { 0%,100% { transform: translateX(0); opacity: 0.5; } 50% { transform: translateX(5px); opacity: 1; } }
-
-/* Nav */
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1rem 2rem; backdrop-filter: blur(20px) saturate(180%); background: rgba(10,10,15,0.7); border-bottom: 1px solid var(--border); transition: all 0.3s ease; }
-html.light nav { background: rgba(248,250,252,0.7); }
-nav.scrolled { padding: 0.75rem 2rem; box-shadow: 0 4px 30px rgba(0,0,0,0.1); }
-.nav-container { max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
-.logo { font-size: 1.25rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.03em; }
-.nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
-.nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.3s; position: relative; padding: 0.5rem 0; }
-.nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transition: width 0.3s; }
-.nav-links a:hover { color: var(--text); }
-.nav-links a:hover::after { width: 100%; }
-.theme-toggle { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--border); background: var(--glass); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.3s; color: var(--text); }
-.theme-toggle:hover { transform: rotate(180deg); border-color: var(--accent); }
-.mobile-menu-btn { display: none; background: none; border: none; color: var(--text); font-size: 1.5rem; cursor: pointer; }
-
-/* Hero */
-.hero { min-height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; padding: 6rem 2rem 4rem; }
-#particleCanvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
-.hero-content { position: relative; z-index: 2; text-align: center; max-width: 900px; }
-.hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.5rem 1rem; border-radius: 9999px; background: var(--glass); border: 1px solid var(--border); font-size: 0.875rem; color: var(--accent); margin-bottom: 2rem; }
-.hero-badge::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px var(--accent); animation: pulse 2s infinite; }
-.hero h1 { font-size: clamp(2.5rem, 6vw, 5rem); line-height: 1.1; margin-bottom: 1.5rem; }
-.hero-tagline { font-size: clamp(1.125rem, 2.5vw, 1.5rem); color: var(--text-muted); margin-bottom: 2rem; min-height: 2.5rem; }
-.hero-location { display: flex; align-items: center; justify-content: center; gap: 0.5rem; color: var(--text-muted); font-size: 0.875rem; margin-bottom: 3rem; }
-.hero-cta { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-.btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 2rem; border-radius: 0.75rem; font-weight: 600; font-size: 0.875rem; text-decoration: none; transition: all 0.3s; position: relative; overflow: hidden; cursor: pointer; border: none; }
-.btn-primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; box-shadow: 0 4px 30px rgba(0,212,255,0.3); }
-.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 40px rgba(0,212,255,0.4); }
-.btn-secondary { background: var(--glass); color: var(--text); border: 1px solid var(--border); backdrop-filter: blur(10px); }
-.btn-secondary:hover { border-color: var(--accent); transform: translateY(-2px); }
-.scroll-indicator { position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; opacity: 0.5; color: var(--text-muted); font-size: 1.5rem; }
-
-/* Sections */
-section { padding: 6rem 2rem; position: relative; }
-.section-header { max-width: 1200px; margin: 0 auto 4rem; text-align: center; }
-.section-label { display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1rem; padding: 0.25rem 0.75rem; border-radius: 9999px; background: var(--glass); border: 1px solid var(--border); }
-.section-title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
-.section-subtitle { color: var(--text-muted); font-size: 1.125rem; max-width: 600px; margin: 0 auto; }
-
-/* About */
-.about-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-.about-text { font-size: 1.0625rem; line-height: 1.8; color: var(--text-muted); }
-.about-text p { margin-bottom: 1.5rem; }
-.about-text strong { color: var(--text); }
-.stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
-.stat-card { padding: 2rem; border-radius: 1rem; background: var(--bg-card); border: 1px solid var(--border); transition: all 0.3s; position: relative; overflow: hidden; }
-.stat-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transform: scaleX(0); transition: transform 0.3s; }
-.stat-card:hover::before { transform: scaleX(1); }
-.stat-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-.stat-number { font-size: 2.5rem; font-weight: 800; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1; }
-.stat-label { font-size: 0.875rem; color: var(--text-muted); margin-top: 0.5rem; }
-
-/* Skills */
-.skills-container { max-width: 1200px; margin: 0 auto; }
-.skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
-.skill-category { padding: 2rem; border-radius: 1rem; background: var(--bg-card); border: 1px solid var(--border); transition: all 0.3s; }
-.skill-category:hover { border-color: var(--accent); transform: translateY(-3px); }
-.skill-category h3 { font-size: 1.125rem; margin-bottom: 1.5rem; color: var(--text); }
-.skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-.skill-tag { padding: 0.375rem 0.875rem; border-radius: 0.5rem; font-size: 0.8125rem; font-weight: 500; background: var(--glass); border: 1px solid var(--border); color: var(--text); transition: all 0.2s; }
-.skill-tag:hover { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; border-color: transparent; }
-
-/* Featured Projects */
-.featured-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
-.featured-card { padding: 2.5rem; border-radius: 1.5rem; background: var(--bg-card); border: 1px solid var(--border); overflow: hidden; transition: all 0.4s; }
-.featured-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.3); border-color: var(--accent); }
-.featured-badge { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 1rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 1.5rem; }
-.featured-badge.busara { background: rgba(0,212,255,0.1); color: var(--accent); border: 1px solid rgba(0,212,255,0.2); }
-.featured-badge.kilimo { background: rgba(245,158,11,0.1); color: var(--accent-3); border: 1px solid rgba(245,158,11,0.2); }
-.featured-card h3 { font-size: 1.75rem; margin-bottom: 1rem; }
-.featured-card p { color: var(--text-muted); line-height: 1.7; margin-bottom: 1.5rem; }
-.featured-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
-.featured-tag { padding: 0.25rem 0.75rem; border-radius: 0.375rem; font-size: 0.75rem; font-weight: 600; background: var(--glass); border: 1px solid var(--border); color: var(--text-muted); }
-.featured-links { display: flex; gap: 1rem; }
-.featured-links a { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.25rem; border-radius: 0.5rem; font-size: 0.875rem; font-weight: 600; text-decoration: none; transition: all 0.3s; }
-.featured-links a.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; }
-.featured-links a.secondary { background: var(--glass); color: var(--text); border: 1px solid var(--border); }
-.featured-links a:hover { transform: translateY(-2px); }
-
-/* DAG */
-.dag-container { margin-top: 2rem; padding: 1.5rem; border-radius: 1rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border); }
-html.light .dag-container { background: rgba(0,0,0,0.03); }
-.dag-stages { display: flex; justify-content: space-between; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
-.dag-stage { flex: 1; min-width: 80px; text-align: center; padding: 0.75rem; border-radius: 0.5rem; background: var(--glass); border: 1px solid var(--border); font-size: 0.75rem; font-weight: 600; transition: all 0.3s; }
-.dag-stage:hover { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; }
-.dag-arrow { color: var(--text-muted); font-size: 1.25rem; animation: slideRight 1.5s ease infinite; }
-
-/* Projects Grid */
-.projects-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 1.5rem; }
-.project-card { padding: 2rem; border-radius: 1rem; background: var(--bg-card); border: 1px solid var(--border); transition: all 0.3s; }
-.project-card:hover { transform: translateY(-5px); border-color: var(--accent); }
-.project-card h4 { font-size: 1.25rem; margin-bottom: 0.75rem; }
-.project-card p { color: var(--text-muted); font-size: 0.9375rem; margin-bottom: 1.25rem; }
-.project-tags { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.project-tag { font-size: 0.75rem; padding: 0.25rem 0.625rem; border-radius: 0.25rem; background: var(--glass); color: var(--text-muted); border: 1px solid var(--border); }
-.project-link { color: var(--accent); text-decoration: none; font-size: 0.875rem; font-weight: 600; }
-.project-link:hover { text-decoration: underline; }
-
-/* Services */
-.services-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-.service-card { padding: 2rem; border-radius: 1rem; background: var(--bg-card); border: 1px solid var(--border); transition: all 0.3s; }
-.service-card:hover { border-color: var(--accent); transform: translateY(-3px); }
-.service-card h3 { font-size: 1.125rem; margin-bottom: 1rem; color: var(--accent); }
-.service-card ul { list-style: none; }
-.service-card li { padding: 0.375rem 0; color: var(--text-muted); font-size: 0.9375rem; }
-.service-card li::before { content: '→ '; color: var(--accent); }
-
-/* Contact */
-.contact-section { text-align: center; max-width: 800px; margin: 0 auto; }
-.contact-links { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 2rem; }
-.contact-link { display: flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.5rem; border-radius: 0.75rem; background: var(--glass); border: 1px solid var(--border); color: var(--text); text-decoration: none; font-weight: 500; font-size: 0.9375rem; transition: all 0.3s; }
-.contact-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
-.contact-link svg { width: 20px; height: 20px; }
-
-/* Footer */
-footer { padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.875rem; }
-
-/* Mobile */
-@media (max-width: 768px) {
-  .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; flex-direction: column; background: var(--bg-elevated); padding: 1rem 2rem; gap: 0.5rem; border-bottom: 1px solid var(--border); }
-  .nav-links.open { display: flex; }
-  .mobile-menu-btn { display: block; }
-  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .featured-grid { grid-template-columns: 1fr; }
-  .stats-grid { grid-template-columns: 1fr; }
-  section { padding: 4rem 1.5rem; }
-}
-</style>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300d4ff'/%3E%3Cstop offset='0.5' stop-color='%23a855f7'/%3E%3Cstop offset='1' stop-color='%2310b981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='14' fill='url(%23g)'/%3E%3Cg fill='url(%23g)'%3E%3Ccircle cx='20' cy='25' r='5'/%3E%3Ccircle cx='80' cy='25' r='5'/%3E%3Ccircle cx='20' cy='75' r='5'/%3E%3Ccircle cx='80' cy='75' r='5'/%3E%3C/g%3E%3Cg stroke='url(%23g)' stroke-width='2' opacity='0.5'%3E%3Cline x1='50' y1='50' x2='20' y2='25'/%3E%3Cline x1='50' y1='50' x2='80' y2='25'/%3E%3Cline x1='50' y1='50' x2='20' y2='75'/%3E%3Cline x1='50' y1='50' x2='80' y2='75'/%3E%3C/g%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
 </head>
 <body>
 
+<!-- Noise texture overlay -->
+<div class="noise-overlay"></div>
+
 <!-- Navigation -->
-<nav id="navbar">
-  <div class="nav-container">
-    <a href="#" class="logo">Victor Ndunda</a>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#featured">Projects</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#contact">Contact</a></li>
-      <li><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">🌙</button></li>
-    </ul>
-    <button class="mobile-menu-btn" id="mobileMenu">☰</button>
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
+        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="var(--accent)"/><stop offset="0.5" stop-color="var(--accent-2)"/><stop offset="1" stop-color="var(--accent-3)"/>
+        </linearGradient></defs>
+        <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
+        <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
+        <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
+        <line x1="50" y1="50" x2="20" y2="25" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="80" y2="25" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="20" y2="75" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="80" y2="75" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+      </svg>
+      <span>Victor Ndunda</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="#hero" class="nav-link active">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#work" class="nav-link">Work</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="/jobs/" class="nav-link">Jobs</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="cmd-trigger" id="cmdTrigger" title="Search (Cmd+K)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <kbd>⌘K</kbd>
+      </button>
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-toggle" id="mobileToggle" title="Menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
   </div>
 </nav>
 
-<!-- Hero -->
-<section class="hero">
-  <canvas id="particleCanvas"></canvas>
-  <div class="hero-content">
-    <div class="hero-badge">Available for work · Nairobi, Kenya</div>
-    <h1>Victor Ndunda<br><span class="gradient-text-animated">AI Engineer & Founder</span></h1>
-    <div class="hero-tagline" id="typewriter">Building multi-agent intelligence systems.</div>
-    <div class="hero-location">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      Nairobi, Kenya · Building for Africa and the world
+<!-- Command Palette -->
+<div class="cmd-palette" id="cmdPalette">
+  <div class="cmd-overlay" id="cmdOverlay"></div>
+  <div class="cmd-box">
+    <div class="cmd-input-wrap">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="cmdInput" placeholder="Search Victor's work, navigate, or ask..." autocomplete="off" />
+      <kbd>ESC</kbd>
     </div>
-    <div class="hero-cta">
-      <a href="#featured" class="btn btn-primary">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
-        View My Work
-      </a>
-      <a href="#contact" class="btn btn-secondary">Get in Touch</a>
+    <div class="cmd-results" id="cmdResults"></div>
+    <div class="cmd-footer">
+      <span><kbd>↑↓</kbd> navigate</span>
+      <span><kbd>↵</kbd> select</span>
+      <span><kbd>esc</kbd> close</span>
     </div>
   </div>
-  <div class="scroll-indicator">↓</div>
+</div>
+
+<!-- Hero -->
+<section id="hero" class="hero">
+  <canvas id="bgCanvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="pulse-dot"></span> Available for work · Nairobi, Kenya 🇰🇪</div>
+    <h1 class="hero-title">
+      <span class="hero-line">AI Engineer</span>
+      <span class="hero-line gradient-animated">Founder</span>
+      <span class="hero-line">Researcher</span>
+    </h1>
+    <div class="hero-tagline" id="typewriter"></div>
+    <div class="hero-meta">
+      <span>📍 Nairobi, Kenya</span>
+      <span class="separator">·</span>
+      <span>Building for Africa & the world</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#work" class="btn btn-primary">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+        Explore My Work
+      </a>
+      <a href="/blog/" class="btn btn-ghost">Read My Research →</a>
+      <a href="/jobs/" class="btn btn-ghost">Job Portal →</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">50</span><span class="label">AI Agents</span></div>
+      <div class="hero-stat"><span class="num">2</span><span class="label">Platforms Live</span></div>
+      <div class="hero-stat"><span class="num">22+</span><span class="label">Data Sources</span></div>
+      <div class="hero-stat"><span class="num">5+</span><span class="label">Years</span></div>
+    </div>
+  </div>
+  <div class="scroll-hint">↓</div>
 </section>
 
 <!-- About -->
-<section id="about">
-  <div class="section-header">
-    <span class="section-label">About</span>
-    <h2 class="section-title">Turning <span class="gradient-text">data into intelligence.</span></h2>
-    <p class="section-subtitle">I build production-grade AI systems that solve real problems.</p>
-  </div>
-  <div class="about-grid">
-    <div class="about-text">
-      <p>I build <strong>AI systems that turn raw data into intelligence</strong>. My work lives at the intersection of multi-agent orchestration, real statistical math, and production reliability.</p>
-      <p>I'm the founder of <strong>Busara AI</strong> (busaraai.com) — a 50-agent data intelligence platform running a 7-stage parallel DAG pipeline with real math: Holt-Winters forecasting, Z-score/IQR/EWMA anomaly ensembles, OLS regression, Granger causality, K-Means clustering, and PII detection.</p>
-      <p>I'm also building <strong>KilimoPRO</strong> (kilimo.pro) — an AI-powered agricultural intelligence platform for Kenyan and African farmers, with on-device crop disease detection, market price forecasting, and multi-LLM advisory.</p>
-      <p>Based in <strong>Nairobi</strong>, building for Africa and beyond. 5+ years shipping production systems.</p>
+<section id="about" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">About</span>
+      <h2>Turning <span class="grad-text">data into intelligence.</span></h2>
     </div>
-    <div class="stats-grid">
-      <div class="stat-card"><div class="stat-number">50</div><div class="stat-label">AI Agents Built</div></div>
-      <div class="stat-card"><div class="stat-number">7</div><div class="stat-label">Pipeline Stages</div></div>
-      <div class="stat-card"><div class="stat-number">5+</div><div class="stat-label">Years Experience</div></div>
-      <div class="stat-card"><div class="stat-number">2</div><div class="stat-label">Platforms Live</div></div>
-    </div>
-  </div>
-</section>
-
-<!-- Skills -->
-<section id="skills">
-  <div class="section-header">
-    <span class="section-label">Skills</span>
-    <h2 class="section-title">The <span class="gradient-text">stack</span> behind the systems.</h2>
-  </div>
-  <div class="skills-container">
-    <div class="skills-grid">
-      <div class="skill-category">
-        <h3>🎨 Languages</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">TypeScript</span><span class="skill-tag">Python</span><span class="skill-tag">Go</span><span class="skill-tag">SQL</span><span class="skill-tag">Dart</span>
-        </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I build <strong>AI systems that turn raw data into intelligence</strong>. My work lives at the intersection of multi-agent orchestration, real statistical math, and production reliability — not demos, not wrappers.</p>
+        <p>I'm the founder of <strong>Busara AI</strong> — a 50-agent data intelligence platform with a 7-stage parallel DAG pipeline. Real algorithms: Holt-Winters forecasting, Z-score/IQR/EWMA anomaly ensembles, OLS regression, Granger causality, K-Means++ clustering. Live at <a href="https://busaraai.com" target="_blank">busaraai.com</a>.</p>
+        <p>I'm also building <strong>KilimoPRO</strong> (<a href="https://github.com/gadda00/kilimopro" target="_blank">github.com/gadda00/kilimopro</a>) — AI-powered agricultural intelligence for African farmers. On-device crop disease detection (TensorFlow Lite), market price forecasting (GARCH/EWMA), multi-LLM advisory council, and integration with 22+ data sources.</p>
+        <p>Based in <strong>Nairobi</strong>, building for Africa and beyond. I believe the next decade of AI will be multi-agent, distributed, and built by people who care about the math underneath.</p>
       </div>
-      <div class="skill-category">
-        <h3>🚀 Frameworks</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Next.js 15</span><span class="skill-tag">React 19</span><span class="skill-tag">Node.js</span><span class="skill-tag">Flutter</span><span class="skill-tag">Fastify</span><span class="skill-tag">Prisma</span>
+      <div class="about-cards">
+        <div class="about-card">
+          <div class="card-icon">🧠</div>
+          <h4>Multi-Agent AI</h4>
+          <p>50 specialized agents in a DAG pipeline with circuit breakers, smart caching, and real-time streaming.</p>
         </div>
-      </div>
-      <div class="skill-category">
-        <h3>🧠 AI / ML</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Multi-Agent Systems</span><span class="skill-tag">DAG Orchestration</span><span class="skill-tag">GLM-4.6 / GPT / Claude</span><span class="skill-tag">RAG Pipelines</span><span class="skill-tag">TensorFlow Lite</span><span class="skill-tag">Holt-Winters</span><span class="skill-tag">Anomaly Detection</span><span class="skill-tag">Causal Inference</span><span class="skill-tag">K-Means / DBSCAN</span><span class="skill-tag">GARCH / EWMA</span>
+        <div class="about-card">
+          <div class="card-icon">📊</div>
+          <h4>Real Math</h4>
+          <p>Holt-Winters, OLS regression, K-Means++, Granger causality, GARCH volatility — implemented from scratch.</p>
         </div>
-      </div>
-      <div class="skill-category">
-        <h3>☁️ Infrastructure</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">PostgreSQL</span><span class="skill-tag">Supabase</span><span class="skill-tag">Redis</span><span class="skill-tag">Docker</span><span class="skill-tag">Kubernetes</span><span class="skill-tag">Netlify</span><span class="skill-tag">Google Earth Engine</span>
+        <div class="about-card">
+          <div class="card-icon">🌱</div>
+          <h4>Agricultural AI</h4>
+          <p>KilimoPRO integrates KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO for farmer intelligence.</p>
         </div>
-      </div>
-      <div class="skill-category">
-        <h3>💳 Integrations</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">Flutterwave</span><span class="skill-tag">Stripe</span><span class="skill-tag">Google Pay</span><span class="skill-tag">Africa's Talking</span><span class="skill-tag">FAOSTAT API</span><span class="skill-tag">Sentinel-2</span>
-        </div>
-      </div>
-      <div class="skill-category">
-        <h3>📊 Data Sources</h3>
-        <div class="skill-tags">
-          <span class="skill-tag">KilimoSTAT</span><span class="skill-tag">KALRO</span><span class="skill-tag">CHIRPS</span><span class="skill-tag">OpenWeatherMap</span><span class="skill-tag">Semantic Scholar</span><span class="skill-tag">Firecrawl</span>
+        <div class="about-card">
+          <div class="card-icon">🚀</div>
+          <h4>Production-Grade</h4>
+          <p>TypeScript, Next.js, Flutter, Docker, Kubernetes. Shipped and serving real users.</p>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Featured Projects -->
-<section id="featured">
-  <div class="section-header">
-    <span class="section-label">Featured Projects</span>
-    <h2 class="section-title">Platforms I've <span class="gradient-text">built.</span></h2>
-  </div>
-  <div class="featured-grid">
-    <!-- Busara -->
-    <div class="featured-card">
-      <span class="featured-badge busara">🚀 Flagship · Data Intelligence</span>
-      <h3>Busara AI</h3>
-      <p>A 50-agent multi-agent data intelligence platform running a 7-stage parallel DAG pipeline. Real statistical algorithms: Holt-Winters forecasting, Z-score/IQR/EWMA anomaly ensemble, OLS regression, K-Means++, Granger causality. Live at busaraai.com.</p>
-      <div class="featured-tags">
-        <span class="featured-tag">TypeScript</span><span class="featured-tag">Next.js 15</span><span class="featured-tag">50 Agents</span><span class="featured-tag">DAG Pipeline</span><span class="featured-tag">GLM-4.6</span><span class="featured-tag">PostgreSQL</span><span class="featured-tag">PWA</span>
-      </div>
-      <div class="dag-container">
-        <div class="dag-stages">
-          <div class="dag-stage">Ingest<br><small>10 agents</small></div>
-          <span class="dag-arrow">→</span>
-          <div class="dag-stage">Engineer<br><small>10 agents</small></div>
-          <span class="dag-arrow">→</span>
-          <div class="dag-stage">Detect<br><small>10 agents</small></div>
-          <span class="dag-arrow">→</span>
-          <div class="dag-stage">Forecast<br><small>4 agents</small></div>
-          <span class="dag-arrow">→</span>
-          <div class="dag-stage">Infer<br><small>8 agents</small></div>
-          <span class="dag-arrow">→</span>
-          <div class="dag-stage">Report<br><small>8 agents</small></div>
+<!-- Work -->
+<section id="work" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">Featured Work</span>
+      <h2>Platforms I've <span class="grad-text">built.</span></h2>
+    </div>
+    <div class="work-featured">
+      <!-- Busara AI -->
+      <div class="work-card featured">
+        <div class="work-badge busara">🚀 Flagship · Data Intelligence</div>
+        <h3>Busara AI</h3>
+        <p>A 50-agent multi-agent data intelligence platform running a 7-stage parallel DAG pipeline with real statistical algorithms. Live at busaraai.com.</p>
+        <div class="work-tags">
+          <span>TypeScript</span><span>Next.js 15</span><span>50 Agents</span><span>DAG Pipeline</span><span>GLM-4.6</span><span>PostgreSQL</span><span>PWA</span>
+        </div>
+        <div class="dag-viz">
+          <div class="dag-stages">
+            <div class="dag-stage"><span class="stage-name">Ingest</span><span class="stage-count">10</span></div>
+            <span class="dag-arrow">→</span>
+            <div class="dag-stage"><span class="stage-name">Engineer</span><span class="stage-count">10</span></div>
+            <span class="dag-arrow">→</span>
+            <div class="dag-stage"><span class="stage-name">Detect</span><span class="stage-count">10</span></div>
+            <span class="dag-arrow">→</span>
+            <div class="dag-stage"><span class="stage-name">Forecast</span><span class="stage-count">4</span></div>
+            <span class="dag-arrow">→</span>
+            <div class="dag-stage"><span class="stage-name">Infer</span><span class="stage-count">8</span></div>
+            <span class="dag-arrow">→</span>
+            <div class="dag-stage"><span class="stage-name">Report</span><span class="stage-count">8</span></div>
+          </div>
+        </div>
+        <div class="work-links">
+          <a href="https://busaraai.com" target="_blank" class="btn btn-primary btn-sm">Live Demo ↗</a>
+          <a href="https://github.com/gadda00/IntelliFlow" target="_blank" class="btn btn-ghost btn-sm">GitHub</a>
         </div>
       </div>
-      <div class="featured-links" style="margin-top:1.5rem;">
-        <a href="https://busaraai.com" target="_blank" class="primary">Live Demo ↗</a>
-        <a href="https://github.com/gadda00/IntelliFlow" target="_blank" class="secondary">GitHub</a>
+
+      <!-- KilimoPRO -->
+      <div class="work-card featured">
+        <div class="work-badge kilimo">🌱 Agricultural Intelligence</div>
+        <h3>KilimoPRO</h3>
+        <p>AI-powered agricultural intelligence for African farmers. On-device crop disease detection, market forecasting (GARCH/VaR), multi-LLM council, 22+ data sources. Aligned with NASIP 2026-2030.</p>
+        <div class="work-tags">
+          <span>Flutter</span><span>TFLite</span><span>KilimoSTAT API</span><span>Earth Engine</span><span>Multi-LLM Council</span><span>Offline-First</span><span>SMS/USSD</span>
+        </div>
+        <div class="work-links">
+          <a href="https://github.com/gadda00/kilimopro" target="_blank" class="btn btn-primary btn-sm">GitHub ↗</a>
+          <a href="https://kilimo.pro" target="_blank" class="btn btn-ghost btn-sm">Website</a>
+        </div>
       </div>
     </div>
 
-    <!-- KilimoPRO -->
-    <div class="featured-card">
-      <span class="featured-badge kilimo">🌱 Agricultural Intelligence</span>
-      <h3>KilimoPRO</h3>
-      <p>AI-powered agricultural intelligence for Kenyan and African farmers. On-device crop disease detection (TensorFlow Lite), market price forecasting (GARCH/EWMA/VaR), multi-LLM advisory council, and integration with 22+ data sources including KilimoSTAT, FAOSTAT, and Google Earth Engine. Aligned with NASIP 2026-2030.</p>
-      <div class="featured-tags">
-        <span class="featured-tag">Flutter</span><span class="featured-tag">TensorFlow Lite</span><span class="featured-tag">KilimoSTAT API</span><span class="featured-tag">Earth Engine</span><span class="featured-tag">Multi-LLM Council</span><span class="featured-tag">Offline-First</span><span class="featured-tag">SMS/USSD</span>
-      </div>
-      <div class="featured-links" style="margin-top:1.5rem;">
-        <a href="https://github.com/gadda00/kilimopro" target="_blank" class="primary">GitHub ↗</a>
-        <a href="https://kilimo.pro" target="_blank" class="secondary">Website</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Other Projects -->
-  <div style="max-width:1200px;margin:3rem auto 0;">
-    <h3 style="text-align:center;font-size:1.5rem;margin-bottom:2rem;color:var(--text-muted);">More Projects</h3>
-    <div class="projects-grid">
-      <div class="project-card">
+    <!-- More Projects -->
+    <div class="work-grid">
+      <div class="work-card">
         <h4>IntelliFlow v2</h4>
-        <p>12-agent Python system that proved the multi-agent DAG architecture. Featured anomaly detection, forecasting, and NLP.</p>
-        <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Multi-Agent</span></div>
-        <a href="https://github.com/gadda00" target="_blank" class="project-link">View on GitHub →</a>
+        <p>12-agent Python system that proved the multi-agent DAG architecture.</p>
+        <div class="work-tags"><span>Python</span><span>Multi-Agent</span></div>
+        <a href="https://github.com/gadda00" target="_blank" class="work-link">GitHub →</a>
       </div>
-      <div class="project-card">
-        <h4>Financial Forecasting Suite</h4>
-        <p>Time series forecasting toolkit with ARIMA, exponential smoothing, and confidence intervals. Includes backtesting.</p>
-        <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">ARIMA</span><span class="project-tag">Holt-Winters</span></div>
-        <a href="https://github.com/gadda00" target="_blank" class="project-link">View on GitHub →</a>
+      <div class="work-card">
+        <h4>Financial Forecasting</h4>
+        <p>ARIMA, exponential smoothing, confidence intervals. Backtesting included.</p>
+        <div class="work-tags"><span>Python</span><span>ARIMA</span><span>Holt-Winters</span></div>
+        <a href="https://github.com/gadda00" target="_blank" class="work-link">GitHub →</a>
       </div>
-      <div class="project-card">
-        <h4>Fraud Detection System</h4>
-        <p>Real-time fraud detection using rule-based scoring + ML anomaly detection. Flags high amounts, off-hours, rapid succession.</p>
-        <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">ML</span><span class="project-tag">Rule Engine</span></div>
-        <a href="https://github.com/gadda00" target="_blank" class="project-link">View on GitHub →</a>
+      <div class="work-card">
+        <h4>Fraud Detection</h4>
+        <p>Rule-based scoring + ML anomaly detection for financial transactions.</p>
+        <div class="work-tags"><span>Python</span><span>ML</span><span>Rules</span></div>
+        <a href="https://github.com/gadda00" target="_blank" class="work-link">GitHub →</a>
       </div>
-      <div class="project-card">
-        <h4>Victor's Portfolio</h4>
-        <p>This website — built from scratch with pure HTML/CSS/JS. Particle system, typewriter, theme toggle, glassmorphism.</p>
-        <div class="project-tags"><span class="project-tag">HTML/CSS/JS</span><span class="project-tag">Canvas API</span></div>
-        <a href="https://github.com/gadda00/victor-portfolio" target="_blank" class="project-link">View on GitHub →</a>
+      <div class="work-card">
+        <h4>Customer Segmentation</h4>
+        <p>K-Means and DBSCAN clustering engine for marketing analytics.</p>
+        <div class="work-tags"><span>Python</span><span>K-Means</span><span>DBSCAN</span></div>
+        <a href="https://github.com/gadda00" target="_blank" class="work-link">GitHub →</a>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- Skills Marquee -->
+<section class="marquee-section">
+  <div class="marquee">
+    <div class="marquee-track">
+      <span>TypeScript</span><span>•</span><span>Python</span><span>•</span><span>Next.js 15</span><span>•</span><span>React 19</span><span>•</span><span>Flutter</span><span>•</span><span>Multi-Agent AI</span><span>•</span><span>DAG Orchestration</span><span>•</span><span>GLM-4.6</span><span>•</span><span>TensorFlow Lite</span><span>•</span><span>PostgreSQL</span><span>•</span><span>Redis</span><span>•</span><span>Docker</span><span>•</span><span>Kubernetes</span><span>•</span><span>Google Earth Engine</span><span>•</span><span>Holt-Winters</span><span>•</span><span>GARCH</span><span>•</span><span>FAOSTAT API</span><span>•</span><span>Flutterwave</span><span>•</span><span>PWA</span><span>•</span>
+      <span>TypeScript</span><span>•</span><span>Python</span><span>•</span><span>Next.js 15</span><span>•</span><span>React 19</span><span>•</span><span>Flutter</span><span>•</span><span>Multi-Agent AI</span><span>•</span><span>DAG Orchestration</span><span>•</span><span>GLM-4.6</span><span>•</span><span>TensorFlow Lite</span><span>•</span><span>PostgreSQL</span><span>•</span><span>Redis</span><span>•</span><span>Docker</span><span>•</span><span>Kubernetes</span><span>•</span><span>Google Earth Engine</span><span>•</span><span>Holt-Winters</span><span>•</span><span>GARCH</span><span>•</span><span>FAOSTAT API</span><span>•</span><span>Flutterwave</span><span>•</span><span>PWA</span><span>•</span>
     </div>
   </div>
 </section>
 
 <!-- Services -->
-<section id="services">
-  <div class="section-header">
-    <span class="section-label">Services</span>
-    <h2 class="section-title">What I can <span class="gradient-text">build for you.</span></h2>
-    <p class="section-subtitle">Available for local and remote clients.</p>
-  </div>
-  <div class="services-grid">
-    <div class="service-card">
-      <h3>🧠 AI & Multi-Agent</h3>
-      <ul>
-        <li>Multi-agent DAG orchestration</li>
-        <li>LLM integration (GLM-4.6, GPT, Claude)</li>
-        <li>RAG pipelines</li>
-        <li>Custom AI agents</li>
-        <li>Chatbots & assistants</li>
-      </ul>
+<section id="services" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">Services</span>
+      <h2>What I can <span class="grad-text">build for you.</span></h2>
     </div>
-    <div class="service-card">
-      <h3>📊 Data Engineering</h3>
-      <ul>
-        <li>Data pipeline design</li>
-        <li>Statistical analysis</li>
-        <li>Forecasting (Holt-Winters, ARIMA)</li>
-        <li>Anomaly detection</li>
-        <li>Dashboards & visualization</li>
-      </ul>
-    </div>
-    <div class="service-card">
-      <h3>💻 Full-Stack Dev</h3>
-      <ul>
-        <li>Next.js / React apps</li>
-        <li>API design & backend</li>
-        <li>PostgreSQL / Supabase</li>
-        <li>PWA & mobile (Flutter)</li>
-        <li>Payment integration</li>
-      </ul>
-    </div>
-    <div class="service-card">
-      <h3>🎯 Consulting</h3>
-      <ul>
-        <li>AI strategy for businesses</li>
-        <li>Architecture review</li>
-        <li>Code audit & optimization</li>
-        <li>Team training & mentorship</li>
-        <li>MVP development</li>
-      </ul>
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">🧠</div>
+        <h3>AI & Multi-Agent Systems</h3>
+        <ul><li>Multi-agent DAG orchestration</li><li>LLM integration (GLM-4.6, GPT, Claude)</li><li>RAG pipelines</li><li>Custom AI agents</li><li>Chatbots & assistants</li></ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Data Engineering & Analytics</h3>
+        <ul><li>Data pipeline design</li><li>Statistical analysis</li><li>Forecasting (Holt-Winters, ARIMA, GARCH)</li><li>Anomaly detection</li><li>Dashboards & visualization</li></ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💻</div>
+        <h3>Full-Stack Development</h3>
+        <ul><li>Next.js / React apps</li><li>API design & backend</li><li>PostgreSQL / Supabase</li><li>PWA & mobile (Flutter)</li><li>Payment integration</li></ul>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎯</div>
+        <h3>Consulting & Advisory</h3>
+        <ul><li>AI strategy for businesses</li><li>Architecture review</li><li>Code audit & optimization</li><li>Team training & mentorship</li><li>MVP development</li></ul>
+      </div>
     </div>
   </div>
 </section>
 
 <!-- Contact -->
-<section id="contact">
-  <div class="section-header">
-    <span class="section-label">Contact</span>
-    <h2 class="section-title">Let's build <span class="gradient-text">something.</span></h2>
-    <p class="section-subtitle">Open to collaborations on AI products, agricultural technology, and ambitious African tech.</p>
-  </div>
-  <div class="contact-section">
-    <div class="contact-links">
-      <a href="mailto:mututandunda@gmail.com" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
-        mututandunda@gmail.com
+<section id="contact" class="section">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">Contact</span>
+      <h2>Let's build <span class="grad-text">something.</span></h2>
+      <p class="section-sub">Open to collaborations on AI products, agricultural technology, and ambitious African tech.</p>
+    </div>
+    <div class="contact-grid">
+      <a href="mailto:mututandunda@gmail.com" class="contact-card">
+        <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></div>
+        <div><div class="contact-label">Email</div><div class="contact-value">mututandunda@gmail.com</div></div>
       </a>
-      <a href="tel:+254724346971" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-        +254 724 346 971
+      <a href="tel:+254724346971" class="contact-card">
+        <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <div><div class="contact-label">Phone</div><div class="contact-value">+254 724 346 971</div></div>
       </a>
-      <a href="https://wa.me/254724346971" target="_blank" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
-        WhatsApp
+      <a href="https://wa.me/254724346971" target="_blank" class="contact-card">
+        <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg></div>
+        <div><div class="contact-label">WhatsApp</div><div class="contact-value">Chat with me</div></div>
       </a>
-      <a href="https://github.com/gadda00" target="_blank" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
-        GitHub
+      <a href="https://github.com/gadda00" target="_blank" class="contact-card">
+        <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg></div>
+        <div><div class="contact-label">GitHub</div><div class="contact-value">@gadda00</div></div>
       </a>
-      <a href="https://www.linkedin.com/in/victor-ndunda" target="_blank" class="contact-link">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3v9zm-1.5-10.3a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM19 19h-3v-4.7c0-1.1 0-2.5-1.5-2.5s-1.8 1.2-1.8 2.4V19h-3v-9h2.9v1.2h.04c.4-.75 1.4-1.5 2.8-1.5 3 0 3.6 2 3.6 4.5V19z"/></svg>
-        LinkedIn
+      <a href="https://www.linkedin.com/in/victor-ndunda" target="_blank" class="contact-card">
+        <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3v9zm-1.5-10.3a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM19 19h-3v-4.7c0-1.1 0-2.5-1.5-2.5s-1.8 1.2-1.8 2.4V19h-3v-9h2.9v1.2h.04c.4-.75 1.4-1.5 2.8-1.5 3 0 3.6 2 3.6 4.5V19z"/></svg></div>
+        <div><div class="contact-label">LinkedIn</div><div class="contact-value">Victor Ndunda</div></div>
+      </a>
+      <a href="https://busaraai.com" target="_blank" class="contact-card">
+        <div class="contact-icon">🚀</div>
+        <div><div class="contact-label">Busara AI</div><div class="contact-value">busaraai.com</div></div>
       </a>
     </div>
   </div>
@@ -450,165 +319,33 @@ footer { padding: 3rem 2rem; text-align: center; border-top: 1px solid var(--bor
 
 <!-- Footer -->
 <footer>
-  <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
-  <p style="margin-top:0.5rem;opacity:0.6;">busaraai.com · kilimo.pro · victorndunda.com</p>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+            <defs><linearGradient id="footG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+            <circle cx="50" cy="50" r="14" fill="url(#footG)"/>
+            <circle cx="20" cy="25" r="5" fill="url(#footG)"/><circle cx="80" cy="25" r="5" fill="url(#footG)"/>
+            <circle cx="20" cy="75" r="5" fill="url(#footG)"/><circle cx="80" cy="75" r="5" fill="url(#footG)"/>
+          </svg>
+          <span>Victor Ndunda</span>
+        </div>
+        <p>AI Engineer building multi-agent intelligence systems in Nairobi, Kenya.</p>
+      </div>
+      <div class="footer-links">
+        <div><h5>Navigate</h5><a href="#about">About</a><a href="#work">Work</a><a href="/blog/">Blog</a><a href="/jobs/">Jobs</a><a href="#services">Services</a></div>
+        <div><h5>Projects</h5><a href="https://busaraai.com">Busara AI</a><a href="https://github.com/gadda00/kilimopro">KilimoPRO</a><a href="https://github.com/gadda00/IntelliFlow">IntelliFlow</a></div>
+        <div><h5>Connect</h5><a href="mailto:mututandunda@gmail.com">Email</a><a href="tel:+254724346971">Phone</a><a href="https://wa.me/254724346971">WhatsApp</a><a href="https://github.com/gadda00">GitHub</a><a href="https://www.linkedin.com/in/victor-ndunda">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
+      <p>busaraai.com · kilimo.pro · victorndunda.com</p>
+    </div>
+  </div>
 </footer>
 
-<script>
-// ─── Particle System ─────────────────────────────────────────────────
-const canvas = document.getElementById('particleCanvas');
-const ctx = canvas.getContext('2d');
-let particles = [];
-let mouse = { x: null, y: null };
-
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize', resizeCanvas);
-
-class Particle {
-  constructor() {
-    this.x = Math.random() * canvas.width;
-    this.y = Math.random() * canvas.height;
-    this.vx = (Math.random() - 0.5) * 0.5;
-    this.vy = (Math.random() - 0.5) * 0.5;
-    this.size = Math.random() * 2 + 1;
-    this.opacity = Math.random() * 0.5 + 0.1;
-  }
-  update() {
-    this.x += this.vx; this.y += this.vy;
-    if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-    if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-    if (mouse.x) {
-      const dx = mouse.x - this.x, dy = mouse.y - this.y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120) { this.x -= dx * 0.02; this.y -= dy * 0.02; }
-    }
-  }
-  draw() {
-    const isDark = document.documentElement.classList.contains('dark');
-    ctx.fillStyle = isDark ? `rgba(0, 212, 255, ${this.opacity})` : `rgba(8, 145, 178, ${this.opacity * 0.5})`;
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fill();
-  }
-}
-
-function initParticles() {
-  particles = [];
-  const count = Math.min(80, Math.floor(canvas.width * canvas.height / 15000));
-  for (let i = 0; i < count; i++) particles.push(new Particle());
-}
-
-function connectParticles() {
-  const isDark = document.documentElement.classList.contains('dark');
-  for (let a = 0; a < particles.length; a++) {
-    for (let b = a + 1; b < particles.length; b++) {
-      const dx = particles[a].x - particles[b].x;
-      const dy = particles[a].y - particles[b].y;
-      const dist = Math.sqrt(dx * dx + dy * dy);
-      if (dist < 120) {
-        ctx.strokeStyle = isDark
-          ? `rgba(0, 212, 255, ${(1 - dist / 120) * 0.15})`
-          : `rgba(8, 145, 178, ${(1 - dist / 120) * 0.08})`;
-        ctx.lineWidth = 1;
-        ctx.beginPath();
-        ctx.moveTo(particles[a].x, particles[a].y);
-        ctx.lineTo(particles[b].x, particles[b].y);
-        ctx.stroke();
-      }
-    }
-  }
-}
-
-function animate() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => { p.update(); p.draw(); });
-  connectParticles();
-  requestAnimationFrame(animate);
-}
-initParticles();
-animate();
-
-canvas.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
-canvas.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
-window.addEventListener('resize', initParticles);
-
-// ─── Typewriter Effect ────────────────────────────────────────────────
-const taglines = [
-  'Building multi-agent intelligence systems.',
-  'Founder of Busara AI — 50 agents, one mind.',
-  'Building KilimoPRO — AI for African farmers.',
-  'Real math, not vibes.',
-  'Shipping production AI from Nairobi.',
-];
-let taglineIdx = 0, charIdx = 0, isDeleting = false;
-const typewriterEl = document.getElementById('typewriter');
-
-function typewriter() {
-  const current = taglines[taglineIdx];
-  if (isDeleting) {
-    typewriterEl.textContent = current.substring(0, charIdx - 1);
-    charIdx--;
-    if (charIdx === 0) { isDeleting = false; taglineIdx = (taglineIdx + 1) % taglines.length; setTimeout(typewriter, 500); return; }
-    setTimeout(typewriter, 30);
-  } else {
-    typewriterEl.textContent = current.substring(0, charIdx + 1);
-    charIdx++;
-    if (charIdx === current.length) { isDeleting = true; setTimeout(typewriter, 2000); return; }
-    setTimeout(typewriter, 50);
-  }
-}
-typewriter();
-
-// ─── Navbar Scroll ────────────────────────────────────────────────────
-const navbar = document.getElementById('navbar');
-window.addEventListener('scroll', () => {
-  navbar.classList.toggle('scrolled', window.scrollY > 50);
-});
-
-// ─── Theme Toggle ─────────────────────────────────────────────────────
-const themeToggle = document.getElementById('themeToggle');
-const html = document.documentElement;
-const savedTheme = localStorage.getItem('theme') || 'dark';
-html.className = savedTheme;
-themeToggle.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
-
-themeToggle.addEventListener('click', () => {
-  const isDark = html.classList.contains('dark');
-  html.className = isDark ? 'light' : 'dark';
-  themeToggle.textContent = isDark ? '🌙' : '☀️';
-  localStorage.setItem('theme', isDark ? 'light' : 'dark');
-});
-
-// ─── Mobile Menu ──────────────────────────────────────────────────────
-const mobileMenu = document.getElementById('mobileMenu');
-const navLinks = document.getElementById('navLinks');
-mobileMenu.addEventListener('click', () => navLinks.classList.toggle('open'));
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
-
-// ─── Scroll Reveal ────────────────────────────────────────────────────
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.style.opacity = '1';
-      entry.target.style.transform = 'translateY(0)';
-    }
-  });
-}, { threshold: 0.1 });
-
-document.querySelectorAll('section').forEach(s => {
-  s.style.opacity = '0';
-  s.style.transform = 'translateY(30px)';
-  s.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
-  observer.observe(s);
-});
-
-// Make hero visible immediately
-document.querySelector('.hero').style.opacity = '1';
-document.querySelector('.hero').style.transform = 'translateY(0)';
-</script>
+<script src="app.js"></script>
 </body>
 </html>

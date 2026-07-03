@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Blog — Victor Ndunda</title>
+<meta name="description" content="Research, technical deep-dives, and insights on multi-agent AI, agricultural intelligence, and building production systems." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%2300d4ff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<style>
+.blog-hero { padding: 8rem 2rem 4rem; text-align: center; }
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 0 2rem 6rem; }
+.blog-card { padding: 2rem; border-radius: 16px; background: var(--bg-card); border: 1px solid var(--border); transition: all 0.3s; cursor: pointer; }
+.blog-card:hover { border-color: var(--accent); transform: translateY(-5px); }
+.blog-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.625rem; border-radius: 4px; margin-bottom: 1rem; }
+.blog-tag.ai { background: rgba(0,212,255,0.1); color: var(--accent); }
+.blog-tag.agri { background: rgba(16,185,129,0.1); color: var(--accent-3); }
+.blog-tag.research { background: rgba(168,85,247,0.1); color: var(--accent-2); }
+.blog-tag.engineering { background: rgba(245,158,11,0.1); color: #f59e0b; }
+.blog-card h3 { font-size: 1.25rem; margin-bottom: 0.75rem; line-height: 1.3; }
+.blog-card p { color: var(--text-muted); font-size: 0.9375rem; line-height: 1.6; margin-bottom: 1rem; }
+.blog-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.8125rem; color: var(--text-dim); }
+.blog-date { font-weight: 500; }
+.blog-read { color: var(--accent); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none">
+        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
+        <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
+        <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
+      </svg>
+      <span>Victor Ndunda</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/#about" class="nav-link">About</a>
+      <a href="/#work" class="nav-link">Work</a>
+      <a href="/blog/" class="nav-link active">Blog</a>
+      <a href="/jobs/" class="nav-link">Jobs</a>
+      <a href="/#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle"><span>🌙</span></button>
+      <button class="mobile-toggle" id="mobileToggle">☰</button>
+    </div>
+  </div>
+</nav>
+
+<section class="blog-hero">
+  <div class="container">
+    <span class="label" style="display:inline-block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:1rem;">Research & Writing</span>
+    <h1 style="font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;">Deep dives into <span class="grad-text">AI, data & agriculture.</span></h1>
+    <p style="color:var(--text-muted);font-size:1.125rem;max-width:600px;margin:0 auto;">Research, technical deep-dives, and insights on multi-agent AI, agricultural intelligence, and building production systems.</p>
+  </div>
+</section>
+
+<div class="blog-grid" id="blogGrid"></div>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
+      <p><a href="/" style="color:var(--accent);">← Back to Home</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Blog posts data
+const posts = [
+  { tag: 'AI', tagClass: 'ai', title: 'Building a 50-Agent Multi-Agent DAG Pipeline', excerpt: 'How I designed and built Busara AI\'s 7-stage parallel DAG pipeline with 50 specialized agents — from Kahn\'s topological sort to circuit breakers and O(1) LRU caching.', date: '2026-07-01', readTime: '12 min', content: 'blog-50-agents.html' },
+  { tag: 'Agriculture', tagClass: 'agri', title: 'KilimoPRO: AI for 5 Million Kenyan Farmers', excerpt: 'Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data.', date: '2026-06-28', readTime: '15 min', content: 'blog-kilimopro.html' },
+  { tag: 'Research', tagClass: 'research', title: 'Lessons from China\'s National Smart Agriculture Action Plan', excerpt: 'What Kenya can learn from China\'s space-air-ground monitoring networks, large agricultural models, and the 2024-2028 smart agriculture framework.', date: '2026-06-25', readTime: '10 min', content: '#' },
+  { tag: 'Engineering', tagClass: 'engineering', title: 'Real Math, Not Vibes: Implementing Statistical Algorithms in TypeScript', excerpt: 'Holt-Winters triple exponential smoothing, OLS regression via normal equation, K-Means++ with silhouette scoring — all from scratch in TypeScript.', date: '2026-06-20', readTime: '18 min', content: '#' },
+  { tag: 'AI', tagClass: 'ai', title: 'The Multi-LLM Council: When One AI Isn\'t Enough', excerpt: 'How KilimoPRO uses 5 expert AI personas (agronomist, economist, climate scientist, extension officer, risk manager) to deliberate complex farming decisions.', date: '2026-06-15', readTime: '8 min', content: '#' },
+  { tag: 'Research', tagClass: 'research', title: 'Quantitative Finance for Agricultural Markets', excerpt: 'Applying EWMA volatility, GARCH(1,1), Value at Risk (VaR), and RSI from financial markets to agricultural commodity price forecasting.', date: '2026-06-10', readTime: '14 min', content: '#' },
+  { tag: 'Agriculture', tagClass: 'agri', title: '22 Data Sources for Kenyan Agricultural Intelligence', excerpt: 'A comprehensive inventory of verified, operational data APIs: KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, Sentinel-2, CHIRPS, ARDC, and more.', date: '2026-06-05', readTime: '11 min', content: '#' },
+  { tag: 'Engineering', tagClass: 'engineering', title: 'On-Device Crop Disease Detection with TensorFlow Lite', excerpt: 'Training MobileNetV3 on the PlantVillage dataset, quantizing to int8, and running inference on low-end Android phones — completely offline.', date: '2026-06-01', readTime: '13 min', content: '#' },
+  { tag: 'AI', tagClass: 'ai', title: 'NASIP 2026-2030: The KES 1.08 Trillion Opportunity', excerpt: 'Deep analysis of Kenya\'s National Agri-Food Systems Investment Plan and how technology platforms can operationalize its 9 flagship programs.', date: '2026-05-28', readTime: '16 min', content: '#' },
+];
+
+// Render blog cards
+const grid = document.getElementById('blogGrid');
+grid.innerHTML = posts.map(p => `
+  <div class="blog-card" onclick="window.location.href='${p.content}'">
+    <span class="blog-tag ${p.tagClass}">${p.tag}</span>
+    <h3>${p.title}</h3>
+    <p>${p.excerpt}</p>
+    <div class="blog-meta">
+      <span class="blog-date">${p.date} · ${p.readTime} read</span>
+      <span class="blog-read">Read →</span>
+    </div>
+  </div>
+`).join('');
+
+// Theme toggle
+const themeToggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+html.className = localStorage.getItem('theme') || 'dark';
+themeToggle.addEventListener('click', () => {
+  const isDark = html.classList.contains('dark');
+  html.className = isDark ? 'light' : 'dark';
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+  themeToggle.querySelector('span').textContent = isDark ? '☀️' : '🌙';
+});
+themeToggle.querySelector('span').textContent = html.classList.contains('dark') ? '🌙' : '☀️';
+
+// Mobile menu
+document.getElementById('mobileToggle').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+
+// Nav scroll
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+</script>
+</body>
+</html>
