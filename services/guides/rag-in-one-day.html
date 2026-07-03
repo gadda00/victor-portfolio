@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>RAG in 1 Day: Chat with Your Own Documents — Victor Ndunda</title>
+<meta name="description" content="A 1-day hands-on workshop where you build a working RAG chatbot — chat with your PDFs, policies, and manuals. LangChain + ChromaDB + Streamlit. By end of day, you ship." />
+<meta name="author" content="Victor Ndunda" />
+<meta name="keywords" content="RAG workshop, retrieval augmented generation, LangChain, ChromaDB, Streamlit, AI training, developer workshop, Victor Ndunda" />
+<link rel="canonical" href="https://victorndunda.com/services/guides/rag-in-one-day.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="RAG in 1 Day: Chat with Your Own Documents" />
+<meta property="og:description" content="A 1-day hands-on workshop where you build a working RAG chatbot — chat with your PDFs, policies, and manuals. LangChain + ChromaDB + Streamlit. By end of day, you ship." />
+<meta property="og:url" content="https://victorndunda.com/services/guides/rag-in-one-day.html" />
+<meta property="og:image" content="https://victorndunda.com/og-image.png" />
+<meta property="og:site_name" content="Victor Ndunda" />
+<meta property="og:locale" content="en_US" />
+<meta property="article:author" content="Victor Ndunda" />
+<meta property="article:section" content="Builder" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="RAG in 1 Day: Chat with Your Own Documents" />
+<meta name="twitter:description" content="A 1-day hands-on workshop where you build a working RAG chatbot — chat with your PDFs, policies, and manuals. LangChain + ChromaDB + Streamlit. By end of day, you ship." />
+<meta name="twitter:image" content="https://victorndunda.com/og-image.png" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="Victor Ndunda" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/services/guides/guides.css" />
+
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "RAG in 1 Day: Chat with Your Own Documents",
+  "description": "A 1-day hands-on workshop where you build a working RAG chatbot — chat with your PDFs, policies, and manuals. LangChain + ChromaDB + Streamlit. By end of day, you ship.",
+  "image": "https://victorndunda.com/og-image.png",
+  "url": "https://victorndunda.com/services/guides/rag-in-one-day.html",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com",
+    "jobTitle": "AI Engineer & Founder",
+    "sameAs": ["https://github.com/gadda00", "https://www.linkedin.com/in/victor-ndunda"]
+  },
+  "publisher": { "@type": "Person", "name": "Victor Ndunda", "url": "https://victorndunda.com" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://victorndunda.com/services/guides/rag-in-one-day.html" },
+  "articleSection": "Builder",
+  "keywords": "RAG workshop, retrieval augmented generation, LangChain, ChromaDB, Streamlit, AI training, developer workshop, Victor Ndunda"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://victorndunda.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://victorndunda.com/services/" },
+    { "@type": "ListItem", "position": 3, "name": "RAG in 1 Day: Chat with Your Own Documents", "item": "https://victorndunda.com/services/guides/rag-in-one-day.html" }
+  ]
+}
+</script>
+</head><body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<nav id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="logo" aria-label="Victor Ndunda home">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
+        <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
+        <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
+      </svg>
+      <span>Victor Ndunda</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/#about" class="nav-link">About</a>
+      <a href="/#work" class="nav-link">Work</a>
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="/#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><span>🌙</span></button>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+    </div>
+  </div>
+</nav>
+<main id="main">
+<article class="guide-body">
+  <div class="guide-meta">
+    <span class="cat-badge Builder">Builder</span>
+    <span class="duration">⏱ 1-day workshop</span>
+    <span class="audience">👥 For developers</span>
+    <span>📅 July 4, 2026</span>
+    <span class="cat-badge" style="background:rgba(245,158,11,0.1);color:#f59e0b">$200 USD · KES 8,000</span>
+  </div>
+
+  <h1>RAG in 1 Day: Chat with Your Own Documents</h1>
+  <p class="lead">In one day, you'll build a production-grade RAG (Retrieval Augmented Generation) chatbot that lets you "chat with your documents" — PDFs, policies, manuals, contracts. LangChain + ChromaDB + OpenAI + Streamlit. By 5pm, you'll have a working app you can deploy.</p>
+
+  <h2>What You'll Build</h2>
+  <p>By the end of this workshop, you'll have a working <strong>"chat with your PDFs"</strong> application:</p>
+  <ul>
+    <li>📁 Upload documents (PDF, Word, TXT) via a web UI</li>
+    <li>🧠 Documents are chunked, embedded, and stored in a vector database (ChromaDB)</li>
+    <li>💬 Ask questions in natural language</li>
+    <li>🔎 The system retrieves the most relevant passages</li>
+    <li>✍️ GPT-5/Claude generates a grounded answer <strong>with citations</strong></li>
+    <li>🚀 Running locally, ready to deploy to Streamlit Community Cloud or Render</li>
+  </ul>
+  <p>This isn't a toy demo. It's the same architecture I use in production for client RAG systems — just simplified for a one-day build.</p>
+
+  <h2>Why RAG?</h2>
+  <p>LLMs hallucinate. They'll confidently tell you the wrong answer because they don't know what they don't know. <strong>RAG fixes this</strong> by grounding the LLM's response in your specific documents. Instead of asking "What's our refund policy?" and getting a generic answer, the system:</p>
+  <ol>
+    <li>Searches your actual policy document for "refund"</li>
+    <li>Retrieves the relevant passages</li>
+    <li>Feeds those passages to the LLM as context</li>
+    <li>Generates an answer <strong>based only on your document</strong></li>
+    <li>Cites the source passage so you can verify</li>
+  </ol>
+  <p>This is the architecture behind every "chat with your docs" product — from Chatbase to Intercom Fin to custom enterprise systems. And it's learnable in one day.</p>
+
+  <h2>Prerequisites</h2>
+  <p>You <strong>don't</strong> need an ML background. You <strong>do</strong> need:</p>
+  <ul>
+    <li>✅ <strong>Basic Python</strong> — functions, pip, virtual environments</li>
+    <li>✅ <strong>Understanding of APIs and JSON</strong> — you've called a REST API before</li>
+    <li>✅ <strong>A laptop with Python 3.10+</strong> installed</li>
+    <li>✅ <strong>An OpenAI API key</strong> (or Anthropic key — we support both)</li>
+    <li>❌ <strong>No ML/AI background needed</strong> — we teach everything from scratch</li>
+  </ul>
+
+  <h2>Tools We'll Use</h2>
+  <table>
+    <thead><tr><th>Tool</th><th>Role</th><th>Why This One</th></tr></thead>
+    <tbody>
+      <tr><td><strong>LangChain</strong></td><td>Orchestration framework</td><td>Industry standard, huge ecosystem</td></tr>
+      <tr><td><strong>ChromaDB</strong></td><td>Vector database (local)</td><td>Free, runs locally, no setup</td></tr>
+      <tr><td><strong>OpenAI API</strong></td><td>Embeddings + LLM</td><td>Best quality; we also show Claude swap</td></tr>
+      <tr><td><strong>Streamlit</strong></td><td>Web UI</td><td>Fastest way to ship a Python web app</td></tr>
+      <tr><td><strong>PyPDFLoader</strong></td><td>Document parsing</td><td>Handles PDFs cleanly</td></tr>
+    </tbody>
+  </table>
+
+  <h2>Workshop Curriculum</h2>
+
+  <h3>Morning: Foundations (9:00 AM – 1:00 PM)</h3>
+
+  <h4>Module 1: Intro & Why RAG (9:00 – 9:45)</h4>
+  <ul>
+    <li>Why LLMs hallucinate and how RAG fixes it</li>
+    <li>RAG vs. fine-tuning vs. prompt engineering — when to use each</li>
+    <li>Real-world RAG examples (Chatbase, Intercom Fin, enterprise knowledge bases)</li>
+    <li>Workshop overview and what you'll build</li>
+  </ul>
+
+  <h4>Module 2: Embeddings & Vector Math (9:45 – 10:30)</h4>
+  <ul>
+    <li>What are embeddings? (text → vectors of numbers)</li>
+    <li>Cosine similarity — how "closeness" is measured</li>
+    <li>Hands-on: embed sentences, calculate similarity, see it work</li>
+    <li>Choosing an embedding model (OpenAI text-embedding-3-large, alternatives)</li>
+  </ul>
+
+  <h4>Module 3: Chunking Strategies (10:45 – 11:30)</h4>
+  <ul>
+    <li>The #1 RAG failure: bad chunking</li>
+    <li>RecursiveCharacterTextSplitter — chunk size and overlap</li>
+    <li>Semantic chunking — splitting by meaning, not character count</li>
+    <li>Hands-on: chunk a real PDF, inspect the results, compare strategies</li>
+  </ul>
+
+  <h4>Module 4: Vector Databases with Chroma (11:30 – 12:30)</h4>
+  <ul>
+    <li>What a vector database does (and why you need one)</li>
+    <li>ChromaDB — local, free, zero-setup</li>
+    <li>Hands-on: build a vector store, add documents, similarity search</li>
+    <li>Metadata filters — search by document, date, category</li>
+    <li>When to upgrade to Pinecone, Qdrant, or Weaviate</li>
+  </ul>
+
+  <h4>Q&A + Lunch (12:30 – 1:00)</h4>
+
+  <h3>Afternoon: Build & Ship (2:00 PM – 6:00 PM)</h3>
+
+  <h4>Module 5: LangChain RAG Chain (2:00 – 3:00)</h4>
+  <ul>
+    <li>LangChain architecture: retriever + chain + prompt</li>
+    <li>Building the RAG chain with create_retrieval_chain</li>
+    <li>System prompts — controlling tone, format, and grounding behavior</li>
+    <li>Hands-on: wire up the full chain, ask your first question</li>
+  </ul>
+
+  <h4>Module 6: Streamlit Chat UI (3:00 – 3:45)</h4>
+  <ul>
+    <li>Streamlit basics — chat_message, chat_input, session state</li>
+    <li>Building a chat interface like ChatGPT</li>
+    <li>Adding source citations (show which passage the answer came from)</li>
+    <li>File upload widget — let users upload their own PDFs</li>
+    <li>Hands-on: ship the full UI</li>
+  </ul>
+
+  <h4>Module 7: Production Hardening (4:00 – 5:00)</h4>
+  <ul>
+    <li>Evaluation: RAGAS (faithfulness, answer relevance, context recall)</li>
+    <li>Re-ranking — improving retrieval quality with a cross-encoder</li>
+    <li>Hybrid search — combining keyword + semantic search</li>
+    <li>Guardrails — preventing off-topic questions, PII leakage</li>
+    <li>Cost and latency optimization — caching, model selection</li>
+    <li>When to use local models (Ollama) vs. cloud APIs</li>
+  </ul>
+
+  <h4>Module 8: Deploy & Wrap-Up (5:00 – 6:00)</h4>
+  <ul>
+    <li>Deploy to Streamlit Community Cloud (free)</li>
+    <li>Alternative: Render, Railway, or Docker + VPS</li>
+    <li>Adding authentication (Streamlit Authenticator)</li>
+    <li>Q&A and troubleshooting</li>
+    <li>Certificate of completion</li>
+  </ul>
+
+  <h2>What's Included</h2>
+  <ul>
+    <li>✅ <strong>Full-day live instruction</strong> (hands-on, not lecture-style)</li>
+    <li>✅ <strong>Private code repository</strong> — starter code + finished solution</li>
+    <li>✅ <strong>Slide deck + cheat sheets</strong> (yours to keep)</li>
+    <li>✅ <strong>Curated practice dataset</strong> (sample PDFs to work with)</li>
+    <li>✅ <strong>Certificate of completion</strong></li>
+    <li>✅ <strong>30-day post-workshop support</strong> — Slack/Discord channel + 1 office-hours call</li>
+    <li>✅ <strong>Recording of all sessions</strong> (in case you miss a module or want to review)</li>
+  </ul>
+
+  <h2>Pricing</h2>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1.5rem 0">
+    <div style="padding:1.5rem;border-radius:14px;background:var(--bg-card);border:2px solid var(--accent)">
+      <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--accent);font-weight:700;margin-bottom:0.5rem">Early Bird</div>
+      <div style="font-size:2rem;font-weight:800;font-family:'JetBrains Mono',monospace;color:var(--accent)">$200<small style="font-size:0.875rem;color:var(--text-muted)"> / KES 8,000</small></div>
+      <p style="font-size:0.8125rem;color:var(--text-muted);margin-top:0.5rem">Book 7+ days before the workshop date</p>
+    </div>
+    <div style="padding:1.5rem;border-radius:14px;background:var(--bg-card);border:1px solid var(--border)">
+      <div style="font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);font-weight:700;margin-bottom:0.5rem">Standard</div>
+      <div style="font-size:2rem;font-weight:800;font-family:'JetBrains Mono',monospace">$250<small style="font-size:0.875rem;color:var(--text-muted)"> / KES 10,000</small></div>
+      <p style="font-size:0.8125rem;color:var(--text-muted);margin-top:0.5rem">Within 7 days of the workshop date</p>
+    </div>
+  </div>
+  <ul>
+    <li><strong>Team discounts</strong>: 3+ from the same company — 15% off each</li>
+    <li><strong>Scholarships</strong>: Partial scholarships available for African-based builders (apply via email)</li>
+    <li><strong>Company sponsorship</strong>: Invoice provided for company-sponsored seats</li>
+  </ul>
+
+  <h2>Format & Next Dates</h2>
+  <ul>
+    <li><strong>Format</strong>: Remote (Zoom + live coding) or in-person (Nairobi)</li>
+    <li><strong>Cohort size</strong>: Capped at 20 for hands-on help</li>
+    <li><strong>Frequency</strong>: Monthly cohorts</li>
+    <li><strong>Next dates</strong>: <em>To be announced — join the waitlist below for early notification</em></li>
+  </ul>
+
+  <h2>FAQ</h2>
+
+  <details class="svc-faq" open>
+    <summary>Do I need an ML background?</summary>
+    <div class="svc-faq-body">No. You need basic Python (functions, pip, virtual environments) and understanding of APIs/JSON. We teach all the ML concepts (embeddings, vector search, RAG architecture) from scratch. If you can write a Python function and call an API, you're ready.</div>
+  </details>
+
+  <details class="svc-faq">
+    <summary>What if I miss a session?</summary>
+    <div class="svc-faq-body">All sessions are recorded. You'll get access to the recordings + the full code repo + 30-day post-workshop support (Slack channel + 1 office-hours call). You can also attend a future cohort's session for free (subject to availability).</div>
+  </details>
+
+  <details class="svc-faq">
+    <summary>Is there a refund policy?</summary>
+    <div class="svc-faq-body">Full refund up to 7 days before the workshop. 50% refund within 7 days. No refund after the workshop starts, but you can transfer your seat to a colleague or attend a future cohort.</div>
+  </details>
+
+  <details class="svc-faq">
+    <summary>Can I use Claude or local models instead of OpenAI?</summary>
+    <div class="svc-faq-body">Yes. We default to OpenAI (best documented, most reliable), but Module 7 covers swap-ins: Anthropic Claude API, and Ollama for fully local models (no API costs, runs on your machine). The code is modular — changing the LLM is a 2-line change.</div>
+  </details>
+
+  <details class="svc-faq">
+    <summary>Will my data stay private?</summary>
+    <div class="svc-faq-body">Yes. Everything runs locally on your machine. You bring your own OpenAI API key (we show you how to get one). Your documents never leave your laptop except to call the OpenAI API (which you control). For fully private setups, Module 7 covers Ollama (local models, no API calls at all).</div>
+  </details>
+
+  <details class="svc-faq">
+    <summary>Is this production-ready or just a prototype?</summary>
+    <div class="svc-faq-body">It's a working prototype plus the patterns to harden it. Module 7 covers production concerns: evaluation (RAGAS), re-ranking, hybrid search, guardrails, cost/latency optimization, and deployment. By the end, you'll have a deployable app AND the knowledge to improve it for production use.</div>
+  </details>
+
+  <details class="svc-faq">
+    <summary>Do you issue an invoice for company sponsorship?</summary>
+    <div class="svc-faq-body">Yes, on request. Many attendees are sponsored by their employers. We provide a formal invoice with company details, and the certificate of completion can be used for CPD/training records.</div>
+  </details>
+
+  <div class="callout tip">
+    <div class="callout-title">💡 Who This Is For</div>
+    <p>This workshop is for <strong>developers, data analysts, and technical PMs</strong> who want to build RAG systems — not just understand them theoretically. If you're a non-technical founder looking for a chatbot, check out my <a href="/services/guides/no-code-chatbot.html">No-Code Chatbot guide</a> or the <a href="/services/#packages-section">AI Starter package</a> instead.</p>
+  </div>
+
+  
+<div class="guide-cta">
+  <h3>Ready to build RAG in one day?</h3>
+  <p>Join the next cohort. Early bird: $200 / KES 8,000. Includes full-day instruction, code repo, certificate, and 30-day post-workshop support.</p>
+  <div>
+    <a href="/#contact" class="btn primary">Join the waitlist →</a>
+    <a href="/services/#packages-section" class="btn ghost">Or see all services</a>
+  </div>
+</div>
+
+  <div class="sources">
+    <h4>Tools & Documentation Referenced</h4>
+    <ul>
+      <li>LangChain — python.langchain.com</li>
+      <li>ChromaDB — trychroma.com</li>
+      <li>Streamlit — streamlit.io</li>
+      <li>OpenAI API — platform.openai.com</li>
+      <li>RAGAS (RAG evaluation) — docs.ragas.io</li>
+      <li>Ollama (local models) — ollama.ai</li>
+    </ul>
+  </div>
+
+</article>
+<div class="guide-nav"><div></div><div></div></div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
+      <p><a href="/" style="color:var(--accent);">← Home</a> · <a href="/services/" style="color:var(--accent);">Services</a> · <a href="/blog/" style="color:var(--accent);">Blog</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.querySelector('span').textContent=isDark?'☀️':'🌙';});themeToggle.querySelector('span').textContent=html.classList.contains('dark')?'🌙':'☀️';const mobileToggle=document.getElementById('mobileToggle');mobileToggle.addEventListener('click',()=>{const navLinks=document.getElementById('navLinks');const isOpen=navLinks.classList.toggle('open');mobileToggle.setAttribute('aria-expanded',isOpen?'true':'false');});window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+</script>
+</body>
+</html>

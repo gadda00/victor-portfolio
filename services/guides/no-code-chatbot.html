@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Build Your First AI Chatbot (No-Code) — Victor Ndunda</title>
+<meta name="description" content="A 45-minute step-by-step workshop: build a chatbot trained on YOUR documents using Chatbase. No coding required. Includes platform comparison, cost breakdown, and common mistakes." />
+<meta name="author" content="Victor Ndunda" />
+<meta name="keywords" content="no-code chatbot, Chatbase tutorial, build AI chatbot, RAG chatbot, no-code AI, small business chatbot, Victor Ndunda" />
+<link rel="canonical" href="https://victorndunda.com/services/guides/no-code-chatbot.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Build Your First AI Chatbot (No-Code)" />
+<meta property="og:description" content="A 45-minute step-by-step workshop: build a chatbot trained on YOUR documents using Chatbase. No coding required. Includes platform comparison, cost breakdown, and common mistakes." />
+<meta property="og:url" content="https://victorndunda.com/services/guides/no-code-chatbot.html" />
+<meta property="og:image" content="https://victorndunda.com/og-image.png" />
+<meta property="og:site_name" content="Victor Ndunda" />
+<meta property="og:locale" content="en_US" />
+<meta property="article:author" content="Victor Ndunda" />
+<meta property="article:section" content="Beginner" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Build Your First AI Chatbot (No-Code)" />
+<meta name="twitter:description" content="A 45-minute step-by-step workshop: build a chatbot trained on YOUR documents using Chatbase. No coding required. Includes platform comparison, cost breakdown, and common mistakes." />
+<meta name="twitter:image" content="https://victorndunda.com/og-image.png" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="Victor Ndunda" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/services/guides/guides.css" />
+
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Build Your First AI Chatbot (No-Code)",
+  "description": "A 45-minute step-by-step workshop: build a chatbot trained on YOUR documents using Chatbase. No coding required. Includes platform comparison, cost breakdown, and common mistakes.",
+  "image": "https://victorndunda.com/og-image.png",
+  "url": "https://victorndunda.com/services/guides/no-code-chatbot.html",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com",
+    "jobTitle": "AI Engineer & Founder",
+    "sameAs": ["https://github.com/gadda00", "https://www.linkedin.com/in/victor-ndunda"]
+  },
+  "publisher": { "@type": "Person", "name": "Victor Ndunda", "url": "https://victorndunda.com" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://victorndunda.com/services/guides/no-code-chatbot.html" },
+  "articleSection": "Beginner",
+  "keywords": "no-code chatbot, Chatbase tutorial, build AI chatbot, RAG chatbot, no-code AI, small business chatbot, Victor Ndunda"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://victorndunda.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://victorndunda.com/services/" },
+    { "@type": "ListItem", "position": 3, "name": "Build Your First AI Chatbot (No-Code)", "item": "https://victorndunda.com/services/guides/no-code-chatbot.html" }
+  ]
+}
+</script>
+</head><body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<nav id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="logo" aria-label="Victor Ndunda home">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
+        <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
+        <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
+      </svg>
+      <span>Victor Ndunda</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/#about" class="nav-link">About</a>
+      <a href="/#work" class="nav-link">Work</a>
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="/#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><span>🌙</span></button>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+    </div>
+  </div>
+</nav>
+<main id="main">
+<article class="guide-body">
+  <div class="guide-meta">
+    <span class="cat-badge">Beginner</span>
+    <span class="duration">⏱ 45 min workshop</span>
+    <span class="audience">👥 For non-technical founders</span>
+    <span>📅 July 4, 2026</span>
+  </div>
+
+  <h1>Build Your First AI Chatbot (No-Code)</h1>
+  <p class="lead">In the next 45 minutes, you'll build a working AI chatbot trained on YOUR business documents — no coding, no ML background, no $10,000 agency fee. Just a browser, your FAQs, and this guide.</p>
+
+  <h2>What You'll Build</h2>
+  <p>By the end of this workshop, you'll have:</p>
+  <ul>
+    <li>A chatbot that answers questions <strong>grounded in your own documents</strong> (FAQs, policies, product specs) — not hallucinated from general knowledge</li>
+    <li>A widget you can <strong>embed on your website</strong> with one line of code</li>
+    <li>A shareable public link to test with your team</li>
+    <li>Analytics showing what questions people ask</li>
+  </ul>
+  <p>The bot will handle <strong>70-80% of routine customer questions</strong> automatically — freeing you or your team to focus on the complex 20%.</p>
+
+  <h2>Choosing a Platform</h2>
+  <p>There are dozens of no-code chatbot builders. Here are the top 6, compared for small business use:</p>
+
+  <table>
+    <thead><tr><th>Platform</th><th>Best For</th><th>Price (2026)</th><th>Free Tier</th><th>Learning Curve</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Chatbase</strong></td><td>Doc-trained RAG chatbot, embed on site</td><td>Free 50 msgs; Hobby $32; Standard $120</td><td>Yes (50 msg/mo)</td><td>Very low</td></tr>
+      <tr><td><strong>Tidio</strong></td><td>E-commerce live chat + AI (Lyro)</td><td>Free 50 convos; Starter $29; Growth $59</td><td>Yes</td><td>Low</td></tr>
+      <tr><td><strong>Landbot</strong></td><td>Visual conversational workflows, WhatsApp</td><td>from ~$40/mo</td><td>Yes (limited)</td><td>Medium</td></tr>
+      <tr><td><strong>Botpress</strong></td><td>Open-source flexibility, developers</td><td>Free 100 convos; Plus $150; Team $750</td><td>Yes</td><td>Medium-high</td></tr>
+      <tr><td><strong>Voiceflow</strong></td><td>Voice + visual builders</td><td>Free + ~$49/mo</td><td>Yes</td><td>Medium</td></tr>
+      <tr><td><strong>Dante AI</strong></td><td>Quick doc-trained bots</td><td>Paid tiers</td><td>Trial</td><td>Low</td></tr>
+    </tbody>
+  </table>
+  <p class="price-disclaimer">Prices as of July 2026 — verify on vendor sites. Note: Botpress moved to per-conversation billing in May 2026.</p>
+
+  <p><strong>For this workshop, we'll use Chatbase.</strong> Here's why:</p>
+  <ul>
+    <li><strong>Lowest learning curve</strong> — literally "upload docs → get chatbot"</li>
+    <li><strong>Purpose-built for RAG</strong> (Retrieval Augmented Generation) — it grounds answers in your documents, reducing hallucinations</li>
+    <li><strong>Generous free tier</strong> — 50 messages/month, enough to test</li>
+    <li><strong>One-line embed</strong> — paste a script tag into your website</li>
+    <li><strong>Multilingual</strong> — works in English, Swahili, French, and 90+ other languages</li>
+  </ul>
+
+  <h2>Step-by-Step: Build Your Chatbot on Chatbase</h2>
+
+  <h3>Step 1: Create Your Account (2 minutes)</h3>
+  <ol>
+    <li>Go to <a href="https://chatbase.co" target="_blank" rel="noopener noreferrer">chatbase.co</a></li>
+    <li>Click "Get started free"</li>
+    <li>Sign up with Google or your email</li>
+    <li>You'll land on your dashboard — click "Create new chatbot"</li>
+  </ol>
+
+  <h3>Step 2: Upload Your Training Documents (10 minutes)</h3>
+  <p>This is the most important step. Your chatbot is only as good as the documents you feed it. Gather:</p>
+  <ul>
+    <li><strong>FAQ document</strong> — common questions and answers</li>
+    <li><strong>Product/service descriptions</strong> — what you sell, pricing, features</li>
+    <li><strong>Policies</strong> — return policy, shipping, privacy, terms</li>
+    <li><strong>About page</strong> — who you are, your story, your team</li>
+    <li><strong>Any other doc</strong> a customer might ask about</li>
+  </ul>
+  <p>Supported formats: PDF, Word (.docx), TXT, and you can also paste a website URL to auto-crawl it.</p>
+  <ol>
+    <li>In your Chatbase dashboard, go to the <strong>Data Sources</strong> tab</li>
+    <li>Drag and drop your files (or paste your website URL)</li>
+    <li>Click "Process" — Chatbase will chunk, embed, and index your documents</li>
+    <li>Wait 1-2 minutes for processing</li>
+  </ol>
+
+  <div class="callout warning">
+    <div class="callout-title">⚠️ Common Mistake: No Documents Uploaded</div>
+    <p>The #1 reason chatbots fail is that businesses deploy them without uploading any documents. The bot then hallucinates from general model knowledge — giving wrong prices, wrong policies, and wrong answers. <strong>Always upload your business documents first.</strong></p>
+  </div>
+
+  <h3>Step 3: Customize Your Bot's Personality (5 minutes)</h3>
+  <ol>
+    <li>Go to the <strong>Customize</strong> tab</li>
+    <li>Set your bot's name (e.g., "Acme Assistant")</li>
+    <li>Set the welcome message (e.g., "Hi! I'm the Acme Assistant. Ask me about our products, shipping, or returns.")</li>
+    <li>Add 3-4 suggested questions users can click to start</li>
+    <li>Set the <strong>bot persona</strong> — this is crucial. Use something like:<br>
+    <code>You are [Company]'s assistant. Only answer from the uploaded documents. If you don't know, say "I'm not sure about that — let me connect you with a human" and suggest contacting support@company.com. Be friendly, concise, and professional.</code></li>
+    <li>Pick your brand colors and upload your logo</li>
+    <li>Set the language (English, Swahili, etc.)</li>
+  </ol>
+
+  <h3>Step 4: Set Guardrails (3 minutes)</h3>
+  <ol>
+    <li>In <strong>Customize → Behavior</strong>, set the "off-topic reply" — what the bot says when someone asks something unrelated to your business (e.g., "I can only help with questions about [Company]. For other topics, try ChatGPT!")</li>
+    <li>Toggle on <strong>Source citations</strong> — the bot will show which document it pulled the answer from (builds trust)</li>
+    <li>Set up <strong>human escalation</strong> — a message like "Need to talk to a human? Email support@company.com" that appears when the bot can't answer</li>
+    <li>Optionally: add a <strong>lead capture form</strong> — collect name/email before showing the chat, for sales leads</li>
+  </ol>
+
+  <h3>Step 5: Test Your Bot (5 minutes)</h3>
+  <ol>
+    <li>Go to the <strong>Playground</strong> tab</li>
+    <li>Ask 10 questions a real customer would ask:
+      <ul>
+        <li>"What are your business hours?"</li>
+        <li>"How much does [product] cost?"</li>
+        <li>"What's your return policy?"</li>
+        <li>"Do you deliver to [location]?"</li>
+        <li>"How do I track my order?"</li>
+        <li>"Can I get a refund?"</li>
+        <li>"Who owns the company?"</li>
+        <li>"What payment methods do you accept?"</li>
+        <li>"Do you have [specific product]?"</li>
+        <li>"I have a complaint about my order"</li>
+      </ul>
+    </li>
+    <li>For each answer, check: Is it accurate? Is it from your documents? Is the tone right?</li>
+    <li>If the bot gets something wrong, go back to <strong>Data Sources</strong> and add a Q&A pair with the correct answer</li>
+  </ol>
+
+  <h3>Step 6: Embed on Your Website (5 minutes)</h3>
+  <ol>
+    <li>Go to the <strong>Embed</strong> tab</li>
+    <li>Choose your embed style: floating widget (bottom-right corner), inline embed, or full-page</li>
+    <li>Copy the <code>&lt;script&gt;</code> snippet</li>
+    <li>Paste it into your website's <code>&lt;head&gt;</code> or just before <code>&lt;/body&gt;</code></li>
+    <li>If you use WordPress, Webflow, Wix, or Shopify — Chatbase has one-click integrations (no code needed)</li>
+    <li>Refresh your website — the chat widget should appear</li>
+  </ol>
+
+  <p>Alternatively, share the <strong>public link</strong> Chatbase gives you to test with your team before embedding.</p>
+
+  <h3>Step 7: Review and Iterate (ongoing)</h3>
+  <ol>
+    <li>After launch, check the <strong>Conversations</strong> tab weekly</li>
+    <li>Look for questions the bot couldn't answer — add those to your documents</li>
+    <li>Look for questions where the bot gave wrong answers — correct the source document</li>
+    <li>A/B test different welcome messages to see which gets more engagement</li>
+    <li>Update your documents whenever your products, prices, or policies change</li>
+  </ol>
+
+  <h2>Cost Breakdown for a Small Business</h2>
+  <table>
+    <thead><tr><th>Stage</th><th>Plan</th><th>Monthly Cost</th><th>What You Get</th></tr></thead>
+    <tbody>
+      <tr><td>Proof of concept</td><td>Free</td><td>$0</td><td>50 messages/month — test internally</td></tr>
+      <tr><td>Launch</td><td>Hobby</td><td>$32</td><td>500-2,000 msg credits, 33 MB storage, 1 agent</td></tr>
+      <tr><td>Growing site</td><td>Standard</td><td>$120</td><td>More credits, multi-agent, higher limits</td></tr>
+      <tr><td>High traffic</td><td>Pro</td><td>$400</td><td>Maximum credits, priority support</td></tr>
+    </tbody>
+  </table>
+
+  <p>For most small businesses, the <strong>Hobby plan at $32/month</strong> is the right starting point. That's less than $1/day for a 24/7 customer service agent that never sleeps, never gets cranky, and handles 70-80% of routine questions.</p>
+
+  <h2>5 Common Mistakes to Avoid</h2>
+  <ol>
+    <li><strong>No documents uploaded</strong> — the bot hallucinates from general knowledge. Always upload your business docs first.</li>
+    <li><strong>No testing before going live</strong> — test with 10+ real customer questions in the Playground before embedding.</li>
+    <li><strong>No human escalation</strong> — when the bot can't answer, customers get frustrated. Always provide a path to a human.</li>
+    <li><strong>One bot for everything</strong> — don't try to make one bot handle sales AND support AND HR. Scope it to one persona.</li>
+    <li><strong>Set and forget</strong> — review conversation logs weekly. Update documents when products/policies change. A stale chatbot is worse than no chatbot.</li>
+  </ol>
+
+  <h2>Privacy Considerations</h2>
+  <div class="callout warning">
+    <div class="callout-title">⚠️ Data Privacy</div>
+    <p>If your documents contain <strong>personally identifiable information (PII)</strong> — customer names, ID numbers, financial data — be careful. Consumer OpenAI API keys (used by some chatbot builders) may train on your data. For PII:</p>
+    <ul>
+      <li>Use Chatbase's Business plan (data not used for training)</li>
+      <li>Or bring your own OpenAI API key with zero-retention agreement</li>
+      <li>Comply with Kenya Data Protection Act 2019 (parallel to GDPR)</li>
+      <li>Anonymize documents before uploading if possible</li>
+    </ul>
+  </div>
+
+  <h2>What's Next?</h2>
+  <p>Congratulations — you now have a working AI chatbot. But this is just the beginning. To go further:</p>
+  <ul>
+    <li><strong>Connect it to WhatsApp</strong> — reach customers where they already are (especially in Kenya/Africa where WhatsApp dominates)</li>
+    <li><strong>Integrate with your CRM</strong> — automatically create tickets/leads from chat conversations</li>
+    <li><strong>Add Swahili support</strong> — set the bot language to Kiswahili for local customers</li>
+    <li><strong>Train it on more documents</strong> — the more you feed it, the smarter it gets</li>
+    <li><strong>Set up analytics</strong> — track what people ask to identify content gaps in your website/FAQs</li>
+  </ul>
+
+  <p>If you want help with any of these — WhatsApp integration, CRM connection, multilingual setup, or a more sophisticated custom bot — that's exactly what my <strong>AI Starter package</strong> covers. I'll build it for you in 2-3 weeks.</p>
+
+  
+<div class="guide-cta">
+  <h3>Want a chatbot that works on WhatsApp too?</h3>
+  <p>My AI Starter package ($1,500 / KES 200K) builds a WhatsApp or website chatbot trained on your documents, with 1 automation, analytics, and multilingual support (English + Swahili). 2-3 weeks to launch.</p>
+  <div>
+    <a href="/services/#packages-section" class="btn primary">See AI Starter package →</a>
+    <a href="/#contact" class="btn ghost">Get in touch</a>
+  </div>
+</div>
+
+  
+<div class="sources">
+  <h4>Sources & References</h4>
+  <ul><li>Chatbase — chatbase.co (pricing verified Jul 2026)</li><li>Chatbase blog: How to build an AI chatbot — chatbase.co/blog/how-to-build-ai-chatbot</li><li>Tidio pricing — tidio.com</li><li>Botpress pricing update May 2026 — botpress.com/blog/pricing-update-may-2026</li><li>No-code chatbot comparison — resolve247.ai, sitegpt.ai/blog/best-nocode-chatbot-builders</li></ul>
+</div>
+
+</article>
+<div class="guide-nav"><div></div><div></div></div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
+      <p><a href="/" style="color:var(--accent);">← Home</a> · <a href="/services/" style="color:var(--accent);">Services</a> · <a href="/blog/" style="color:var(--accent);">Blog</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.querySelector('span').textContent=isDark?'☀️':'🌙';});themeToggle.querySelector('span').textContent=html.classList.contains('dark')?'🌙':'☀️';const mobileToggle=document.getElementById('mobileToggle');mobileToggle.addEventListener('click',()=>{const navLinks=document.getElementById('navLinks');const isOpen=navLinks.classList.toggle('open');mobileToggle.setAttribute('aria-expanded',isOpen?'true':'false');});window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+</script>
+</body>
+</html>

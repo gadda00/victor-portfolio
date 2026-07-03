@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Building Swahili-First AI Assistants — Victor Ndunda</title>
+<meta name="description" content="A technical guide for developers and PMs building AI assistants that truly work in Swahili — dialects, code-switching, proverbs, and real code for a Swahili RAG system with LangChain." />
+<meta name="author" content="Victor Ndunda" />
+<meta name="keywords" content="Swahili AI, Swahili NLP, Swahili LLM, multilingual AI, African language AI, LangChain RAG, Jacaranda UlizaLlama, Pawa-AI, Victor Ndunda" />
+<link rel="canonical" href="https://victorndunda.com/services/guides/swahili-ai.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Building Swahili-First AI Assistants" />
+<meta property="og:description" content="A technical guide for developers and PMs building AI assistants that truly work in Swahili — dialects, code-switching, proverbs, and real code for a Swahili RAG system with LangChain." />
+<meta property="og:url" content="https://victorndunda.com/services/guides/swahili-ai.html" />
+<meta property="og:image" content="https://victorndunda.com/og-image.png" />
+<meta property="og:site_name" content="Victor Ndunda" />
+<meta property="og:locale" content="en_US" />
+<meta property="article:author" content="Victor Ndunda" />
+<meta property="article:section" content="Builder" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Building Swahili-First AI Assistants" />
+<meta name="twitter:description" content="A technical guide for developers and PMs building AI assistants that truly work in Swahili — dialects, code-switching, proverbs, and real code for a Swahili RAG system with LangChain." />
+<meta name="twitter:image" content="https://victorndunda.com/og-image.png" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="Victor Ndunda" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/services/guides/guides.css" />
+
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Building Swahili-First AI Assistants",
+  "description": "A technical guide for developers and PMs building AI assistants that truly work in Swahili — dialects, code-switching, proverbs, and real code for a Swahili RAG system with LangChain.",
+  "image": "https://victorndunda.com/og-image.png",
+  "url": "https://victorndunda.com/services/guides/swahili-ai.html",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com",
+    "jobTitle": "AI Engineer & Founder",
+    "sameAs": ["https://github.com/gadda00", "https://www.linkedin.com/in/victor-ndunda"]
+  },
+  "publisher": { "@type": "Person", "name": "Victor Ndunda", "url": "https://victorndunda.com" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://victorndunda.com/services/guides/swahili-ai.html" },
+  "articleSection": "Builder",
+  "keywords": "Swahili AI, Swahili NLP, Swahili LLM, multilingual AI, African language AI, LangChain RAG, Jacaranda UlizaLlama, Pawa-AI, Victor Ndunda"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://victorndunda.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://victorndunda.com/services/" },
+    { "@type": "ListItem", "position": 3, "name": "Building Swahili-First AI Assistants", "item": "https://victorndunda.com/services/guides/swahili-ai.html" }
+  ]
+}
+</script>
+</head><body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<nav id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="logo" aria-label="Victor Ndunda home">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
+        <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
+        <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
+      </svg>
+      <span>Victor Ndunda</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/#about" class="nav-link">About</a>
+      <a href="/#work" class="nav-link">Work</a>
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="/#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><span>🌙</span></button>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+    </div>
+  </div>
+</nav>
+<main id="main">
+<article class="guide-body">
+  <div class="guide-meta">
+    <span class="cat-badge Builder">Builder</span>
+    <span class="duration">⏱ 35 min read</span>
+    <span class="audience">👥 For developers & PMs</span>
+    <span>📅 July 4, 2026</span>
+  </div>
+
+  <h1>Building Swahili-First AI Assistants</h1>
+  <p class="lead">Most AI assistants fail at Swahili — not because the language is hard, but because builders treat it as a translation problem. It's not. This guide covers the real challenges (dialects, Sheng, proverbs, honorifics), the current state of Swahili in LLMs, and working code for a Swahili RAG system you can ship today.</p>
+
+  <h2>Why Swahili-First AI Matters</h2>
+  <p>Swahili (Kiswahili) is spoken by <strong>over 200 million people</strong> across East and Central Africa — Kenya, Tanzania, Uganda, Rwanda, Burundi, DRC, Mozambique, and beyond. It's an official language in Kenya, Tanzania, Uganda, and the DRC. Yet most AI assistants are English-first with Swahili as an afterthought — usually via Google Translate, which produces stiff, literal, culturally tone-deaf output.</p>
+  <p>Building <strong>Swahili-first</strong> AI — where the system is designed from the ground up for Swahili speakers — isn't just about translation. It's about dialect awareness, cultural context, code-switching (Sheng), proverbs (methali), honorifics, and the reality that many Swahili speakers switch between Swahili, English, and local languages fluidly.</p>
+  <p>I learned this building <strong>Tapi Learn</strong> (acla.io/tapi-learn) — a multilingual (EN/FR/SW) learning app that reached <strong>11,000+ learners across 38 countries</strong>. Getting Swahili right wasn't a nice-to-have; it was the difference between adoption and abandonment.</p>
+
+  <h2>The Current State of Swahili in LLMs (2026)</h2>
+  <p>Frontier LLMs have gotten significantly better at Swahili. The <strong>Swahili Multilingual Index (reasoning)</strong> scores from Artificial Analysis (July 2026):</p>
+
+  <table>
+    <thead><tr><th>Model</th><th>Swahili Score (0-100)</th></tr></thead>
+    <tbody>
+      <tr><td>Gemini 3.1 Pro Preview</td><td>92</td></tr>
+      <tr><td>GPT-5 (high)</td><td>90</td></tr>
+      <tr><td>Claude Opus 4.6 (max)</td><td>90</td></tr>
+      <tr><td>Gemini 3 Flash</td><td>90</td></tr>
+      <tr><td>Claude Opus 4.5</td><td>88</td></tr>
+      <tr><td>GPT-5.2 (medium)</td><td>88</td></tr>
+      <tr><td>Grok 4</td><td>84</td></tr>
+      <tr><td>DeepSeek V3.2</td><td>80</td></tr>
+      <tr><td>Llama 4 Maverick</td><td>79</td></tr>
+    </tbody>
+  </table>
+
+  <p>For context, English scores for these same models are 95-99. So frontier models now reach <strong>88-92 on Swahili reasoning</strong> — a massive improvement from even 2024, but still behind English. For translation specifically, GPT-4o achieves a <strong>BLEU score of ~49.32</strong> on Swahili-English translation (arxiv 2502.14338), which is decent but not great for production use.</p>
+
+  <p>The takeaway: <strong>you can build useful Swahili AI with frontier models today</strong>, but you need to design for Swahili's specific challenges — not just translate English prompts.</p>
+
+  <h2>The Real Challenges (Beyond Translation)</h2>
+
+  <h3>1. Dialects</h3>
+  <p>Swahili isn't monolithic. Major dialects include:</p>
+  <ul>
+    <li><strong>Kimvita</strong> — Mombasa coast (the prestige dialect)</li>
+    <li><strong>Kiunguja</strong> — Zanzibar (the basis for Standard Swahili)</li>
+    <li><strong>Kiamu</strong> — Lamu region</li>
+    <li><strong>Kingozi</strong> — archaic/literary</li>
+    <li>Plus regional variations across Kenya, Tanzania, Uganda, DRC</li>
+  </ul>
+  <p>A model trained primarily on Standard Swahili (Kiunguja) may struggle with Kimvita's vocabulary differences. This matters for user-facing assistants — a Mombasa user expects to be understood in their dialect, not corrected to Standard Swahili.</p>
+
+  <h3>2. Code-Switching and Sheng</h3>
+  <p>In Nairobi especially, speakers fluidly mix Swahili, English, and local languages into <strong>Sheng</strong> — an evolving urban slang with no standard orthography. A user might type: <em>"Nime-get hiyo message lakini sijui how to reply, can you help?"</em> An AI trained on "pure" Swahili won't handle this well.</p>
+  <p>Real-world Swahili AI needs to handle code-switching gracefully — understand the mixed input and respond in a way that matches the user's register.</p>
+
+  <h3>3. Proverbs (Methali)</h3>
+  <p>Swahili has a rich tradition of proverbs (<em>methali</em>) that carry cultural meaning far beyond their literal translation. <em>"Asiyesikia la mkuu huvunjika guu"</em> (literally: "He who doesn't listen to the elder's advice breaks a leg") means "Ignore wise counsel at your peril." A literal translation misses the point entirely.</p>
+  <p>For AI to truly work in Swahili, it needs to recognize proverbs, understand their metaphorical meaning, and ideally use them appropriately in responses. This requires cultural training data, not just language data.</p>
+
+  <h3>4. Honorifics and Politeness Registers</h3>
+  <p>Swahili has complex politeness systems. Addressing an elder vs. a peer vs. a child uses different forms. <em>"Hujambo?"</em> (formal greeting) vs. <em>"Mambo?"</em> (casual). A model that responds to a formal inquiry with casual language feels disrespectful — and users will reject it.</p>
+
+  <h2>Technical Approaches</h2>
+
+  <h3>Approach 1: System Prompts in Swahili</h3>
+  <p>The cheapest and fastest approach. With GPT-5 or Claude (Swahili score 90), a well-crafted Swahili system prompt produces surprisingly good results:</p>
+  <pre><code>system_prompt = """
+Wewe ni msaidizi wa AI anayezungumza Kiswahili.
+Jibu maswali kwa kutumia taarifa zilizotolewa kwenye muktadha.
+Ikiwa hujui, sema 'Sijui' na usitengeneze taarifa.
+Tumia lugha ya heshima na mithali inapofaa.
+Jibu kwa Kiswahili sanifu isipokuwa mtumiaji aombe lugha nyingine.
+"""</code></pre>
+  <p>This works for ~80% of use cases with frontier models. But it won't handle dialect variations, Sheng, or domain-specific vocabulary well.</p>
+
+  <h3>Approach 2: Fine-Tuning on Swahili Corpora</h3>
+  <p>For production systems, fine-tuning on domain-specific Swahili data gives better results. Available datasets:</p>
+  <ul>
+    <li><strong>Masakhane</strong> (huggingface.co/masakhane) — MasakhaNER (named entity recognition), MasakhaPOS (part-of-speech tagging) for 20 African languages including Swahili</li>
+    <li><strong>MakerereNLP</strong> — East African text and speech data</li>
+    <li><strong>mbeukman/xlm-roberta-finetuned-swahili-ner</strong> — pre-trained NER model</li>
+    <li><strong>AfroLLM / AfroBench</strong> — benchmark and models for African languages (ACL 2025 paper)</li>
+  </ul>
+
+  <h3>Approach 3: RAG with Swahili Documents</h3>
+  <p>The best approach for accuracy + freshness + privacy. Embed Swahili documents (policies, FAQs, extension content) into a vector database, retrieve relevant passages, then generate grounded answers. This is what <strong>Jacaranda Health's UlizaLlama</strong> does for maternal health in Kenya.</p>
+
+  <h3>Approach 4: Translation Pipelines (Hybrid)</h3>
+  <p>Translate the user's Swahili query to English, process in English (where models are strongest), translate the answer back to Swahili. Useful for complex reasoning tasks, but introduces latency and potential translation errors. <strong>UlizaLlama</strong> uses a hybrid of native Swahili and translation.</p>
+
+  <h2>Real-World Examples</h2>
+
+  <h3>Jacaranda Health — UlizaLlama ("AskLlama")</h3>
+  <p>The first-in-kind <strong>open-access Swahili LLM</strong>, built for Jacaranda's PROMPTS maternal health platform (SMS-based, for new mothers in Kenya):</p>
+  <ul>
+    <li><strong>Why they built it</strong>: ChatGPT alone wasn't suitable — API cost at scale, data not locally stored (problem for health PII), lacked domain customization</li>
+    <li><strong>What they built</strong>: Open-source Swahili LLM, hosted on their own servers for data privacy</li>
+    <li><strong>Humans in the loop</strong>: Clinically-trained agents vet AI responses before sending to mothers</li>
+    <li><strong>Open source</strong>: Published a toolkit so other orgs can adapt it</li>
+    <li><strong>Roadmap</strong>: Expanding to 5 African languages</li>
+  </ul>
+  <p><strong>Key lesson</strong>: Don't rely on ChatGPT alone for Swahili at scale. Host your own model for privacy + performance. Keep humans in the loop for high-stakes domains.</p>
+
+  <h3>Pawa-AI (Neoform)</h3>
+  <p>"Swahili-first AI assistant for Africa" — partners with native speakers to bake in <strong>dialects, proverbs, and culture</strong>. Not a translation wrapper. No-code platform to build, fine-tune, and deploy small language models (SLMs) for African markets.</p>
+
+  <h3>Tapi Learn (ACLA)</h3>
+  <p>The multilingual learning app I built — <strong>11,000+ learners across 38 countries</strong>, with full EN/FR/SW support. Key lessons:</p>
+  <ul>
+    <li>Language selector must be prominent (not buried in settings)</li>
+    <li>Courses need to be authored natively in each language, not translated</li>
+    <li>The AI Career Coach handles code-switching naturally (users mix languages)</li>
+    <li>4.8★ rating suggests the multilingual experience works</li>
+  </ul>
+
+  <h2>Working Code: Swahili RAG System</h2>
+  <p>Here's a complete, working example of a Swahili RAG system using LangChain + ChromaDB + OpenAI. This is the pattern I use in production:</p>
+
+  <pre><code>from langchain_community.document_loaders import PyPDFLoader
+from langchain_text_splitters import RecursiveCharacterTextSplitter
+from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_community.vectorstores import Chroma
+from langchain.chains import create_retrieval_chain
+from langchain.chains.combine_documents import create_stuff_documents_chain
+from langchain_core.prompts import ChatPromptTemplate
+
+# 1. Load Swahili documents (e.g., agricultural policy in Kiswahili)
+docs = PyPDFLoader("sera_ya_kilimo.pdf").load()
+splits = RecursiveCharacterTextSplitter(
+    chunk_size=800,
+    chunk_overlap=120
+).split_documents(docs)
+
+# 2. Embed and store in Chroma vector database
+vector = Chroma.from_documents(
+    splits,
+    OpenAIEmbeddings(model="text-embedding-3-large")
+)
+retriever = vector.as_retriever(search_kwargs={"k": 4})
+
+# 3. Swahili system prompt with cultural instructions
+system = (
+    "Wewe ni msaidizi wa AI anayezungumza Kiswahili. "
+    "Jibu maswala kwa kutumia taarifa zilizotolewa kwenye muktadha. "
+    "Ikiwa hujui, sema 'Sijui' na usitengeneze taarifa. "
+    "Tumia lugha ya heshima na mithali inapofaa."
+)
+prompt = ChatPromptTemplate.from_messages([
+    ("system", system),
+    ("system", "Muktadha: {context}"),
+    ("human", "{input}"),
+])
+
+# 4. Build RAG chain
+llm = ChatOpenAI(model="gpt-5", temperature=0)
+chain = create_retrieval_chain(
+    retriever,
+    create_stuff_documents_chain(llm, prompt),
+)
+
+# 5. Ask in Swahili
+answer = chain.invoke({
+    "input": "Ni mbolea gani nzuri kwa maharage?"
+})
+print(answer["answer"])
+# Output: Kwa maharage, mbolea ya DAP (Diammonium Phosphate)
+# inafaa wakati wa kupanda, na CAN (Calcium Ammonium Nitrate)
+# inapakwa baada ya wiki 3-4...</code></pre>
+
+  <p>Add a <strong>Streamlit UI</strong> for a deployable app:</p>
+  <pre><code>import streamlit as st
+
+st.title("Msaidizi wa Kilimo (Swahili)")
+st.write("Uliza swali lolote kuhusu kilimo...")
+
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+for msg in st.session_state.messages:
+    with st.chat_message(msg["role"]):
+        st.write(msg["content"])
+
+if prompt := st.chat_input("Andika swali hapa..."):
+    st.session_state.messages.append({"role": "user", "content": prompt})
+    with st.chat_message("user"):
+        st.write(prompt)
+
+    with st.chat_message("assistant"):
+        response = chain.invoke({"input": prompt})
+        st.write(response["answer"])
+        st.session_state.messages.append(
+            {"role": "assistant", "content": response["answer"]}
+        )</code></pre>
+
+  <h2>Evaluation: How to Measure Swahili AI Quality</h2>
+  <p>Don't just eyeball it. Use proper metrics:</p>
+  <ul>
+    <li><strong>BLEU</strong> (n-gram overlap) — standard MT metric. GPT-4o on Swahili: ~49.32. Fine-tuned models: 40-55.</li>
+    <li><strong>chrF / chrF++</strong> (character-level F-score) — better for morphologically rich languages like Swahili. Fine-tuned: ~41.8.</li>
+    <li><strong>Human evaluation</strong> — essential for fluency, adequacy, cultural appropriateness. No automated metric captures whether a proverb was used correctly.</li>
+    <li><strong>AfroBench / Swahili LLM Leaderboard</strong> — community benchmarks (Michael Mollel, LinkedIn)</li>
+    <li><strong>Afrimed-QA</strong> — health QA benchmark for African contexts (Google Research)</li>
+  </ul>
+
+  <div class="callout tip">
+    <div class="callout-title">💡 Key Insight</div>
+    <p>Automated metrics (BLEU, chrF) tell you if your model is improving. <strong>Human evaluation tells you if it's actually useful.</strong> Always include native Swahili speakers in your evaluation loop — especially for proverbs, honorifics, and cultural appropriateness.</p>
+  </div>
+
+  <h2>Lessons from the Field</h2>
+  <ol>
+    <li><strong>Don't rely on ChatGPT alone</strong> — API cost at scale, data privacy concerns, lack of domain customization</li>
+    <li><strong>Host your own model</strong> when handling PII (health, financial) — Jacaranda's approach</li>
+    <li><strong>Keep humans in the loop</strong> for high-stakes domains (health, legal) — AI drafts, human reviews</li>
+    <li><strong>Publish your toolkit</strong> — other orgs can adapt and the ecosystem grows (Jacaranda did this)</li>
+    <li><strong>More training data = better accuracy</strong> over time — invest in data collection from day one</li>
+    <li><strong>Design for code-switching</strong> — real users don't speak "pure" Swahili</li>
+    <li><strong>Test with real users</strong> in real contexts — lab testing misses dialect and cultural issues</li>
+  </ol>
+
+  <h2>The Kenya AI Ecosystem (2026)</h2>
+  <p>Kenya's AI landscape is maturing rapidly:</p>
+  <ul>
+    <li><strong>Kenya's AI Strategy</strong> — the government formed an AI committee and launched initiatives like the Fikra API</li>
+    <li><strong>Microsoft Research Africa</strong> (Nairobi) — advancing African-language NLP and voice AI</li>
+    <li><strong>Google Africa NLP</strong> — investing in African language models</li>
+    <li><strong>Masakhane</strong> — pan-African NLP research community</li>
+    <li><strong>Local startups</strong> — Pawa-AI (Neoform), Lima Labs, and others building Africa-specific AI</li>
+  </ul>
+  <p>If you're building Swahili AI, you're not alone — there's a growing ecosystem of datasets, models, and community support.</p>
+
+  <h2>What I'd Build for You</h2>
+  <p>If you need a Swahili-first AI assistant — for healthcare, agriculture, education, customer service, or government — I build production systems. My approach combines:</p>
+  <ul>
+    <li>Swahili system prompts with cultural instructions</li>
+    <li>RAG over your Swahili documents (grounded, no hallucination)</li>
+    <li>Fine-tuning where domain-specific accuracy matters</li>
+    <li>Human-in-the-loop for high-stakes domains</li>
+    <li>WhatsApp/SMS delivery for reach</li>
+    <li>Offline-capable models for rural contexts</li>
+  </ul>
+  <p>This is what I built for Tapi Learn (11K+ users, 38 countries, 4.8★) and what I can build for you.</p>
+
+  
+<div class="guide-cta">
+  <h3>Need a Swahili-first AI assistant?</h3>
+  <p>I build production multilingual AI — Swahili, English, French, Luganda, Amharic. RAG, fine-tuning, WhatsApp delivery. From $3,500 / KES 280K.</p>
+  <div>
+    <a href="/services/#packages-section" class="btn primary">See Multilingual AI services →</a>
+    <a href="/#contact" class="btn ghost">Get in touch</a>
+  </div>
+</div>
+
+  
+<div class="sources">
+  <h4>Sources & References</h4>
+  <ul><li>Artificial Analysis — Swahili Multilingual Index — artificialanalysis.ai/models/multilingual/swahili</li><li>Jacaranda Health UlizaLlama — jacarandahealth.org, ai4d.ai/blog</li><li>Pawa-AI (Neoform) — linkedin.com/posts/henrinyakarundi</li><li>Masakhane NLP — huggingface.co/masakhane</li><li>AfroBench — aclanthology.org/2025.findings-acl.976.pdf</li><li>Swahili BLEU scores — arxiv 2502.14338</li><li>Tapi Learn — acla.io/tapi-learn</li><li>Google Africa NLP — blog.google/intl/en-africa</li></ul>
+</div>
+
+</article>
+<div class="guide-nav"><div></div><div></div></div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
+      <p><a href="/" style="color:var(--accent);">← Home</a> · <a href="/services/" style="color:var(--accent);">Services</a> · <a href="/blog/" style="color:var(--accent);">Blog</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.querySelector('span').textContent=isDark?'☀️':'🌙';});themeToggle.querySelector('span').textContent=html.classList.contains('dark')?'🌙':'☀️';const mobileToggle=document.getElementById('mobileToggle');mobileToggle.addEventListener('click',()=>{const navLinks=document.getElementById('navLinks');const isOpen=navLinks.classList.toggle('open');mobileToggle.setAttribute('aria-expanded',isOpen?'true':'false');});window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+</script>
+</body>
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prompt Engineering for Non-Engineers — Victor Ndunda</title>
+<meta name="description" content="The 5 core prompt patterns every professional should know: role-play, few-shot, chain-of-thought, context+constraints, and delimiters. With real before/after examples." />
+<meta name="author" content="Victor Ndunda" />
+<meta name="keywords" content="prompt engineering, AI prompts, ChatGPT tips, RTF framework, few-shot prompting, chain of thought, Victor Ndunda" />
+<link rel="canonical" href="https://victorndunda.com/services/guides/prompt-engineering.html" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Prompt Engineering for Non-Engineers" />
+<meta property="og:description" content="The 5 core prompt patterns every professional should know: role-play, few-shot, chain-of-thought, context+constraints, and delimiters. With real before/after examples." />
+<meta property="og:url" content="https://victorndunda.com/services/guides/prompt-engineering.html" />
+<meta property="og:image" content="https://victorndunda.com/og-image.png" />
+<meta property="og:site_name" content="Victor Ndunda" />
+<meta property="og:locale" content="en_US" />
+<meta property="article:author" content="Victor Ndunda" />
+<meta property="article:section" content="Beginner" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Prompt Engineering for Non-Engineers" />
+<meta name="twitter:description" content="The 5 core prompt patterns every professional should know: role-play, few-shot, chain-of-thought, context+constraints, and delimiters. With real before/after examples." />
+<meta name="twitter:image" content="https://victorndunda.com/og-image.png" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="Victor Ndunda" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/services/guides/guides.css" />
+
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Prompt Engineering for Non-Engineers",
+  "description": "The 5 core prompt patterns every professional should know: role-play, few-shot, chain-of-thought, context+constraints, and delimiters. With real before/after examples.",
+  "image": "https://victorndunda.com/og-image.png",
+  "url": "https://victorndunda.com/services/guides/prompt-engineering.html",
+  "datePublished": "2026-07-04",
+  "dateModified": "2026-07-04",
+  "author": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com",
+    "jobTitle": "AI Engineer & Founder",
+    "sameAs": ["https://github.com/gadda00", "https://www.linkedin.com/in/victor-ndunda"]
+  },
+  "publisher": { "@type": "Person", "name": "Victor Ndunda", "url": "https://victorndunda.com" },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://victorndunda.com/services/guides/prompt-engineering.html" },
+  "articleSection": "Beginner",
+  "keywords": "prompt engineering, AI prompts, ChatGPT tips, RTF framework, few-shot prompting, chain of thought, Victor Ndunda"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://victorndunda.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Services", "item": "https://victorndunda.com/services/" },
+    { "@type": "ListItem", "position": 3, "name": "Prompt Engineering for Non-Engineers", "item": "https://victorndunda.com/services/guides/prompt-engineering.html" }
+  ]
+}
+</script>
+</head><body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<nav id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="logo" aria-label="Victor Ndunda home">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
+        <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
+        <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
+      </svg>
+      <span>Victor Ndunda</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/#about" class="nav-link">About</a>
+      <a href="/#work" class="nav-link">Work</a>
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/blog/" class="nav-link">Blog</a>
+      <a href="/#contact" class="nav-link">Contact</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme"><span>🌙</span></button>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+    </div>
+  </div>
+</nav>
+<main id="main">
+<article class="guide-body">
+  <div class="guide-meta">
+    <span class="cat-badge">Beginner</span>
+    <span class="duration">⏱ 20 min read</span>
+    <span class="audience">👥 For professionals & students</span>
+    <span>📅 July 4, 2026</span>
+  </div>
+
+  <h1>Prompt Engineering for Non-Engineers</h1>
+  <p class="lead">You don't need to code to write great AI prompts. You need five patterns, a framework called RTF, and the discipline to give the AI context. This guide teaches all three — with real before/after examples you can copy today.</p>
+
+  <h2>Why Prompt Engineering Matters</h2>
+  <p>The difference between a mediocre AI output and a great one is almost never the AI model — it's the prompt. The same ChatGPT that gives you a generic, useless paragraph with "write me a proposal" will give you a polished, ready-to-send document with the right prompt. Prompt engineering is the skill of asking well. It's not coding. It's clear thinking, translated into instructions.</p>
+  <p>After reading this guide, you'll know the <strong>five core patterns</strong> that cover 90% of real-world prompting, the <strong>RTF framework</strong> that makes every prompt better, and the <strong>common mistakes</strong> that waste your time.</p>
+
+  <h2>The RTF Framework: Role, Task, Format</h2>
+  <p>Before the five patterns, learn this simple framework. Every good prompt has three parts:</p>
+  <ul>
+    <li><strong>Role</strong> — Who should the AI pretend to be? ("Act as a marketing strategist..." / "Act as a CPA explaining to a small-business owner...")</li>
+    <li><strong>Task</strong> — What exactly should it do? Use a verb + object + scope. ("Write a 90-word cold email..." / "Summarize this 10-page report into 5 bullet points...")</li>
+    <li><strong>Format</strong> — How should the answer look? ("Format as a markdown table..." / "Return as JSON with keys {title, summary, tags}..." / "Plain text, ready to paste into an email...")</li>
+  </ul>
+
+  <div class="before-after">
+    <div class="ba-col ba-before">
+      <div class="ba-label">❌ Without RTF</div>
+      <div class="ba-content">Write a refund policy.</div>
+    </div>
+    <div class="ba-col ba-after">
+      <div class="ba-label">✅ With RTF</div>
+      <div class="ba-content">Act as an e-commerce lawyer <em>[Role]</em>. Write a refund policy for a Kenyan online store selling electronics <em>[Task + Context]</em>. 7-day returns, sealed items only, M-Pesa refund in 5 days, comply with Consumer Protection Act 2012. ≤200 words <em>[Constraints]</em>. Format as a ready-to-publish document <em>[Format]</em>.</div>
+    </div>
+  </div>
+
+  <p>The first prompt gives you a generic, American-style policy that doesn't mention M-Pesa or Kenyan law. The second gives you something you can almost publish. That's the power of RTF.</p>
+
+  <h2>The 5 Core Patterns</h2>
+
+  <h3>Pattern 1: Role-Play ("Act as...")</h3>
+  <p>Assigning a persona is the single highest-impact thing you can do. It constrains vocabulary, tone, depth, and perspective. The AI doesn't just "write about marketing" — it writes <em>as a marketing strategist</em>, using the frameworks, terminology, and judgment of one.</p>
+  <div class="before-after">
+    <div class="ba-col ba-before">
+      <div class="ba-label">❌ Before</div>
+      <div class="ba-content">Explain depreciation.</div>
+    </div>
+    <div class="ba-col ba-after">
+      <div class="ba-label">✅ After</div>
+      <div class="ba-content">Act as a CPA explaining depreciation to a small-business owner who hates jargon. Use a shoe-shop example.</div>
+    </div>
+  </div>
+  <p>The "after" version gives you an explanation that uses a concrete, relatable example (buying shoes for a shop, wearing them out over time, deducting the cost), in plain language, at the right depth for a non-accountant. <strong>Always assign a role.</strong></p>
+
+  <h3>Pattern 2: Few-Shot (Give Examples)</h3>
+  <p>Large language models learn from examples in the prompt. If you show 2–5 examples of the input → output you want, the AI will match that pattern. This is called "few-shot" prompting, and it's especially powerful for classification, formatting, and tone-matching tasks.</p>
+  <div class="before-after">
+    <div class="ba-col ba-before">
+      <div class="ba-label">❌ Before</div>
+      <div class="ba-content">Classify the sentiment of this review: [review]</div>
+    </div>
+    <div class="ba-col ba-after">
+      <div class="ba-label">✅ After (few-shot)</div>
+      <div class="ba-content">Classify sentiment as Pos, Neg, or Neutral. Examples:<br>"Loved it!" → Pos<br>"Broke in 2 days" → Neg<br>"It's okay" → Neutral<br><br>Now classify: [review]</div>
+    </div>
+  </div>
+  <p>Without examples, the AI might return "The sentiment is positive because..." (a full sentence). With examples, it returns just "Pos" — exactly the format you want for a spreadsheet. <strong>Give 2–5 examples whenever you need a specific output format.</strong></p>
+
+  <h3>Pattern 3: Chain-of-Thought (Step by Step)</h3>
+  <p>For math, logic, multi-step reasoning, or any task where the AI might "jump to the wrong conclusion," ask it to reason step by step. This dramatically reduces errors on problems that require intermediate steps.</p>
+  <div class="before-after">
+    <div class="ba-col ba-before">
+      <div class="ba-label">❌ Before</div>
+      <div class="ba-content">If 3 pens cost $12, what do 7 pens cost?</div>
+    </div>
+    <div class="ba-col ba-after">
+      <div class="ba-label">✅ After (chain-of-thought)</div>
+      <div class="ba-content">If 3 pens cost $12, what do 7 pens cost? Solve step by step, showing each calculation, then give the final answer.</div>
+    </div>
+  </div>
+  <p>The "after" version forces the AI to show: (1) $12 ÷ 3 = $4 per pen, (2) $4 × 7 = $28. You can verify each step. If it makes an error, you'll see exactly where. <strong>Use chain-of-thought for anything involving numbers, logic, or multi-constraint reasoning.</strong></p>
+
+  <h3>Pattern 4: Context + Constraints</h3>
+  <p>AI models default to generic, American, English-language output. If you need something specific — a particular audience, legal jurisdiction, length, tone, or set of rules — say so explicitly. Constraints are guardrails.</p>
+  <div class="prompt-card">
+    <div class="prompt-label">Example with full context + constraints</div>
+    <div class="prompt-after">Act as a Kenyan employment lawyer [Role]. Write a warning letter template for an employee who has been late 5 times in 2 weeks [Task]. Context: company is in Nairobi, 30 employees, under Kenya Employment Act 2007. Constraints: professional tone, cite the relevant section of the Act, give the employee 7 days to improve, ≤200 words, format as a letter with date/address/salutation/sign-off [Format].</div>
+  </div>
+  <p>The context (Kenya, Nairobi, Employment Act 2007) and constraints (7 days, 200 words, letter format) turn a generic "write a warning letter" into something a Kenyan HR manager could actually use. <strong>Always specify: who is this for, what jurisdiction/rules apply, and what are the hard limits?</strong></p>
+
+  <h3>Pattern 5: Delimiters + Output Format Specification</h3>
+  <p>When you're pasting large amounts of text into a prompt (an article, a contract, a dataset), use delimiters like <code>###</code>, <code>"""</code>, or XML tags (<code>&lt;article&gt;...&lt;/article&gt;</code>) to separate your instructions from the data. This prevents "prompt injection" — where the AI confuses your instructions with the content you're asking it to process.</p>
+  <div class="prompt-card">
+    <div class="prompt-label">Example with delimiters + JSON output</div>
+    <div class="prompt-after">Summarize the text between &lt;article&gt; tags into a JSON object with keys: {title, tldr, key_points (array of 3 strings), sentiment ("pos"/"neg"/"neutral")}. Return ONLY valid JSON, no other text.<br><br>&lt;article&gt;<br>[paste your article here]<br>&lt;/article&gt;</div>
+  </div>
+  <p>With delimiters, the AI knows exactly where the article starts and ends. With "Return ONLY valid JSON," you get output you can paste directly into code. <strong>Use delimiters whenever you mix instructions with large text inputs.</strong></p>
+
+  <h2>Advanced: Temperature and Control</h2>
+  <p>If you're using the ChatGPT API (not the web interface), you can control "temperature" — how creative vs. deterministic the output is:</p>
+  <ul>
+    <li><strong>Temperature 0</strong> — deterministic, factual, best for data extraction, classification, legal/medical content</li>
+    <li><strong>Temperature 0.7</strong> — balanced, good default for most tasks</li>
+    <li><strong>Temperature 1.0+</strong> — creative, best for brainstorming, fiction, marketing copy</li>
+  </ul>
+  <p>In the ChatGPT web interface, you can approximate this by phrasing: "Be precise and factual" (low temperature) vs. "Be creative and brainstorm freely" (high temperature).</p>
+
+  <h2>Common Mistakes to Avoid</h2>
+  <ol>
+    <li><strong>Vague prompts</strong> — "Write something good about marketing." What does "good" mean? What format? What audience? Be specific.</li>
+    <li><strong>No context</strong> — Who is this for? What jurisdiction? What tone? Without context, you get generic American English.</li>
+    <li><strong>No examples for novel formats</strong> — If you want a specific output shape, show 2–3 examples. Don't describe it; demonstrate it.</li>
+    <li><strong>One giant compound question</strong> — Instead of "analyze this data, find trends, make a chart, write a summary, and suggest next steps," break it into 4 separate prompts. You'll get better results on each.</li>
+    <li><strong>Trusting output without checking</strong> — AI hallucinates citations, statistics, and dates. Always verify anything factual.</li>
+  </ol>
+
+  <h2>Practice Exercises</h2>
+  <p>The only way to learn prompt engineering is to practice. Try these five exercises, in order:</p>
+  <ol>
+    <li>Take a vague prompt you've used before (e.g., "write a blog post about AI") and rewrite it using RTF. Compare the two outputs.</li>
+    <li>Add 3 few-shot examples to a sentiment classification task. Test on 10 real reviews. Did accuracy improve?</li>
+    <li>Use chain-of-thought on a math or logic word problem. Check the AI's reasoning step by step.</li>
+    <li>Use <code>&lt;article&gt;</code> delimiters and request JSON output. Parse the result with a JSON validator.</li>
+    <li>Run the same prompt twice — once with "be creative" and once with "be precise." Diff the two answers.</li>
+  </ol>
+
+  <h2>The One-Minute Prompt Checklist</h2>
+  <p>Before you hit send on any prompt, check:</p>
+  <ul>
+    <li>☐ Did I assign a <strong>Role</strong>? ("Act as a...")</li>
+    <li>☐ Did I specify the <strong>Task</strong> clearly? (verb + object + scope)</li>
+    <li>☐ Did I define the <strong>Format</strong>? (table, JSON, email, bullets, word count)</li>
+    <li>☐ Did I give <strong>Context</strong>? (audience, jurisdiction, tone)</li>
+    <li>☐ Did I set <strong>Constraints</strong>? (length, what to include/exclude)</li>
+    <li>☐ If a novel format, did I give <strong>Examples</strong>?</li>
+  </ul>
+  <p>If you check all six, your prompt is in the top 5% of prompts the AI receives. Your output quality will reflect that.</p>
+
+  
+<div class="guide-cta">
+  <h3>Want AI prompts tuned for YOUR business?</h3>
+  <p>My AI Audit ($4,500 / KES 350K) includes a custom prompt library built around your specific workflows — sales, support, operations, HR. 50% credited toward any build.</p>
+  <div>
+    <a href="/services/#packages-section" class="btn primary">See AI Audit package →</a>
+    <a href="/#contact" class="btn ghost">Get in touch</a>
+  </div>
+</div>
+
+  
+<div class="sources">
+  <h4>Sources & References</h4>
+  <ul><li>Prompt Engineering Guide — promptingguide.ai</li><li>IBM Think: Prompt Engineering — ibm.com/think/topics/prompt-engineering</li><li>PromptHub: Few-Shot Prompting — prompthub.us</li><li>K2view: Chain-of-Thought — k2view.com</li><li>RTF Framework — Medium (@aciddun), Buffalo State Library</li></ul>
+</div>
+
+</article>
+<div class="guide-nav"><div></div><div></div></div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
+      <p><a href="/" style="color:var(--accent);">← Home</a> · <a href="/services/" style="color:var(--accent);">Services</a> · <a href="/blog/" style="color:var(--accent);">Blog</a></p>
+    </div>
+  </div>
+</footer>
+
+<script>
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.querySelector('span').textContent=isDark?'☀️':'🌙';});themeToggle.querySelector('span').textContent=html.classList.contains('dark')?'🌙':'☀️';const mobileToggle=document.getElementById('mobileToggle');mobileToggle.addEventListener('click',()=>{const navLinks=document.getElementById('navLinks');const isOpen=navLinks.classList.toggle('open');mobileToggle.setAttribute('aria-expanded',isOpen?'true':'false');});window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+</script>
+</body>
+</html>

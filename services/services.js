@@ -130,6 +130,13 @@
           <div class="svc-case-tech">
             ${c.tech.map(t => `<span class="tech-tag">${esc(t)}</span>`).join('')}
           </div>
+          ${c.testimonial ? `
+            <div style="margin-top:1.25rem;padding:1rem 1.125rem;border-radius:10px;background:var(--glass);border-left:3px solid var(--accent);">
+              <div style="font-size:0.75rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;font-weight:700;margin-bottom:0.5rem">💬 Testimonial</div>
+              <p style="font-style:italic;color:var(--text);font-size:0.8125rem;line-height:1.6;margin-bottom:0.5rem">"${esc(c.testimonial.quote)}"</p>
+              <div style="font-size:0.75rem;color:var(--text-muted)">— <strong>${esc(c.testimonial.name)}</strong>, ${esc(c.testimonial.role)}, ${esc(c.testimonial.location)}</div>
+            </div>
+          ` : ''}
         </div>
       </div>
     `).join('');
@@ -159,7 +166,7 @@
   // ─── Guides ────────────────────────────────────────────────
   function renderGuides() {
     const html = DATA.guides.map(g => `
-      <a href="${g.free ? '/blog/' : '/#contact'}" class="svc-guide" data-guide="${g.id}">
+      <a href="${g.url || '/services/'}" class="svc-guide" data-guide="${g.id}">
         <div class="cat-row">
           <span class="cat ${esc(g.category)}">${esc(g.category)}</span>
           <span class="duration">${esc(g.duration)}</span>

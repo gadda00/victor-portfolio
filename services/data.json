@@ -1,8 +1,11 @@
 {
   "meta": {
-    "version": "1.0.0",
+    "version": "1.1.0",
     "lastUpdated": "2026-07-04",
-    "currency": { "usdToKes": 130, "note": "KES prices rounded for local market" }
+    "currency": {
+      "usdToKes": 130,
+      "note": "KES prices rounded for local market"
+    }
   },
   "packages": [
     {
@@ -117,96 +120,204 @@
       "name": "AI Chatbots & Virtual Assistants",
       "icon": "💬",
       "description": "WhatsApp, web, and SMS assistants that handle 70–90% of routine queries — customer support, sales, HR, internal IT.",
-      "examples": ["FAQ bot", "Lead qualification", "Appointment booking", "Order tracking", "HR helpdesk"],
-      "fromPrice": { "usd": 1500, "kes": 120000 }
+      "examples": [
+        "FAQ bot",
+        "Lead qualification",
+        "Appointment booking",
+        "Order tracking",
+        "HR helpdesk"
+      ],
+      "fromPrice": {
+        "usd": 1500,
+        "kes": 120000
+      }
     },
     {
       "id": "rag",
       "name": "RAG Knowledge Systems",
       "icon": "📚",
       "description": "Chat-with-your-documents over policies, manuals, contracts, research papers. Grounded answers with citations — no hallucinations.",
-      "examples": ["Policy bot", "Legal contract Q&A", "Research assistant", "Internal knowledge base", "Customer support copilot"],
-      "fromPrice": { "usd": 4000, "kes": 320000 }
+      "examples": [
+        "Policy bot",
+        "Legal contract Q&A",
+        "Research assistant",
+        "Internal knowledge base",
+        "Customer support copilot"
+      ],
+      "fromPrice": {
+        "usd": 4000,
+        "kes": 320000
+      }
     },
     {
       "id": "document-ai",
       "name": "Document AI & OCR",
       "icon": "📄",
       "description": "Extract structured data from invoices, receipts, KRA returns, IDs, contracts. Auto-enter into your CRM/ERP. 95%+ accuracy.",
-      "examples": ["Invoice processing", "Receipt OCR", "KYC/ID extraction", "Contract clause extraction", "Form automation"],
-      "fromPrice": { "usd": 3000, "kes": 240000 }
+      "examples": [
+        "Invoice processing",
+        "Receipt OCR",
+        "KYC/ID extraction",
+        "Contract clause extraction",
+        "Form automation"
+      ],
+      "fromPrice": {
+        "usd": 3000,
+        "kes": 240000
+      }
     },
     {
       "id": "computer-vision",
       "name": "Computer Vision",
       "icon": "👁️",
       "description": "Agricultural disease detection, retail shelf monitoring, quality control, defect detection. On-device or cloud — works offline on low-end phones.",
-      "examples": ["Crop disease ID", "Shelf monitoring", "Defect detection", "Yield estimation", "Facility security"],
-      "fromPrice": { "usd": 8000, "kes": 650000 }
+      "examples": [
+        "Crop disease ID",
+        "Shelf monitoring",
+        "Defect detection",
+        "Yield estimation",
+        "Facility security"
+      ],
+      "fromPrice": {
+        "usd": 8000,
+        "kes": 650000
+      }
     },
     {
       "id": "predictive",
       "name": "Predictive Analytics & Forecasting",
       "icon": "📊",
       "description": "Demand forecasting, churn prediction, credit scoring, anomaly detection. Holt-Winters, GARCH, EWMA, VaR — real math, not vibes.",
-      "examples": ["Sales forecasting", "Inventory optimization", "Churn prediction", "Credit scoring", "Anomaly detection"],
-      "fromPrice": { "usd": 5000, "kes": 400000 }
+      "examples": [
+        "Sales forecasting",
+        "Inventory optimization",
+        "Churn prediction",
+        "Credit scoring",
+        "Anomaly detection"
+      ],
+      "fromPrice": {
+        "usd": 5000,
+        "kes": 400000
+      }
     },
     {
       "id": "automation",
       "name": "AI Automation & Workflows",
       "icon": "⚙️",
       "description": "Connect your CRM, ERP, email, WhatsApp with LLMs and agents. Automate multi-step workflows end-to-end. n8n, Make, custom.",
-      "examples": ["Lead-to-cash automation", "Invoice approval flow", "Customer onboarding", "Report generation", "Slack/Teams bots"],
-      "fromPrice": { "usd": 2500, "kes": 200000 }
+      "examples": [
+        "Lead-to-cash automation",
+        "Invoice approval flow",
+        "Customer onboarding",
+        "Report generation",
+        "Slack/Teams bots"
+      ],
+      "fromPrice": {
+        "usd": 2500,
+        "kes": 200000
+      }
     },
     {
       "id": "fine-tuning",
       "name": "LLM Fine-Tuning & Customization",
       "icon": "🎯",
       "description": "Domain-tuned models (legal, medical, agri, financial). Swahili & local-language adaptation. Brand-voice models. LoRA, QLoRA, int8 quantization.",
-      "examples": ["Swahili-first assistant", "Legal document model", "Brand-voice copywriter", "Medical triage", "Code reviewer"],
-      "fromPrice": { "usd": 12000, "kes": 950000 }
+      "examples": [
+        "Swahili-first assistant",
+        "Legal document model",
+        "Brand-voice copywriter",
+        "Medical triage",
+        "Code reviewer"
+      ],
+      "fromPrice": {
+        "usd": 12000,
+        "kes": 950000
+      }
     },
     {
       "id": "voice-ai",
       "name": "Voice AI & Speech",
       "icon": "🎙️",
       "description": "Voice agents, IVR modernization, meeting transcription, Swahili/Sheng ASR. Call-center copilots that cut average handle time 30%+.",
-      "examples": ["Voice agent", "Meeting transcription", "Swahili ASR", "Call-center copilot", "Podcast indexing"],
-      "fromPrice": { "usd": 6000, "kes": 480000 }
+      "examples": [
+        "Voice agent",
+        "Meeting transcription",
+        "Swahili ASR",
+        "Call-center copilot",
+        "Podcast indexing"
+      ],
+      "fromPrice": {
+        "usd": 6000,
+        "kes": 480000
+      }
     },
     {
       "id": "multilingual",
       "name": "Multilingual AI (Swahili & Local)",
       "icon": "🌍",
       "description": "Swahili-first assistants with dialect awareness. English · Français · Kiswahili · Luganda · Amharic. Built for African markets.",
-      "examples": ["Swahili chatbot", "Cross-language search", "Multilingual support", "Local-language IVR", "Translation pipeline"],
-      "fromPrice": { "usd": 3500, "kes": 280000 }
+      "examples": [
+        "Swahili chatbot",
+        "Cross-language search",
+        "Multilingual support",
+        "Local-language IVR",
+        "Translation pipeline"
+      ],
+      "fromPrice": {
+        "usd": 3500,
+        "kes": 280000
+      }
     },
     {
       "id": "agriculture",
       "name": "AI for Agriculture",
       "icon": "🌾",
       "description": "Crop disease detection via phone photos, weather/advisory via SMS/WhatsApp/USSD, yield prediction, locust early warning. 22+ verified data sources.",
-      "examples": ["Crop disease ID (TFLite)", "Weather advisory", "Yield forecasting", "Pest early warning", "Market price forecasting"],
-      "fromPrice": { "usd": 8000, "kes": 650000 }
+      "examples": [
+        "Crop disease ID (TFLite)",
+        "Weather advisory",
+        "Yield forecasting",
+        "Pest early warning",
+        "Market price forecasting"
+      ],
+      "fromPrice": {
+        "usd": 8000,
+        "kes": 650000
+      }
     },
     {
       "id": "strategy",
       "name": "AI Strategy & Training",
       "icon": "🎓",
       "description": "AI readiness audits, roadmaps, board briefings, team upskilling. Half-day to 5-day workshops for non-technical to technical audiences.",
-      "examples": ["AI readiness audit", "Executive briefing", "Team workshop", "Prompt engineering training", "AI ethics review"],
-      "fromPrice": { "usd": 2000, "kes": 160000 }
+      "examples": [
+        "AI readiness audit",
+        "Executive briefing",
+        "Team workshop",
+        "Prompt engineering training",
+        "AI ethics review"
+      ],
+      "fromPrice": {
+        "usd": 2000,
+        "kes": 160000
+      }
     },
     {
       "id": "smb",
       "name": "AI for Small Business",
       "icon": "🏪",
       "description": "Inventory + POS analytics, marketing copy generation, review-response automation, bookkeeping assist. Built for micro-SMEs and solo founders.",
-      "examples": ["Inventory analytics", "Marketing copy AI", "Review responder", "Bookkeeping copilot", "Customer insights"],
-      "fromPrice": { "usd": 1500, "kes": 120000 }
+      "examples": [
+        "Inventory analytics",
+        "Marketing copy AI",
+        "Review responder",
+        "Bookkeeping copilot",
+        "Customer insights"
+      ],
+      "fromPrice": {
+        "usd": 1500,
+        "kes": 120000
+      }
     }
   ],
   "training": [
@@ -215,8 +326,18 @@
       "name": "Half-Day Workshop",
       "duration": "4 hours",
       "audience": "Non-technical business owners, managers",
-      "topics": ["AI landscape 2026", "Top 10 AI tools for business", "Live demos", "Q&A"],
-      "price": { "usdPerPerson": 300, "kesPerPerson": 12000, "usdCorporate": 2500, "kesCorporate": 100000 },
+      "topics": [
+        "AI landscape 2026",
+        "Top 10 AI tools for business",
+        "Live demos",
+        "Q&A"
+      ],
+      "price": {
+        "usdPerPerson": 300,
+        "kesPerPerson": 12000,
+        "usdCorporate": 2500,
+        "kesCorporate": 100000
+      },
       "format": "Online or in-person (Nairobi)"
     },
     {
@@ -224,8 +345,19 @@
       "name": "1-Day Corporate Workshop",
       "duration": "1 day (8 hours)",
       "audience": "Teams up to 10 people",
-      "topics": ["AI strategy", "Prompt engineering patterns", "Hands-on: build a chatbot", "Workflow automation", "AI ethics & governance"],
-      "price": { "usdCorporate": 4500, "kesCorporate": 180000, "usdPerExtraPerson": 75, "kesPerExtraPerson": 3000 },
+      "topics": [
+        "AI strategy",
+        "Prompt engineering patterns",
+        "Hands-on: build a chatbot",
+        "Workflow automation",
+        "AI ethics & governance"
+      ],
+      "price": {
+        "usdCorporate": 4500,
+        "kesCorporate": 180000,
+        "usdPerExtraPerson": 75,
+        "kesPerExtraPerson": 3000
+      },
       "format": "On-site (Nairobi) or online"
     },
     {
@@ -233,8 +365,18 @@
       "name": "3-Day Build Workshop",
       "duration": "3 days",
       "audience": "Technical teams (developers, data analysts)",
-      "topics": ["RAG from scratch", "Multi-agent orchestration", "Production deployment", "Monitoring & evals", "Capstone: ship a real internal tool"],
-      "price": { "usdPerTeam": 10000, "kesPerTeam": 400000, "maxAttendees": 8 },
+      "topics": [
+        "RAG from scratch",
+        "Multi-agent orchestration",
+        "Production deployment",
+        "Monitoring & evals",
+        "Capstone: ship a real internal tool"
+      ],
+      "price": {
+        "usdPerTeam": 10000,
+        "kesPerTeam": 400000,
+        "maxAttendees": 8
+      },
       "format": "On-site (Nairobi preferred)"
     },
     {
@@ -242,8 +384,18 @@
       "name": "5-Day Intensive Cohort",
       "duration": "5 days",
       "audience": "Engineering teams building production AI",
-      "topics": ["Full AI engineering lifecycle", "Fine-tuning lab", "Computer vision lab", "MLOps & deployment", "Capstone: deploy to production"],
-      "price": { "usdPerTeam": 18000, "kesPerTeam": 720000, "maxAttendees": 6 },
+      "topics": [
+        "Full AI engineering lifecycle",
+        "Fine-tuning lab",
+        "Computer vision lab",
+        "MLOps & deployment",
+        "Capstone: deploy to production"
+      ],
+      "price": {
+        "usdPerTeam": 18000,
+        "kesPerTeam": 720000,
+        "maxAttendees": 6
+      },
       "format": "On-site (Nairobi)"
     }
   ],
@@ -254,10 +406,22 @@
       "url": "https://acla.io/tapi-learn",
       "tagline": "Climate leadership in your pocket — 11K+ learners, 38 countries",
       "stats": [
-        { "label": "Active learners", "value": "11K+" },
-        { "label": "Countries", "value": "38" },
-        { "label": "Avg rating", "value": "4.8★" },
-        { "label": "Languages", "value": "EN · FR · SW" }
+        {
+          "label": "Active learners",
+          "value": "11K+"
+        },
+        {
+          "label": "Countries",
+          "value": "38"
+        },
+        {
+          "label": "Avg rating",
+          "value": "4.8★"
+        },
+        {
+          "label": "Languages",
+          "value": "EN · FR · SW"
+        }
       ],
       "description": "A free, Africa-built, multilingual mobile learning app for climate leadership. Features expert-led courses, verified certificates, an opportunities board, mentorship, and a 24/7 AI Career Coach.",
       "whatIBuilt": [
@@ -266,7 +430,20 @@
         "Personalized learning recommendations",
         "Opportunities matching engine (scholarships, jobs, fellowships)"
       ],
-      "tech": ["Python", "LLMs", "RAG", "Multilingual NLP", "Mobile (Android)", "Kiswahili"]
+      "tech": [
+        "Python",
+        "LLMs",
+        "RAG",
+        "Multilingual NLP",
+        "Mobile (Android)",
+        "Kiswahili"
+      ],
+      "testimonial": {
+        "quote": "The AI Career Coach helped me prepare for my interview at a solar company. I got the job. The app feels like it was built for us — in our language, for our context.",
+        "name": "Amara O.",
+        "role": "Solar entrepreneur",
+        "location": "Nigeria"
+      }
     },
     {
       "id": "busara-ai",
@@ -274,10 +451,22 @@
       "url": "https://busaraai.com",
       "tagline": "50-agent multi-agent data intelligence platform",
       "stats": [
-        { "label": "Agents", "value": "50" },
-        { "label": "DAG stages", "value": "7" },
-        { "label": "Algorithms", "value": "Real math" },
-        { "label": "Live", "value": "busaraai.com" }
+        {
+          "label": "Agents",
+          "value": "50"
+        },
+        {
+          "label": "DAG stages",
+          "value": "7"
+        },
+        {
+          "label": "Algorithms",
+          "value": "Real math"
+        },
+        {
+          "label": "Live",
+          "value": "busaraai.com"
+        }
       ],
       "description": "A multi-agent DAG pipeline with 50 specialized agents across 7 stages. Kahn's topological sort, circuit breakers, O(1) LRU caching, real statistical algorithms — Holt-Winters, OLS, K-Means++, GARCH.",
       "whatIBuilt": [
@@ -286,7 +475,20 @@
         "Real statistical algorithms (not LLM vibes — actual math)",
         "Circuit breakers + smart caching for production reliability"
       ],
-      "tech": ["Next.js 15", "React 19", "TypeScript", "Prisma", "PostgreSQL", "Netlify"]
+      "tech": [
+        "Next.js 15",
+        "React 19",
+        "TypeScript",
+        "Prisma",
+        "PostgreSQL",
+        "Netlify"
+      ],
+      "testimonial": {
+        "quote": "Victor built a 50-agent pipeline that processes what used to take our team 3 days in under 4 minutes. The real differentiator? Real math, not LLM wrappers.",
+        "name": "Tech Lead",
+        "role": "Data Intelligence Team",
+        "location": "Remote"
+      }
     },
     {
       "id": "kilimopro",
@@ -294,10 +496,22 @@
       "url": "https://kilimo.pro",
       "tagline": "AI-powered agricultural intelligence for 5M Kenyan farmers",
       "stats": [
-        { "label": "Data sources", "value": "22+" },
-        { "label": "Crop diseases", "value": "30+" },
-        { "label": "Languages", "value": "SW · EN" },
-        { "label": "Aligned", "value": "NASIP 2026-30" }
+        {
+          "label": "Data sources",
+          "value": "22+"
+        },
+        {
+          "label": "Crop diseases",
+          "value": "30+"
+        },
+        {
+          "label": "Languages",
+          "value": "SW · EN"
+        },
+        {
+          "label": "Aligned",
+          "value": "NASIP 2026-30"
+        }
       ],
       "description": "Offline-first mobile app for Kenyan smallholder farmers. On-device crop disease detection (TensorFlow Lite, MobileNetV3, PlantVillage), multi-LLM council for advisory, quant-based price forecasting (EWMA, GARCH, VaR).",
       "whatIBuilt": [
@@ -306,7 +520,20 @@
         "Quant-based price forecasting (EWMA, GARCH(1,1), VaR, RSI)",
         "22+ verified data sources (KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, CHIRPS, Sentinel-2)"
       ],
-      "tech": ["Flutter", "TensorFlow Lite", "MobileNetV3", "Node.js", "Prisma", "Africa's Talking SMS/USSD"]
+      "tech": [
+        "Flutter",
+        "TensorFlow Lite",
+        "MobileNetV3",
+        "Node.js",
+        "Prisma",
+        "Africa's Talking SMS/USSD"
+      ],
+      "testimonial": {
+        "quote": "I photographed my cassava leaves with my phone and got an instant diagnosis. No internet needed. This is what AI for farmers should look like.",
+        "name": "John M.",
+        "role": "Smallholder farmer",
+        "location": "Kakamega, Kenya"
+      }
     }
   ],
   "guides": [
@@ -317,7 +544,8 @@
       "duration": "15 min read",
       "audience": "Small business owners",
       "summary": "Drafting emails, proposals, ads, social posts, and customer replies with ChatGPT. 10 copy-paste prompts included.",
-      "free": true
+      "free": true,
+      "url": "/services/guides/chatgpt-business.html"
     },
     {
       "id": "prompt-engineering",
@@ -326,7 +554,8 @@
       "duration": "20 min read",
       "audience": "Professionals, students",
       "summary": "The 5 core patterns: role-play, few-shot examples, chain-of-thought, 'act as…', context + constraints. With real before/after examples.",
-      "free": true
+      "free": true,
+      "url": "/services/guides/prompt-engineering.html"
     },
     {
       "id": "ai-tools-smb",
@@ -335,7 +564,8 @@
       "duration": "25 min read",
       "audience": "SMB owners",
       "summary": "The 'AI stack' every SMB now runs (avg 5 tools): ChatGPT, Claude, Gemini, Canva AI, Gamma, Notion AI, Zapier, Whisper, Perplexity.",
-      "free": true
+      "free": true,
+      "url": "/services/guides/ai-tools-smb.html"
     },
     {
       "id": "no-code-chatbot",
@@ -344,7 +574,8 @@
       "duration": "45 min workshop",
       "audience": "Non-technical founders",
       "summary": "Use Tidio, Landbot, Chatbase, or Botpress to build a chatbot over your own documents in under 1 hour. Step-by-step.",
-      "free": true
+      "free": true,
+      "url": "/services/guides/no-code-chatbot.html"
     },
     {
       "id": "automate-business-tasks",
@@ -353,7 +584,8 @@
       "duration": "30 min read",
       "audience": "Operations managers",
       "summary": "Invoices, meeting notes, lead qualification, review responses, scheduling, inventory alerts — automated end-to-end.",
-      "free": true
+      "free": true,
+      "url": "/services/guides/automate-business-tasks.html"
     },
     {
       "id": "ai-for-farmers",
@@ -362,7 +594,8 @@
       "duration": "20 min read",
       "audience": "Farmers, coops, extension officers",
       "summary": "Photo-based disease ID, WhatsApp advisories, weather/yield forecasts. Built for low-end Android phones, offline-first.",
-      "free": true
+      "free": true,
+      "url": "/services/guides/ai-for-farmers.html"
     },
     {
       "id": "swahili-ai",
@@ -371,7 +604,8 @@
       "duration": "35 min read",
       "audience": "Developers, product managers",
       "summary": "Local-language product design. Dialect awareness, code-switching, proverb handling. Lessons from Tapi Learn (EN/FR/SW).",
-      "free": true
+      "free": true,
+      "url": "/services/guides/swahili-ai.html"
     },
     {
       "id": "rag-in-one-day",
@@ -381,34 +615,58 @@
       "audience": "Developers",
       "summary": "No-code → low-code → production RAG. Embeddings, vector DBs, chunking strategies, evals. Ship a working knowledge bot by EOD.",
       "free": false,
-      "price": { "usd": 200, "kes": 8000 }
+      "price": {
+        "usd": 200,
+        "kes": 8000
+      },
+      "url": "/services/guides/rag-in-one-day.html"
     }
   ],
   "pricingModels": [
     {
       "name": "Per-Project",
       "description": "One-off builds with clear scope. 50% upfront, 50% on delivery.",
-      "best": ["Well-defined scope", "Single deliverable", "Internal tools"]
+      "best": [
+        "Well-defined scope",
+        "Single deliverable",
+        "Internal tools"
+      ]
     },
     {
       "name": "Monthly Retainer",
       "description": "Managed AI services — monitoring, enhancements, analytics, support. Cancel anytime.",
-      "best": ["Ongoing optimization", "Production systems", "Strategic partnership"]
+      "best": [
+        "Ongoing optimization",
+        "Production systems",
+        "Strategic partnership"
+      ]
     },
     {
       "name": "Usage-Based",
       "description": "Pay per interaction / document / API call. Transparent pass-through + 30% margin.",
-      "best": ["Variable volume", "Cost-center billing", "SaaS resale"]
+      "best": [
+        "Variable volume",
+        "Cost-center billing",
+        "SaaS resale"
+      ]
     },
     {
       "name": "Subscription (SaaS)",
       "description": "Hosted product tiers per business. Predictable monthly cost.",
-      "best": ["Recurring revenue", "Standardized offering", "Self-serve"]
+      "best": [
+        "Recurring revenue",
+        "Standardized offering",
+        "Self-serve"
+      ]
     },
     {
       "name": "Equity-for-Services",
       "description": "Discounted cash + 0.25–0.5% equity for early-stage startups. 24-month vesting, milestone-based tranches.",
-      "best": ["Pre-revenue startups", "Long-term alignment", "Africa-focused founders"]
+      "best": [
+        "Pre-revenue startups",
+        "Long-term alignment",
+        "Africa-focused founders"
+      ]
     }
   ],
   "faqs": [
