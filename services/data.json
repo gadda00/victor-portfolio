@@ -1,0 +1,448 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "lastUpdated": "2026-07-04",
+    "currency": { "usdToKes": 130, "note": "KES prices rounded for local market" }
+  },
+  "packages": [
+    {
+      "id": "audit",
+      "name": "AI Audit",
+      "tagline": "Find your highest-ROI AI opportunities in 1–2 weeks",
+      "icon": "🔍",
+      "tier": "discovery",
+      "bestFor": "Companies unsure where AI fits, or wanting a prioritized roadmap before building",
+      "deliverables": [
+        "Current-state assessment (people, data, systems)",
+        "Opportunity map (5–10 ranked use cases with ROI model)",
+        "Quick-win pilot plan (1 actionable project ready to build)",
+        "Make-vs-buy recommendation",
+        "Risk + compliance review (data privacy, KENYA DPA 2019, GDPR)",
+        "Executive readout + 12-month roadmap"
+      ],
+      "timeline": "1–2 weeks",
+      "price": {
+        "usdOneTime": 4500,
+        "kesOneTime": 350000,
+        "note": "50% credited toward any subsequent build package"
+      },
+      "outcome": "A board-ready AI strategy with one pilot ready to ship",
+      "color": "#64748b"
+    },
+    {
+      "id": "starter",
+      "name": "AI Starter",
+      "tagline": "Ship your first working AI tool — for SMBs & micro-businesses",
+      "icon": "🚀",
+      "tier": "smb",
+      "bestFor": "Small businesses, solo founders, NGOs, cooperatives ready to automate routine work",
+      "deliverables": [
+        "WhatsApp or website FAQ chatbot (handles 70–80% of routine questions)",
+        "1 automation workflow (lead capture, auto-reply, or appointment booking)",
+        "Knowledge base setup (chat with your docs — up to 50 documents)",
+        "Basic analytics dashboard (queries, resolution rate, popular topics)",
+        "Multilingual support (English + Swahili)",
+        "2 rounds of revisions + 30 days post-launch support"
+      ],
+      "timeline": "2–3 weeks",
+      "price": {
+        "usdOneTime": 2500,
+        "kesOneTime": 200000,
+        "usdMonthly": 350,
+        "kesMonthly": 28000,
+        "note": "Monthly covers hosting, monitoring, prompt tweaks. Cancel anytime."
+      },
+      "outcome": "Cut customer response time by ~80%, reclaim 10+ hours/week",
+      "color": "#10b981"
+    },
+    {
+      "id": "growth",
+      "name": "AI Growth",
+      "tagline": "Production AI systems that integrate with your stack",
+      "icon": "📈",
+      "tier": "midmarket",
+      "bestFor": "Growing companies with CRM/ERP/data that need AI woven into real workflows",
+      "deliverables": [
+        "RAG knowledge bot over company documents (policies, manuals, contracts, FAQs)",
+        "2–3 integrations (CRM, ERP, WhatsApp Business, email, or custom API)",
+        "Predictive analytics dashboard (forecasting, churn, demand, or anomalies)",
+        "Custom AI agent for one workflow (e.g., sales-lead qualification, support triage)",
+        "Admin console + user management",
+        "Monthly enhancements + analytics review",
+        "Priority support (4-hour response, business hours)"
+      ],
+      "timeline": "6–10 weeks",
+      "price": {
+        "usdOneTime": 14000,
+        "kesOneTime": 1100000,
+        "usdMonthly": 3000,
+        "kesMonthly": 240000,
+        "note": "Retainer covers monitoring, monthly feature releases, analytics, support"
+      },
+      "outcome": "Cut support response time 46–97%, reduce inventory costs ~30%",
+      "color": "#00d4ff"
+    },
+    {
+      "id": "enterprise",
+      "name": "AI Enterprise",
+      "tagline": "Custom multi-agent systems, fine-tuned models, dedicated SLAs",
+      "icon": "🏢",
+      "tier": "enterprise",
+      "bestFor": "Enterprises, regulated industries, large-scale agritech/fintech/health platforms",
+      "deliverables": [
+        "Custom multi-agent DAG orchestration (Busara AI framework — 50+ agents)",
+        "LLM fine-tuning on your domain (legal, medical, agricultural, financial)",
+        "Computer vision pipelines (defect detection, crop disease, document OCR)",
+        "On-prem or private-cloud deployment (data sovereignty)",
+        "Security & compliance review (SOC2, ISO 27001, GDPR, Kenya DPA)",
+        "Dedicated Slack/Teams channel + named engineer",
+        "99.5% uptime SLA + 1-hour critical response",
+        "Quarterly roadmap + executive business reviews"
+      ],
+      "timeline": "12–24 weeks",
+      "price": {
+        "usdOneTime": "Custom",
+        "kesOneTime": "Custom",
+        "usdMonthly": "Custom",
+        "kesMonthly": "Custom",
+        "note": "Typical engagements: $25K–$100K+ build + $5K–$20K/mo. Equity-for-services available for startups."
+      },
+      "outcome": "Enterprise-wide AI aligned to board priorities — measurable P&L impact",
+      "color": "#a855f7"
+    }
+  ],
+  "services": [
+    {
+      "id": "chatbots",
+      "name": "AI Chatbots & Virtual Assistants",
+      "icon": "💬",
+      "description": "WhatsApp, web, and SMS assistants that handle 70–90% of routine queries — customer support, sales, HR, internal IT.",
+      "examples": ["FAQ bot", "Lead qualification", "Appointment booking", "Order tracking", "HR helpdesk"],
+      "fromPrice": { "usd": 1500, "kes": 120000 }
+    },
+    {
+      "id": "rag",
+      "name": "RAG Knowledge Systems",
+      "icon": "📚",
+      "description": "Chat-with-your-documents over policies, manuals, contracts, research papers. Grounded answers with citations — no hallucinations.",
+      "examples": ["Policy bot", "Legal contract Q&A", "Research assistant", "Internal knowledge base", "Customer support copilot"],
+      "fromPrice": { "usd": 4000, "kes": 320000 }
+    },
+    {
+      "id": "document-ai",
+      "name": "Document AI & OCR",
+      "icon": "📄",
+      "description": "Extract structured data from invoices, receipts, KRA returns, IDs, contracts. Auto-enter into your CRM/ERP. 95%+ accuracy.",
+      "examples": ["Invoice processing", "Receipt OCR", "KYC/ID extraction", "Contract clause extraction", "Form automation"],
+      "fromPrice": { "usd": 3000, "kes": 240000 }
+    },
+    {
+      "id": "computer-vision",
+      "name": "Computer Vision",
+      "icon": "👁️",
+      "description": "Agricultural disease detection, retail shelf monitoring, quality control, defect detection. On-device or cloud — works offline on low-end phones.",
+      "examples": ["Crop disease ID", "Shelf monitoring", "Defect detection", "Yield estimation", "Facility security"],
+      "fromPrice": { "usd": 8000, "kes": 650000 }
+    },
+    {
+      "id": "predictive",
+      "name": "Predictive Analytics & Forecasting",
+      "icon": "📊",
+      "description": "Demand forecasting, churn prediction, credit scoring, anomaly detection. Holt-Winters, GARCH, EWMA, VaR — real math, not vibes.",
+      "examples": ["Sales forecasting", "Inventory optimization", "Churn prediction", "Credit scoring", "Anomaly detection"],
+      "fromPrice": { "usd": 5000, "kes": 400000 }
+    },
+    {
+      "id": "automation",
+      "name": "AI Automation & Workflows",
+      "icon": "⚙️",
+      "description": "Connect your CRM, ERP, email, WhatsApp with LLMs and agents. Automate multi-step workflows end-to-end. n8n, Make, custom.",
+      "examples": ["Lead-to-cash automation", "Invoice approval flow", "Customer onboarding", "Report generation", "Slack/Teams bots"],
+      "fromPrice": { "usd": 2500, "kes": 200000 }
+    },
+    {
+      "id": "fine-tuning",
+      "name": "LLM Fine-Tuning & Customization",
+      "icon": "🎯",
+      "description": "Domain-tuned models (legal, medical, agri, financial). Swahili & local-language adaptation. Brand-voice models. LoRA, QLoRA, int8 quantization.",
+      "examples": ["Swahili-first assistant", "Legal document model", "Brand-voice copywriter", "Medical triage", "Code reviewer"],
+      "fromPrice": { "usd": 12000, "kes": 950000 }
+    },
+    {
+      "id": "voice-ai",
+      "name": "Voice AI & Speech",
+      "icon": "🎙️",
+      "description": "Voice agents, IVR modernization, meeting transcription, Swahili/Sheng ASR. Call-center copilots that cut average handle time 30%+.",
+      "examples": ["Voice agent", "Meeting transcription", "Swahili ASR", "Call-center copilot", "Podcast indexing"],
+      "fromPrice": { "usd": 6000, "kes": 480000 }
+    },
+    {
+      "id": "multilingual",
+      "name": "Multilingual AI (Swahili & Local)",
+      "icon": "🌍",
+      "description": "Swahili-first assistants with dialect awareness. English · Français · Kiswahili · Luganda · Amharic. Built for African markets.",
+      "examples": ["Swahili chatbot", "Cross-language search", "Multilingual support", "Local-language IVR", "Translation pipeline"],
+      "fromPrice": { "usd": 3500, "kes": 280000 }
+    },
+    {
+      "id": "agriculture",
+      "name": "AI for Agriculture",
+      "icon": "🌾",
+      "description": "Crop disease detection via phone photos, weather/advisory via SMS/WhatsApp/USSD, yield prediction, locust early warning. 22+ verified data sources.",
+      "examples": ["Crop disease ID (TFLite)", "Weather advisory", "Yield forecasting", "Pest early warning", "Market price forecasting"],
+      "fromPrice": { "usd": 8000, "kes": 650000 }
+    },
+    {
+      "id": "strategy",
+      "name": "AI Strategy & Training",
+      "icon": "🎓",
+      "description": "AI readiness audits, roadmaps, board briefings, team upskilling. Half-day to 5-day workshops for non-technical to technical audiences.",
+      "examples": ["AI readiness audit", "Executive briefing", "Team workshop", "Prompt engineering training", "AI ethics review"],
+      "fromPrice": { "usd": 2000, "kes": 160000 }
+    },
+    {
+      "id": "smb",
+      "name": "AI for Small Business",
+      "icon": "🏪",
+      "description": "Inventory + POS analytics, marketing copy generation, review-response automation, bookkeeping assist. Built for micro-SMEs and solo founders.",
+      "examples": ["Inventory analytics", "Marketing copy AI", "Review responder", "Bookkeeping copilot", "Customer insights"],
+      "fromPrice": { "usd": 1500, "kes": 120000 }
+    }
+  ],
+  "training": [
+    {
+      "id": "half-day",
+      "name": "Half-Day Workshop",
+      "duration": "4 hours",
+      "audience": "Non-technical business owners, managers",
+      "topics": ["AI landscape 2026", "Top 10 AI tools for business", "Live demos", "Q&A"],
+      "price": { "usdPerPerson": 300, "kesPerPerson": 12000, "usdCorporate": 2500, "kesCorporate": 100000 },
+      "format": "Online or in-person (Nairobi)"
+    },
+    {
+      "id": "one-day",
+      "name": "1-Day Corporate Workshop",
+      "duration": "1 day (8 hours)",
+      "audience": "Teams up to 10 people",
+      "topics": ["AI strategy", "Prompt engineering patterns", "Hands-on: build a chatbot", "Workflow automation", "AI ethics & governance"],
+      "price": { "usdCorporate": 4500, "kesCorporate": 180000, "usdPerExtraPerson": 75, "kesPerExtraPerson": 3000 },
+      "format": "On-site (Nairobi) or online"
+    },
+    {
+      "id": "three-day",
+      "name": "3-Day Build Workshop",
+      "duration": "3 days",
+      "audience": "Technical teams (developers, data analysts)",
+      "topics": ["RAG from scratch", "Multi-agent orchestration", "Production deployment", "Monitoring & evals", "Capstone: ship a real internal tool"],
+      "price": { "usdPerTeam": 10000, "kesPerTeam": 400000, "maxAttendees": 8 },
+      "format": "On-site (Nairobi preferred)"
+    },
+    {
+      "id": "five-day",
+      "name": "5-Day Intensive Cohort",
+      "duration": "5 days",
+      "audience": "Engineering teams building production AI",
+      "topics": ["Full AI engineering lifecycle", "Fine-tuning lab", "Computer vision lab", "MLOps & deployment", "Capstone: deploy to production"],
+      "price": { "usdPerTeam": 18000, "kesPerTeam": 720000, "maxAttendees": 6 },
+      "format": "On-site (Nairobi)"
+    }
+  ],
+  "caseStudies": [
+    {
+      "id": "tapi-learn",
+      "name": "Tapi Learn (ACLA)",
+      "url": "https://acla.io/tapi-learn",
+      "tagline": "Climate leadership in your pocket — 11K+ learners, 38 countries",
+      "stats": [
+        { "label": "Active learners", "value": "11K+" },
+        { "label": "Countries", "value": "38" },
+        { "label": "Avg rating", "value": "4.8★" },
+        { "label": "Languages", "value": "EN · FR · SW" }
+      ],
+      "description": "A free, Africa-built, multilingual mobile learning app for climate leadership. Features expert-led courses, verified certificates, an opportunities board, mentorship, and a 24/7 AI Career Coach.",
+      "whatIBuilt": [
+        "AI Career Coach — 24/7 interactive assistant for CV reviews, interview prep, career advice",
+        "Multilingual NLP pipeline (English · Français · Kiswahili)",
+        "Personalized learning recommendations",
+        "Opportunities matching engine (scholarships, jobs, fellowships)"
+      ],
+      "tech": ["Python", "LLMs", "RAG", "Multilingual NLP", "Mobile (Android)", "Kiswahili"]
+    },
+    {
+      "id": "busara-ai",
+      "name": "Busara AI",
+      "url": "https://busaraai.com",
+      "tagline": "50-agent multi-agent data intelligence platform",
+      "stats": [
+        { "label": "Agents", "value": "50" },
+        { "label": "DAG stages", "value": "7" },
+        { "label": "Algorithms", "value": "Real math" },
+        { "label": "Live", "value": "busaraai.com" }
+      ],
+      "description": "A multi-agent DAG pipeline with 50 specialized agents across 7 stages. Kahn's topological sort, circuit breakers, O(1) LRU caching, real statistical algorithms — Holt-Winters, OLS, K-Means++, GARCH.",
+      "whatIBuilt": [
+        "7-stage parallel DAG orchestrator (TypeScript)",
+        "50 specialized agents (research, analysis, forecasting, reporting)",
+        "Real statistical algorithms (not LLM vibes — actual math)",
+        "Circuit breakers + smart caching for production reliability"
+      ],
+      "tech": ["Next.js 15", "React 19", "TypeScript", "Prisma", "PostgreSQL", "Netlify"]
+    },
+    {
+      "id": "kilimopro",
+      "name": "KilimoPRO",
+      "url": "https://kilimo.pro",
+      "tagline": "AI-powered agricultural intelligence for 5M Kenyan farmers",
+      "stats": [
+        { "label": "Data sources", "value": "22+" },
+        { "label": "Crop diseases", "value": "30+" },
+        { "label": "Languages", "value": "SW · EN" },
+        { "label": "Aligned", "value": "NASIP 2026-30" }
+      ],
+      "description": "Offline-first mobile app for Kenyan smallholder farmers. On-device crop disease detection (TensorFlow Lite, MobileNetV3, PlantVillage), multi-LLM council for advisory, quant-based price forecasting (EWMA, GARCH, VaR).",
+      "whatIBuilt": [
+        "On-device crop disease detection (TFLite, MobileNetV3, 91% accuracy, <4MB model)",
+        "Multi-LLM Council (5 expert personas: agronomist, economist, climate scientist, extension officer, risk manager)",
+        "Quant-based price forecasting (EWMA, GARCH(1,1), VaR, RSI)",
+        "22+ verified data sources (KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, CHIRPS, Sentinel-2)"
+      ],
+      "tech": ["Flutter", "TensorFlow Lite", "MobileNetV3", "Node.js", "Prisma", "Africa's Talking SMS/USSD"]
+    }
+  ],
+  "guides": [
+    {
+      "id": "chatgpt-business",
+      "title": "How to Use ChatGPT for Your Business",
+      "category": "Beginner",
+      "duration": "15 min read",
+      "audience": "Small business owners",
+      "summary": "Drafting emails, proposals, ads, social posts, and customer replies with ChatGPT. 10 copy-paste prompts included.",
+      "free": true
+    },
+    {
+      "id": "prompt-engineering",
+      "title": "Prompt Engineering for Non-Engineers",
+      "category": "Beginner",
+      "duration": "20 min read",
+      "audience": "Professionals, students",
+      "summary": "The 5 core patterns: role-play, few-shot examples, chain-of-thought, 'act as…', context + constraints. With real before/after examples.",
+      "free": true
+    },
+    {
+      "id": "ai-tools-smb",
+      "title": "AI Tools Every Small Business Should Know",
+      "category": "Beginner",
+      "duration": "25 min read",
+      "audience": "SMB owners",
+      "summary": "The 'AI stack' every SMB now runs (avg 5 tools): ChatGPT, Claude, Gemini, Canva AI, Gamma, Notion AI, Zapier, Whisper, Perplexity.",
+      "free": true
+    },
+    {
+      "id": "no-code-chatbot",
+      "title": "Build Your First AI Chatbot (No-Code)",
+      "category": "Beginner",
+      "duration": "45 min workshop",
+      "audience": "Non-technical founders",
+      "summary": "Use Tidio, Landbot, Chatbase, or Botpress to build a chatbot over your own documents in under 1 hour. Step-by-step.",
+      "free": true
+    },
+    {
+      "id": "automate-business-tasks",
+      "title": "Automate 15+ Business Tasks with AI",
+      "category": "Intermediate",
+      "duration": "30 min read",
+      "audience": "Operations managers",
+      "summary": "Invoices, meeting notes, lead qualification, review responses, scheduling, inventory alerts — automated end-to-end.",
+      "free": true
+    },
+    {
+      "id": "ai-for-farmers",
+      "title": "AI for Farmers & Agri-Cooperatives",
+      "category": "Sector",
+      "duration": "20 min read",
+      "audience": "Farmers, coops, extension officers",
+      "summary": "Photo-based disease ID, WhatsApp advisories, weather/yield forecasts. Built for low-end Android phones, offline-first.",
+      "free": true
+    },
+    {
+      "id": "swahili-ai",
+      "title": "Building Swahili-First AI Assistants",
+      "category": "Builder",
+      "duration": "35 min read",
+      "audience": "Developers, product managers",
+      "summary": "Local-language product design. Dialect awareness, code-switching, proverb handling. Lessons from Tapi Learn (EN/FR/SW).",
+      "free": true
+    },
+    {
+      "id": "rag-in-one-day",
+      "title": "RAG in 1 Day: Chat with Your Own Documents",
+      "category": "Builder",
+      "duration": "1-day workshop",
+      "audience": "Developers",
+      "summary": "No-code → low-code → production RAG. Embeddings, vector DBs, chunking strategies, evals. Ship a working knowledge bot by EOD.",
+      "free": false,
+      "price": { "usd": 200, "kes": 8000 }
+    }
+  ],
+  "pricingModels": [
+    {
+      "name": "Per-Project",
+      "description": "One-off builds with clear scope. 50% upfront, 50% on delivery.",
+      "best": ["Well-defined scope", "Single deliverable", "Internal tools"]
+    },
+    {
+      "name": "Monthly Retainer",
+      "description": "Managed AI services — monitoring, enhancements, analytics, support. Cancel anytime.",
+      "best": ["Ongoing optimization", "Production systems", "Strategic partnership"]
+    },
+    {
+      "name": "Usage-Based",
+      "description": "Pay per interaction / document / API call. Transparent pass-through + 30% margin.",
+      "best": ["Variable volume", "Cost-center billing", "SaaS resale"]
+    },
+    {
+      "name": "Subscription (SaaS)",
+      "description": "Hosted product tiers per business. Predictable monthly cost.",
+      "best": ["Recurring revenue", "Standardized offering", "Self-serve"]
+    },
+    {
+      "name": "Equity-for-Services",
+      "description": "Discounted cash + 0.25–0.5% equity for early-stage startups. 24-month vesting, milestone-based tranches.",
+      "best": ["Pre-revenue startups", "Long-term alignment", "Africa-focused founders"]
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Do you work with small businesses or only enterprises?",
+      "a": "Both. The AI Starter package ($1,500–$3,000) is built specifically for SMBs, micro-businesses, and solo founders. I also serve enterprises with custom multi-agent systems. Pricing scales with scope — not company size."
+    },
+    {
+      "q": "Can you build AI that works in Swahili?",
+      "a": "Yes. Multilingual AI (English · Français · Kiswahili · Luganda · Amharic) is a core specialty. I built Tapi Learn (acla.io/tapi-learn) with full EN/FR/SW support and 11K+ learners across 38 countries."
+    },
+    {
+      "q": "What if I don't know what AI can do for my business?",
+      "a": "Start with the AI Audit ($4,500 / KES 350K, 1–2 weeks). You'll get a prioritized roadmap with ROI models and one pilot ready to build. 50% of the audit fee is credited toward any subsequent build."
+    },
+    {
+      "q": "Do you offer payment plans?",
+      "a": "Yes. Per-project work is 50% upfront / 50% on delivery. Retainers are monthly. For startups, I offer equity-for-services (0.25–0.5% equity, 24-month vesting) alongside discounted cash."
+    },
+    {
+      "q": "Where are you based? Do you work remotely?",
+      "a": "I'm based in Nairobi, Kenya. I work with clients globally (remote-first, async-friendly). For East African clients, I can do on-site workshops and kickoffs in Nairobi."
+    },
+    {
+      "q": "What technologies do you use?",
+      "a": "Python, TypeScript, Next.js, React, Flutter, TensorFlow Lite, PyTorch, LangChain, PostgreSQL, Prisma, n8n, Docker. For LLMs: GLM-4.6, GPT-4, Claude, Gemini, Llama — whatever fits the use case and budget."
+    },
+    {
+      "q": "How do you handle data privacy?",
+      "a": "All client data is handled per Kenya Data Protection Act 2019 and GDPR. On-prem or private-cloud deployment available for sensitive workloads. No client data is used to train shared models. Full data processing agreement on retainer."
+    },
+    {
+      "q": "Can you train my team to use AI?",
+      "a": "Yes. I offer half-day ($300/person) to 5-day ($18K/team) workshops. Non-technical to technical audiences. Topics include prompt engineering, RAG, multi-agent systems, MLOps, and AI ethics."
+    }
+  ]
+}
