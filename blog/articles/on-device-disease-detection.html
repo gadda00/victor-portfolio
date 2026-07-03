@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>On-Device Crop Disease Detection with TensorFlow Lite — Victor Ndunda</title>
+<meta name="description" content="Training MobileNetV3 on the PlantVillage dataset, quantizing to int8, and running inference on low-end Android phones — completely offline." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%2300d4ff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<style>
+.article { max-width: 780px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+.article-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.625rem; border-radius: 4px; margin-bottom: 1rem; background: rgba(245,158,11,0.1); color: #f59e0b; }
+.article h1 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); line-height: 1.2; margin-bottom: 1rem; }
+.article-meta { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.article-body { font-size: 1.0625rem; line-height: 1.8; color: var(--text); }
+.article-body h2 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
+.article-body h3 { font-size: 1.125rem; margin-top: 2rem; margin-bottom: 0.75rem; }
+.article-body p { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body strong { color: var(--text); }
+.article-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--glass); border: 1px solid var(--border); color: var(--accent); }
+.article-body ul { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body li { margin-bottom: 0.5rem; }
+.article-back { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<nav id="nav"><div class="nav-inner"><a href="/" class="logo"><svg width="32" height="32" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><circle cx="50" cy="50" r="14" fill="url(#logoG)"/><circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/><circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/></svg><span>Victor Ndunda</span></a><div class="nav-links" id="navLinks"><a href="/" class="nav-link">Home</a><a href="/#about" class="nav-link">About</a><a href="/#work" class="nav-link">Work</a><a href="/blog/" class="nav-link active">Blog</a><a href="/#contact" class="nav-link">Contact</a></div><div class="nav-actions"><button class="theme-toggle" id="themeToggle"><span>🌙</span></button><button class="mobile-toggle" id="mobileToggle">☰</button></div></div></nav>
+<article class="article">
+  <span class="article-tag">Engineering</span>
+  <h1>On-Device Crop Disease Detection with TensorFlow Lite</h1>
+  <div class="article-meta">By Victor Ndunda · June 1, 2026 · 13 min read</div>
+  <div class="article-body">
+
+    <p>One of KilimoPRO's most powerful features is on-device crop disease detection. A farmer points their phone at a diseased leaf, and within seconds — without any internet connection — the AI identifies the disease, shows a confidence score, and provides treatment recommendations. This article explains how it works.</p>
+
+    <h2>The Model: MobileNetV3</h2>
+    <p>I chose MobileNetV3Small as the base model for its excellent accuracy-to-size ratio. MobileNetV3 was designed by Google specifically for mobile devices, using depthwise separable convolutions and inverted residuals to reduce computation. The model takes a 224×224 pixel image as input and outputs a probability distribution across disease classes.</p>
+
+    <h2>Training: Transfer Learning</h2>
+    <p>Training from scratch would require millions of images and weeks of GPU time. Instead, I used <strong>transfer learning</strong>: starting from a MobileNetV3 model pre-trained on ImageNet (which already knows how to recognize visual features like edges, textures, and shapes), I replaced the final classification layers and fine-tuned them on the PlantVillage dataset (54,305 images of 14 crop species and 26 diseases).</p>
+    <p>The training process: (1) freeze the pre-trained base model, (2) train only the new classification layers for 20 epochs, (3) unfreeze the top 20 layers of the base model, (4) fine-tune with a lower learning rate for 10 more epochs. This two-stage approach produces models that generalize well without overfitting.</p>
+
+    <h2>Quantization: float32 → int8</h2>
+    <p>The trained model in float32 format is approximately 25MB — too large to bundle with an app targeting low-end Android phones with limited storage. <strong>Quantization</strong> converts the model's weights from 32-bit floating-point numbers to 8-bit integers, reducing the model size by 75% (from 25MB to ~5MB) with less than 1% accuracy loss.</p>
+    <p>TensorFlow Lite provides built-in quantization through the TFLiteConverter. I set <code>converter.optimizations = [tf.lite.Optimize.DEFAULT]</code>, <code>converter.target_spec.supported_types = [tf.int8]</code>, and specified int8 for both input and output types.</p>
+
+    <h2>On-Device Inference</h2>
+    <p>The TFLite model runs entirely on the farmer's Android phone using the <code>tflite_flutter</code> package. No internet connection is required. On a typical Android device with 2GB RAM, the model produces a diagnosis in 200-500 milliseconds — fast enough for real-time use in the field.</p>
+    <p>The inference pipeline: (1) capture photo with the camera, (2) resize to 224×224, (3) normalize pixel values to [0,1], (4) run TFLite model, (5) get probability distribution, (6) display the disease with highest probability and its confidence score.</p>
+
+    <h2>PlantVillage Nuru Inspiration</h2>
+    <p>This approach is directly inspired by PlantVillage Nuru (developed by Penn State University), which has been deployed in Kenya, Tanzania, and Uganda. Nuru uses on-device CNN models to diagnose crop diseases in cassava, maize, and potato. KilimoPRO adopts the same technical approach but extends it to a broader range of crops and integrates the disease detection with the platform's other intelligence modules.</p>
+
+    <h2>Results</h2>
+    <p>The trained model achieves 95%+ accuracy on the PlantVillage test set. In real-world conditions (photos taken by farmers in the field with varying lighting, angles, and backgrounds), accuracy drops to approximately 85-90%. For cases where confidence is below 70%, the app recommends consulting an extension officer and provides the ExtensionLink to connect to the nearest available expert.</p>
+
+    <div class="article-back"><a href="/blog/" class="btn btn-ghost btn-sm">← Back to Blog</a></div>
+  </div>
+</article>
+<footer><div class="container"><div class="footer-bottom"><p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p><p><a href="/" style="color:var(--accent);">← Home</a></p></div></div></footer>
+<script>
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.querySelector('span').textContent=isDark?'☀️':'🌙';});themeToggle.querySelector('span').textContent=html.classList.contains('dark')?'🌙':'☀️';document.getElementById('mobileToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+</script>
+</body>
+</html>

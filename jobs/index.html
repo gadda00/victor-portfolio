@@ -4,7 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Job Portal — Victor Ndunda</title>
-<meta name="description" content="AI-powered job search portal aggregating remote tech jobs from multiple sources. Search, filter, and apply with AI-tailored applications." />
+<meta name="description" content="Private job search portal." />
+<meta name="robots" content="noindex, nofollow" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%2300d4ff'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -41,6 +42,28 @@
 </head>
 <body>
 <div class="noise-overlay"></div>
+
+<!-- Auth Overlay (Google Sign-In for Victor only) -->
+<div id="authOverlay" class="auth-overlay">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <svg width="48" height="48" viewBox="0 0 100 100" fill="none">
+        <defs><linearGradient id="authG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="14" fill="url(#authG)"/>
+        <circle cx="20" cy="25" r="5" fill="url(#authG)"/><circle cx="80" cy="25" r="5" fill="url(#authG)"/>
+        <circle cx="20" cy="75" r="5" fill="url(#authG)"/><circle cx="80" cy="75" r="5" fill="url(#authG)"/>
+      </svg>
+    </div>
+    <h2>Private Portal</h2>
+    <p>Sign in with Google to access the job search portal.</p>
+    <div id="gSignInButton"></div>
+    <p class="auth-note">Authorized access only.</p>
+    <p class="auth-error" id="authError"></p>
+  </div>
+</div>
+
+<!-- Job Portal Content (hidden until auth) -->
+<div id="jobContent" style="display:none;">
 
 <nav id="nav">
   <div class="nav-inner">
@@ -98,10 +121,101 @@
   <div class="container">
     <div class="footer-bottom">
       <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
-      <p><a href="/" style="color:var(--accent);">← Back to Home</a></p>
+      <p><a href="/" style="color:var(--accent);">← Home</a> · <a href="#" onclick="logout();return false;" style="color:var(--accent);">Sign Out</a></p>
     </div>
   </div>
 </footer>
+</div><!-- /jobContent -->
+
+<style>
+.auth-overlay { position: fixed; inset: 0; z-index: 3000; background: var(--bg); display: flex; align-items: center; justify-content: center; }
+.auth-box { text-align: center; padding: 3rem; max-width: 400px; }
+.auth-logo { margin-bottom: 1.5rem; display: flex; justify-content: center; }
+.auth-box h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+.auth-box p { color: var(--text-muted); margin-bottom: 1.5rem; }
+.auth-note { font-size: 0.75rem; color: var(--text-dim); margin-top: 1rem; }
+.auth-error { color: #ef4444; font-size: 0.875rem; margin-top: 0.5rem; display: none; }
+#gSignInButton { display: flex; justify-content: center; }
+</style>
+
+<!-- Google Identity Services -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<script>
+// ─── Google OAuth Authentication ─────────────────────────────────────
+// Only allows Victor's email: mututandunda@gmail.com
+// Uses Google Identity Services (GIS) — no backend needed for static sites
+// To set up: Create OAuth 2.0 Client ID at console.cloud.google.com
+// Add your domain (victorndunda.com) to Authorized JavaScript origins
+
+const ALLOWED_EMAIL = 'mututandunda@gmail.com';
+// Replace with your actual Google OAuth Client ID from Google Cloud Console
+const GOOGLE_CLIENT_ID = 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com';
+
+function initGoogleAuth() {
+  if (typeof google === 'undefined' || !google.accounts) {
+    setTimeout(initGoogleAuth, 500);
+    return;
+  }
+  
+  google.accounts.id.initialize({
+    client_id: GOOGLE_CLIENT_ID,
+    callback: handleCredentialResponse,
+  });
+  
+  google.accounts.id.renderButton(
+    document.getElementById('gSignInButton'),
+    { theme: 'outline', size: 'large', text: 'sign_in_with', shape: 'pill' }
+  );
+}
+
+function handleCredentialResponse(response) {
+  // Decode the JWT token to get user email
+  const payload = JSON.parse(atob(response.credential.split('.')[1]));
+  const email = payload.email;
+  
+  if (email === ALLOWED_EMAIL) {
+    // Authorized — show job portal
+    sessionStorage.setItem('jobs_auth', 'true');
+    sessionStorage.setItem('jobs_user', email);
+    document.getElementById('authOverlay').style.display = 'none';
+    document.getElementById('jobContent').style.display = 'block';
+    fetchJobs();
+  } else {
+    // Unauthorized
+    const errorEl = document.getElementById('authError');
+    errorEl.textContent = `Access denied. ${email} is not authorized.`;
+    errorEl.style.display = 'block';
+    google.accounts.id.disableAutoSelect();
+  }
+}
+
+function logout() {
+  sessionStorage.removeItem('jobs_auth');
+  sessionStorage.removeItem('jobs_user');
+  google.accounts.id.disableAutoSelect();
+  location.reload();
+}
+
+// Check if already authenticated (session-based)
+function checkAuth() {
+  if (sessionStorage.getItem('jobs_auth') === 'true') {
+    document.getElementById('authOverlay').style.display = 'none';
+    document.getElementById('jobContent').style.display = 'block';
+    return true;
+  }
+  return false;
+}
+
+// Initialize on page load
+window.addEventListener('load', () => {
+  if (checkAuth()) {
+    fetchJobs();
+  } else {
+    initGoogleAuth();
+  }
+});
+</script>
 
 <script>
 // ─── Job Search Portal ────────────────────────────────────────────────

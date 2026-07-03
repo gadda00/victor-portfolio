@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The Multi-LLM Council: When One AI Isn't Enough — Victor Ndunda</title>
+<meta name="description" content="How KilimoPRO uses 5 expert AI personas (agronomist, economist, climate scientist, extension officer, risk manager) to deliberate complex farming decisions." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%2300d4ff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<style>
+.article { max-width: 780px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+.article-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.625rem; border-radius: 4px; margin-bottom: 1rem; background: rgba(0,212,255,0.1); color: var(--accent); }
+.article h1 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); line-height: 1.2; margin-bottom: 1rem; }
+.article-meta { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.article-body { font-size: 1.0625rem; line-height: 1.8; color: var(--text); }
+.article-body h2 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
+.article-body h3 { font-size: 1.125rem; margin-top: 2rem; margin-bottom: 0.75rem; }
+.article-body p { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body strong { color: var(--text); }
+.article-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--glass); border: 1px solid var(--border); color: var(--accent); }
+.article-body ul { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body li { margin-bottom: 0.5rem; }
+.article-back { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<nav id="nav"><div class="nav-inner"><a href="/" class="logo"><svg width="32" height="32" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><circle cx="50" cy="50" r="14" fill="url(#logoG)"/><circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/><circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/></svg><span>Victor Ndunda</span></a><div class="nav-links" id="navLinks"><a href="/" class="nav-link">Home</a><a href="/#about" class="nav-link">About</a><a href="/#work" class="nav-link">Work</a><a href="/blog/" class="nav-link active">Blog</a><a href="/#contact" class="nav-link">Contact</a></div><div class="nav-actions"><button class="theme-toggle" id="themeToggle"><span>🌙</span></button><button class="mobile-toggle" id="mobileToggle">☰</button></div></div></nav>
+<article class="article">
+  <span class="article-tag">AI</span>
+  <h1>The Multi-LLM Council: When One AI Isn't Enough</h1>
+  <div class="article-meta">By Victor Ndunda · June 15, 2026 · 8 min read</div>
+  <div class="article-body">
+
+    <p>When a farmer asks a complex question like "Should I switch from maize to sorghum given the changing rainfall patterns in Makueni?", a single AI response may not be sufficient. The question has agronomic, economic, climatic, and risk dimensions that no single perspective can fully address. This is why KilimoPRO implements a Multi-LLM Council.</p>
+
+    <h2>The Five Personas</h2>
+    <ul>
+      <li><strong>Dr. Wanjiku (Agronomist):</strong> 20 years of experience in Kenyan agriculture. Specializes in soil health, crop science, and yield optimization. Recommendations based on KALRO research and FAO guidelines.</li>
+      <li><strong>James Mwangi (Agricultural Economist):</strong> Specializes in East African markets. Analyzes input costs, market prices, ROI calculations, and risk management. Thinks in terms of cost-benefit analysis.</li>
+      <li><strong>Dr. Achieng (Climate Scientist):</strong> Specializes in East African climate patterns and their impact on agriculture. Understands El Niño/La Niña cycles, CHIRPS rainfall data, and climate change projections for Kenya.</li>
+      <li><strong>Peter Kamau (Extension Officer):</strong> 15 years of field experience in rural Kenya. Knows what farmers can actually implement with limited resources. Focuses on practical, step-by-step recommendations.</li>
+      <li><strong>Sarah Otieno (Risk Manager):</strong> Specializes in agricultural risk management. Thinks about worst-case scenarios, crop insurance, diversification strategies, and climate resilience.</li>
+    </ul>
+
+    <h2>How It Works</h2>
+    <p>Each persona receives the farmer's question along with their farm context (location, crops, soil type, weather, market data). Each persona analyzes the question from their professional perspective and provides: an analysis, a specific recommendation, and a confidence score (0-100%). The system uses GLM-4.6 as the underlying LLM, with different system prompts for each persona.</p>
+
+    <h2>Synthesis</h2>
+    <p>After all five personas have provided their analysis, a synthesis engine (also powered by GLM-4.6) combines them into: a concise summary of agreement and disagreement, a single unified recommendation, and a consensus assessment (strong/moderate/divided). The synthesis is where the magic happens — it identifies the common threads across all perspectives and resolves conflicts.</p>
+
+    <h2>Inspiration</h2>
+    <p>This approach was inspired by the <code>council-of-high-intelligence</code> project on GitHub, which uses 18 AI personas (Aristotle, Feynman, Kahneman, Torvalds, etc.) to deliberate on complex decisions. I adapted the concept for agriculture, replacing philosophers with domain experts that a Kenyan farmer would actually trust.</p>
+
+    <div class="article-back"><a href="/blog/" class="btn btn-ghost btn-sm">← Back to Blog</a></div>
+  </div>
+</article>
+<footer><div class="container"><div class="footer-bottom"><p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p><p><a href="/" style="color:var(--accent);">← Home</a></p></div></div></footer>
+<script>
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.querySelector('span').textContent=isDark?'☀️':'🌙';});themeToggle.querySelector('span').textContent=html.classList.contains('dark')?'🌙':'☀️';document.getElementById('mobileToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Quantitative Finance for Agricultural Markets — Victor Ndunda</title>
+<meta name="description" content="Applying EWMA volatility, GARCH(1,1), Value at Risk (VaR), and RSI from financial markets to agricultural commodity price forecasting." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%2300d4ff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<style>
+.article { max-width: 780px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+.article-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.625rem; border-radius: 4px; margin-bottom: 1rem; background: rgba(168,85,247,0.1); color: var(--accent-2); }
+.article h1 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); line-height: 1.2; margin-bottom: 1rem; }
+.article-meta { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.article-body { font-size: 1.0625rem; line-height: 1.8; color: var(--text); }
+.article-body h2 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
+.article-body h3 { font-size: 1.125rem; margin-top: 2rem; margin-bottom: 0.75rem; }
+.article-body p { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body strong { color: var(--text); }
+.article-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--glass); border: 1px solid var(--border); color: var(--accent); }
+.article-body ul { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body li { margin-bottom: 0.5rem; }
+.article-back { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<nav id="nav"><div class="nav-inner"><a href="/" class="logo"><svg width="32" height="32" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><circle cx="50" cy="50" r="14" fill="url(#logoG)"/><circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/><circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/></svg><span>Victor Ndunda</span></a><div class="nav-links" id="navLinks"><a href="/" class="nav-link">Home</a><a href="/#about" class="nav-link">About</a><a href="/#work" class="nav-link">Work</a><a href="/blog/" class="nav-link active">Blog</a><a href="/#contact" class="nav-link">Contact</a></div><div class="nav-actions"><button class="theme-toggle" id="themeToggle"><span>🌙</span></button><button class="mobile-toggle" id="mobileToggle">☰</button></div></div></nav>
+<article class="article">
+  <span class="article-tag">Research</span>
+  <h1>Quantitative Finance for Agricultural Markets</h1>
+  <div class="article-meta">By Victor Ndunda · June 10, 2026 · 14 min read</div>
+  <div class="article-body">
+
+    <p>Agricultural commodity prices exhibit the same patterns that quantitative finance models were designed to handle: trends, volatility clustering, seasonal effects, and sudden shocks. This article explains how I borrowed techniques from quantitative finance — inspired by the awesome-quant project — and applied them to agricultural price forecasting in KilimoPRO.</p>
+
+    <h2>EWMA Volatility (RiskMetrics)</h2>
+    <p>Exponentially Weighted Moving Average (EWMA) volatility estimation assigns more weight to recent observations. Using the RiskMetrics standard lambda of 0.94, the variance is updated as: <code>σ²ₜ = λ × σ²ₜ₋₁ + (1-λ) × r²ₜ</code>. This gives more weight to recent price movements, which is critical for agricultural markets where volatility can spike suddenly due to droughts, pest outbreaks, or policy changes.</p>
+
+    <h2>GARCH(1,1)</h2>
+    <p>Generalized Autoregressive Conditional Heteroskedasticity (GARCH) models volatility clustering — the tendency for periods of high volatility to be followed by more high volatility. The GARCH(1,1) model is: <code>σ² = ω + α × r² + β × σ²</code>. For agricultural prices, I estimated parameters using method of moments with typical commodity values: α=0.1, β=0.85, ω derived from the long-run variance.</p>
+
+    <h2>Value at Risk (VaR)</h2>
+    <p>Value at Risk answers the question: "What's the most I could lose with 95% confidence?" For a farmer considering whether to store their produce or sell now, VaR provides a quantified risk assessment. <code>VaR₉₅ = price × σ × 1.645</code>. If the 95% VaR is KES 500 per bag, it means there's a 5% chance prices will drop by more than KES 500 in the forecast period.</p>
+
+    <h2>RSI (Relative Strength Index)</h2>
+    <p>RSI measures the speed and change of price movements on a scale of 0-100. RSI > 70 indicates "overbought" (prices may fall — sell signal). RSI < 30 indicates "oversold" (prices may rise — hold signal). This is directly applicable to agricultural markets: when maize prices spike above historical norms (RSI > 70), it's a good time to sell.</p>
+
+    <h2>SMA Crossover</h2>
+    <p>Simple Moving Average crossover compares short-term (5-period) and long-term (20-period) moving averages. When the short-term crosses above the long-term, it's a bullish signal (sell to capture the trend). When it crosses below, it's bearish (store and wait).</p>
+
+    <h2>Putting It All Together</h2>
+    <p>The KilimoPRO quant forecasting module combines all these metrics into a single recommendation. For example: "Prices are trending upward. RSI indicates prices are high (72) — this may be a good time to sell. Short-term moving average is above long-term — bullish signal. Sell now to maximize returns. ⚠️ High price volatility (18.5%). Consider selling in batches. Risk assessment: 95% chance prices won't drop more than 12% in the next 2 weeks."</p>
+
+    <div class="article-back"><a href="/blog/" class="btn btn-ghost btn-sm">← Back to Blog</a></div>
+  </div>
+</article>
+<footer><div class="container"><div class="footer-bottom"><p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p><p><a href="/" style="color:var(--accent);">← Home</a></p></div></div></footer>
+<script>
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.querySelector('span').textContent=isDark?'☀️':'🌙';});themeToggle.querySelector('span').textContent=html.classList.contains('dark')?'🌙':'☀️';document.getElementById('mobileToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+</script>
+</body>
+</html>

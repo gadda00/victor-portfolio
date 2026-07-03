@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KilimoPRO: AI for 5 Million Kenyan Farmers — Victor Ndunda</title>
+<meta name="description" content="Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%2300d4ff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<style>
+.article { max-width: 780px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+.article-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.625rem; border-radius: 4px; margin-bottom: 1rem; background: rgba(16,185,129,0.1); color: var(--accent-3); }
+.article h1 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); line-height: 1.2; margin-bottom: 1rem; }
+.article-meta { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.article-body { font-size: 1.0625rem; line-height: 1.8; color: var(--text); }
+.article-body h2 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
+.article-body h3 { font-size: 1.125rem; margin-top: 2rem; margin-bottom: 0.75rem; }
+.article-body p { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body strong { color: var(--text); }
+.article-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--glass); border: 1px solid var(--border); color: var(--accent); }
+.article-body ul { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body li { margin-bottom: 0.5rem; }
+.article-back { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<nav id="nav"><div class="nav-inner"><a href="/" class="logo"><svg width="32" height="32" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><circle cx="50" cy="50" r="14" fill="url(#logoG)"/><circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/><circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/></svg><span>Victor Ndunda</span></a><div class="nav-links" id="navLinks"><a href="/" class="nav-link">Home</a><a href="/#about" class="nav-link">About</a><a href="/#work" class="nav-link">Work</a><a href="/blog/" class="nav-link active">Blog</a><a href="/#contact" class="nav-link">Contact</a></div><div class="nav-actions"><button class="theme-toggle" id="themeToggle"><span>🌙</span></button><button class="mobile-toggle" id="mobileToggle">☰</button></div></div></nav>
+<article class="article">
+  <span class="article-tag">Agriculture</span>
+  <h1>KilimoPRO: AI for 5 Million Kenyan Farmers</h1>
+  <div class="article-meta">By Victor Ndunda · June 28, 2026 · 15 min read</div>
+  <div class="article-body">
+
+    <p>KilimoPRO (kilimo.pro) is an AI-powered agricultural intelligence platform I am building for Kenyan and African farmers. The name combines "Kilimo" (Swahili for agriculture) with "PRO" denoting professional-grade intelligence. This article is the technical story of how it's being built.</p>
+
+    <h2>The Problem</h2>
+    <p>Kenya has 5.5 million smallholder farming households producing 70% of the country's agricultural output. Maize yields average 1.4-1.8 t/ha against a global average of 5.8. Post-harvest losses consume 30-40% of food produced. The extension worker-to-farmer ratio is 1:785 (FAO recommends 1:400). There is simply no way to provide personalized agricultural advisory to millions of farmers through human extension workers alone.</p>
+
+    <h2>22 Data Sources</h2>
+    <p>I spent weeks researching and verifying 22 operational data sources that KilimoPRO integrates:</p>
+    <ul>
+      <li><strong>KilimoSTAT</strong> (statistics.kilimo.go.ke) — Kenya's official agricultural statistics platform with a documented Swagger API</li>
+      <li><strong>FAOSTAT API</strong> — Global agricultural statistics via SDMX-based REST API, launched in late 2024</li>
+      <li><strong>KALRO Digital Agriculture Platform</strong> (keep.kalro.org) — Soil, land, crop, and weather data</li>
+      <li><strong>Google Earth Engine</strong> — Satellite imagery (Sentinel-2, Landsat) for NDVI crop health monitoring</li>
+      <li><strong>CHIRPS</strong> — Daily satellite rainfall data at 5km resolution</li>
+      <li><strong>Africa Regional Data Cube</strong> — 17 years of analysis-ready satellite data for Kenya</li>
+      <li><strong>Semantic Scholar API</strong> — Latest agricultural research papers for the advisory module</li>
+      <li><strong>Firecrawl</strong> — Web scraping for agricultural news and market prices</li>
+    </ul>
+
+    <h2>On-Device Crop Disease Detection</h2>
+    <p>One of the most powerful features is on-device crop disease detection using TensorFlow Lite. I trained a MobileNetV3 CNN on the PlantVillage dataset (54,305 images, 26 diseases), quantized it to int8 (reducing model size from 25MB to 5MB), and it runs inference in under 500ms on a low-end Android phone. Completely offline. This means a farmer in rural Makueni with no internet can point their phone at a diseased maize leaf and get a diagnosis in seconds.</p>
+
+    <h2>Multi-LLM Council</h2>
+    <p>For complex farming decisions, a single AI response isn't enough. KilimoPRO implements a "Council of High Intelligence" — 5 AI expert personas (agronomist, economist, climate scientist, extension officer, risk manager) that each analyze the question from their professional perspective, then synthesize their deliberation into a unified recommendation. This is inspired by the council-of-high-intelligence project on GitHub.</p>
+
+    <h2>NASIP Alignment</h2>
+    <p>KilimoPRO is designed to operationalize Kenya's National Agri-Food Systems Investment Plan (NASIP) 2026-2030, a KES 1.08 trillion investment framework. The platform directly supports 7 of 9 NASIP flagship programs, particularly Flagship 7 (Data & Digital Infrastructure, KES 45B) by serving as the farmer-facing interface for the National Agriculture Data Hub.</p>
+
+    <h2>Quant-Based Price Forecasting</h2>
+    <p>For market intelligence, I borrowed quantitative finance techniques from the awesome-quant project. The price forecasting module uses EWMA volatility (RiskMetrics λ=0.94), GARCH(1,1) for volatility clustering, Value at Risk (VaR 95% and 99%), RSI for overbought/oversold signals, and SMA crossovers for buy/sell/hold recommendations. These models, originally designed for financial markets, adapt surprisingly well to agricultural commodity prices.</p>
+
+    <div class="article-back"><a href="/blog/" class="btn btn-ghost btn-sm">← Back to Blog</a></div>
+  </div>
+</article>
+<footer><div class="container"><div class="footer-bottom"><p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p><p><a href="/" style="color:var(--accent);">← Home</a></p></div></div></footer>
+<script>
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.querySelector('span').textContent=isDark?'☀️':'🌙';});themeToggle.querySelector('span').textContent=html.classList.contains('dark')?'🌙':'☀️';document.getElementById('mobileToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+</script>
+</body>
+</html>

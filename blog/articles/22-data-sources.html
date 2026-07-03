@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>22 Data Sources for Kenyan Agricultural Intelligence — Victor Ndunda</title>
+<meta name="description" content="A comprehensive inventory of verified, operational data APIs: KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, Sentinel-2, CHIRPS, ARDC, and more." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%2300d4ff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<style>
+.article { max-width: 780px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+.article-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.625rem; border-radius: 4px; margin-bottom: 1rem; background: rgba(16,185,129,0.1); color: var(--accent-3); }
+.article h1 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); line-height: 1.2; margin-bottom: 1rem; }
+.article-meta { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.article-body { font-size: 1.0625rem; line-height: 1.8; color: var(--text); }
+.article-body h2 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
+.article-body h3 { font-size: 1.125rem; margin-top: 2rem; margin-bottom: 0.75rem; }
+.article-body p { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body strong { color: var(--text); }
+.article-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--glass); border: 1px solid var(--border); color: var(--accent); }
+.article-body ul { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body li { margin-bottom: 0.5rem; }
+.article-back { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<nav id="nav"><div class="nav-inner"><a href="/" class="logo"><svg width="32" height="32" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><circle cx="50" cy="50" r="14" fill="url(#logoG)"/><circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/><circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/></svg><span>Victor Ndunda</span></a><div class="nav-links" id="navLinks"><a href="/" class="nav-link">Home</a><a href="/#about" class="nav-link">About</a><a href="/#work" class="nav-link">Work</a><a href="/blog/" class="nav-link active">Blog</a><a href="/#contact" class="nav-link">Contact</a></div><div class="nav-actions"><button class="theme-toggle" id="themeToggle"><span>🌙</span></button><button class="mobile-toggle" id="mobileToggle">☰</button></div></div></nav>
+<article class="article">
+  <span class="article-tag">Agriculture</span>
+  <h1>22 Data Sources for Kenyan Agricultural Intelligence</h1>
+  <div class="article-meta">By Victor Ndunda · June 5, 2026 · 11 min read</div>
+  <div class="article-body">
+
+    <p>No agricultural intelligence platform can function without data. This article provides a comprehensive inventory of the 22 data sources that KilimoPRO integrates — every source has been verified to exist and to provide data that can be programmatically consumed.</p>
+
+    <h2>Kenyan Government Sources</h2>
+    <ul>
+      <li><strong>KilimoSTAT</strong> (statistics.kilimo.go.ke) — Kenya's official agricultural statistics platform with a documented Swagger API at /api/swagger/. Provides production stats, crop data, livestock, fisheries, food security, and climate indicators.</li>
+      <li><strong>KALRO Digital Agriculture Platform</strong> (keep.kalro.org) — Land, soil, and crop data with decision-support tools for climate-smart agriculture. Developed with World Bank support.</li>
+      <li><strong>KAOP</strong> (Kenya Agricultural Observatory Platform) — Ward-level weather forecasts, integrated with KALRO. Provides gridded forecasts at approximately 5km resolution.</li>
+      <li><strong>KADP</strong> (Kenya Agriculture Data Sharing Platform) — Open data initiative by KALRO for agricultural research data.</li>
+      <li><strong>ASDG Portal</strong> (agdata.go.ke) — Centralized portal for agricultural data sharing across government agencies.</li>
+      <li><strong>AIRC</strong> (airc.kilimo.go.ke) — Agriculture Information Resource Centre, manages the Ministry Call Centre and compiles weekly market price bulletins covering 100+ markets.</li>
+      <li><strong>KMD</strong> (meteo.go.ke) — Kenya Meteorological Department, provides weather forecasts and climate data.</li>
+      <li><strong>KNBS</strong> (knbs.or.ke) — Kenya National Bureau of Statistics, provides Economic Survey data and census data.</li>
+    </ul>
+
+    <h2>International Sources</h2>
+    <ul>
+      <li><strong>FAOSTAT API</strong> (api.fao.org) — The world's largest agricultural statistics database, with a new API Developer Portal launched in late 2024. SDMX-based REST API. Free access. Over 3 million time-series records.</li>
+      <li><strong>Google Earth Engine</strong> — Cloud-based platform for planetary-scale geospatial analysis. Free for research. Provides Sentinel-2 (10m, 5-day revisit), Landsat (30m, 16-day), MODIS (250m, daily), and CHIRPS rainfall (5km, daily).</li>
+      <li><strong>Sentinel-2</strong> (Copernicus) — European Space Agency satellite providing 10m optical imagery every 5 days. Free and open access.</li>
+      <li><strong>Landsat</strong> (NASA) — 50+ year satellite record, 30m resolution, 16-day revisit. Free and open access.</li>
+      <li><strong>ARDC / Digital Earth Africa</strong> — Africa Regional Data Cube, launched in Nairobi in 2018. 17 years of analysis-ready satellite data for Kenya using Open Data Cube technology.</li>
+      <li><strong>CHIRPS</strong> — Climate Hazards Group InfraRed Precipitation with Station data. Daily rainfall at 5km resolution, with a particular focus on Africa. Free access.</li>
+      <li><strong>OpenWeatherMap API</strong> — Global weather data, current conditions and forecasts. Free tier available.</li>
+      <li><strong>World Bank Data API</strong> — GDP, population, and agricultural indicators. Free REST API.</li>
+    </ul>
+
+    <h2>Communications & Research</h2>
+    <ul>
+      <li><strong>Africa's Talking</strong> — SMS, USSD, and Voice API with coverage in all 54 African countries. Essential for the SMS/USSD fallback channel.</li>
+      <li><strong>PlantVillage Dataset</strong> — 54,305 images of 14 crop species and 26 diseases, from Penn State University. Free open dataset for training crop disease detection models.</li>
+      <li><strong>Semantic Scholar API</strong> — Academic paper search with 200M+ papers. Free tier (rate-limited). Used for the "Research" module that shows farmers latest research on their crops.</li>
+      <li><strong>Firecrawl</strong> — Web scraping API that converts any URL to LLM-ready markdown. Used to scrape agricultural news, market prices, and extension content.</li>
+    </ul>
+
+    <h2>Integration Architecture</h2>
+    <p>Integrating 22 data sources requires a well-designed data pipeline. Each source has a dedicated connector service that handles authentication, data fetching, parsing, and error handling. Connectors run on scheduled intervals (daily for market prices, every 5 days for satellite imagery) and write normalized data to a central PostgreSQL database. A data quality validation layer checks incoming data for completeness and consistency.</p>
+
+    <div class="article-back"><a href="/blog/" class="btn btn-ghost btn-sm">← Back to Blog</a></div>
+  </div>
+</article>
+<footer><div class="container"><div class="footer-bottom"><p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p><p><a href="/" style="color:var(--accent);">← Home</a></p></div></div></footer>
+<script>
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.querySelector('span').textContent=isDark?'☀️':'🌙';});themeToggle.querySelector('span').textContent=html.classList.contains('dark')?'🌙':'☀️';document.getElementById('mobileToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+</script>
+</body>
+</html>

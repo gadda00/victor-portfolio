@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /jobs/
+
+Sitemap: https://victorndunda.com/sitemap.xml

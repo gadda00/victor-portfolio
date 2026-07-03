@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Building a 50-Agent Multi-Agent DAG Pipeline — Victor Ndunda</title>
+<meta name="description" content="How I designed and built Busara AI's 7-stage parallel DAG pipeline with 50 specialized agents — from Kahn's topological sort to circuit breakers and O(1) LRU caching." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%2300d4ff'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<style>
+.article { max-width: 780px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+.article-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.625rem; border-radius: 4px; margin-bottom: 1rem; background: rgba(0,212,255,0.1); color: var(--accent); }
+.article h1 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); line-height: 1.2; margin-bottom: 1rem; }
+.article-meta { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.article-body { font-size: 1.0625rem; line-height: 1.8; color: var(--text); }
+.article-body h2 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
+.article-body h3 { font-size: 1.125rem; margin-top: 2rem; margin-bottom: 0.75rem; }
+.article-body p { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body strong { color: var(--text); }
+.article-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--glass); border: 1px solid var(--border); color: var(--accent); }
+.article-body pre { padding: 1.5rem; border-radius: 12px; background: var(--bg-elev); border: 1px solid var(--border); overflow-x: auto; margin-bottom: 1.5rem; }
+.article-body pre code { padding: 0; border: none; background: none; color: var(--text); font-size: 0.875rem; }
+.article-body ul { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body li { margin-bottom: 0.5rem; }
+.article-back { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+<div class="noise-overlay"></div>
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="/" class="logo">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none"><defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><circle cx="50" cy="50" r="14" fill="url(#logoG)"/><circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/><circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/></svg>
+      <span>Victor Ndunda</span>
+    </a>
+    <div class="nav-links" id="navLinks"><a href="/" class="nav-link">Home</a><a href="/#about" class="nav-link">About</a><a href="/#work" class="nav-link">Work</a><a href="/blog/" class="nav-link active">Blog</a><a href="/#contact" class="nav-link">Contact</a></div>
+    <div class="nav-actions"><button class="theme-toggle" id="themeToggle"><span>🌙</span></button><button class="mobile-toggle" id="mobileToggle">☰</button></div>
+  </div>
+</nav>
+
+<article class="article">
+  <span class="article-tag">AI · Engineering</span>
+  <h1>Building a 50-Agent Multi-Agent DAG Pipeline</h1>
+  <div class="article-meta">By Victor Ndunda · July 1, 2026 · 12 min read</div>
+  <div class="article-body">
+    <p>When I started building Busara AI, I knew that the future of AI wasn't a single monolithic model doing everything — it was a team of specialized agents, each an expert in its domain, working together in a coordinated pipeline. What I didn't fully appreciate was how challenging it would be to orchestrate 50 agents with complex dependencies, handle failures gracefully, and do it all fast enough to deliver results in under 30 seconds.</p>
+    <p>This article is the technical deep-dive into how I built the Busara AI v7.0 multi-agent framework — the architecture, the algorithms, and the hard-won lessons.</p>
+
+    <h2>The Problem: Why Multi-Agent?</h2>
+    <p>Most AI applications today use a single LLM to handle everything: understanding the request, retrieving relevant data, reasoning about the answer, and generating the response. This works for simple tasks but breaks down for complex, multi-dimensional analysis. A single model can't be an expert in everything. When you ask it to forecast time series data AND detect anomalies AND infer causal relationships AND generate code, the quality of each individual task degrades.</p>
+    <p>The multi-agent approach is different. Instead of one model trying to do everything, you have 50 specialized agents, each focused on a specific domain. The Data Profiling agent knows everything about statistical summaries. The Anomaly Ensemble agent is an expert in Z-score, IQR, and EWMA detection. The Holt-Winters Forecast agent lives and breathes triple exponential smoothing. Each agent does one thing extremely well, and the results are combined into a comprehensive analysis.</p>
+
+    <h2>The Architecture: DAG-Based Orchestration</h2>
+    <p>The core of the framework is a <strong>Directed Acyclic Graph (DAG)</strong> that defines the execution order and dependencies between agents. Agents are organized into 7 stages, and within each stage, agents run in parallel. The DAG ensures that an agent only executes after all its dependencies have completed.</p>
+    <p>Here's the stage layout:</p>
+    <ul>
+      <li><strong>Stage 0 — Ingest (10 agents):</strong> Data ingestion, schema inference, profiling, PII detection, quality scoring</li>
+      <li><strong>Stage 1 — Engineer (10 agents):</strong> Median imputation, mode imputation, standard scaling, feature engineering, type coercion</li>
+      <li><strong>Stage 2 — Detect (10 agents):</strong> Anomaly ensemble (Z+IQR+EWMA), Isolation Forest, K-Means, DBSCAN, GMM, fraud detection, sentiment, correlation, stationarity, seasonality</li>
+      <li><strong>Stage 3 — Forecast (4 agents):</strong> Holt-Winters, ARIMA, moving average, anomaly forecasting</li>
+      <li><strong>Stage 4 — Infer (8 agents):</strong> OLS regression, causal inference, feature importance, SHAP, Auto-ML, benchmark, knowledge graph, Africa market intel</li>
+      <li><strong>Stage 5 — Report (8 agents):</strong> Insight generator, narrative composer, code generator, visualization, synthetic data, reflection, real-time alert, orchestrator</li>
+    </ul>
+
+    <h2>Kahn's Topological Sort</h2>
+    <p>To determine the execution order, I implemented <strong>Kahn's algorithm</strong> for topological sorting. The algorithm works by repeatedly finding agents with no unmet dependencies (in-degree of zero), executing them, and removing their outgoing edges. This naturally groups agents into stages that can run in parallel.</p>
+    <pre><code>function topologicalSort(agents: Map&lt;string, AgentMetadata&gt;): string[][] {
+  const inDegree = new Map&lt;string, number&gt;();
+  const adjList = new Map&lt;string, string[]&gt;();
+  
+  // Build graph
+  for (const [id, meta] of agents) {
+    inDegree.set(id, meta.dependencies.length);
+    for (const dep of meta.dependencies) {
+      if (!adjList.has(dep)) adjList.set(dep, []);
+      adjList.get(dep)!.push(id);
+    }
+  }
+  
+  // Kahn's algorithm — process in layers (stages)
+  const stages: string[][] = [];
+  let current = Array.from(agents.keys()).filter(id => inDegree.get(id) === 0);
+  
+  while (current.length > 0) {
+    stages.push(current);
+    const next: string[] = [];
+    for (const id of current) {
+      for (const neighbor of adjList.get(id) ?? []) {
+        const newDegree = inDegree.get(neighbor)! - 1;
+        inDegree.set(neighbor, newDegree);
+        if (newDegree === 0) next.push(neighbor);
+      }
+    }
+    current = next;
+  }
+  return stages;
+}</code></pre>
+
+    <h2>Circuit Breakers</h2>
+    <p>In a 50-agent pipeline, failures are inevitable. An API might time out, a dataset might be malformed, or an algorithm might hit an edge case. Without protection, a single failure can cascade through the entire pipeline. I implemented <strong>circuit breakers</strong> for each agent, following the pattern from Michael Nygard's "Release It!".</p>
+    <p>After 3 consecutive failures, the circuit "opens" — subsequent calls to that agent are skipped for 60 seconds, returning a "circuit_breaker_open" status. After the reset timeout, the circuit goes "half_open" — one trial call is allowed. If it succeeds, the circuit closes; if it fails, it reopens. This prevents the pipeline from repeatedly invoking a broken agent and wasting time.</p>
+
+    <h2>Smart Caching (O(1) LRU)</h2>
+    <p>Many agents produce the same output for the same input. Rather than re-computing, I implemented a <strong>Least Recently Used (LRU) cache</strong> with O(1) operations using JavaScript's Map data structure. The Map maintains insertion order, so the oldest entry is always the first one iterated. When the cache is full, we delete the first entry (oldest) in O(1) time.</p>
+
+    <h2>Real-Time Progress Broadcasting</h2>
+    <p>One of the most important features for user experience is transparency. When a user uploads a dataset, they don't want to stare at a spinner for 30 seconds — they want to see what's happening. I implemented <strong>Server-Sent Events (SSE)</strong> to stream progress updates in real time. As each agent starts, runs, and completes, the server pushes an event to the client, which updates the DAG visualizer with status colors and timing information.</p>
+
+    <h2>Results</h2>
+    <p>The 50-agent pipeline processes a typical dataset (1,000 rows × 10 columns) in under 30 seconds. The parallel execution within stages means that the total time is roughly the sum of the longest agent in each stage, not the sum of all agents. With 50 agents across 7 stages, the effective parallelism ratio is about 7x — meaning the pipeline runs 7 times faster than sequential execution would.</p>
+    <p>But the real result isn't speed — it's depth. In 30 seconds, a user gets anomaly detection, forecasting, causal inference, clustering, regression, code generation, and a narrative report. That's the power of multi-agent orchestration: not one model trying to do everything, but 50 experts working together.</p>
+
+    <div class="article-back">
+      <a href="/blog/" class="btn btn-ghost btn-sm">← Back to Blog</a>
+    </div>
+  </div>
+</article>
+
+<footer><div class="container"><div class="footer-bottom"><p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p><p><a href="/" style="color:var(--accent);">← Home</a></p></div></div></footer>
+
+<script>
+const themeToggle = document.getElementById('themeToggle');
+const html = document.documentElement;
+html.className = localStorage.getItem('theme') || 'dark';
+themeToggle.addEventListener('click', () => { const isDark = html.classList.contains('dark'); html.className = isDark ? 'light' : 'dark'; localStorage.setItem('theme', isDark ? 'light' : 'dark'); themeToggle.querySelector('span').textContent = isDark ? '☀️' : '🌙'; });
+themeToggle.querySelector('span').textContent = html.classList.contains('dark') ? '🌙' : '☀️';
+document.getElementById('mobileToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
+window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50));
+</script>
+</body>
+</html>
