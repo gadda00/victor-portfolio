@@ -48,6 +48,10 @@ jobs:
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
+          X_BEARER_TOKEN: ${{ secrets.X_BEARER_TOKEN }}
+          X_OAUTH2_CLIENT_ID: ${{ secrets.X_OAUTH2_CLIENT_ID }}
+          X_OAUTH2_ACCESS_TOKEN: ${{ secrets.X_OAUTH2_ACCESS_TOKEN }}
+          X_OAUTH2_REFRESH_TOKEN: ${{ secrets.X_OAUTH2_REFRESH_TOKEN }}
           TIKTOK_CLIENT_ID: ${{ secrets.TIKTOK_CLIENT_ID }}
           TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
           TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
@@ -124,46 +128,110 @@ jobs:
                   print(f'  ❌ LinkedIn error: {e}')
                   results['linkedin'] = False
           
-          # ─── X (Twitter) ──────────────────────────────────
-          x_key = os.environ.get('X_API_KEY', '')
-          x_secret = os.environ.get('X_API_SECRET', '')
-          x_token = os.environ.get('X_ACCESS_TOKEN', '')
-          x_token_secret = os.environ.get('X_ACCESS_SECRET', '')
-          
-          if all([x_key, x_secret, x_token, x_token_secret]):
-              print('🐦 Posting to X...')
+          # ─── X (Twitter) — OAuth 2.0 with refresh token ───
+          x_refresh = os.environ.get('X_OAUTH2_REFRESH_TOKEN', '')
+          x_client_id = os.environ.get('X_OAUTH2_CLIENT_ID', '')
+
+          if x_refresh and x_client_id:
+              print('🐦 Posting to X (OAuth 2.0 with refresh)...')
               try:
-                  method = 'POST'
-                  base_url = 'https://api.twitter.com/2/tweets'
-                  oauth_params = {
-                      'oauth_consumer_key': x_key,
-                      'oauth_nonce': secrets.token_hex(16),
-                      'oauth_signature_method': 'HMAC-SHA256',
-                      'oauth_timestamp': str(int(time.time())),
-                      'oauth_token': x_token,
-                      'oauth_version': '1.0',
-                  }
-                  body = json.dumps({'text': message[:280]}).encode()
-                  params_str = '&'.join(f'{quote(k, safe=\"\")}={quote(v, safe=\"\")}' for k, v in sorted(oauth_params.items()))
-                  base_string = f'{method}&{quote(base_url, safe=\"\")}&{quote(params_str, safe=\"\")}'
-                  signing_key = f'{quote(x_secret, safe=\"\")}&{quote(x_token_secret, safe=\"\")}'
-                  signature = base64.b64encode(hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha256).digest()).decode()
-                  oauth_params['oauth_signature'] = signature
-                  auth_header = 'OAuth ' + ', '.join(f'{k}=\"{quote(v, safe=\"\")}\"' for k, v in sorted(oauth_params.items()))
-                  req = urllib.request.Request(base_url, data=body,
-                      headers={'Authorization': auth_header, 'Content-Type': 'application/json'}, method='POST')
-                  urllib.request.urlopen(req)
-                  print('  ✅ X posted!')
-                  results['twitter'] = True
+                  # Step 1: Refresh the access token (access tokens expire in 2 hours)
+                  # See: https://developer.x.com/en/docs/authentication/oauth-2-0/authorization-code
+                  refresh_data = urllib.parse.urlencode({
+                      'refresh_token': x_refresh,
+                      'grant_type': 'refresh_token',
+                      'client_id': x_client_id,
+                  }).encode()
+                  refresh_req = urllib.request.Request(
+                      'https://api.twitter.com/2/oauth2/token',
+                      data=refresh_data,
+                      headers={
+                          'Content-Type': 'application/x-www-form-urlencoded',
+                      },
+                      method='POST'
+                  )
+                  refresh_resp = urllib.request.urlopen(refresh_req, timeout=15)
+                  refresh_json = json.loads(refresh_resp.read().decode())
+                  access_token = refresh_json.get('access_token')
+                  new_refresh = refresh_json.get('refresh_token', x_refresh)
+
+                  if not access_token:
+                      print('  ❌ Could not refresh X access token')
+                      print(f'     Response: {refresh_json}')
+                      results['twitter'] = False
+                  else:
+                      print('  ✓ Refreshed X access token')
+
+                      # Step 2: Post the tweet using the fresh access token
+                      body = json.dumps({'text': message[:280]}).encode()
+                      req = urllib.request.Request(
+                          'https://api.twitter.com/2/tweets',
+                          data=body,
+                          headers={
+                              'Authorization': f'Bearer {access_token}',
+                              'Content-Type': 'application/json',
+                          },
+                          method='POST'
+                      )
+                      post_resp = urllib.request.urlopen(req, timeout=15)
+                      post_json = json.loads(post_resp.read().decode())
+                      tweet_id = post_json.get('data', {}).get('id', 'unknown')
+                      print(f'  ✅ X posted! Tweet ID: {tweet_id}')
+                      print(f'     URL: https://x.com/victor_ndunda/status/{tweet_id}')
+                      results['twitter'] = True
               except urllib.error.HTTPError as e:
                   body = e.read().decode()[:500]
                   print(f'  ❌ X HTTP {e.code}: {body}')
                   if e.code == 401:
-                      print('  💡 Token expired or invalid. Regenerate at: https://developer.x.com > App > Keys and Tokens')
+                      print('  💡 Refresh token expired (6-month limit). Regenerate at:')
+                      print('     https://developer.x.com > App > OAuth 2.0 > Generate tokens')
+                  elif e.code == 403:
+                      print('  💡 App may not have tweet write permission. Check:')
+                      print('     https://developer.x.com > App > App settings > Permissions')
                   results['twitter'] = False
               except Exception as e:
                   print(f'  ❌ X error: {e}')
                   results['twitter'] = False
+          else:
+              # Fallback: try OAuth 1.0a if old-style tokens are set (legacy)
+              x_key = os.environ.get('X_API_KEY', '')
+              x_secret = os.environ.get('X_API_SECRET', '')
+              x_token = os.environ.get('X_ACCESS_TOKEN', '')
+              x_token_secret = os.environ.get('X_ACCESS_SECRET', '')
+              if all([x_key, x_secret, x_token, x_token_secret]):
+                  print('🐦 Posting to X (OAuth 1.0a legacy)...')
+                  try:
+                      method = 'POST'
+                      base_url = 'https://api.twitter.com/2/tweets'
+                      oauth_params = {
+                          'oauth_consumer_key': x_key,
+                          'oauth_nonce': secrets.token_hex(16),
+                          'oauth_signature_method': 'HMAC-SHA256',
+                          'oauth_timestamp': str(int(time.time())),
+                          'oauth_token': x_token,
+                          'oauth_version': '1.0',
+                      }
+                      body = json.dumps({'text': message[:280]}).encode()
+                      params_str = '&'.join(f'{quote(k, safe=\"\")}={quote(v, safe=\"\")}' for k, v in sorted(oauth_params.items()))
+                      base_string = f'{method}&{quote(base_url, safe=\"\")}&{quote(params_str, safe=\"\")}'
+                      signing_key = f'{quote(x_secret, safe=\"\")}&{quote(x_token_secret, safe=\"\")}'
+                      signature = base64.b64encode(hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha256).digest()).decode()
+                      oauth_params['oauth_signature'] = signature
+                      auth_header = 'OAuth ' + ', '.join(f'{k}=\"{quote(v, safe=\"\")}\"' for k, v in sorted(oauth_params.items()))
+                      req = urllib.request.Request(base_url, data=body,
+                          headers={'Authorization': auth_header, 'Content-Type': 'application/json'}, method='POST')
+                      urllib.request.urlopen(req)
+                      print('  ✅ X posted!')
+                      results['twitter'] = True
+                  except urllib.error.HTTPError as e:
+                      body = e.read().decode()[:500]
+                      print(f'  ❌ X HTTP {e.code}: {body}')
+                      results['twitter'] = False
+                  except Exception as e:
+                      print(f'  ❌ X error: {e}')
+                      results['twitter'] = False
+              else:
+                  print('🐦 X: No OAuth 2.0 refresh token or OAuth 1.0a credentials set — skipping')
           
           # ─── TikTok (Content Posting API) ────────────────
           # Note: TikTok requires pre-generated video content.
@@ -195,9 +263,11 @@ jobs:
           echo ""
           echo "Active platforms:"
           echo "  LinkedIn: ✅ (LINKEDIN_ACCESS_TOKEN)"
-          echo "  X/Twitter: ✅ (X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET)"
-          echo "  TikTok: ⏳ (TIKTOK_CLIENT_ID, TIKTOK_CLIENT_SECRET, TIKTOK_ACCESS_TOKEN) — video pipeline pending"
+          echo "  X/Twitter: ✅ (X_OAUTH2_CLIENT_ID, X_OAUTH2_REFRESH_TOKEN — OAuth 2.0 with auto-refresh)"
+          echo "  TikTok: ⏳ (TIKTOK_CLIENT_ID, TIKTOK_CLIENT_SECRET, TIKTOK_ACCESS_TOKEN) — under review"
           echo ""
           echo "Facebook: ❌ Removed (abandoned per product decision)"
           echo ""
           echo "Note: If any platform fails, check token permissions (see SOCIAL-CMS.md)"
+          echo "X OAuth 2.0 refresh tokens expire in 6 months — regenerate at:"
+          echo "  https://developer.x.com > App > OAuth 2.0 > Generate tokens"
