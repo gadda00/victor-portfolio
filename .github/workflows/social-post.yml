@@ -66,7 +66,7 @@ jobs:
             echo "=== Posting: $TITLE ==="
             
             python3 -c "
-          import json, os, sys, urllib.request, urllib.parse, base64, hmac, hashlib, time, secrets
+          import json, os, sys, urllib.request, urllib.parse, urllib.error, base64, hmac, hashlib, time, secrets
           from urllib.parse import quote
           
           title = '''$TITLE'''
@@ -85,7 +85,7 @@ jobs:
                       headers={'Authorization': f'Bearer {li_token}'})
                   resp = urllib.request.urlopen(req)
                   person_id = json.loads(resp.read()).get('sub', '')
-                  
+
                   if person_id:
                       post_data = {
                           'author': f'urn:li:person:{person_id}',
@@ -114,6 +114,12 @@ jobs:
                   else:
                       print('  ❌ Could not get LinkedIn person ID')
                       results['linkedin'] = False
+              except urllib.error.HTTPError as e:
+                  body = e.read().decode()[:500]
+                  print(f'  ❌ LinkedIn HTTP {e.code}: {body}')
+                  if e.code == 401:
+                      print('  💡 Token expired or invalid. Regenerate at: https://developer.linkedin.com > My Apps > Auth')
+                  results['linkedin'] = False
               except Exception as e:
                   print(f'  ❌ LinkedIn error: {e}')
                   results['linkedin'] = False
@@ -149,6 +155,12 @@ jobs:
                   urllib.request.urlopen(req)
                   print('  ✅ X posted!')
                   results['twitter'] = True
+              except urllib.error.HTTPError as e:
+                  body = e.read().decode()[:500]
+                  print(f'  ❌ X HTTP {e.code}: {body}')
+                  if e.code == 401:
+                      print('  💡 Token expired or invalid. Regenerate at: https://developer.x.com > App > Keys and Tokens')
+                  results['twitter'] = False
               except Exception as e:
                   print(f'  ❌ X error: {e}')
                   results['twitter'] = False
