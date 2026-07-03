@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Blog — Victor Ndunda | AI Engineer & Researcher</title>
+<title>Articles — Victor Ndunda | AI Engineer & Researcher</title>
 <meta name="description" content="Research, technical deep-dives, and insights on multi-agent AI, agricultural intelligence, and building production systems by Victor Ndunda." />
 <meta name="author" content="Victor Ndunda" />
-<meta name="keywords" content="Victor Ndunda blog, AI research, multi-agent systems, agricultural AI, Kenya, KilimoPRO, Busara AI" />
-<link rel="canonical" href="https://victorndunda.com/blog/" />
+<meta name="keywords" content="Victor Ndunda articles, AI research, multi-agent systems, agricultural AI, Kenya, KilimoPRO, Busara AI" />
+<link rel="canonical" href="https://victorndunda.com/articles/" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Blog — Victor Ndunda" />
+<meta property="og:title" content="Articles — Victor Ndunda" />
 <meta property="og:description" content="Research, technical deep-dives, and insights on multi-agent AI, agricultural intelligence, and building production systems." />
-<meta property="og:url" content="https://victorndunda.com/blog/" />
+<meta property="og:url" content="https://victorndunda.com/articles/" />
 <meta property="og:site_name" content="Victor Ndunda" />
 <meta property="og:locale" content="en_US" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Blog — Victor Ndunda" />
+<meta name="twitter:title" content="Articles — Victor Ndunda" />
 <meta name="twitter:description" content="Research, technical deep-dives, and insights on multi-agent AI, agricultural intelligence, and building production systems." />
 <meta name="theme-color" content="#0a0e1a" />
 <meta name="color-scheme" content="dark light" />
@@ -37,8 +37,8 @@
 {
   "@context": "https://schema.org",
   "@type": "Blog",
-  "name": "Victor Ndunda — Blog",
-  "url": "https://victorndunda.com/blog/",
+  "name": "Victor Ndunda — Articles",
+  "url": "https://victorndunda.com/articles/",
   "description": "Research, technical deep-dives, and insights on multi-agent AI, agricultural intelligence, and building production systems.",
   "author": { "@type": "Person", "name": "Victor Ndunda", "url": "https://victorndunda.com" }
 }
@@ -49,10 +49,11 @@
   "@type": "BreadcrumbList",
   "itemListElement": [
     { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://victorndunda.com/" },
-    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://victorndunda.com/blog/" }
+    { "@type": "ListItem", "position": 2, "name": "Articles", "item": "https://victorndunda.com/articles/" }
   ]
 }
 </script>
+
 <style>
 .blog-hero { padding: 8rem 2rem 4rem; text-align: center; }
 .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 0 2rem 6rem; }
@@ -88,8 +89,7 @@
       <a href="/" class="nav-link">Home</a>
       <a href="/#about" class="nav-link">About</a>
       <a href="/#work" class="nav-link">Work</a>
-      <a href="/blog/" class="nav-link active">Blog</a>
-      <a href="/articles/" class="nav-link">Articles</a>
+      <a href="/articles/" class="nav-link active">Articles</a>
       <a href="/#contact" class="nav-link">Contact</a>
     </div>
     <div class="nav-actions">
@@ -119,34 +119,32 @@
 </footer>
 
 <script>
-// Blog posts data
+// Blog posts data — single source of truth (mirrored in /blog/index.html)
 const posts = [
-  { tag: 'AI', tagClass: 'ai', title: 'Building a 50-Agent Multi-Agent DAG Pipeline', excerpt: 'How I designed and built Busara AI\'s 7-stage parallel DAG pipeline with 50 specialized agents — from Kahn\'s topological sort to circuit breakers and O(1) LRU caching.', date: '2026-07-01', readTime: '12 min', content: 'articles/building-50-agent-dag.html' },
-  { tag: 'Agriculture', tagClass: 'agri', title: 'KilimoPRO: AI for 5 Million Kenyan Farmers', excerpt: 'Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data.', date: '2026-06-28', readTime: '15 min', content: 'articles/kilimopro-ai-for-farmers.html' },
-  { tag: 'Research', tagClass: 'research', title: 'Lessons from China\'s National Smart Agriculture Action Plan', excerpt: 'What Kenya can learn from China\'s space-air-ground monitoring networks, large agricultural models, and the 2024-2028 smart agriculture framework.', date: '2026-06-25', readTime: '10 min', content: 'articles/chinese-smart-agriculture.html' },
-  { tag: 'Engineering', tagClass: 'engineering', title: 'Real Math, Not Vibes: Statistical Algorithms in TypeScript', excerpt: 'Holt-Winters triple exponential smoothing, OLS regression via normal equation, K-Means++ with silhouette scoring — all from scratch in TypeScript.', date: '2026-06-20', readTime: '18 min', content: 'articles/real-math-not-vibes.html' },
-  { tag: 'AI', tagClass: 'ai', title: 'The Multi-LLM Council: When One AI Isn\'t Enough', excerpt: 'How KilimoPRO uses 5 expert AI personas (agronomist, economist, climate scientist, extension officer, risk manager) to deliberate complex farming decisions.', date: '2026-06-15', readTime: '8 min', content: 'articles/multi-llm-council.html' },
-  { tag: 'Research', tagClass: 'research', title: 'Quantitative Finance for Agricultural Markets', excerpt: 'Applying EWMA volatility, GARCH(1,1), Value at Risk (VaR), and RSI from financial markets to agricultural commodity price forecasting.', date: '2026-06-10', readTime: '14 min', content: 'articles/quant-finance-for-agriculture.html' },
-  { tag: 'Agriculture', tagClass: 'agri', title: '22 Data Sources for Kenyan Agricultural Intelligence', excerpt: 'A comprehensive inventory of verified, operational data APIs: KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, Sentinel-2, CHIRPS, ARDC, and more.', date: '2026-06-05', readTime: '11 min', content: 'articles/22-data-sources.html' },
-  { tag: 'Engineering', tagClass: 'engineering', title: 'On-Device Crop Disease Detection with TensorFlow Lite', excerpt: 'Training MobileNetV3 on the PlantVillage dataset, quantizing to int8, and running inference on low-end Android phones — completely offline.', date: '2026-06-01', readTime: '13 min', content: 'articles/on-device-disease-detection.html' },
-  { tag: 'Agriculture', tagClass: 'agri', title: 'NASIP 2026-2030: The KES 1.08 Trillion Opportunity', excerpt: 'Deep analysis of Kenya\'s National Agri-Food Systems Investment Plan and how technology platforms can operationalize its 9 flagship programs.', date: '2026-05-28', readTime: '16 min', content: 'articles/nasip-2026-2030-opportunity.html' },
+  { tag: 'AI', tagClass: 'ai', title: 'Building a 50-Agent Multi-Agent DAG Pipeline', excerpt: 'How I designed and built Busara AI\'s 7-stage parallel DAG pipeline with 50 specialized agents — from Kahn\'s topological sort to circuit breakers and O(1) LRU caching.', date: '2026-07-01', readTime: '12 min', content: '/blog/articles/building-50-agent-dag.html' },
+  { tag: 'Agriculture', tagClass: 'agri', title: 'KilimoPRO: AI for 5 Million Kenyan Farmers', excerpt: 'Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data.', date: '2026-06-28', readTime: '15 min', content: '/blog/articles/kilimopro-ai-for-farmers.html' },
+  { tag: 'Research', tagClass: 'research', title: 'Lessons from China\'s National Smart Agriculture Action Plan', excerpt: 'What Kenya can learn from China\'s space-air-ground monitoring networks, large agricultural models, and the 2024-2028 smart agriculture framework.', date: '2026-06-25', readTime: '10 min', content: '/blog/articles/chinese-smart-agriculture.html' },
+  { tag: 'Engineering', tagClass: 'engineering', title: 'Real Math, Not Vibes: Statistical Algorithms in TypeScript', excerpt: 'Holt-Winters triple exponential smoothing, OLS regression via normal equation, K-Means++ with silhouette scoring — all from scratch in TypeScript.', date: '2026-06-20', readTime: '18 min', content: '/blog/articles/real-math-not-vibes.html' },
+  { tag: 'AI', tagClass: 'ai', title: 'The Multi-LLM Council: When One AI Isn\'t Enough', excerpt: 'How KilimoPRO uses 5 expert AI personas (agronomist, economist, climate scientist, extension officer, risk manager) to deliberate complex farming decisions.', date: '2026-06-15', readTime: '8 min', content: '/blog/articles/multi-llm-council.html' },
+  { tag: 'Research', tagClass: 'research', title: 'Quantitative Finance for Agricultural Markets', excerpt: 'Applying EWMA volatility, GARCH(1,1), Value at Risk (VaR), and RSI from financial markets to agricultural commodity price forecasting.', date: '2026-06-10', readTime: '14 min', content: '/blog/articles/quant-finance-for-agriculture.html' },
+  { tag: 'Agriculture', tagClass: 'agri', title: '22 Data Sources for Kenyan Agricultural Intelligence', excerpt: 'A comprehensive inventory of verified, operational data APIs: KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, Sentinel-2, CHIRPS, ARDC, and more.', date: '2026-06-05', readTime: '11 min', content: '/blog/articles/22-data-sources.html' },
+  { tag: 'Engineering', tagClass: 'engineering', title: 'On-Device Crop Disease Detection with TensorFlow Lite', excerpt: 'Training MobileNetV3 on the PlantVillage dataset, quantizing to int8, and running inference on low-end Android phones — completely offline.', date: '2026-06-01', readTime: '13 min', content: '/blog/articles/on-device-disease-detection.html' },
+  { tag: 'Agriculture', tagClass: 'agri', title: 'NASIP 2026-2030: The KES 1.08 Trillion Opportunity', excerpt: 'Deep analysis of Kenya\'s National Agri-Food Systems Investment Plan and how technology platforms can operationalize its 9 flagship programs.', date: '2026-05-28', readTime: '16 min', content: '/blog/articles/nasip-2026-2030-opportunity.html' },
 ];
 
-// Render blog cards
 const grid = document.getElementById('blogGrid');
 grid.innerHTML = posts.map(p => `
-  <div class="blog-card" onclick="window.location.href='${p.content}'">
+  <article class="blog-card" onclick="window.location.href='${p.content}'" itemscope itemtype="https://schema.org/Article">
     <span class="blog-tag ${p.tagClass}">${p.tag}</span>
-    <h3>${p.title}</h3>
+    <h3 itemprop="headline">${p.title}</h3>
     <p>${p.excerpt}</p>
     <div class="blog-meta">
-      <span class="blog-date">${p.date} · ${p.readTime} read</span>
+      <span class="blog-date"><time itemprop="datePublished" datetime="${p.date}">${p.date}</time> · ${p.readTime} read</span>
       <span class="blog-read">Read →</span>
     </div>
-  </div>
+  </article>
 `).join('');
 
-// Theme toggle
 const themeToggle = document.getElementById('themeToggle');
 const html = document.documentElement;
 html.className = localStorage.getItem('theme') || 'dark';
@@ -158,12 +156,10 @@ themeToggle.addEventListener('click', () => {
 });
 themeToggle.querySelector('span').textContent = html.classList.contains('dark') ? '🌙' : '☀️';
 
-// Mobile menu
 document.getElementById('mobileToggle').addEventListener('click', () => {
   document.getElementById('navLinks').classList.toggle('open');
 });
 
-// Nav scroll
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
 });

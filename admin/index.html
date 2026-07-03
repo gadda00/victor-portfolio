@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Dashboard — Victor Ndunda</title>
+<meta name="description" content="Private admin dashboard for victorndunda.com. Authorized access only." />
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+<meta name="author" content="Victor Ndunda" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<link rel="canonical" href="https://victorndunda.com/admin/" />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2300d4ff'/%3E%3Cstop offset='1' stop-color='%23a855f7'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='%230a0e1a'/%3E%3Cpath d='M30 50 L45 65 L70 35' stroke='url(%23g)' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css" />
+<link rel="stylesheet" href="/admin/admin.css" />
+
+<!-- Security Headers (meta equivalents) -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="referrer" content="no-referrer" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" />
+<meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
+</head>
+<body>
+<div class="noise-overlay"></div>
+
+<!-- ═══ Auth Overlay ═══════════════════════════════════════════ -->
+<div id="authOverlay" class="auth-overlay hidden">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <svg width="64" height="64" viewBox="0 0 100 100" fill="none">
+        <defs>
+          <linearGradient id="authG" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#00d4ff"/>
+            <stop offset="0.5" stop-color="#a855f7"/>
+            <stop offset="1" stop-color="#10b981"/>
+          </linearGradient>
+        </defs>
+        <rect width="100" height="100" rx="22" fill="#0a0e1a" opacity="0.6"/>
+        <path d="M28 50 L43 65 L72 32" stroke="url(#authG)" stroke-width="8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>Admin Dashboard</h2>
+    <p class="auth-subtitle">Sign in with your Google account to access the private admin area.<br/>You'll be prompted to choose which account to use.</p>
+
+    <div id="googleSignInBtn" style="display:flex;justify-content:center;margin-bottom:1rem;"></div>
+
+    <div style="display:flex;justify-content:center;gap:0.5rem;margin-top:0.5rem">
+      <button id="manualSignInBtn" class="auth-google-btn" style="display:none">
+        <svg viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Choose an account
+      </button>
+    </div>
+
+    <p class="auth-note">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      Authorized access only · mututandunda@gmail.com
+    </p>
+    <div class="auth-error" id="authError"></div>
+
+    <div style="margin-top:1.5rem;padding-top:1.5rem;border-top:1px solid var(--border);font-size:0.7rem;color:var(--text-dim);line-height:1.5">
+      <div style="display:flex;align-items:center;gap:0.375rem;justify-content:center;margin-bottom:0.375rem">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        <span>Protected by Google OAuth 2.0</span>
+      </div>
+      30-minute idle timeout · Account selection required · CSP-protected
+    </div>
+  </div>
+</div>
+
+<!-- ═══ Admin App ═════════════════════════════════════════════ -->
+<div id="adminApp" class="admin-app">
+  <div class="admin-shell">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <a href="/">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
+            <defs><linearGradient id="sideG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+            <circle cx="50" cy="50" r="14" fill="url(#sideG)"/>
+            <circle cx="20" cy="25" r="5" fill="url(#sideG)"/><circle cx="80" cy="25" r="5" fill="url(#sideG)"/>
+            <circle cx="20" cy="75" r="5" fill="url(#sideG)"/><circle cx="80" cy="75" r="5" fill="url(#sideG)"/>
+          </svg>
+          <span>Victor Ndunda</span>
+          <span class="badge">Admin</span>
+        </a>
+      </div>
+
+      <div class="sidebar-user">
+        <img id="sidebarUserAvatar" src="" alt="" />
+        <div class="sidebar-user-info">
+          <div class="name" id="sidebarUserName">—</div>
+          <div class="email" id="sidebarUserEmail">—</div>
+        </div>
+      </div>
+
+      <div class="sidebar-section-label">Main</div>
+      <nav class="sidebar-nav">
+        <a class="sidebar-nav-item active" data-section="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a class="sidebar-nav-item" data-section="content">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span>Content</span>
+          <span class="count" id="navContentCount">9</span>
+        </a>
+        <a class="sidebar-nav-item" data-section="analytics">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+          <span>Analytics</span>
+        </a>
+        <a class="sidebar-nav-item" data-section="social">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg>
+          <span>Social Media</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-section-label">Tools</div>
+      <nav class="sidebar-nav">
+        <a class="sidebar-nav-item" data-section="seo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <span>SEO Tools</span>
+        </a>
+        <a class="sidebar-nav-item" data-section="security">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <span>Security</span>
+        </a>
+        <a class="sidebar-nav-item" data-section="jobs">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          <span>Job Portal</span>
+        </a>
+        <a class="sidebar-nav-item" data-section="settings">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-status">
+          <span class="dot"></span>
+          <span>All systems operational</span>
+        </div>
+        <button class="sidebar-logout" onclick="logout()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Sign Out
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main content -->
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <button class="admin-mobile-toggle" id="mobileToggle">☰</button>
+          <div>
+            <h1 id="topbarTitle">Dashboard Overview</h1>
+            <div class="subtitle" id="topbarSubtitle">Real-time site metrics and recent activity</div>
+          </div>
+        </div>
+        <div class="admin-topbar-actions">
+          <button class="theme-toggle" id="themeToggle" style="background:var(--bg-card);border:1px solid var(--border);border-radius:10px;padding:0.5rem 0.75rem;cursor:pointer;color:var(--text);font-family:inherit"><span>🌙</span></button>
+          <a class="admin-btn" href="/" target="_blank">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            View Site
+          </a>
+        </div>
+      </div>
+
+      <!-- Overview section -->
+      <section class="admin-section active" id="section-overview">
+        <div class="stats-grid" id="statsGrid"></div>
+
+        <div class="admin-grid-2">
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Recent Activity</h2>
+            </div>
+            <div class="activity-feed" id="activityFeed"></div>
+          </div>
+
+          <div class="admin-card">
+            <div class="admin-card-header">
+              <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Recent Logins</h2>
+            </div>
+            <div id="recentLogins"></div>
+          </div>
+        </div>
+
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Quick Actions</h2>
+          </div>
+          <div class="quick-actions" id="quickActions"></div>
+        </div>
+      </section>
+
+      <!-- Content section -->
+      <section class="admin-section" id="section-content">
+        <div class="admin-card">
+          <div class="admin-card-header">
+            <h2><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Published Articles</h2>
+            <a class="admin-btn primary" href="https://github.com/gadda00/victor-portfolio/new/main/blog/articles" target="_blank">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              New Article
+            </a>
+          </div>
+          <div class="article-list" id="articleList"></div>
+        </div>
+      </section>
+
+      <!-- Analytics section -->
+      <section class="admin-section" id="section-analytics">
+        <div id="analyticsContent"></div>
+      </section>
+
+      <!-- Social section -->
+      <section class="admin-section" id="section-social">
+        <div id="socialContent"></div>
+      </section>
+
+      <!-- SEO section -->
+      <section class="admin-section" id="section-seo">
+        <div id="seoContent"></div>
+      </section>
+
+      <!-- Security section -->
+      <section class="admin-section" id="section-security">
+        <div id="securityContent"></div>
+      </section>
+
+      <!-- Jobs section -->
+      <section class="admin-section" id="section-jobs">
+        <div id="jobsContent"></div>
+      </section>
+
+      <!-- Settings section -->
+      <section class="admin-section" id="section-settings">
+        <div id="settingsContent"></div>
+      </section>
+
+      <footer style="margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);text-align:center;color:var(--text-dim);font-size:0.75rem">
+        <p>© 2026 Victor Ndunda · Admin Dashboard v1.0 · <a href="/" style="color:var(--accent)">victorndunda.com</a></p>
+      </footer>
+    </main>
+
+  </div>
+</div>
+
+<!-- Google Identity Services -->
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<!-- Blog posts data (shared) -->
+<script>
+const BLOG_POSTS = [
+  { tag: 'AI', tagClass: 'ai', title: 'Building a 50-Agent Multi-Agent DAG Pipeline', date: '2026-07-01', readTime: '12 min', content: '/blog/articles/building-50-agent-dag.html' },
+  { tag: 'Agriculture', tagClass: 'agri', title: 'KilimoPRO: AI for 5 Million Kenyan Farmers', date: '2026-06-28', readTime: '15 min', content: '/blog/articles/kilimopro-ai-for-farmers.html' },
+  { tag: 'Research', tagClass: 'research', title: 'Lessons from China\'s National Smart Agriculture Action Plan', date: '2026-06-25', readTime: '10 min', content: '/blog/articles/chinese-smart-agriculture.html' },
+  { tag: 'Engineering', tagClass: 'engineering', title: 'Real Math, Not Vibes: Statistical Algorithms in TypeScript', date: '2026-06-20', readTime: '18 min', content: '/blog/articles/real-math-not-vibes.html' },
+  { tag: 'AI', tagClass: 'ai', title: 'The Multi-LLM Council: When One AI Isn\'t Enough', date: '2026-06-15', readTime: '8 min', content: '/blog/articles/multi-llm-council.html' },
+  { tag: 'Research', tagClass: 'research', title: 'Quantitative Finance for Agricultural Markets', date: '2026-06-10', readTime: '14 min', content: '/blog/articles/quant-finance-for-agriculture.html' },
+  { tag: 'Agriculture', tagClass: 'agri', title: '22 Data Sources for Kenyan Agricultural Intelligence', date: '2026-06-05', readTime: '11 min', content: '/blog/articles/22-data-sources.html' },
+  { tag: 'Engineering', tagClass: 'engineering', title: 'On-Device Crop Disease Detection with TensorFlow Lite', date: '2026-06-01', readTime: '13 min', content: '/blog/articles/on-device-disease-detection.html' },
+  { tag: 'Agriculture', tagClass: 'agri', title: 'NASIP 2026-2030: The KES 1.08 Trillion Opportunity', date: '2026-05-28', readTime: '16 min', content: '/blog/articles/nasip-2026-2030-opportunity.html' },
+];
+</script>
+
+<!-- Admin logic -->
+<script src="/admin/admin.js"></script>
+</body>
+</html>

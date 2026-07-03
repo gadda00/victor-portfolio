@@ -44,15 +44,17 @@ jobs:
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
-          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          TIKTOK_CLIENT_ID: ${{ secrets.TIKTOK_CLIENT_ID }}
+          TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
+          TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
         run: |
           for FILE in ${{ steps.detect.outputs.files }}; do
             FILENAME=$(basename "$FILE")
             TITLE=$(grep -oP '<title>\K[^<]+' "$FILE" | sed 's/ — Victor Ndunda//' || echo "New Article")
+            DESC=$(grep -oP '<meta name="description" content="\K[^"]+' "$FILE" || echo "")
             URL="https://victorndunda.com/blog/articles/$FILENAME"
             MESSAGE="📝 New article: $TITLE
-            
+          
           $URL
           
           #AI #MachineLearning #Tech #Kenya #Agriculture"
@@ -64,6 +66,7 @@ jobs:
           from urllib.parse import quote
           
           title = '''$TITLE'''
+          desc = '''$DESC'''
           url = '$URL'
           message = '''$MESSAGE'''
           
@@ -74,7 +77,6 @@ jobs:
           if li_token:
               print('💼 Posting to LinkedIn...')
               try:
-                  # Get person ID
                   req = urllib.request.Request('https://api.linkedin.com/v2/userinfo',
                       headers={'Authorization': f'Bearer {li_token}'})
                   resp = urllib.request.urlopen(req)
@@ -90,7 +92,7 @@ jobs:
                                   'shareMediaCategory': 'ARTICLE',
                                   'media': [{
                                       'status': 'READY',
-                                      'description': {'text': title},
+                                      'description': {'text': desc or title},
                                       'originalUrl': url,
                                       'title': {'text': title}
                                   }]
@@ -147,26 +149,24 @@ jobs:
                   print(f'  ❌ X error: {e}')
                   results['twitter'] = False
           
-          # ─── Facebook ─────────────────────────────────────
-          fb_page_id = os.environ.get('FB_PAGE_ID', '')
-          fb_token = os.environ.get('FB_PAGE_ACCESS_TOKEN', '')
-          
-          if fb_page_id and fb_token:
-              print('📘 Posting to Facebook...')
-              try:
-                  params = urllib.parse.urlencode({'message': message, 'link': url, 'access_token': fb_token})
-                  post_url = f'https://graph.facebook.com/v21.0/{fb_page_id}/feed?{params}'
-                  req = urllib.request.Request(post_url, method='POST')
-                  urllib.request.urlopen(req)
-                  print('  ✅ Facebook posted!')
-                  results['facebook'] = True
-              except Exception as e:
-                  print(f'  ❌ Facebook error: {e}')
-                  results['facebook'] = False
+          # ─── TikTok (Content Posting API) ────────────────
+          # Note: TikTok requires pre-generated video content.
+          # This stub logs the intent; full video generation requires a media pipeline.
+          tt_token = os.environ.get('TIKTOK_ACCESS_TOKEN', '')
+          if tt_token:
+              print('🎵 TikTok: article logged for video pipeline (text-to-video not yet automated).')
+              print(f'  Title: {title}')
+              print(f'  URL: {url}')
+              # When video pipeline is ready:
+              # POST https://open.tiktokapis.com/v2/post/publish/video/init/
+              # Headers: Authorization: Bearer {tt_token}
+              # Body: { title, privacy_level, video_url }
+              results['tiktok'] = 'pending-video-pipeline'
           
           print(f'\\n=== Summary ===')
           for platform, success in results.items():
-              print(f'  {platform}: {\"✅\" if success else \"❌\"} ')
+              status = '✅' if success is True else ('⏳' if success == 'pending-video-pipeline' else '❌')
+              print(f'  {platform}: {status}')
           "
           done
           
@@ -177,10 +177,11 @@ jobs:
           echo "Articles processed:"
           echo "${{ steps.detect.outputs.files }}"
           echo ""
-          echo "Secrets configured:"
+          echo "Active platforms:"
           echo "  LinkedIn: ✅ (LINKEDIN_ACCESS_TOKEN)"
           echo "  X/Twitter: ✅ (X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET)"
-          echo "  Facebook: ✅ (FB_PAGE_ID, FB_PAGE_ACCESS_TOKEN)"
+          echo "  TikTok: ⏳ (TIKTOK_CLIENT_ID, TIKTOK_CLIENT_SECRET, TIKTOK_ACCESS_TOKEN) — video pipeline pending"
           echo ""
-          echo "Note: If any platform fails, check that the tokens have"
-          echo "the correct permissions (see SOCIAL-CMS.md for details)"
+          echo "Facebook: ❌ Removed (abandoned per product decision)"
+          echo ""
+          echo "Note: If any platform fails, check token permissions (see SOCIAL-CMS.md)"

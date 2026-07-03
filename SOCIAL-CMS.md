@@ -2,12 +2,24 @@
 
 ## Overview
 
-This document describes the social media automation and blog content management system for Victor Ndunda's portfolio at victorndunda.com.
+This document describes the social media automation and blog content management system for Victor Ndunda's portfolio at [victorndunda.com](https://victorndunda.com).
+
+## Architecture Summary
+
+| Component | Status | Notes |
+|---|---|---|
+| Blog CMS | ✅ Active | File-based, 9 articles live |
+| LinkedIn auto-post | ✅ Active | LinkedIn Share API |
+| X (Twitter) auto-post | ✅ Active | X API v2, OAuth 1.0a |
+| TikTok auto-post | ⏳ Pending | Credentials staged; video pipeline TBD |
+| Facebook auto-post | ❌ Abandoned | Removed per product decision (2026-07-03) |
+| Admin dashboard | ✅ Active | `/admin/` (Google OAuth, private) |
+| Job portal | ✅ Active | `/jobs/` (Google OAuth, private) |
 
 ## Blog Content Management
 
 ### Architecture
-The blog uses a file-based CMS approach — articles are HTML files in `/blog/articles/`. To publish a new article:
+The blog uses a file-based CMS approach — articles are HTML files in `/blog/articles/` (also accessible via `/articles/`). To publish a new article:
 
 1. Create a new HTML file in `/blog/articles/` using the article template
 2. Add the article metadata to the `posts` array in `/blog/index.html`
@@ -20,6 +32,7 @@ The blog CMS is designed to work with AI tools for content generation:
 2. **Draft**: Use LLM (GLM-4.6, GPT-4, or Claude) to write the article
 3. **Format**: Convert to HTML using the article template
 4. **Publish**: Push to GitHub
+5. **Auto-post**: GitHub Actions triggers social media posting on push
 
 ### SEO Optimization
 Each article includes:
@@ -32,138 +45,79 @@ Each article includes:
 
 ## Social Media Auto-Posting
 
-### Overview
-The social media automation system auto-posts blog articles to:
-- **X (Twitter)** — via X API v2
-- **LinkedIn** — via LinkedIn Share API
-- **Facebook** — via Facebook Graph API (Page posts)
-- **TikTok** — via TikTok Content Posting API
+### Active Platforms
 
-### Setup Requirements
+#### 1. LinkedIn API
+- **API**: LinkedIn Share API (`w_member_social` scope)
+- **Endpoint**: `POST https://api.linkedin.com/v2/ugcPosts`
+- **Auth**: OAuth 2.0 Bearer Token
+- **Secret stored**: `LINKEDIN_ACCESS_TOKEN`
+- **To refresh token**: Visit https://developer.linkedin.com/ > My Apps > Victorndunda > Auth > Generate Access Token
+- **Required scopes**: `w_member_social`, `openid`, `profile`
 
-#### 1. X (Twitter) API
+#### 2. X (Twitter) API v2
 - **API**: X API v2
-- **Free tier**: 17 posts per 24 hours
-- **Status**: ⚠️ App credentials stored but need OAuth 1.0a user tokens
+- **Endpoint**: `POST https://api.twitter.com/2/tweets`
+- **Auth**: OAuth 1.0a User Context (HMAC-SHA256 signing)
+- **Rate limit**: 17 posts per 24 hours (Free tier)
 - **Secrets stored**: `X_API_KEY`, `X_API_SECRET`, `X_ACCESS_TOKEN`, `X_ACCESS_SECRET`
-- **Current credentials are**: OAuth 2.0 Client ID/Secret + Consumer Key/Secret
 - **To get OAuth 1.0a tokens**: Visit https://developer.x.com/ > App > Keys and Tokens > Generate Access Token & Secret
-- **Note**: The current credentials may be OAuth 2.0 only. For posting tweets, you need OAuth 1.0a User Context tokens (Access Token + Access Token Secret)
 
-#### 2. LinkedIn API
-- **API**: LinkedIn Share API (w_member_social scope)
-- **Status**: ⚠️ Token stored but needs verification — may need to be regenerated
-- **Token stored as**: GitHub secret `LINKEDIN_ACCESS_TOKEN`
-- **To get a fresh token**: Visit https://developer.linkedin.com/ > My Apps > Victorndunda > Auth > Generate Access Token
-- **Required scope**: `w_member_social` (for posting) + `openid` + `profile` (for user info)
-
-#### 3. Facebook Graph API
-- **API**: Facebook Graph API v21.0 (Page Posts)
-- **App**: "Victorndunda" (App ID: 1005457702227257)
-- **Page**: facebook.com/profile.php?id=61591723585919
-- **Status**: ⚠️ App token stored but needs Page Access Token
-- **Current token**: App Token (APP_ID|APP_SECRET) — cannot post to pages
-- **To get Page Access Token**:
-  1. Visit https://developers.facebook.com/tools/explorer/
-  2. Select app "Victorndunda"
-  3. Add permissions: `pages_manage_posts`, `pages_read_engagement`
-  4. Click "Generate Access Token"
-  5. Select your Page (ID: 61591723585919)
-  6. Copy the Page Access Token
-  7. Update GitHub secret `FB_PAGE_ACCESS_TOKEN` with the new token
-- **Secrets stored**: `FB_PAGE_ID`, `FB_PAGE_ACCESS_TOKEN`
-
-#### 4. TikTok Content Posting API
+#### 3. TikTok Content Posting API (Staged)
 - **API**: TikTok Content Posting API
-- **Setup**:
-  1. Register a TikTok Developer app at developers.tiktok.com
-  2. Apply for Content Posting API access
-  3. Generate access token
-  4. Set environment variable: `TIKTOK_ACCESS_TOKEN`
+- **App name**: Victorrndunda
+- **Client ID**: `77z5e5d5lrrhnk` (stored as `TIKTOK_CLIENT_ID`)
+- **Client Secrets**: Two active secrets (key rotation)
+- **Domain verification token**: `tiktok-developers-site-verification=Vl0GJD45LLUlnpFfQ23udG6lANNqZy3R` (added to site `<meta>`)
+- **Access Token TTL**: 2 months (5,184,000 seconds)
+- **Endpoint**: `POST https://open.tiktokapis.com/v2/post/publish/video/init/`
+- **Status**: Credentials staged in workflow; video generation pipeline (text → short video) is pending
+- **Secrets to store**: `TIKTOK_CLIENT_ID`, `TIKTOK_CLIENT_SECRET`, `TIKTOK_ACCESS_TOKEN`
+- **Note**: TikTok requires pre-generated video content; article auto-post will trigger when video pipeline is built
 
-### Implementation
+### Abandoned Platforms
+
+#### Facebook (Abandoned 2026-07-03)
+- **Reason**: Product decision to consolidate social presence on LinkedIn, X, and TikTok
+- **Previous app ID**: 1005457702227257
+- **Action**: Removed from `social-post.yml` workflow; `FB_PAGE_ID` and `FB_PAGE_ACCESS_TOKEN` secrets may remain in GitHub but are no longer used
+
+### GitHub Actions Workflow
 
 The auto-posting runs as a GitHub Action on every push to `main` that includes new blog articles. The workflow:
 
 1. Detects new/modified files in `/blog/articles/`
 2. Extracts title, description, and URL from each article
-3. Posts to each social platform:
-   - **X**: "New article: {title} — {url}"
+3. Posts to each active platform:
    - **LinkedIn**: Professional post with article summary and URL
-   - **Facebook**: Page post with article title and URL
-   - **TikTok**: Video post (requires pre-generated video content)
+   - **X**: Tweet with article title and URL (≤280 chars)
+   - **TikTok**: Logs intent (video pipeline pending)
 4. Logs results to the GitHub Action output
 
-### GitHub Actions Workflow
+## Admin Dashboard (`/admin/`)
 
-Create `.github/workflows/social-post.yml`:
+A private admin area accessible only to `mututandunda@gmail.com` via Google OAuth with **account selection** (forces the Google account picker so the right account can be chosen from many).
 
-```yaml
-name: Auto-Post to Social Media
-on:
-  push:
-    branches: [main]
-    paths: ['blog/articles/**']
-jobs:
-  post:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-      - name: Detect new articles
-        id: detect
-        run: |
-          NEW_FILES=$(git diff --name-only HEAD~1 HEAD -- 'blog/articles/' | grep '\.html$' || true)
-          echo "files=$NEW_FILES" >> $GITHUB_OUTPUT
-      - name: Post to X
-        if: steps.detect.outputs.files != ''
-        run: |
-          # Parse article title and URL, then post to X API v2
-          # POST https://api.twitter.com/2/tweets
-          # Body: {"text": "New article: {title} — https://victorndunda.com/blog/articles/{filename}"}
-          echo "Posting to X..."
-      - name: Post to LinkedIn
-        if: steps.detect.outputs.files != ''
-        run: |
-          # POST https://api.linkedin.com/v2/ugcPosts
-          echo "Posting to LinkedIn..."
-      - name: Post to Facebook
-        if: steps.detect.outputs.files != ''
-        run: |
-          # POST https://graph.facebook.com/v25.0/{page_id}/feed
-          echo "Posting to Facebook..."
-```
+### Features
+- **Dashboard Overview**: Site stats, recent activity, quick actions
+- **Content Management**: List, view, and manage blog articles
+- **Analytics**: Page views, top content, traffic sources (privacy-friendly, no third-party tracking)
+- **Social Media**: View posting status, connected platforms
+- **SEO Tools**: Meta tag inspector, sitemap status, structured data validator
+- **Security Center**: Login attempts, session info, security headers status
+- **Job Portal Stats**: Aggregated job feed stats
 
-### API Details
+### Access
+- URL: `https://victorndunda.com/admin/`
+- Auth: Google OAuth 2.0 (GIS) with `prompt: 'select_account'`
+- Allowed email: `mututandunda@gmail.com`
+- Session: 30-minute idle timeout, persisted in `sessionStorage`
+- robots.txt: `Disallow: /admin/`
+- Meta: `noindex, nofollow, noarchive, nosnippet`
 
-#### X (Twitter) API v2
-- **Endpoint**: `POST https://api.twitter.com/2/tweets`
-- **Auth**: OAuth 1.0a User Context
-- **Body**: `{"text": "New article: Building a 50-Agent DAG Pipeline — https://victorndunda.com/blog/articles/building-50-agent-dag.html"}`
-- **Rate limit**: 17 requests per 24 hours (Free tier)
-- **Cost**: Free
+## Job Portal (`/jobs/`)
 
-#### LinkedIn Share API
-- **Endpoint**: `POST https://api.linkedin.com/v2/ugcPosts`
-- **Auth**: OAuth 2.0 Bearer Token (w_member_social scope)
-- **Body**: Article share with title, description, and URL
-- **Rate limit**: Not publicly documented, but generous for individual use
-- **Cost**: Free
-
-#### Facebook Graph API
-- **Endpoint**: `POST https://graph.facebook.com/v25.0/{page_id}/feed`
-- **Auth**: Page Access Token (pages_manage_posts permission)
-- **Body**: `{"message": "New article: {title}", "link": "{url}"}`
-- **Rate limit**: 200 calls per hour per user
-- **Cost**: Free
-
-#### TikTok Content Posting API
-- **Endpoint**: `POST https://open.tiktokapis.com/v2/post/publish/video/init/`
-- **Auth**: OAuth 2.0 Access Token
-- **Requirements**: Pre-generated video content (article summary as short video)
-- **Rate limit**: App-specific
-- **Cost**: Free
+Private job aggregation portal (existing). Same Google OAuth as admin.
 
 ## SEO Implementation
 
@@ -173,44 +127,99 @@ The portfolio includes structured data for Google Rich Results:
 1. **Person Schema** (index.html) — name, job title, worksFor, sameAs, address, knowsAbout
 2. **WebSite Schema** (index.html) — name, url, description, author
 3. **Article Schema** (each blog article) — headline, datePublished, author, publisher
+4. **BreadcrumbList** (blog + articles)
 
 ### Technical SEO
-- `robots.txt` — allows crawling of all pages except `/jobs/`
+- `robots.txt` — allows crawling; disallows `/admin/`, `/jobs/`
 - `sitemap.xml` — lists all public pages with lastmod dates
-- `.nojekyll` — prevents Jekyll processing (needed for /blog/ and /jobs/)
+- `.nojekyll` — prevents Jekyll processing
 - `canonical` URLs — prevents duplicate content issues
 - Open Graph + Twitter Card meta tags — for social sharing
 - Semantic HTML5 — proper heading hierarchy, article tags, nav tags
 - Mobile responsive — Google mobile-first indexing ready
-- Fast loading — no external dependencies except Google Fonts
+- Fast loading — minimal external dependencies (Google Fonts only)
 - HTTPS enforced — via GitHub Pages
+- TikTok site verification meta tag
 
 ### Content SEO
 - Target keywords: "Victor Ndunda", "AI Engineer Nairobi", "Busara AI", "KilimoPRO", "multi-agent AI", "agricultural intelligence Kenya"
 - Meta descriptions on every page (150-160 characters)
-- Image alt texts (when images are added)
 - Internal linking between blog articles
 - External links to GitHub repos and live projects
 
-## Google OAuth Setup for Job Portal
+## Security Implementation
 
-### How to set up Google Sign-In for the private job portal:
+### Headers & Meta Tags
+- `Content-Security-Policy` — restricts script/style/img/font/connect sources
+- `X-Content-Type-Options: nosniff`
+- `X-Frame-Options: DENY` (or `frame-ancestors 'none'` in CSP)
+- `Referrer-Policy: strict-origin-when-cross-origin`
+- `Permissions-Policy` — restricts camera, microphone, geolocation
+- `X-UA-Compatible: IE=edge`
 
-1. Go to [Google Cloud Console](https://console.cloud.google.com)
-2. Create a new project (or use existing)
-3. Navigate to **APIs & Services > Credentials**
-4. Click **Create Credentials > OAuth client ID**
-5. Select **Web application**
-6. Add `https://victorndunda.com` to **Authorized JavaScript origins**
-7. Copy the **Client ID**
-8. Replace `YOUR_GOOGLE_CLIENT_ID` in `/jobs/index.html` with your Client ID
-9. Push to GitHub
+> Note: GitHub Pages does not allow setting HTTP response headers via `.htaccess` or `_headers` files. We use `<meta http-equiv>` equivalents where possible. For full HTTP header control, consider moving to Netlify/Cloudflare Pages.
 
-The job portal will only allow access to `mututandunda@gmail.com`. Any other Google account will see "Access denied."
+### Authentication Security
+- Google OAuth 2.0 via Google Identity Services (GIS)
+- Authorized email allowlist (single user: `mututandunda@gmail.com`)
+- Account selection forced (`prompt: 'select_account'`) — prevents wrong-account lockout
+- Session storage (not localStorage) — cleared on browser close
+- 30-minute idle timeout on admin
+- `noindex, nofollow, noarchive, nosnippet` on all private pages
+- robots.txt disallows private paths
+- No visible links to private areas in public navigation
 
-### Security Notes
-- The OAuth flow is client-side only (no backend needed for static sites)
-- Session-based auth (cleared on browser close) — prevents persistent access
-- `noindex, nofollow` meta tag prevents search engine indexing
-- `robots.txt` disallows `/jobs/` path
-- No visible link in navigation — only accessible by direct URL
+### Content Security Policy (CSP)
+The site uses a strict CSP that only allows:
+- Scripts from Google Accounts (GIS) and inline (with nonce)
+- Styles from Google Fonts and inline
+- Images from self and data: URIs
+- Fonts from Google Fonts
+- Connects to Google APIs and public job APIs
+
+## Google OAuth Setup
+
+### How Google Sign-In works (with account selection)
+
+1. User navigates to `/admin/` or `/jobs/`
+2. Google Identity Services loads
+3. `google.accounts.id.prompt()` is called with `prompt_parent_id` and select_account hint
+4. **Account picker appears** — user selects which Google account to use
+5. On credential response, JWT is decoded client-side
+6. Email is checked against allowlist
+7. If authorized → dashboard loads; session stored in `sessionStorage`
+8. If unauthorized → access denied message; auto-select disabled
+
+### Setup Steps (already done)
+1. ✅ Google Cloud project created
+2. ✅ OAuth 2.0 Client ID: `794306876985-8v3qsraj7t591oc4jv0p0s056htknjf1.apps.googleusercontent.com`
+3. ✅ Authorized JavaScript origins: `https://victorndunda.com`, `https://www.victorndunda.com`, `http://localhost:3000`
+4. ✅ GIS script loaded on `/admin/` and `/jobs/`
+5. ✅ `prompt: 'select_account'` configured for account picker
+
+## File Structure
+
+```
+victor-portfolio/
+├── index.html              # Home page
+├── styles.css              # Global styles
+├── app.js                  # Global JS (theme, nav, particles)
+├── blog/
+│   ├── index.html          # Blog listing
+│   └── articles/           # 9 article HTML files
+├── articles/               # Clean URL mirror of /blog/articles/
+├── admin/                  # Private admin dashboard (Google OAuth)
+│   ├── index.html          # Admin SPA
+│   ├── admin.css           # Admin-specific styles
+│   └── admin.js            # Admin logic
+├── jobs/                   # Private job portal (Google OAuth)
+│   └── index.html
+├── terms-of-service.html
+├── privacy-policy.html
+├── robots.txt
+├── sitemap.xml
+├── CNAME                   # victorndunda.com
+└── .github/workflows/
+    ├── deploy.yml          # GitHub Pages deploy
+    └── social-post.yml     # Auto-post on new articles
+```

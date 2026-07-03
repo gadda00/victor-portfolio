@@ -4,12 +4,24 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Job Portal — Victor Ndunda</title>
-<meta name="description" content="Private job search portal." />
-<meta name="robots" content="noindex, nofollow" />
+<meta name="description" content="Private job search portal — authorized access only." />
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+<meta name="author" content="Victor Ndunda" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<link rel="canonical" href="https://victorndunda.com/jobs/" />
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='14' fill='%2300d4ff'/%3E%3C/svg%3E" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/styles.css" />
+
+<!-- Security Headers -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="referrer" content="no-referrer" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" />
+<meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
 <style>
 .jobs-hero { padding: 8rem 2rem 2rem; text-align: center; }
 .jobs-controls { max-width: 1000px; margin: 0 auto; padding: 0 2rem 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
@@ -82,6 +94,7 @@
       <a href="/#work" class="nav-link">Work</a>
       <a href="/blog/" class="nav-link">Blog</a>
       <a href="/jobs/" class="nav-link active">Jobs</a>
+      <a href="/admin/" class="nav-link">Admin</a>
       <a href="/#contact" class="nav-link">Contact</a>
     </div>
     <div class="nav-actions">
@@ -157,16 +170,22 @@ function initGoogleAuth() {
     setTimeout(initGoogleAuth, 500);
     return;
   }
-  
+
   google.accounts.id.initialize({
     client_id: GOOGLE_CLIENT_ID,
     callback: handleCredentialResponse,
+    auto_select: false, // Force account picker
+    cancel_on_tap_outside: false,
+    use_fedcm_for_prompt: true,
   });
-  
+
   google.accounts.id.renderButton(
     document.getElementById('gSignInButton'),
-    { theme: 'outline', size: 'large', text: 'sign_in_with', shape: 'pill' }
+    { theme: 'outline', size: 'large', text: 'continue_with', shape: 'pill', width: 280, locale: 'en' }
   );
+
+  // Show account picker
+  google.accounts.id.prompt();
 }
 
 function handleCredentialResponse(response) {
