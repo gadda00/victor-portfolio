@@ -26,114 +26,161 @@ jobs:
             echo "No new articles detected."
           fi
 
-      - name: Post to LinkedIn
+      - name: Setup Python
         if: steps.detect.outputs.files != ''
-        env:
-          LINKEDIN_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
-        run: |
-          for FILE in ${{ steps.detect.outputs.files }}; do
-            FILENAME=$(basename "$FILE")
-            # Extract title from HTML
-            TITLE=$(grep -oP '<title>\K[^<]+' "$FILE" || echo "New Article")
-            
-            echo "Posting to LinkedIn: $TITLE"
-            
-            # Get LinkedIn person ID from the token
-            PERSON_ID=$(curl -s -H "Authorization: Bearer $LINKEDIN_TOKEN" \
-              "https://api.linkedin.com/v2/userinfo" | python3 -c "import json,sys; print(json.load(sys.stdin).get('sub',''))" 2>/dev/null || echo "")
-            
-            if [ -n "$PERSON_ID" ]; then
-              # Post to LinkedIn
-              curl -s -X POST "https://api.linkedin.com/v2/ugcPosts" \
-                -H "Authorization: Bearer $LINKEDIN_TOKEN" \
-                -H "Content-Type: application/json" \
-                -H "X-Restli-Protocol-Version: 2.0.0" \
-                -d "{
-                  \"author\": \"urn:li:person:$PERSON_ID\",
-                  \"lifecycleState\": \"PUBLISHED\",
-                  \"specificContent\": {
-                    \"com.linkedin.ugc.ShareContent\": {
-                      \"shareCommentary\": {
-                        \"text\": \"📝 New article: $TITLE\\n\\nRead it here: https://victorndunda.com/blog/articles/$FILENAME\"
-                      },
-                      \"shareMediaCategory\": \"ARTICLE\",
-                      \"media\": [{
-                        \"status\": \"READY\",
-                        \"description\": {\"text\": \"$TITLE\"},
-                        \"originalUrl\": \"https://victorndunda.com/blog/articles/$FILENAME\",
-                        \"title\": {\"text\": \"$TITLE\"}
-                      }]
-                    }
-                  },
-                  \"visibility\": {\"com.linkedin.ugc.MemberNetworkVisibility\": \"PUBLIC\"}
-                }"
-              echo "✅ Posted to LinkedIn"
-            else
-              echo "⚠️ Could not get LinkedIn person ID"
-            fi
-          done
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
 
-      - name: Post to X (Twitter)
+      - name: Install dependencies
+        if: steps.detect.outputs.files != ''
+        run: pip install requests
+
+      - name: Post to all social media
         if: steps.detect.outputs.files != ''
         env:
+          LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
           X_ACCESS_SECRET: ${{ secrets.X_ACCESS_SECRET }}
-        run: |
-          for FILE in ${{ steps.detect.outputs.files }}; do
-            FILENAME=$(basename "$FILE")
-            TITLE=$(grep -oP '<title>\K[^<]+' "$FILE" | sed 's/ — Victor Ndunda//' || echo "New Article")
-            
-            if [ -n "$X_API_KEY" ]; then
-              echo "Posting to X: $TITLE"
-              # Install twurl for OAuth 1.0a
-              gem install twurl
-              
-              twurl authorize --consumer-key "$X_API_KEY" --consumer-secret "$X_API_SECRET" --access-token "$X_ACCESS_TOKEN" --token-secret "$X_ACCESS_SECRET" 2>/dev/null || true
-              
-              TWEET_TEXT="📝 New article: $TITLE
-            
-          https://victorndunda.com/blog/articles/$FILENAME
-          
-          #AI #MachineLearning #Tech #Kenya"
-          
-              twurl -X POST -H api.twitter.com "/2/tweets" -d "{\"text\": \"$TWEET_TEXT\"}" 2>/dev/null && echo "✅ Posted to X" || echo "⚠️ X posting failed (check API credentials)"
-            else
-              echo "⚠️ X API credentials not set. Add secrets: X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET"
-            fi
-          done
-
-      - name: Post to Facebook Page
-        if: steps.detect.outputs.files != ''
-        env:
           FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
-          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
+          FB_PAGE_ACCESS_TOKEN: ${{ secrets.FB_PAGE_ACCESS_TOKEN }}
         run: |
           for FILE in ${{ steps.detect.outputs.files }}; do
             FILENAME=$(basename "$FILE")
             TITLE=$(grep -oP '<title>\K[^<]+' "$FILE" | sed 's/ — Victor Ndunda//' || echo "New Article")
+            URL="https://victorndunda.com/blog/articles/$FILENAME"
+            MESSAGE="📝 New article: $TITLE
             
-            if [ -n "$FB_PAGE_ID" ] && [ -n "$FB_PAGE_TOKEN" ]; then
-              echo "Posting to Facebook: $TITLE"
-              curl -s -X POST "https://graph.facebook.com/v25.0/$FB_PAGE_ID/feed" \
-                -d "message=📝 New article: $TITLE" \
-                -d "link=https://victorndunda.com/blog/articles/$FILENAME" \
-                -d "access_token=$FB_PAGE_TOKEN"
-              echo "✅ Posted to Facebook"
-            else
-              echo "⚠️ Facebook credentials not set. Add secrets: FB_PAGE_ID, FB_PAGE_ACCESS_TOKEN"
-            fi
+          $URL
+          
+          #AI #MachineLearning #Tech #Kenya #Agriculture"
+            
+            echo "=== Posting: $TITLE ==="
+            
+            python3 -c "
+          import json, os, sys, urllib.request, urllib.parse, base64, hmac, hashlib, time, secrets
+          from urllib.parse import quote
+          
+          title = '''$TITLE'''
+          url = '$URL'
+          message = '''$MESSAGE'''
+          
+          results = {}
+          
+          # ─── LinkedIn ─────────────────────────────────────
+          li_token = os.environ.get('LINKEDIN_ACCESS_TOKEN', '')
+          if li_token:
+              print('💼 Posting to LinkedIn...')
+              try:
+                  # Get person ID
+                  req = urllib.request.Request('https://api.linkedin.com/v2/userinfo',
+                      headers={'Authorization': f'Bearer {li_token}'})
+                  resp = urllib.request.urlopen(req)
+                  person_id = json.loads(resp.read()).get('sub', '')
+                  
+                  if person_id:
+                      post_data = {
+                          'author': f'urn:li:person:{person_id}',
+                          'lifecycleState': 'PUBLISHED',
+                          'specificContent': {
+                              'com.linkedin.ugc.ShareContent': {
+                                  'shareCommentary': {'text': message},
+                                  'shareMediaCategory': 'ARTICLE',
+                                  'media': [{
+                                      'status': 'READY',
+                                      'description': {'text': title},
+                                      'originalUrl': url,
+                                      'title': {'text': title}
+                                  }]
+                              }
+                          },
+                          'visibility': {'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC'}
+                      }
+                      req = urllib.request.Request('https://api.linkedin.com/v2/ugcPosts',
+                          data=json.dumps(post_data).encode(),
+                          headers={'Authorization': f'Bearer {li_token}', 'Content-Type': 'application/json', 'X-Restli-Protocol-Version': '2.0.0'},
+                          method='POST')
+                      urllib.request.urlopen(req)
+                      print('  ✅ LinkedIn posted!')
+                      results['linkedin'] = True
+                  else:
+                      print('  ❌ Could not get LinkedIn person ID')
+                      results['linkedin'] = False
+              except Exception as e:
+                  print(f'  ❌ LinkedIn error: {e}')
+                  results['linkedin'] = False
+          
+          # ─── X (Twitter) ──────────────────────────────────
+          x_key = os.environ.get('X_API_KEY', '')
+          x_secret = os.environ.get('X_API_SECRET', '')
+          x_token = os.environ.get('X_ACCESS_TOKEN', '')
+          x_token_secret = os.environ.get('X_ACCESS_SECRET', '')
+          
+          if all([x_key, x_secret, x_token, x_token_secret]):
+              print('🐦 Posting to X...')
+              try:
+                  method = 'POST'
+                  base_url = 'https://api.twitter.com/2/tweets'
+                  oauth_params = {
+                      'oauth_consumer_key': x_key,
+                      'oauth_nonce': secrets.token_hex(16),
+                      'oauth_signature_method': 'HMAC-SHA256',
+                      'oauth_timestamp': str(int(time.time())),
+                      'oauth_token': x_token,
+                      'oauth_version': '1.0',
+                  }
+                  body = json.dumps({'text': message[:280]}).encode()
+                  params_str = '&'.join(f'{quote(k, safe=\"\")}={quote(v, safe=\"\")}' for k, v in sorted(oauth_params.items()))
+                  base_string = f'{method}&{quote(base_url, safe=\"\")}&{quote(params_str, safe=\"\")}'
+                  signing_key = f'{quote(x_secret, safe=\"\")}&{quote(x_token_secret, safe=\"\")}'
+                  signature = base64.b64encode(hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha256).digest()).decode()
+                  oauth_params['oauth_signature'] = signature
+                  auth_header = 'OAuth ' + ', '.join(f'{k}=\"{quote(v, safe=\"\")}\"' for k, v in sorted(oauth_params.items()))
+                  req = urllib.request.Request(base_url, data=body,
+                      headers={'Authorization': auth_header, 'Content-Type': 'application/json'}, method='POST')
+                  urllib.request.urlopen(req)
+                  print('  ✅ X posted!')
+                  results['twitter'] = True
+              except Exception as e:
+                  print(f'  ❌ X error: {e}')
+                  results['twitter'] = False
+          
+          # ─── Facebook ─────────────────────────────────────
+          fb_page_id = os.environ.get('FB_PAGE_ID', '')
+          fb_token = os.environ.get('FB_PAGE_ACCESS_TOKEN', '')
+          
+          if fb_page_id and fb_token:
+              print('📘 Posting to Facebook...')
+              try:
+                  params = urllib.parse.urlencode({'message': message, 'link': url, 'access_token': fb_token})
+                  post_url = f'https://graph.facebook.com/v21.0/{fb_page_id}/feed?{params}'
+                  req = urllib.request.Request(post_url, method='POST')
+                  urllib.request.urlopen(req)
+                  print('  ✅ Facebook posted!')
+                  results['facebook'] = True
+              except Exception as e:
+                  print(f'  ❌ Facebook error: {e}')
+                  results['facebook'] = False
+          
+          print(f'\\n=== Summary ===')
+          for platform, success in results.items():
+              print(f'  {platform}: {\"✅\" if success else \"❌\"} ')
+          "
           done
-
+          
       - name: Summary
         if: steps.detect.outputs.files != ''
         run: |
-          echo "=== Social Media Auto-Post Summary ==="
-          echo "Articles posted:"
+          echo "=== Social Media Auto-Post Complete ==="
+          echo "Articles processed:"
           echo "${{ steps.detect.outputs.files }}"
           echo ""
-          echo "LinkedIn: ✅ (token configured)"
-          echo "X/Twitter: Requires secrets (X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET)"
-          echo "Facebook: Requires secrets (FB_PAGE_ID, FB_PAGE_ACCESS_TOKEN)"
-          echo "TikTok: Requires Content Posting API setup (see SOCIAL-CMS.md)"
+          echo "Secrets configured:"
+          echo "  LinkedIn: ✅ (LINKEDIN_ACCESS_TOKEN)"
+          echo "  X/Twitter: ✅ (X_API_KEY, X_API_SECRET, X_ACCESS_TOKEN, X_ACCESS_SECRET)"
+          echo "  Facebook: ✅ (FB_PAGE_ID, FB_PAGE_ACCESS_TOKEN)"
+          echo ""
+          echo "Note: If any platform fails, check that the tokens have"
+          echo "the correct permissions (see SOCIAL-CMS.md for details)"

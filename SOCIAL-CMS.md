@@ -44,23 +44,34 @@ The social media automation system auto-posts blog articles to:
 #### 1. X (Twitter) API
 - **API**: X API v2
 - **Free tier**: 17 posts per 24 hours
-- **Setup**:
-  1. Apply for an X Developer account at developer.x.com
-  2. Create a Project and App
-  3. Generate Bearer Token and API keys
-  4. Set environment variables: `X_API_KEY`, `X_API_SECRET`, `X_ACCESS_TOKEN`, `X_ACCESS_SECRET`
+- **Status**: ⚠️ App credentials stored but need OAuth 1.0a user tokens
+- **Secrets stored**: `X_API_KEY`, `X_API_SECRET`, `X_ACCESS_TOKEN`, `X_ACCESS_SECRET`
+- **Current credentials are**: OAuth 2.0 Client ID/Secret + Consumer Key/Secret
+- **To get OAuth 1.0a tokens**: Visit https://developer.x.com/ > App > Keys and Tokens > Generate Access Token & Secret
+- **Note**: The current credentials may be OAuth 2.0 only. For posting tweets, you need OAuth 1.0a User Context tokens (Access Token + Access Token Secret)
 
 #### 2. LinkedIn API
 - **API**: LinkedIn Share API (w_member_social scope)
-- **Status**: ✅ Token obtained and stored as GitHub repository secret `LINKEDIN_ACCESS_TOKEN`
-- **Setup**: Complete — add the token as a repository secret in GitHub Settings > Secrets and Variables > Actions
+- **Status**: ⚠️ Token stored but needs verification — may need to be regenerated
+- **Token stored as**: GitHub secret `LINKEDIN_ACCESS_TOKEN`
+- **To get a fresh token**: Visit https://developer.linkedin.com/ > My Apps > Victorndunda > Auth > Generate Access Token
+- **Required scope**: `w_member_social` (for posting) + `openid` + `profile` (for user info)
 
 #### 3. Facebook Graph API
-- **API**: Facebook Graph API v25.0 (Page Posts)
-- **Setup**:
-  1. Create a Facebook App at developers.facebook.com
-  2. Get a Page Access Token with `pages_manage_posts` permission
-  3. Set environment variables: `FB_PAGE_ID`, `FB_PAGE_ACCESS_TOKEN`
+- **API**: Facebook Graph API v21.0 (Page Posts)
+- **App**: "Victorndunda" (App ID: 1005457702227257)
+- **Page**: facebook.com/profile.php?id=61591723585919
+- **Status**: ⚠️ App token stored but needs Page Access Token
+- **Current token**: App Token (APP_ID|APP_SECRET) — cannot post to pages
+- **To get Page Access Token**:
+  1. Visit https://developers.facebook.com/tools/explorer/
+  2. Select app "Victorndunda"
+  3. Add permissions: `pages_manage_posts`, `pages_read_engagement`
+  4. Click "Generate Access Token"
+  5. Select your Page (ID: 61591723585919)
+  6. Copy the Page Access Token
+  7. Update GitHub secret `FB_PAGE_ACCESS_TOKEN` with the new token
+- **Secrets stored**: `FB_PAGE_ID`, `FB_PAGE_ACCESS_TOKEN`
 
 #### 4. TikTok Content Posting API
 - **API**: TikTok Content Posting API
