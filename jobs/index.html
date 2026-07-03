@@ -28,7 +28,7 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="no-referrer" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" />
 <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
 <style>
 .jobs-hero { padding: 8rem 2rem 2rem; text-align: center; }
@@ -154,29 +154,60 @@
 
 <section class="jobs-hero">
   <div class="container">
-    <span class="label" style="display:inline-block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:1rem;">Job Portal</span>
+    <span class="label" style="display:inline-block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:1rem;">Job Portal · Smart Apply</span>
     <h1 style="font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;">AI Engineering <span class="grad-text">Job Search.</span></h1>
-    <p style="color:var(--text-muted);font-size:1.125rem;max-width:600px;margin:0 auto;">Aggregating remote AI/ML, data engineering, and full-stack jobs from multiple sources.</p>
+    <p style="color:var(--text-muted);font-size:1.125rem;max-width:700px;margin:0 auto;">Smart job aggregation with AI-powered matching, tailored resume + cover letter generation, and one-click Gmail apply.</p>
   </div>
 </section>
 
+<!-- View tabs: Open / Applied History -->
+<div class="portal-tabs" role="tablist" aria-label="View selector">
+  <button class="portal-tab active" data-view="open" role="tab" aria-selected="true">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    Open Jobs
+  </button>
+  <button class="portal-tab" data-view="history" role="tab" aria-selected="false">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+    Applied History
+  </button>
+  <div style="flex:1"></div>
+  <button class="portal-tab-icon" id="exportBtn" title="Export backup" aria-label="Export backup">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+  </button>
+  <label class="portal-tab-icon" title="Import backup" aria-label="Import backup">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    <input type="file" id="importFile" accept="application/json" style="display:none" />
+  </label>
+</div>
+
+<!-- Stats bar -->
+<div class="portal-stats" id="stats"></div>
+
+<!-- Controls (search + filters + min score) -->
 <div class="jobs-controls">
   <div class="jobs-search">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-muted)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-    <input type="text" id="searchInput" placeholder="Search AI, ML, data, full-stack jobs..." aria-label="Search jobs" />
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--text-muted)" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" id="search" placeholder="Search AI, ML, data, full-stack jobs..." aria-label="Search jobs" />
   </div>
   <button class="jobs-filter active" data-filter="all">All</button>
-  <button class="jobs-filter" data-filter="ai">AI/ML</button>
-  <button class="jobs-filter" data-filter="data">Data</button>
-  <button class="jobs-filter" data-filter="fullstack">Full-Stack</button>
   <button class="jobs-filter" data-filter="remote">Remote</button>
+  <button class="jobs-filter" data-filter="onsite">Onsite</button>
+  <button class="jobs-filter" data-filter="email">Email Apply</button>
+  <select class="jobs-filter" id="minScore" aria-label="Minimum match score">
+    <option value="0">Any Score</option>
+    <option value="50">50+ Good</option>
+    <option value="65">65+ Strong</option>
+    <option value="80">80+ Excellent</option>
+  </select>
 </div>
 
-<div class="jobs-stats" id="jobsStats"></div>
-
-<div class="jobs-grid" id="jobsGrid">
+<!-- Jobs grid (rendered by app.js) -->
+<div class="jobs-grid" id="grid">
   <div class="jobs-loading">Loading jobs from multiple sources...</div>
 </div>
+
+<!-- Toast notification -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <footer>
   <div class="container">
@@ -201,6 +232,75 @@
 .auth-note { font-size: 0.75rem; color: var(--text-dim); margin-top: 1rem; }
 .auth-error { color: #ef4444; font-size: 0.875rem; margin-top: 0.5rem; display: none; }
 #gSignInButton { display: flex; justify-content: center; }
+
+/* ─── Portal Automation Styles ────────────────────────────── */
+.portal-tabs { max-width: 1000px; margin: 0 auto; padding: 0 2rem 1rem; display: flex; gap: 0.5rem; align-items: center; }
+.portal-tab { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.625rem 1.125rem; border-radius: 10px; font-size: 0.875rem; font-weight: 600; font-family: inherit; cursor: pointer; background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); transition: all 0.2s; }
+.portal-tab:hover { color: var(--text); border-color: var(--accent); }
+.portal-tab.active { background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(168,85,247,0.1)); color: var(--accent); border-color: var(--accent); }
+.portal-tab-icon { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 9px; background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border); cursor: pointer; transition: all 0.2s; font-family: inherit; }
+.portal-tab-icon:hover { color: var(--accent); border-color: var(--accent); }
+
+.portal-stats { max-width: 1000px; margin: 0 auto 1rem; padding: 0 2rem; display: flex; gap: 1rem; flex-wrap: wrap; font-size: 0.8125rem; color: var(--text-muted); }
+.portal-stats span { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.5rem 0.875rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; }
+.portal-stats b { color: var(--text); font-family: 'JetBrains Mono', monospace; font-weight: 700; }
+
+/* Score badge */
+.score { display: inline-flex; align-items: center; padding: 0.3rem 0.625rem; border-radius: 6px; font-size: 0.7rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; white-space: nowrap; }
+.score.excellent { background: rgba(16,185,129,0.15); color: #10b981; border: 1px solid rgba(16,185,129,0.3); }
+.score.strong { background: rgba(0,212,255,0.15); color: var(--accent); border: 1px solid rgba(0,212,255,0.3); }
+.score.good { background: rgba(168,85,247,0.15); color: var(--accent-2); border: 1px solid rgba(168,85,247,0.3); }
+.score.weak { background: rgba(245,158,11,0.15); color: #f59e0b; border: 1px solid rgba(245,158,11,0.3); }
+.score.poor { background: rgba(239,68,68,0.15); color: #ef4444; border: 1px solid rgba(239,68,68,0.3); }
+
+/* Job card (richer) */
+.jobs-grid article.card, .jobs-grid .job-card { position: relative; padding: 1.5rem; border-radius: 14px; background: var(--bg-card); border: 1px solid var(--border); transition: all 0.3s; }
+.jobs-grid article.card:hover, .jobs-grid .job-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+.card-head { display: flex; justify-content: space-between; align-items: start; gap: 0.75rem; margin-bottom: 0.75rem; }
+.card-head .title { font-size: 1.0625rem; font-weight: 600; line-height: 1.3; }
+.card-head .company { font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.25rem; }
+.tags, .matched-row { display: flex; gap: 0.375rem; flex-wrap: wrap; margin-bottom: 0.5rem; align-items: center; }
+.tag { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; background: var(--glass); border: 1px solid var(--border); color: var(--text-muted); }
+.tag.matched { background: rgba(16,185,129,0.1); border-color: rgba(16,185,129,0.3); color: #10b981; font-weight: 600; }
+.tag.missing { background: rgba(239,68,68,0.08); border-color: rgba(239,68,68,0.2); color: #ef4444; }
+.matched-row .lbl { font-size: 0.7rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600; margin-right: 0.25rem; }
+.salary { font-size: 0.8125rem; color: #f59e0b; font-weight: 600; margin-top: 0.25rem; }
+.card-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 0.75rem; }
+.btn { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.5rem 0.875rem; border-radius: 8px; font-size: 0.8125rem; font-weight: 600; cursor: pointer; border: 1px solid var(--border); background: var(--bg-card); color: var(--text); font-family: inherit; text-decoration: none; transition: all 0.2s; }
+.btn:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+.btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border-color: transparent; color: #fff; }
+.btn.primary:hover { color: #fff; box-shadow: 0 4px 12px var(--glow); }
+.btn.ghost { background: transparent; }
+.btn.danger { color: #ef4444; border-color: rgba(239,68,68,0.3); }
+.btn.danger:hover { background: rgba(239,68,68,0.1); color: #ef4444; border-color: #ef4444; }
+
+.status-pill { display: inline-block; padding: 0.3rem 0.75rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
+.status-select { padding: 0.4rem 0.625rem; border-radius: 6px; background: var(--bg-card); border: 1px solid var(--border); color: var(--text); font-size: 0.8125rem; font-family: inherit; cursor: pointer; }
+.status-select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.why { margin-top: 0.75rem; }
+.why summary { cursor: pointer; font-size: 0.75rem; color: var(--text-dim); font-weight: 600; }
+.why ul { margin: 0.5rem 0 0; padding-left: 1.25rem; font-size: 0.75rem; color: var(--text-muted); }
+
+.empty, .jobs-empty { text-align: center; padding: 3rem 1.5rem; color: var(--text-muted); }
+.empty h3 { font-size: 1rem; margin-bottom: 0.5rem; color: var(--text); }
+
+/* Toast */
+.toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(120%); background: var(--bg-card); border: 1px solid var(--border); border-left: 3px solid var(--accent); padding: 0.875rem 1.25rem; border-radius: 10px; font-size: 0.875rem; max-width: 90vw; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: transform 0.3s ease; z-index: 10000; }
+.toast.show { transform: translateX(-50%) translateY(0); }
+.toast.error { border-left-color: #ef4444; }
+
+/* Score breakdown details */
+.jobs-grid details.why[open] { padding: 0.5rem 0.75rem; background: var(--glass); border-radius: 8px; }
+.jobs-grid details.why[open] summary { margin-bottom: 0.5rem; }
+
+@media (max-width: 640px) {
+  .portal-tabs { flex-wrap: wrap; }
+  .portal-stats { gap: 0.5rem; }
+  .portal-stats span { font-size: 0.75rem; padding: 0.4rem 0.625rem; }
+  .card-actions { flex-direction: column; }
+  .card-actions .btn { width: 100%; justify-content: center; }
+}
 </style>
 
 <!-- Google Identity Services -->
@@ -372,255 +472,143 @@ window.addEventListener('load', () => {
 </script>
 
 <script>
-// ─── Job Search Portal ────────────────────────────────────────────────
-// Aggregates jobs from multiple free APIs:
-// 1. Arbeitnow API (free, no key) — aggregates RemoteOK, Jobicy, and more
-// 2. RemoteOK API (free, no key)
+// ─── Job Portal Bootstrap ───────────────────────────────────────────
+// Fetches live jobs from Arbeitnow + RemoteOK, normalises them into the
+// shape expected by the automation modules (lib/*.js), then sets
+// window.PORTAL_JOBS and lets app.js take over rendering + interactions.
 
-let allJobs = [];
-let activeFilter = 'all';
-let searchTerm = '';
+(async function () {
+  const grid = document.getElementById('grid');
 
-async function fetchJobs() {
-  const grid = document.getElementById('jobsGrid');
-  const stats = document.getElementById('jobsStats');
-  
-  try {
-    // Fetch from Arbeitnow (aggregates multiple sources)
-    const resp = await fetch('https://www.arbeitnow.com/api/job-board-api');
-    const data = await resp.json();
-    
-    let jobs = [];
-    if (data.data && Array.isArray(data.data)) {
-      jobs = data.data.map(j => ({
-        title: j.title || 'Unknown',
-        company: j.company_name || 'Unknown',
-        description: j.description || '',
-        url: j.url || j.slug || '#',
-        remote: j.remote !== false,
-        location: j.location || 'Remote',
-        tags: j.tags || [],
-        source: 'arbeitnow',
-        createdAt: j.created_at || new Date().toISOString(),
-      }));
+  function normaliseJob(j, source) {
+    // Stable id across sources
+    const id = source + ':' + (j.slug || j.id || (j.title + '|' + j.company_name));
+    // Try to extract an email apply address from description
+    let applyEmail = '';
+    const descText = (j.description || '') + ' ' + (j.how_to_apply || '');
+    const emailMatch = descText.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
+    if (emailMatch && /apply|careers?|jobs?@/i.test(emailMatch[0])) applyEmail = emailMatch[0];
+
+    // Salary extraction (rough)
+    let salaryMin, salaryMax, salaryCurrency;
+    const salaryMatch = (j.salary || j.description || '').match(/(\$|KES|USD|EUR|€)\s?(\d[\d,]*)\s?[-–to]+\s?(\$|KES|USD|EUR|€)?\s?(\d[\d,]*)/i);
+    if (salaryMatch) {
+      salaryMin = parseInt(salaryMatch[2].replace(/,/g, ''));
+      salaryMax = parseInt(salaryMatch[4].replace(/,/g, ''));
+      salaryCurrency = (salaryMatch[1] || salaryMatch[3] || '').replace(/[$€]/, 'USD').toUpperCase();
     }
-    
-    // Also try RemoteOK
+
+    // Tech-stack heuristic: tags often include tech names
+    const techStack = (j.tags || []).filter(Boolean);
+
+    return {
+      id,
+      title: j.title || j.position || 'Untitled',
+      company: j.company_name || j.company || 'Unknown',
+      description: (j.description || '').replace(/<[^>]*>/g, ' ').substring(0, 800),
+      url: j.url || j.apply_url || j.slug || '#',
+      remote: j.remote !== false && (j.location || '').toLowerCase().includes('remote') || j.remote === true,
+      location: j.location || 'Remote',
+      tags: j.tags || [],
+      source,
+      createdAt: j.created_at || new Date((j.date || Date.now()) * 1000).toISOString(),
+      applyEmail,
+      techStack,
+      salaryMin, salaryMax, salaryCurrency,
+    };
+  }
+
+  async function fetchAllJobs() {
+    const jobs = [];
+
+    // 1. Arbeitnow (aggregates RemoteOK, Jobicy, etc.)
     try {
-      const resp2 = await fetch('https://remoteok.com/api?api=1');
-      const data2 = await resp2.json();
-      if (Array.isArray(data2) && data2.length > 1) {
-        const remoteOkJobs = data2.slice(1, 51).map(j => ({
-          title: j.position || 'Unknown',
-          company: j.company || 'Unknown',
-          description: j.description || j.tags?.join(', ') || '',
-          url: j.url || j.apply_url || '#',
-          remote: true,
-          location: j.location || 'Remote',
-          tags: j.tags || [],
-          source: 'remoteok',
-          createdAt: new Date((j.date || Date.now()) * 1000).toISOString(),
-        }));
-        jobs = [...jobs, ...remoteOkJobs];
+      const r = await fetch('https://www.arbeitnow.com/api/job-board-api');
+      if (r.ok) {
+        const data = await r.json();
+        if (data.data && Array.isArray(data.data)) {
+          data.data.forEach(j => jobs.push(normaliseJob(j, 'arbeitnow')));
+        }
       }
-    } catch (e) {
-      console.warn('RemoteOK fetch failed:', e);
-    }
-    
-    // Filter for relevant tech jobs
-    allJobs = jobs.filter(j => {
+    } catch (e) { console.warn('Arbeitnow fetch failed:', e); }
+
+    // 2. RemoteOK directly
+    try {
+      const r2 = await fetch('https://remoteok.com/api?api=1');
+      if (r2.ok) {
+        const data2 = await r2.json();
+        if (Array.isArray(data2) && data2.length > 1) {
+          data2.slice(1, 81).forEach(j => jobs.push(normaliseJob(j, 'remoteok')));
+        }
+      }
+    } catch (e) { console.warn('RemoteOK fetch failed:', e); }
+
+    // Filter for tech-relevant jobs (matches Victor's domain)
+    const keywords = ['ai', 'ml', 'machine learning', 'data', 'engineer', 'developer', 'python', 'typescript', 'react', 'node', 'fullstack', 'full-stack', 'backend', 'frontend', 'software', 'agriculture', 'agritech', 'llm', 'deep learning'];
+    const filtered = jobs.filter(j => {
       const text = (j.title + ' ' + j.description + ' ' + j.tags.join(' ')).toLowerCase();
-      const keywords = ['ai', 'ml', 'machine learning', 'data', 'engineer', 'developer', 'python', 'typescript', 'react', 'node', 'fullstack', 'full-stack', 'backend', 'frontend', 'software', 'agriculture', 'agritech'];
       return keywords.some(k => text.includes(k));
     });
-    
-    // Remove duplicates
+
+    // Dedupe by title+company
     const seen = new Set();
-    allJobs = allJobs.filter(j => {
-      const key = (j.title + j.company).toLowerCase();
+    const deduped = filtered.filter(j => {
+      const key = (j.title + '|' + j.company).toLowerCase();
       if (seen.has(key)) return false;
       seen.add(key);
       return true;
     });
-    
-    // Sort by date
-    allJobs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    
-    // Update stats
-    const sources = {};
-    allJobs.forEach(j => { sources[j.source] = (sources[j.source] || 0) + 1; });
-    stats.innerHTML = `<span>📊 ${allJobs.length} jobs found</span>` + 
-      Object.entries(sources).map(([s, c]) => `<span class="source-badge source-${s}">${s}: ${c}</span>`).join('');
-    
-    renderJobs();
-  } catch (error) {
-    console.error('Job fetch error:', error);
-    grid.innerHTML = '<div class="jobs-empty"><p>Failed to load jobs. Please try again later.</p><p style="margin-top:1rem;"><a href="https://remoteok.com/remote-ai-ml-jobs" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Browse RemoteOK directly →</a></p><p style="margin-top:0.5rem;"><a href="https://www.arbeitnow.com/" target="_blank" rel="noopener noreferrer" style="color:var(--accent);">Browse Arbeitnow directly →</a></p></div>';
-  }
-}
 
-function renderJobs() {
-  const grid = document.getElementById('jobsGrid');
-  
-  let filtered = allJobs;
-  
-  // Apply filter
-  if (activeFilter !== 'all' && activeFilter !== 'remote') {
-    const filterKeywords = {
-      ai: ['ai', 'ml', 'machine learning', 'artificial intelligence', 'llm', 'nlp', 'deep learning', 'model', 'neural'],
-      data: ['data', 'analytics', 'pipeline', 'etl', 'warehouse', 'scientist', 'engineer'],
-      fullstack: ['fullstack', 'full-stack', 'frontend', 'backend', 'react', 'node', 'typescript', 'python'],
-    };
-    const kw = filterKeywords[activeFilter] || [];
-    filtered = filtered.filter(j => {
-      const text = (j.title + ' ' + j.description + ' ' + j.tags.join(' ')).toLowerCase();
-      return kw.some(k => text.includes(k));
-    });
-  }
-  
-  if (activeFilter === 'remote') {
-    filtered = filtered.filter(j => j.remote);
-  }
-  
-  // Apply search
-  if (searchTerm) {
-    filtered = filtered.filter(j => {
-      const text = (j.title + ' ' + j.company + ' ' + j.description + ' ' + j.tags.join(' ')).toLowerCase();
-      return text.includes(searchTerm.toLowerCase());
-    });
-  }
-  
-  if (filtered.length === 0) {
-    grid.innerHTML = '<div class="jobs-empty"><p>No jobs match your search.</p><p style="margin-top:0.5rem"><button class="jobs-filter" onclick="clearFilters()" style="cursor:pointer">Clear filters</button></p></div>';
-    return;
+    // Sort newest first
+    deduped.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    return deduped;
   }
 
-  // Clear and use DOM API to prevent XSS from unsanitized job data
-  grid.innerHTML = '';
-  filtered.slice(0, 50).forEach(j => {
-    const date = new Date(j.createdAt);
-    const daysAgo = Math.floor((Date.now() - date.getTime()) / (1000 * 60 * 60 * 24));
-    const sourceClass = j.source === 'remoteok' ? 'source-remoteok' : 'source-arbeitnow';
-    const desc = (j.description || '').replace(/<[^>]*>/g, '').substring(0, 200);
+  try {
+    const allJobs = await fetchAllJobs();
+    if (!allJobs.length) {
+      grid.innerHTML = '<div class="empty"><h3>No jobs loaded</h3><p>Could not fetch jobs from Arbeitnow or RemoteOK. Try again later.</p></div>';
+      return;
+    }
 
-    // Validate URL — only allow http/https protocols
-    let safeUrl = '#';
-    try {
-      const u = new URL(j.url);
-      if (u.protocol === 'http:' || u.protocol === 'https:') safeUrl = u.href;
-    } catch (e) { /* keep # */ }
+    // Hand off to the automation modules
+    window.PORTAL_JOBS = allJobs;
 
-    const card = document.createElement('article');
-    card.className = 'job-card';
+    // Now load the lib modules in order, then app.js will auto-init
+    const scripts = [
+      '/jobs/lib/profile.js',
+      '/jobs/lib/storage.js',
+      '/jobs/lib/scoring.js',
+      '/jobs/lib/templates.js',
+      '/jobs/lib/resume.js',
+      '/jobs/lib/coverletter.js',
+      '/jobs/lib/gmail.js',
+      '/jobs/lib/tracking.js',
+      '/jobs/lib/app.js',
+    ];
 
-    // Build card with safe DOM APIs (no innerHTML for user data)
-    const header = document.createElement('div');
-    header.className = 'job-header';
-    const headerInfo = document.createElement('div');
-    const titleEl = document.createElement('div');
-    titleEl.className = 'job-title';
-    titleEl.textContent = j.title; // safe
-    const companyEl = document.createElement('div');
-    companyEl.className = 'job-company';
-    companyEl.textContent = j.company; // safe
-    headerInfo.appendChild(titleEl);
-    headerInfo.appendChild(companyEl);
-    const sourceBadge = document.createElement('span');
-    sourceBadge.className = `source-badge ${sourceClass}`;
-    sourceBadge.textContent = j.source; // safe
-    header.appendChild(headerInfo);
-    header.appendChild(sourceBadge);
-    card.appendChild(header);
-
-    // Tags
-    if (j.tags && j.tags.length) {
-      const tagsEl = document.createElement('div');
-      tagsEl.className = 'job-tags';
-      j.tags.slice(0, 5).forEach(t => {
-        const tag = document.createElement('span');
-        tag.className = 'job-tag';
-        tag.textContent = t; // safe
-        tagsEl.appendChild(tag);
+    for (const src of scripts) {
+      await new Promise((resolve, reject) => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = () => reject(new Error('Failed to load ' + src));
+        document.body.appendChild(s);
       });
-      card.appendChild(tagsEl);
     }
 
-    // Description
-    if (desc) {
-      const descEl = document.createElement('div');
-      descEl.className = 'job-desc';
-      descEl.textContent = desc; // safe
-      card.appendChild(descEl);
+    // app.js auto-inits on DOMContentLoaded — but DOM already loaded.
+    // Manually trigger init if it hasn't run.
+    if (window.JobPortal && !window.JobPortal._initialised) {
+      window.JobPortal.init();
+      window.JobPortal._initialised = true;
     }
 
-    // Footer
-    const footer = document.createElement('div');
-    footer.className = 'job-footer';
-    const meta = document.createElement('span');
-    meta.className = 'job-meta';
-    meta.textContent = `📍 ${j.location || 'Remote'} · ${daysAgo === 0 ? 'Today' : daysAgo === 1 ? '1 day ago' : daysAgo + ' days ago'}`;
-    const apply = document.createElement('a');
-    apply.href = safeUrl;
-    apply.target = '_blank';
-    apply.rel = 'noopener noreferrer';
-    apply.className = 'job-apply';
-    apply.textContent = 'Apply →';
-    footer.appendChild(meta);
-    footer.appendChild(apply);
-    card.appendChild(footer);
-
-    grid.appendChild(card);
-  });
-}
-
-function clearFilters() {
-  document.getElementById('searchInput').value = '';
-  searchTerm = '';
-  activeFilter = 'all';
-  document.querySelectorAll('.jobs-filter').forEach(b => b.classList.remove('active'));
-  document.querySelector('.jobs-filter[data-filter="all"]').classList.add('active');
-  renderJobs();
-}
-
-// Event listeners
-document.getElementById('searchInput').addEventListener('input', e => {
-  searchTerm = e.target.value;
-  renderJobs();
-});
-
-document.querySelectorAll('.jobs-filter').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.jobs-filter').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    activeFilter = btn.dataset.filter;
-    renderJobs();
-  });
-});
-
-// Theme toggle
-const themeToggle = document.getElementById('themeToggle');
-const html = document.documentElement;
-html.className = localStorage.getItem('theme') || 'dark';
-themeToggle.addEventListener('click', () => {
-  const isDark = html.classList.contains('dark');
-  html.className = isDark ? 'light' : 'dark';
-  localStorage.setItem('theme', isDark ? 'light' : 'dark');
-  themeToggle.querySelector('span').textContent = isDark ? '☀️' : '🌙';
-});
-themeToggle.querySelector('span').textContent = html.classList.contains('dark') ? '🌙' : '☀️';
-
-// Mobile menu
-document.getElementById('mobileToggle').addEventListener('click', () => {
-  document.getElementById('navLinks').classList.toggle('open');
-});
-
-// Nav scroll
-window.addEventListener('scroll', () => {
-  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
-});
-
-// Load jobs on page load
-fetchJobs();
+  } catch (err) {
+    console.error('Job portal bootstrap failed:', err);
+    grid.innerHTML = '<div class="empty"><h3>Failed to load</h3><p>' + (err.message || 'Unknown error') + '</p><p style="margin-top:1rem"><a href="https://remoteok.com/remote-ai-ml-jobs" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Browse RemoteOK directly →</a></p></div>';
+  }
+})();
 </script>
 </body>
 </html>
