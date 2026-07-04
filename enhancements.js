@@ -12,54 +12,17 @@
   var REDUCED_MOTION = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   // ── 1. View Transitions for same-origin navigations ──────────────
-  // Intercept same-origin link clicks and use document.startViewTransition
-  // for a smooth fade between pages. Falls back to normal navigation.
-  if ('startViewTransition' in document && !REDUCED_MOTION) {
-    function shouldIntercept(url) {
-      try {
-        var target = new URL(url, location.href);
-        if (target.origin !== location.origin) return false;
-        // Skip if opens in new tab / has download / different protocol
-        if (target.protocol !== 'http:' && target.protocol !== 'https:') return false;
-        // Skip hash-only changes on same page (let smooth scroll handle)
-        if (target.pathname === location.pathname && target.hash) return false;
-        // Skip admin (has its own SPA-like nav) and jobs (dynamic data)
-        if (target.pathname.startsWith('/admin') || target.pathname.startsWith('/jobs')) return false;
-        return true;
-      } catch (e) { return false; }
-    }
-
-    document.addEventListener('click', function (e) {
-      var a = e.target.closest('a');
-      if (!a) return;
-      if (a.target === '_blank' || a.hasAttribute('download')) return;
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-      if (a.origin !== location.origin) return;
-      if (!shouldIntercept(a.href)) return;
-
-      e.preventDefault();
-      var href = a.href;
-
-      // If only the hash changed, don't intercept
-      var targetUrl = new URL(href);
-      if (targetUrl.pathname === location.pathname && targetUrl.search === location.search) {
-        return;
-      }
-
-      document.startViewTransition(function () {
-        // Navigate after the old snapshot is captured
-        return new Promise(function (resolve) {
-          // Use a tiny timeout so the new snapshot is captured after navigation
-          location.href = href;
-          // The promise won't resolve before navigation, which is fine —
-          // the browser will paint the new page and VT captures it.
-          // For same-document transitions we'd resolve here, but for MPA
-          // the navigation itself completes the transition.
-          setTimeout(resolve, 0);
-        });
-      });
-    }, { capture: true });
-  }
+  // This site is an MPA (multi-page application). Cross-document view
+  // transitions are enabled via the <meta name="view-transition" content="same-origin">
+  // tag in each page's <head>. The browser handles snapshot capture and
+  // animation natively (Chrome 123+, Safari 18+, Firefox behind flag).
+  //
+  // No JS interception needed — attempting to call document.startViewTransition()
+  // with a location.href callback would unload the document mid-transition
+  // and break the animation. The meta tag is the correct MPA mechanism.
+  //
+  // For same-document (SPA) navigations, we could use startViewTransition(),
+  // but this site doesn't do SPA routing. Leaving this as a no-op.
 
   // ── 2. PWA install prompt ─────────────────────────────────────────
   var deferredPrompt = null;
@@ -176,6 +139,8 @@
       ticking = true;
     }
   }, { passive: true });
+  // Initial check (in case page loads scrolled, e.g. via #anchor or refresh)
+  toggleBackTop();
 
   // ── 5. Active section tracking via IntersectionObserver ──────────
   // Highlights the nav link for the section currently in view
