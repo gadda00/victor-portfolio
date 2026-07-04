@@ -114,15 +114,20 @@
       <span>Victor Ndunda</span>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="#hero" class="nav-link active">Home</a>
-      <a href="#about" class="nav-link">About</a>
-      <a href="#work" class="nav-link">Work</a>
-      <a href="/blog/" class="nav-link">Blog</a>
-      <a href="/articles/" class="nav-link">Articles</a>
-      <a href="#services" class="nav-link">Services</a>
-      <a href="#contact" class="nav-link">Contact</a>
+      <a href="#hero" class="nav-link active" data-i18n-key="nav.home">Home</a>
+      <a href="#about" class="nav-link" data-i18n-key="nav.about">About</a>
+      <a href="#work" class="nav-link" data-i18n-key="nav.work">Work</a>
+      <a href="/resume/" class="nav-link" data-i18n-key="nav.resume">Resume</a>
+      <a href="/blog/" class="nav-link" data-i18n-key="nav.blog">Blog</a>
+      <a href="/articles/" class="nav-link" data-i18n-key="nav.articles">Articles</a>
+      <a href="#services" class="nav-link" data-i18n-key="nav.services">Services</a>
+      <a href="#contact" class="nav-link" data-i18n-key="nav.contact">Contact</a>
     </div>
     <div class="nav-actions">
+      <div class="lang-toggle" role="group" aria-label="Language selector">
+        <button type="button" data-lang-btn="en" class="active" aria-pressed="true">EN</button>
+        <button type="button" data-lang-btn="sw" aria-pressed="false">SW</button>
+      </div>
       <button class="cmd-trigger" id="cmdTrigger" aria-label="Open command palette (Cmd+K)" title="Search (Cmd+K)">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <kbd>⌘K</kbd>
@@ -161,7 +166,7 @@
 <section id="hero" class="hero">
   <canvas id="bgCanvas"></canvas>
   <div class="hero-content">
-    <div class="hero-badge"><span class="pulse-dot"></span> Available for work · Nairobi, Kenya 🇰🇪</div>
+    <div class="hero-badge"><span class="pulse-dot"></span> <span data-i18n-key="hero.badge">Available for work · Nairobi, Kenya 🇰🇪</span></div>
     <h1 class="hero-title">
       <span class="hero-line">AI Engineer</span>
       <span class="hero-line gradient-animated">Founder</span>
@@ -174,12 +179,16 @@
       <span>Building for Africa & the world</span>
     </div>
     <div class="hero-cta">
-      <a href="#work" class="btn btn-primary">
+      <a href="#work" class="btn btn-primary" data-i18n-key="hero.cta.work">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
         Explore My Work
       </a>
-      <a href="/blog/" class="btn btn-ghost">Read My Research →</a>
-      <a href="/jobs/" class="btn btn-ghost">Job Portal →</a>
+      <a href="/resume/Victor-Ndunda-Resume.pdf" download class="btn btn-primary btn-accent-2" id="heroResumeBtn" data-i18n-key="hero.cta.resume">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download Resume
+      </a>
+      <a href="/blog/" class="btn btn-ghost" data-i18n-key="hero.cta.blog">Read My Research →</a>
+      <a href="/jobs/" class="btn btn-ghost" data-i18n-key="hero.cta.jobs">Job Portal →</a>
     </div>
     <div class="hero-stats">
       <div class="hero-stat"><span class="num">50</span><span class="label">AI Agents</span></div>
@@ -226,6 +235,47 @@
           <h4>Production-Grade</h4>
           <p>TypeScript, Next.js, Flutter, Docker, Kubernetes. Shipped and serving real users.</p>
         </div>
+      </div>
+    </div>
+
+    <!-- Education timeline -->
+    <div class="education-block" id="education">
+      <div class="education-head">
+        <span class="label">Education</span>
+        <h3>Academic <span class="grad-text">foundation.</span></h3>
+      </div>
+      <div class="education-timeline">
+        <div class="edu-item">
+          <div class="edu-dot"></div>
+          <div class="edu-card">
+            <div class="edu-period">2014 — 2018</div>
+            <h4 class="edu-degree">B.Sc. in Computer Science</h4>
+            <div class="edu-school">University of Embu · Embu, Kenya</div>
+            <p class="edu-detail">Coursework in Data Structures &amp; Algorithms, Machine Learning, Database Systems, Statistics, and Distributed Systems. Final-year project — an early crop advisory system that seeded the KilimoPRO concept. Top-quartile standing in the School of Computing.</p>
+            <div class="edu-tags">
+              <span>Algorithms</span><span>ML</span><span>Databases</span><span>Statistics</span><span>Distributed Systems</span>
+            </div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-dot edu-dot-muted"></div>
+          <div class="edu-card edu-card-soft">
+            <div class="edu-period">Ongoing</div>
+            <h4 class="edu-degree">Continuous Learning</h4>
+            <div class="edu-school">Self-directed · Open source · Research</div>
+            <p class="edu-detail">Active builder and maintainer of open-source AI projects (KilimoPRO, IntelliFlow, Busara AI). Deep technical reading in multi-agent orchestration, statistical forecasting, and on-device ML. Aligned with Kenya's NASIP 2026-2030 agricultural strategy.</p>
+          </div>
+        </div>
+      </div>
+      <div class="education-cta">
+        <a href="/resume/" class="btn btn-ghost btn-sm">
+          View full resume
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="/resume/Victor-Ndunda-Resume.pdf" download class="btn btn-primary btn-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download PDF
+        </a>
       </div>
     </div>
   </div>
@@ -333,38 +383,30 @@
     </div>
 
     <!-- Packages quick view -->
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-bottom:3rem">
-      <a href="/services/#packages-section" style="text-decoration:none;color:inherit">
-        <div style="padding:1.5rem;border-radius:14px;background:var(--bg-card);border:1px solid var(--border);border-top:3px solid #64748b;transition:all 0.3s;height:100%" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='#64748b'" onmouseout="this.style.transform='';this.style.borderColor='var(--border)'">
-          <div style="font-size:1.75rem;margin-bottom:0.5rem">🔍</div>
-          <div style="font-weight:700;font-size:1rem;margin-bottom:0.25rem">AI Audit</div>
-          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.75rem;line-height:1.5">Find your highest-ROI AI opportunities in 1–2 weeks</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:0.8125rem;color:#64748b;font-weight:600">From $4,500 · KES 350K</div>
-        </div>
+    <div class="svc-quick-grid">
+      <a href="/services/#packages-section" class="svc-quick-card svc-quick-audit">
+        <div class="svc-quick-icon">🔍</div>
+        <div class="svc-quick-name">AI Audit</div>
+        <div class="svc-quick-desc">Find your highest-ROI AI opportunities in 1–2 weeks</div>
+        <div class="svc-quick-price">From $4,500 · KES 350K</div>
       </a>
-      <a href="/services/#packages-section" style="text-decoration:none;color:inherit">
-        <div style="padding:1.5rem;border-radius:14px;background:var(--bg-card);border:1px solid var(--border);border-top:3px solid #10b981;transition:all 0.3s;height:100%" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='#10b981'" onmouseout="this.style.transform='';this.style.borderColor='var(--border)'">
-          <div style="font-size:1.75rem;margin-bottom:0.5rem">🚀</div>
-          <div style="font-weight:700;font-size:1rem;margin-bottom:0.25rem">AI Starter</div>
-          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.75rem;line-height:1.5">First working AI tool for SMBs & micro-businesses</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:0.8125rem;color:#10b981;font-weight:600">From $2,500 · KES 200K</div>
-        </div>
+      <a href="/services/#packages-section" class="svc-quick-card svc-quick-starter">
+        <div class="svc-quick-icon">🚀</div>
+        <div class="svc-quick-name">AI Starter</div>
+        <div class="svc-quick-desc">First working AI tool for SMBs & micro-businesses</div>
+        <div class="svc-quick-price">From $2,500 · KES 200K</div>
       </a>
-      <a href="/services/#packages-section" style="text-decoration:none;color:inherit">
-        <div style="padding:1.5rem;border-radius:14px;background:var(--bg-card);border:1px solid var(--border);border-top:3px solid #00d4ff;transition:all 0.3s;height:100%" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='#00d4ff'" onmouseout="this.style.transform='';this.style.borderColor='var(--border)'">
-          <div style="font-size:1.75rem;margin-bottom:0.5rem">📈</div>
-          <div style="font-weight:700;font-size:1rem;margin-bottom:0.25rem">AI Growth</div>
-          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.75rem;line-height:1.5">Production AI integrated with your CRM/ERP stack</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:0.8125rem;color:#00d4ff;font-weight:600">From $14,000 · KES 1.1M</div>
-        </div>
+      <a href="/services/#packages-section" class="svc-quick-card svc-quick-growth">
+        <div class="svc-quick-icon">📈</div>
+        <div class="svc-quick-name">AI Growth</div>
+        <div class="svc-quick-desc">Production AI integrated with your CRM/ERP stack</div>
+        <div class="svc-quick-price">From $14,000 · KES 1.1M</div>
       </a>
-      <a href="/services/#packages-section" style="text-decoration:none;color:inherit">
-        <div style="padding:1.5rem;border-radius:14px;background:var(--bg-card);border:1px solid var(--border);border-top:3px solid #a855f7;transition:all 0.3s;height:100%" onmouseover="this.style.transform='translateY(-4px)';this.style.borderColor='#a855f7'" onmouseout="this.style.transform='';this.style.borderColor='var(--border)'">
-          <div style="font-size:1.75rem;margin-bottom:0.5rem">🏢</div>
-          <div style="font-weight:700;font-size:1rem;margin-bottom:0.25rem">AI Enterprise</div>
-          <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:0.75rem;line-height:1.5">Custom multi-agent systems, fine-tuned models, SLAs</div>
-          <div style="font-family:'JetBrains Mono',monospace;font-size:0.8125rem;color:#a855f7;font-weight:600">Custom · $25K–$100K+</div>
-        </div>
+      <a href="/services/#packages-section" class="svc-quick-card svc-quick-enterprise">
+        <div class="svc-quick-icon">🏢</div>
+        <div class="svc-quick-name">AI Enterprise</div>
+        <div class="svc-quick-desc">Custom multi-agent systems, fine-tuned models, SLAs</div>
+        <div class="svc-quick-price">Custom · $25K–$100K+</div>
       </a>
     </div>
 
@@ -401,11 +443,54 @@
       </div>
     </div>
 
-    <div style="text-align:center;margin-top:3rem">
-      <a href="/services/" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.875rem 1.75rem;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#fff;font-weight:600;text-decoration:none;transition:all 0.2s" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 25px var(--glow)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+    <div class="services-cta-row">
+      <a href="/services/" class="btn btn-primary services-cta-btn">
         Explore all services & pricing
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials / Social proof -->
+<section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-head">
+  <div class="container">
+    <div class="section-head">
+      <span class="label">Testimonials</span>
+      <h2>What people <span class="grad-text">say.</span></h2>
+      <p class="section-sub">Selected feedback from collaborators, clients, and the open-source community.</p>
+    </div>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <p class="testimonial-quote">Victor's multi-agent DAG architecture gave us a working data-intelligence pipeline in weeks, not months. The statistical depth — Holt-Winters, Granger, K-Means++ — is the real deal, not wrapper code.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">DK</div>
+          <div>
+            <div class="testimonial-name">David K.</div>
+            <div class="testimonial-role">CTO · FinTech, Nairobi</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">KilimoPRO's on-device crop disease detection worked offline on my $80 phone. That is the kind of AI African farmers actually need. Victor understands the constraints.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">JM</div>
+          <div>
+            <div class="testimonial-name">Jane M.</div>
+            <div class="testimonial-role">Agricultural Extension Officer · Embu</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <p class="testimonial-quote">We hired Victor for a 2-week AI audit. He delivered a prioritized roadmap with ROI models and one pilot ready to ship. The 50% credit toward build made it a no-brainer.</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">SO</div>
+          <div>
+            <div class="testimonial-name">Sarah O.</div>
+            <div class="testimonial-role">Operations Director · Logistics SME</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -505,6 +590,19 @@
 </footer>
 
 <script src="app.js" defer></script>
+<script src="/i18n.js" defer></script>
+
+<!-- Floating action buttons (resume + contact) -->
+<div class="fab-stack" aria-hidden="false">
+  <a href="/resume/Victor-Ndunda-Resume.pdf" download class="fab fab-resume" aria-label="Download resume PDF" title="Download resume">
+    <span class="fab-label">Download Resume</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+  </a>
+  <a href="mailto:mututandunda@gmail.com" class="fab fab-contact" aria-label="Contact Victor" title="Contact">
+    <span class="fab-label">Contact Victor</span>
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>
+  </a>
+</div>
 
 <!-- Service worker registration (PWA / offline support) -->
 <script>

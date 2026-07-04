@@ -31,7 +31,12 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'" />
 <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
 <style>
-.jobs-hero { padding: 8rem 2rem 2rem; text-align: center; }
+.jobs-hero { padding: 8rem 2rem 2rem; text-align: center; background: radial-gradient(ellipse 600px 300px at 50% 0%, rgba(0,212,255,0.08), transparent 70%); }
+.jobs-hero-eyebrow { display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1rem; }
+.jobs-hero-title { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; font-weight: 800; letter-spacing: -0.02em; }
+.jobs-hero-sub { color: var(--text-muted); font-size: 1.125rem; max-width: 700px; margin: 0 auto; line-height: 1.6; }
+.jobs-hero-sub a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; }
+.jobs-hero-cta { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.6rem; margin-top: 1.5rem; }
 .jobs-controls { max-width: 1000px; margin: 0 auto; padding: 0 2rem 2rem; display: flex; gap: 0.75rem; flex-wrap: wrap; }
 .jobs-search { flex: 1; min-width: 250px; display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1rem; border-radius: 10px; background: var(--bg-card); border: 1px solid var(--border); }
 .jobs-search input { flex: 1; background: none; border: none; outline: none; color: var(--text); font-size: 0.9375rem; font-family: inherit; }
@@ -140,8 +145,10 @@
       <a href="/" class="nav-link">Home</a>
       <a href="/#about" class="nav-link">About</a>
       <a href="/#work" class="nav-link">Work</a>
+      <a href="/resume/" class="nav-link">Resume</a>
       <a href="/blog/" class="nav-link">Blog</a>
       <a href="/jobs/" class="nav-link active">Jobs</a>
+      <a href="/dashboard/" class="nav-link">Dashboard</a>
       <a href="/admin/" class="nav-link">Admin</a>
       <a href="/#contact" class="nav-link">Contact</a>
     </div>
@@ -154,9 +161,16 @@
 
 <section class="jobs-hero">
   <div class="container">
-    <span class="label" style="display:inline-block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:1rem;">Job Portal · Smart Apply</span>
-    <h1 style="font-size:clamp(2rem,4vw,3rem);margin-bottom:1rem;">AI Engineering <span class="grad-text">Job Search.</span></h1>
-    <p style="color:var(--text-muted);font-size:1.125rem;max-width:700px;margin:0 auto;">Smart job aggregation with AI-powered matching, tailored resume + cover letter generation, and one-click Gmail apply.</p>
+    <span class="jobs-hero-eyebrow">Job Portal · Smart Apply</span>
+    <h1 class="jobs-hero-title">AI Engineering <span class="grad-text">Job Search.</span></h1>
+    <p class="jobs-hero-sub">Smart job aggregation with AI-powered matching, tailored resume + cover letter generation, and one-click Gmail apply. Track every application in your <a href="/dashboard/" style="color:var(--accent)">dashboard</a>.</p>
+    <div class="jobs-hero-cta">
+      <a href="/resume/Victor-Ndunda-Resume.pdf" download class="btn btn-primary btn-sm">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download resume
+      </a>
+      <a href="/dashboard/" class="btn btn-ghost btn-sm">My Dashboard →</a>
+    </div>
   </div>
 </section>
 
