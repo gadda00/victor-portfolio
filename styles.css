@@ -528,6 +528,90 @@ body[data-lang="en"] [data-i18n-sw-only] { display: none; }
 /* Highlight new sections (resume, education, testimonials) when navigated to */
 :target { scroll-margin-top: 90px; }
 
+/* ─── Services journey band (homepage) ───────────────────────────── */
+.svc-journey-band {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 2.5rem;
+  align-items: center;
+  padding: 2.5rem;
+  margin-bottom: 3rem;
+  background:
+    radial-gradient(ellipse 400px 200px at 10% 0%, rgba(0,212,255,0.08), transparent 70%),
+    radial-gradient(ellipse 400px 200px at 90% 100%, rgba(168,85,247,0.08), transparent 70%),
+    var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 22px;
+  position: relative;
+  overflow: hidden;
+}
+.svc-journey-band::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+}
+.svc-journey-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.35rem 0.875rem;
+  background: var(--glass); border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.72rem; font-weight: 700; color: var(--text-muted);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.svc-journey-title {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 800; letter-spacing: -0.02em;
+  margin-bottom: 0.6rem;
+  text-wrap: balance;
+}
+.svc-journey-sub {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+  max-width: 520px;
+}
+.svc-journey-cta {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+}
+.svc-journey-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+.journey-step {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 1rem 0.5rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.journey-step:hover { border-color: var(--accent); transform: translateY(-2px); }
+.step-num {
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: white;
+  font-weight: 700; font-size: 0.875rem;
+  border-radius: 50%;
+  margin-bottom: 0.4rem;
+}
+.step-label {
+  font-size: 0.75rem; font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+@media (max-width: 768px) {
+  .svc-journey-band { grid-template-columns: 1fr; padding: 1.5rem; gap: 1.5rem; }
+  .svc-journey-steps { grid-template-columns: repeat(6, 1fr); gap: 0.4rem; }
+  .journey-step { padding: 0.6rem 0.25rem; }
+  .step-num { width: 24px; height: 24px; font-size: 0.75rem; }
+  .step-label { font-size: 0.65rem; }
+}
+
 /* ─── Modern CSS enhancements (progressive, 2025 baseline) ──────── */
 
 /* Balanced text wrapping for headings — avoids orphan words */

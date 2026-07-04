@@ -11,6 +11,43 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker for PWA/offline support (in progress)
 - Auto-update sitemap.xml lastmod dates via GitHub Action (in progress)
 
+## [2.5.0] — 2026-07-04
+
+### Added — Full-fledged Services Platform + Marketing Strategy
+
+**Services Platform (full client journey):**
+- **Project Scope Wizard** (`/services/wizard.html`) — intelligent 6-step multi-step wizard with a rules-based recommendation engine. Asks goal, AI type (multi-select), scale, budget, timeline, and details. Scores all 4 packages (0–100) and recommends the best fit. Saves briefs to localStorage. Includes instant price estimate with timeline multiplier and service add-ons. Auto-advances on selection. Validates each step. Result modal shows recommended package, match score, alternative packages, and CTAs to contract/payment/dashboard.
+- **Client Portal** (`/services/client-dashboard.html`) — personal dashboard showing saved briefs with status badges (Draft/Contracted/In Progress/Delivered), KPI strip (briefs/contracts/payments/active), 6-step journey explainer, and data export/clear. All data local to the browser.
+- **Contract Generator** (`/services/contract.html`) — auto-generates a 11-section AI Services Agreement from a brief (parties, scope, timeline, fees, client responsibilities, revisions, IP, confidentiality, warranties, termination, governing law). PDF download via jsPDF. Print-optimized CSS. Contract ID generation. Marks brief as "contracted" when viewed.
+- **Payment Plan** (`/services/payment.html`) — 3 payment plans (50/50, milestone-based 30/40/30, monthly retainer) with live price breakdown. 3 payment methods (M-Pesa Paybill, Flutterwave, Stripe) with merchant details. Email/WhatsApp confirmation CTAs. Saves selected plan to brief.
+
+**Homepage repositioning:**
+- Removed "Job Portal →" CTA from hero (it was for Victor, not clients).
+- Added "Start a Project" as the prominent secondary CTA (after Explore My Work).
+- Added full-width "Services Journey Band" at the top of the services section — 6-step visual (Scope → Register → Contract → Pay → Track → Launch) with CTA to wizard.
+- Services now has its own prominent line with the full client journey CTAs.
+
+**Services landing page (`/services/`):**
+- Hero CTA now leads with "Start the Project Wizard" (primary), then Explore packages, then Estimate your project.
+- CTA banner at bottom now offers Wizard + Dashboard + Discovery call.
+
+**Marketing Strategy doc (`MARKETING-STRATEGY.md`):**
+- Comprehensive 90-day growth plan with positioning, 4 growth channels (inbound content, outbound direct, community, social media), funnel math, email marketing setup, analytics, week-by-week action plan, $176/mo budget, brand voice guide, risk mitigation, and success metrics. Targets 7 closed clients and $56K revenue in 90 days.
+
+**Infrastructure:**
+- Service worker bumped to `vnd-v2.7.0`; pre-caches all new service pages (wizard, client-dashboard, contract, payment + their CSS/JS).
+- View Transitions meta tag added to all 17 blog articles and guides (was only on top-level pages).
+- Service worker `NEVER_CACHE` list no longer excludes `/jobs/` (its shell is now cached).
+
+### Verified
+- 0 console errors across 11 pages tested (home, services, wizard, client-dashboard, contract, payment, resume, dashboard, blog, blog article, guide).
+- Wizard end-to-end flow tested: 6 steps → result modal → correct recommendation (AI Growth for product/SMB/$3-10k/standard timeline).
+- No broken internal links (32 HTML files, 46 targets).
+- All images have alt text, all pages have lang/canonical/view-transition.
+
+### Note
+- Payment methods (M-Pesa Paybill 4071186, Flutterwave link, Stripe link) are placeholders. Victor must replace with his actual merchant details before going live with payments.
+
 ## [2.4.0] — 2026-07-04
 
 ### Added — Modern Web Platform + Error Fixes + Resume Enrichment

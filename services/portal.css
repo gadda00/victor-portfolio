@@ -1,0 +1,191 @@
+/* Victor Ndunda — Client Portal styles */
+
+/* ─── Portal hero ────────────────────────────────────────────────── */
+.portal-hero {
+  padding: 7rem 0 2rem;
+  background:
+    radial-gradient(ellipse 700px 280px at 20% 0%, rgba(0,212,255,0.10), transparent 70%),
+    radial-gradient(ellipse 700px 280px at 80% 0%, rgba(168,85,247,0.10), transparent 70%);
+  border-bottom: 1px solid var(--border);
+}
+.portal-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.875rem;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+.portal-title {
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
+}
+.portal-sub {
+  color: var(--text-muted);
+  font-size: 1.0625rem;
+  max-width: 640px;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+.portal-cta { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+
+/* ─── KPI strip (reuses .kpi-card from dashboard) ────────────────── */
+.portal-kpis { padding: 2rem 0; border-bottom: 1px solid var(--border); }
+
+/* ─── Section heads ──────────────────────────────────────────────── */
+.portal-section { padding: 3rem 0; }
+.portal-section-head { margin-bottom: 2rem; }
+.portal-section-head h2 {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800; letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.portal-section-head p { color: var(--text-muted); font-size: 0.9375rem; line-height: 1.6; max-width: 640px; }
+
+/* ─── Brief cards ────────────────────────────────────────────────── */
+.portal-briefs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.25rem;
+}
+.brief-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+  position: relative;
+}
+.brief-card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-2px); }
+.brief-card-head {
+  display: flex; justify-content: space-between; align-items: flex-start;
+  gap: 1rem; margin-bottom: 1rem;
+}
+.brief-card-pkg {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  padding: 0.3rem 0.7rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.75rem; font-weight: 600;
+}
+.brief-card-date {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem; color: var(--text-dim);
+}
+.brief-card-name { font-size: 1.125rem; font-weight: 700; margin-bottom: 0.25rem; }
+.brief-card-company { font-size: 0.875rem; color: var(--text-muted); margin-bottom: 1rem; }
+.brief-card-est {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.875rem 1rem;
+  margin-bottom: 1rem;
+}
+.brief-card-est-label {
+  font-size: 0.7rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--text-dim); margin-bottom: 0.25rem;
+}
+.brief-card-est-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem; font-weight: 600; color: var(--accent);
+}
+.brief-card-meta {
+  display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1rem;
+}
+.brief-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.68rem;
+  padding: 0.2rem 0.5rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  color: var(--text-muted);
+}
+.brief-card-actions {
+  display: flex; flex-wrap: wrap; gap: 0.4rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+.brief-card-actions .btn {
+  flex: 1; min-width: 110px;
+  justify-content: center;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.78rem;
+}
+.brief-card-status {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+}
+.brief-card-status.draft { background: rgba(100,116,139,0.15); color: #94a3b8; }
+.brief-card-status.contracted { background: rgba(0,212,255,0.15); color: var(--accent); }
+.brief-card-status.in-progress { background: rgba(245,158,11,0.15); color: #f59e0b; }
+.brief-card-status.delivered { background: rgba(16,185,129,0.15); color: var(--accent-3); }
+
+.portal-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  background: var(--bg-card);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+}
+.portal-empty h3 { font-size: 1.25rem; margin-bottom: 0.5rem; }
+.portal-empty p { color: var(--text-muted); margin-bottom: 1.5rem; }
+.portal-empty a { color: var(--accent); }
+
+/* ─── Journey grid ───────────────────────────────────────────────── */
+.portal-journey-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.25rem;
+}
+.portal-step {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  position: relative;
+  padding-top: 2.5rem;
+}
+.portal-step-num {
+  position: absolute;
+  top: 1rem; left: 1.5rem;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: white;
+  font-weight: 700; font-size: 1rem;
+  border-radius: 10px;
+}
+.portal-step h3 { font-size: 1.0625rem; font-weight: 700; margin-bottom: 0.5rem; }
+.portal-step p { color: var(--text-muted); font-size: 0.875rem; line-height: 1.6; }
+.portal-step a { color: var(--accent); }
+
+/* ─── Data management ────────────────────────────────────────────── */
+.portal-data-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  flex-wrap: wrap;
+}
+.portal-data-card h3 { font-size: 1.0625rem; margin-bottom: 0.4rem; }
+.portal-data-card p { color: var(--text-muted); font-size: 0.875rem; line-height: 1.6; }
+.portal-data-actions { display: flex; gap: 0.5rem; flex-shrink: 0; }
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .portal-hero { padding: 5rem 0 1.5rem; }
+  .portal-data-card { flex-direction: column; align-items: flex-start; }
+}

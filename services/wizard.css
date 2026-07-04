@@ -1,0 +1,462 @@
+/* Victor Ndunda — Project Scope Wizard styles
+   Extends /styles.css + /services/services.css with wizard-specific UI. */
+
+/* ─── Nav portal button ──────────────────────────────────────────── */
+.nav-portal-btn {
+  padding: 0.5rem 0.875rem !important;
+  font-size: 0.8125rem !important;
+  border-radius: 9px !important;
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  text-decoration: none;
+}
+@media (max-width: 900px) {
+  .nav-actions .nav-portal-btn { display: none; }
+}
+
+/* ─── Wizard hero ────────────────────────────────────────────────── */
+.wizard-hero {
+  padding: 7rem 0 2rem;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 700px 280px at 20% 0%, rgba(0,212,255,0.10), transparent 70%),
+    radial-gradient(ellipse 700px 280px at 80% 0%, rgba(168,85,247,0.10), transparent 70%);
+  border-bottom: 1px solid var(--border);
+}
+.wizard-back {
+  display: inline-block;
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  margin-bottom: 1.25rem;
+  transition: color 0.2s var(--ease);
+}
+.wizard-back:hover { color: var(--accent); }
+.wizard-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.875rem;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  margin-bottom: 1.25rem;
+}
+.wizard-title {
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  font-weight: 800; letter-spacing: -0.03em;
+  margin-bottom: 0.75rem;
+  text-wrap: balance;
+}
+.wizard-sub {
+  color: var(--text-muted);
+  font-size: 1.0625rem;
+  max-width: 680px;
+  margin: 0 auto;
+  line-height: 1.6;
+  text-wrap: pretty;
+}
+
+/* ─── Progress bar ───────────────────────────────────────────────── */
+.wizard-progress-bar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--border);
+  padding: 0.75rem 0;
+}
+.wizard-progress-fill {
+  position: absolute;
+  top: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  transition: width 0.4s var(--ease);
+  width: 16.66%;
+}
+.wizard-progress-steps {
+  display: flex;
+  justify-content: space-between;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  gap: 0.5rem;
+}
+.wiz-step {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+  transition: color 0.3s var(--ease);
+  white-space: nowrap;
+}
+.wiz-step.active { color: var(--accent); }
+.wiz-step.done { color: var(--accent-3); }
+@media (max-width: 600px) {
+  .wiz-step { font-size: 0.65rem; }
+  .wizard-progress-steps { gap: 0.25rem; padding: 0 0.5rem; }
+}
+
+/* ─── Wizard body ────────────────────────────────────────────────── */
+.wizard-body {
+  padding: 3rem 0 4rem;
+  min-height: 50vh;
+}
+.wiz-step-panel {
+  display: none;
+  animation: wizFadeIn 0.4s var(--ease);
+}
+.wiz-step-panel.active { display: block; }
+@keyframes wizFadeIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+.wiz-step-title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  text-wrap: balance;
+}
+.wiz-step-sub {
+  color: var(--text-muted);
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  max-width: 640px;
+  line-height: 1.6;
+}
+
+/* ─── Option cards ───────────────────────────────────────────────── */
+.wiz-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+.wiz-options-multi { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+.wiz-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  transition: all 0.25s var(--ease);
+  position: relative;
+}
+.wiz-option:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  background: var(--bg-elev);
+}
+.wiz-option.selected {
+  border-color: var(--accent);
+  background: rgba(0,212,255,0.06);
+  box-shadow: 0 0 0 2px rgba(0,212,255,0.15);
+}
+.wiz-option-icon {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+.wiz-option.selected .wiz-option-icon {
+  background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(168,85,247,0.15));
+  border-color: var(--accent);
+}
+.wiz-option-body { flex: 1; min-width: 0; }
+.wiz-option-name {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+.wiz-option-desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.wiz-check {
+  position: absolute;
+  top: 0.75rem; right: 0.75rem;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: white;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.75rem; font-weight: 700;
+  opacity: 0;
+  transform: scale(0.5);
+  transition: all 0.25s var(--ease);
+}
+.wiz-option.selected .wiz-check {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ─── Form ───────────────────────────────────────────────────────── */
+.wiz-form {
+  display: flex; flex-direction: column; gap: 1.25rem;
+  max-width: 640px;
+}
+.wiz-form-row { display: flex; flex-direction: column; gap: 0.4rem; }
+.wiz-form-row-2col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.wiz-form-row label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text);
+}
+.wiz-form-row label .req { color: var(--accent-2); }
+.wiz-form-row input,
+.wiz-form-row select,
+.wiz-form-row textarea {
+  padding: 0.75rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9375rem;
+  transition: border-color 0.2s var(--ease);
+}
+.wiz-form-row input:focus,
+.wiz-form-row select:focus,
+.wiz-form-row textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(0,212,255,0.15);
+}
+.wiz-form-row textarea { resize: vertical; min-height: 100px; }
+.wiz-form-row input::placeholder,
+.wiz-form-row textarea::placeholder { color: var(--text-dim); }
+.wiz-consent { margin-top: 0.5rem; }
+.wiz-checkbox {
+  display: flex; align-items: flex-start; gap: 0.6rem;
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  line-height: 1.5;
+}
+.wiz-checkbox input[type="checkbox"] {
+  margin-top: 0.2rem;
+  width: 18px; height: 18px;
+  accent-color: var(--accent);
+  flex-shrink: 0;
+}
+
+/* ─── Navigation buttons ─────────────────────────────────────────── */
+.wiz-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.wiz-nav-info {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+#wizNext:disabled,
+#wizPrev:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ─── Result modal ───────────────────────────────────────────────── */
+.wiz-result-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10,10,15,0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 2rem 1rem;
+  overflow-y: auto;
+}
+.wiz-result-overlay[hidden] { display: none; }
+.wiz-result-modal {
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  max-width: 720px;
+  width: 100%;
+  padding: 2.5rem;
+  position: relative;
+  animation: wizModalIn 0.4s var(--ease);
+  margin: auto;
+}
+@keyframes wizModalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+.wiz-result-close {
+  position: absolute;
+  top: 1rem; right: 1rem;
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  border-radius: 50%;
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s var(--ease);
+}
+.wiz-result-close:hover { color: var(--text); border-color: var(--accent); }
+
+.wiz-result-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.35rem 0.875rem;
+  background: rgba(16,185,129,0.1);
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 999px;
+  font-size: 0.72rem; font-weight: 700;
+  color: var(--accent-3);
+  letter-spacing: 0.1em; text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.wiz-result-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+  text-wrap: balance;
+}
+.wiz-result-sub {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.wiz-recommendation {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid var(--accent);
+}
+.wiz-recom-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+.wiz-recom-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.4rem;
+}
+.wiz-recom-why {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+.wiz-recom-price {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.wiz-estimate-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+.wiz-estimate-cell {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 0.875rem 1rem;
+}
+.wiz-estimate-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  margin-bottom: 0.25rem;
+}
+.wiz-estimate-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.wiz-features {
+  margin-bottom: 1.5rem;
+}
+.wiz-features-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+.wiz-features ul {
+  list-style: none; padding: 0; margin: 0;
+}
+.wiz-features li {
+  position: relative;
+  padding: 0.3rem 0 0.3rem 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+.wiz-features li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--accent-3);
+  font-weight: 700;
+}
+
+.wiz-result-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+.wiz-result-actions .btn { flex: 1; min-width: 160px; justify-content: center; }
+
+.wiz-save-note {
+  margin-top: 1rem;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  text-align: center;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .wizard-hero { padding: 5rem 0 1.5rem; }
+  .wizard-body { padding: 2rem 0 3rem; }
+  .wiz-options { grid-template-columns: 1fr; }
+  .wiz-form-row-2col { grid-template-columns: 1fr; }
+  .wiz-result-modal { padding: 1.5rem; }
+  .wiz-result-actions .btn { min-width: 100%; }
+}
