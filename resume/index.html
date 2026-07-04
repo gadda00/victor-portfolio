@@ -26,6 +26,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="/styles.css" />
 <link rel="stylesheet" href="/resume/resume.css" />
+
+<!-- Performance hints -->
+<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+<link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+<link rel="dns-prefetch" href="https://github.com" />
+
+<!-- View Transitions API (cross-page navigation, Chrome 115+) -->
+<meta name="view-transition" content="same-origin" />
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
@@ -163,9 +171,10 @@
         <div class="resume-date">2023 — Present</div>
       </div>
       <ul class="resume-bullets">
-        <li>Designed and shipped a <strong>50-agent multi-agent platform</strong> with a 7-stage parallel DAG pipeline (Ingest → Engineer → Detect → Forecast → Infer → Report) with circuit breakers and smart caching.</li>
+        <li>Designed and shipped a <strong>50-agent multi-agent platform</strong> with a 7-stage parallel DAG pipeline (Ingest → Engineer → Detect → Forecast → Infer → Report) with circuit breakers and smart caching — serving live users at busaraai.com.</li>
         <li>Implemented real statistical algorithms from scratch: Holt-Winters forecasting, Z-score/IQR/EWMA anomaly ensembles, OLS regression, Granger causality, K-Means++ clustering.</li>
         <li>Integrated GLM-4.6, GPT, Claude, and Gemini into a multi-LLM council with streaming responses and citation-grounded RAG.</li>
+        <li>Cut average analysis latency by ~40% via smart caching and parallel DAG execution.</li>
         <li>Stack: TypeScript, Next.js 15, React 19, PostgreSQL, Redis, Docker, Kubernetes, PWA.</li>
       </ul>
     </div>
@@ -179,10 +188,11 @@
         <div class="resume-date">2022 — Present</div>
       </div>
       <ul class="resume-bullets">
-        <li>Built an <strong>offline-first Flutter app</strong> for African farmers with on-device crop disease detection via TensorFlow Lite.</li>
+        <li>Built an <strong>offline-first Flutter app</strong> for African farmers with on-device crop disease detection via TensorFlow Lite — runs on $80 Android phones.</li>
         <li>Engineered market price forecasting using GARCH/EWMA/VaR, and a multi-LLM advisory council covering agronomy, markets, climate, and finance.</li>
-        <li>Integrated 22+ data sources: KilimoSTAT, FAOSTAT, Google Earth Engine, KALRO, open weather APIs.</li>
+        <li>Integrated <strong>22+ data sources</strong>: KilimoSTAT, FAOSTAT, Google Earth Engine, KALRO, open weather APIs.</li>
         <li>Aligned with Kenya's NASIP 2026-2030 agricultural strategy; supports SMS/USSD channels for low-end phone users.</li>
+        <li>Open-sourced on GitHub; designed for scale across East African smallholder farmers.</li>
       </ul>
     </div>
 
@@ -275,15 +285,28 @@
     </div>
   </section>
 
+  <!-- Open Source & Writing -->
+  <section class="resume-section" aria-labelledby="oss-head">
+    <h2 id="oss-head" class="resume-section-title"><span class="resume-section-icon">📚</span> Open Source &amp; Writing</h2>
+    <div class="resume-card">
+      <ul class="resume-bullets">
+        <li>Open-source maintainer — <a href="https://github.com/gadda00" target="_blank" rel="noopener">github.com/gadda00</a> (KilimoPRO, IntelliFlow, Financial Forecasting, Fraud Detection, Customer Segmentation).</li>
+        <li>Author of technical articles on multi-agent DAG architecture, real math vs vibes, multi-LLM councils, quant finance for agriculture, and 22 data sources — published at <a href="/blog/">victorndunda.com/blog/</a>.</li>
+        <li>Author of 8 'How to Use AI' guides for SMBs — chatgpt for business, prompt engineering, AI tools, no-code chatbots, automation, AI for farmers, Swahili AI, RAG in one day.</li>
+        <li>TikTok Developer Domain Verification — verified technical domain ownership.</li>
+      </ul>
+    </div>
+  </section>
+
   <!-- Certifications -->
   <section class="resume-section" aria-labelledby="cert-head">
     <h2 id="cert-head" class="resume-section-title"><span class="resume-section-icon">🏅</span> Certifications &amp; Recognition</h2>
     <div class="resume-card">
       <ul class="resume-bullets">
-        <li>TikTok Developer Domain Verification — verified technical domain ownership.</li>
-        <li>PWA Build — offline-capable portfolio with service worker &amp; manifest.</li>
-        <li>Open-source contributor — <a href="https://github.com/gadda00" target="_blank" rel="noopener">github.com/gadda00</a> (KilimoPRO, IntelliFlow, Financial Forecasting, Fraud Detection, Customer Segmentation).</li>
+        <li>PWA Build — offline-capable portfolio with service worker, manifest, and install prompt.</li>
+        <li>WCAG-aware accessibility — skip-to-content, focus-visible, reduced-motion, ARIA labels.</li>
         <li>Aligned with Kenya's National Agricultural Information System (NASIP) 2026-2030.</li>
+        <li>TikTok Developer Domain Verification — verified technical domain ownership.</li>
       </ul>
     </div>
   </section>
@@ -318,6 +341,7 @@
 </footer>
 
 <script src="/resume/resume.js" defer></script>
+<script src="/enhancements.js" defer></script>
 <script>
   // Inline minimal theme+nav for resilience if app.js doesn't load
   (function(){

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Victor Ndunda — AI Engineer &amp; Founder</title>
+    <link>https://victorndunda.com/blog/</link>
+    <atom:link href="https://victorndunda.com/feed.xml" rel="self" type="application/rss+xml" />
+    <description>AI Engineer building multi-agent intelligence systems and agricultural AI in Nairobi, Kenya.</description>
+    <language>en</language>
+    <lastBuildDate>Sat, 04 Jul 2026 10:08:38 +0000</lastBuildDate>
+    <managingEditor>mututandunda@gmail.com (Victor Ndunda)</managingEditor>
+    <webMaster>mututandunda@gmail.com (Victor Ndunda)</webMaster>
+    <ttl>60</ttl>
+    <item>
+      <title>Building a 50-Agent Multi-Agent DAG Pipeline</title>
+      <link>https://victorndunda.com/blog/articles/building-50-agent-dag.html</link>
+      <guid isPermaLink="true">https://victorndunda.com/blog/articles/building-50-agent-dag.html</guid>
+      <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
+      <description><![CDATA[How I designed and built Busara AI's 7-stage parallel DAG pipeline with 50 specialized agents — from Kahn's topological sort to circuit breakers and O(1) LRU caching.]]></description>
+    <category>multi-agent</category>
+    <category>DAG</category>
+    <category>TypeScript</category>
+    <category>Busara AI</category>
+    <category>orchestration</category>
+    </item>
+    <item>
+      <title>KilimoPRO: AI for 5 Million Kenyan Farmers</title>
+      <link>https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html</link>
+      <guid isPermaLink="true">https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html</guid>
+      <pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate>
+      <description><![CDATA[Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data.]]></description>
+    <category>KilimoPRO</category>
+    <category>agriculture</category>
+    <category>Flutter</category>
+    <category>TensorFlow Lite</category>
+    <category>Kenya</category>
+    </item>
+    <item>
+      <title>Lessons from China's National Smart Agriculture Action Plan</title>
+      <link>https://victorndunda.com/blog/articles/chinese-smart-agriculture.html</link>
+      <guid isPermaLink="true">https://victorndunda.com/blog/articles/chinese-smart-agriculture.html</guid>
+      <pubDate>Thu, 25 Jun 2026 00:00:00 +0000</pubDate>
+      <description><![CDATA[What Kenya can learn from China's space-air-ground monitoring networks, large agricultural models, and the 2024-2028 smart agriculture framework.]]></description>
+    <category>policy</category>
+    <category>China</category>
+    <category>Kenya</category>
+    <category>smart agriculture</category>
+    <category>research</category>
+    </item>
+    <item>
+      <title>Real Math, Not Vibes: Statistical Algorithms in TypeScript</title>
+      <link>https://victorndunda.com/blog/articles/real-math-not-vibes.html</link>
+      <guid isPermaLink="true">https://victorndunda.com/blog/articles/real-math-not-vibes.html</guid>
+      <pubDate>Sat, 20 Jun 2026 00:00:00 +0000</pubDate>
+      <description><![CDATA[Holt-Winters triple exponential smoothing, OLS regression via normal equation, K-Means++ with silhouette scoring — all from scratch in TypeScript.]]></description>
+    <category>TypeScript</category>
+    <category>statistics</category>
+    <category>Holt-Winters</category>
+    <category>OLS</category>
+    <category>K-Means</category>
+    </item>
+    <item>
+      <title>The Multi-LLM Council: When One AI Isn't Enough</title>
+      <link>https://victorndunda.com/blog/articles/multi-llm-council.html</link>
+      <guid isPermaLink="true">https://victorndunda.com/blog/articles/multi-llm-council.html</guid>
+      <pubDate>Mon, 15 Jun 2026 00:00:00 +0000</pubDate>
+      <description><![CDATA[How KilimoPRO uses 5 expert AI personas (agronomist, economist, climate scientist, extension officer, risk manager) to deliberate complex farming decisions.]]></description>
+    <category>LLM</category>
+    <category>multi-agent</category>
+    <category>KilimoPRO</category>
+    <category>agriculture</category>
+    </item>
+    <item>
+      <title>Quantitative Finance for Agricultural Markets</title>
+      <link>https://victorndunda.com/blog/articles/quant-finance-for-agriculture.html</link>
+      <guid isPermaLink="true">https://victorndunda.com/blog/articles/quant-finance-for-agriculture.html</guid>
+      <pubDate>Wed, 10 Jun 2026 00:00:00 +0000</pubDate>
+      <description><![CDATA[Applying EWMA volatility, GARCH(1,1), Value at Risk (VaR), and RSI from financial markets to agricultural commodity price forecasting.]]></description>
+    <category>quant</category>
+    <category>GARCH</category>
+    <category>EWMA</category>
+    <category>VaR</category>
+    <category>agriculture</category>
+    </item>
+    <item>
+      <title>22 Data Sources for Kenyan Agricultural Intelligence</title>
+      <link>https://victorndunda.com/blog/articles/22-data-sources.html</link>
+      <guid isPermaLink="true">https://victorndunda.com/blog/articles/22-data-sources.html</guid>
+      <pubDate>Fri, 05 Jun 2026 00:00:00 +0000</pubDate>
+      <description><![CDATA[A comprehensive inventory of verified, operational data APIs: KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, Sentinel-2, CHIRPS, ARDC, and more.]]></description>
+    <category>data sources</category>
+    <category>API</category>
+    <category>agriculture</category>
+    <category>Kenya</category>
+    <category>KilimoSTAT</category>
+    </item>
+    <item>
+      <title>On-Device Crop Disease Detection with TensorFlow Lite</title>
+      <link>https://victorndunda.com/blog/articles/on-device-disease-detection.html</link>
+      <guid isPermaLink="true">https://victorndunda.com/blog/articles/on-device-disease-detection.html</guid>
+      <pubDate>Mon, 01 Jun 2026 00:00:00 +0000</pubDate>
+      <description><![CDATA[Training MobileNetV3 on the PlantVillage dataset, quantizing to int8, and running inference on low-end Android phones — completely offline.]]></description>
+    <category>TensorFlow Lite</category>
+    <category>MobileNetV3</category>
+    <category>PlantVillage</category>
+    <category>on-device ML</category>
+    <category>Flutter</category>
+    </item>
+    <item>
+      <title>NASIP 2026-2030: The KES 1.08 Trillion Opportunity</title>
+      <link>https://victorndunda.com/blog/articles/nasip-2026-2030-opportunity.html</link>
+      <guid isPermaLink="true">https://victorndunda.com/blog/articles/nasip-2026-2030-opportunity.html</guid>
+      <pubDate>Thu, 28 May 2026 00:00:00 +0000</pubDate>
+      <description><![CDATA[Deep analysis of Kenya's National Agri-Food Systems Investment Plan and how technology platforms can operationalize its 9 flagship programs.]]></description>
+    <category>NASIP</category>
+    <category>Kenya</category>
+    <category>policy</category>
+    <category>agriculture</category>
+    <category>investment</category>
+    </item>
+  </channel>
+</rss>

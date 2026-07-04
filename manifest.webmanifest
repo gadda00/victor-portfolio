@@ -45,19 +45,39 @@
   ],
   "shortcuts": [
     {
+      "name": "Resume",
+      "short_name": "Resume",
+      "url": "/resume/",
+      "description": "View and download Victor's resume",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
+      "name": "Dashboard Hub",
+      "short_name": "Dashboard",
+      "url": "/dashboard/",
+      "description": "Unified control center",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    },
+    {
       "name": "Blog",
+      "short_name": "Blog",
       "url": "/blog/",
-      "description": "Read latest articles"
+      "description": "Read latest articles",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     },
     {
       "name": "Articles",
+      "short_name": "Articles",
       "url": "/articles/",
-      "description": "Browse all articles"
+      "description": "Browse all articles",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     },
     {
-      "name": "Admin Dashboard",
-      "url": "/admin/",
-      "description": "Private admin area"
+      "name": "Jobs Portal",
+      "short_name": "Jobs",
+      "url": "/jobs/",
+      "description": "AI engineering job search",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     }
   ]
 }

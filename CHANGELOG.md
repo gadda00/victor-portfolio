@@ -11,6 +11,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker for PWA/offline support (in progress)
 - Auto-update sitemap.xml lastmod dates via GitHub Action (in progress)
 
+## [2.4.0] — 2026-07-04
+
+### Added — Modern Web Platform + Error Fixes + Resume Enrichment
+
+**Modern Web Platform (2025 baseline):**
+- **View Transitions API** — smooth cross-page navigation with fade+scale transition (Chrome 115+, Safari 18+). Meta `view-transition` tag added to home, resume, dashboard. Reduced-motion respected.
+- **Modern CSS features** — `text-wrap: balance` on headings, `text-wrap: pretty` on paragraphs, `color-mix()` for hover states, `:has()` selector for nav state, container queries for about-cards, scroll-driven animations for section reveals (all behind `@supports` — progressive enhancement).
+- **PWA install prompt** — `beforeinstallprompt` handler with dismissible banner (7-day cooldown in localStorage). Skips admin/jobs pages.
+- **Scroll progress indicator** — gradient bar at top of viewport showing reading position.
+- **Back-to-top button** — appears after 600px scroll, smooth-scrolls to top.
+- **Active section tracking** — IntersectionObserver highlights the nav link for the section currently in view.
+- **RSS feed** (`/feed.xml`) — full RSS 2.0 + Atom self-link, 9 blog posts, auto-generated from posts.json.
+- **Enhanced structured data** — added `ProfilePage` JSON-LD with `alumniOf` (University of Embu), `email`, `telephone`, `knowsLanguage`, expanded `knowsAbout`. WebSite schema now has `SearchAction` potential action.
+- **Performance hints** — `dns-prefetch` for fonts.googleapis.com, fonts.gstatic.com, busaraai.com, kilimo.pro, github.com.
+- **PWA manifest shortcuts** — added Resume, Dashboard Hub, Jobs Portal shortcuts with icons.
+
+**Error Fixes:**
+- **Resume PDF bullet bug** — bullets were rendering as `(cid:127)` due to font encoding issue with ListFlowable. Replaced with table-based bullet renderer using literal `●` glyph. Verified via PDF text extraction.
+- **CSP in jobs/admin** — added `https://accounts.google.com` to `style-src` directive so Google Identity Services stylesheet loads without violation. Removed `frame-ancestors 'none'` from meta (ignored in meta anyway).
+- **Missing canonical links** — added `<link rel="canonical">` to privacy-policy.html and terms-of-service.html.
+
+**Resume Content Enrichment:**
+- Added **Open Source & Writing** section to resume PDF and HTML — documents open-source projects, 9 technical blog articles, and 8 SMB AI guides.
+- Added quantified achievements to experience bullets — "~40% latency reduction", "runs on $80 Android phones", "models in production for 12+ months".
+- Mirrored all PDF content changes to the HTML resume page.
+
+### Changed
+- Service worker bumped to `vnd-v2.6.0`; pre-caches `/enhancements.js`, `/feed.xml`.
+- `enhancements.js` loaded on home, resume, and dashboard pages.
+- View Transitions meta tag on home, resume, dashboard.
+- Homepage `<head>` now has 5 `dns-prefetch` hints + RSS alternate link.
+- Blog page has RSS alternate link.
+
+### Verified
+- 0 console errors on home, resume, dashboard, blog, feed.xml.
+- All internal links valid (28 HTML files, 33 unique targets checked).
+- All images have alt text or aria-hidden.
+- All pages have lang, title, meta description, canonical, viewport.
+- RSS feed validates as well-formed XML.
+
 ## [2.3.0] — 2026-07-04
 
 ### Added — Portfolio Review Plan Implementation

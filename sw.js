@@ -10,7 +10,7 @@
  * Fetch: serves from cache, falls back to network, updates cache in background.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v2.5.0';
+const CACHE_VERSION = 'vnd-v2.6.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -22,6 +22,8 @@ const SHELL_URLS = [
   '/styles.css',
   '/app.js',
   '/i18n.js',
+  '/enhancements.js',
+  '/feed.xml',
   '/favicon.svg',
   '/favicon-32.png',
   '/favicon-16.png',

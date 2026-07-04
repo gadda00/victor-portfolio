@@ -55,7 +55,55 @@
   "url": "https://victorndunda.com",
   "name": "Victor Ndunda — AI Engineer & Founder",
   "description": "AI Engineer building multi-agent intelligence systems and agricultural AI in Nairobi, Kenya.",
-  "author": { "@type": "Person", "name": "Victor Ndunda" }
+  "author": { "@type": "Person", "name": "Victor Ndunda" },
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://victorndunda.com/?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": "https://victorndunda.com",
+  "name": "Victor Ndunda — AI Engineer, Founder & Researcher",
+  "mainEntity": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com",
+    "image": "https://victorndunda.com/og-image.png",
+    "jobTitle": "AI Engineer & Founder",
+    "description": "AI engineer and founder building production multi-agent intelligence systems and agricultural AI for African markets.",
+    "email": "mailto:mututandunda@gmail.com",
+    "telephone": "+254724346971",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Nairobi",
+      "addressCountry": "Kenya"
+    },
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "University of Embu",
+      "url": "https://www.embuni.ac.ke"
+    },
+    "worksFor": [
+      { "@type": "Organization", "name": "Busara AI", "url": "https://busaraai.com" },
+      { "@type": "Organization", "name": "KilimoPRO", "url": "https://kilimo.pro" }
+    ],
+    "knowsAbout": ["Multi-Agent AI", "Agricultural Intelligence", "TypeScript", "Machine Learning", "Data Engineering", "LLM", "Flutter", "TensorFlow Lite", "DAG Orchestration", "Statistical Forecasting"],
+    "knowsLanguage": ["en", "sw"],
+    "sameAs": [
+      "https://github.com/gadda00",
+      "https://www.linkedin.com/in/victor-ndunda",
+      "https://busaraai.com",
+      "https://kilimo.pro"
+    ]
+  }
 }
 </script>
 <meta name="twitter:card" content="summary_large_image" />
@@ -68,6 +116,7 @@
 <meta name="theme-color" content="#0a0e1a" />
 <meta name="color-scheme" content="dark light" />
 <link rel="canonical" href="https://victorndunda.com" />
+<link rel="alternate" type="application/rss+xml" title="Victor Ndunda — Blog" href="https://victorndunda.com/feed.xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -76,6 +125,14 @@
 <!-- Performance: Preload critical resources -->
 <link rel="preload" href="/styles.css" as="style" />
 <link rel="preload" href="/app.js" as="script" crossorigin />
+<link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+<link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+<link rel="dns-prefetch" href="https://busaraai.com" />
+<link rel="dns-prefetch" href="https://kilimo.pro" />
+<link rel="dns-prefetch" href="https://github.com" />
+
+<!-- View Transitions API (cross-page navigation, Chrome 115+) -->
+<meta name="view-transition" content="same-origin" />
 
 <!-- TikTok Developer Domain Verification -->
 <meta name="tiktok-developers-site-verification" content="Vl0GJD45LLUlnpFfQ23udG6lANNqZy3R" />
@@ -591,6 +648,7 @@
 
 <script src="app.js" defer></script>
 <script src="/i18n.js" defer></script>
+<script src="/enhancements.js" defer></script>
 
 <!-- Floating action buttons (resume + contact) -->
 <div class="fab-stack" aria-hidden="false">

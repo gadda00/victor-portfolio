@@ -528,3 +528,194 @@ body[data-lang="en"] [data-i18n-sw-only] { display: none; }
 /* Highlight new sections (resume, education, testimonials) when navigated to */
 :target { scroll-margin-top: 90px; }
 
+/* ─── Modern CSS enhancements (progressive, 2025 baseline) ──────── */
+
+/* Balanced text wrapping for headings — avoids orphan words */
+h1, h2, h3, .hero-title, .resume-title, .dash-title, .section-head h2 {
+  text-wrap: balance;
+}
+/* Pretty wrapping for paragraphs (Chrome 117+, Safari 17.5+) */
+p, li, .about-text, .resume-bullets li {
+  text-wrap: pretty;
+}
+
+/* View Transitions API — smooth cross-page navigation */
+@supports (view-transition-name: none) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.35s;
+    animation-timing-function: var(--ease);
+  }
+  ::view-transition-old(root) {
+    animation-name: vt-fade-out;
+  }
+  ::view-transition-new(root) {
+    animation-name: vt-fade-in;
+  }
+  @keyframes vt-fade-out {
+    from { opacity: 1; transform: scale(1); }
+    to   { opacity: 0; transform: scale(0.98); }
+  }
+  @keyframes vt-fade-in {
+    from { opacity: 0; transform: scale(1.02); }
+    to   { opacity: 1; transform: scale(1); }
+  }
+  /* Respect reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation: none !important;
+    }
+  }
+}
+
+/* Modern color-mix() usage for hover states (Chrome 111+, Safari 16.2+, Firefox 113+) */
+@supports (color: color-mix(in srgb, red, blue)) {
+  .nav-link:hover,
+  .resume-card:hover,
+  .edu-card:hover,
+  .testimonial-card:hover,
+  .kpi-card:hover,
+  .module-card:hover {
+    border-color: color-mix(in srgb, var(--accent) 35%, var(--border));
+  }
+  .svc-quick-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px color-mix(in srgb, var(--accent) 12%, transparent);
+  }
+}
+
+/* :has() selector — style nav when a section is active (Chrome 105+, Safari 15.4+, Firefox 121+) */
+@supports selector(:has(*)) {
+  /* Highlight nav link when its target section is in view */
+  .nav-links:has(.nav-link.active) .nav-link.active {
+    color: var(--accent);
+  }
+}
+
+/* Scroll-driven animations — subtle reveal (Chrome 115+, behind flag in others) */
+@supports (animation-timeline: view()) {
+  .resume-section,
+  .testimonial-card,
+  .module-card,
+  .edu-card {
+    animation: reveal-in linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 40%;
+  }
+  @keyframes reveal-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .resume-section, .testimonial-card, .module-card, .edu-card {
+      animation: none !important;
+    }
+  }
+}
+
+/* Container queries — make about-cards responsive to their container, not viewport */
+@supports (container-type: inline-size) {
+  .about-cards {
+    container-type: inline-size;
+  }
+  @container (max-width: 500px) {
+    .about-cards {
+      grid-template-columns: 1fr !important;
+    }
+  }
+}
+
+/* Focus-visible refinement using :has() — show focus ring only for keyboard users */
+:focus:not(:focus-visible) { outline: none; }
+
+/* Smooth scrolling with reduced-motion respect */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
+/* PWA install prompt banner */
+.pwa-install-banner {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 1.25rem;
+  right: 1.25rem;
+  max-width: 420px;
+  margin: 0 auto;
+  background: var(--bg-elev);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+  z-index: 950;
+  display: none;
+  align-items: center;
+  gap: 0.875rem;
+  animation: slideUp 0.4s var(--ease);
+}
+.pwa-install-banner.visible { display: flex; }
+.pwa-install-banner .pwa-icon { font-size: 1.75rem; flex-shrink: 0; }
+.pwa-install-banner .pwa-text { flex: 1; min-width: 0; }
+.pwa-install-banner .pwa-title { font-weight: 700; font-size: 0.9375rem; color: var(--text); }
+.pwa-install-banner .pwa-sub { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.1rem; }
+.pwa-install-banner .pwa-actions { display: flex; gap: 0.4rem; flex-shrink: 0; }
+.pwa-install-banner .pwa-btn {
+  border: none; cursor: pointer;
+  padding: 0.45rem 0.875rem;
+  border-radius: 8px;
+  font-size: 0.8125rem; font-weight: 600;
+  font-family: inherit;
+}
+.pwa-install-banner .pwa-btn-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: white;
+}
+.pwa-install-banner .pwa-btn-dismiss {
+  background: transparent;
+  color: var(--text-muted);
+}
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (max-width: 600px) {
+  .pwa-install-banner { left: 0.75rem; right: 0.75rem; padding: 0.875rem 1rem; }
+  .pwa-install-banner .pwa-icon { display: none; }
+}
+
+/* Scroll progress indicator (top bar) */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  z-index: 9999;
+  transition: width 0.1s ease-out;
+  pointer-events: none;
+}
+
+/* Back-to-top button (appears on scroll) */
+.back-to-top {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 5.5rem;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  color: var(--text);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease), border-color 0.3s var(--ease);
+  z-index: 900;
+  text-decoration: none;
+}
+.back-to-top.visible { opacity: 1; pointer-events: auto; }
+.back-to-top:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-3px); }
+@media (max-width: 768px) {
+  .back-to-top { right: 0.875rem; bottom: 5rem; }
+}
+
