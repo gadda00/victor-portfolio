@@ -1,0 +1,254 @@
+/* Victor Ndunda — Dashboard Hub styles
+   Extends /styles.css with dashboard-specific layout. */
+
+.dash-main { min-height: 60vh; }
+
+/* ─── Header ──────────────────────────────────────────────────────── */
+.dash-header {
+  padding: 6rem 0 2rem;
+  background:
+    radial-gradient(ellipse 700px 280px at 20% 0%, rgba(0,212,255,0.10), transparent 70%),
+    radial-gradient(ellipse 700px 280px at 80% 0%, rgba(168,85,247,0.10), transparent 70%);
+  border-bottom: 1px solid var(--border);
+}
+.dash-header-row {
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.dash-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.4rem 0.875rem;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 0.75rem; font-weight: 600; color: var(--text-muted);
+  letter-spacing: 0.05em; text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.pulse-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent-3);
+  animation: dashPulse 2s infinite;
+}
+@keyframes dashPulse {
+  0% { box-shadow: 0 0 0 0 rgba(16,185,129,0.6); }
+  70% { box-shadow: 0 0 0 8px rgba(16,185,129,0); }
+  100% { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
+}
+.dash-title {
+  font-size: clamp(2rem, 4.5vw, 3rem);
+  font-weight: 800; letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+.dash-sub {
+  color: var(--text-muted);
+  font-size: 1.0625rem;
+  max-width: 640px;
+  line-height: 1.6;
+}
+.dash-status-chip {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(16,185,129,0.08);
+  border: 1px solid rgba(16,185,129,0.3);
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--accent-3);
+}
+.dash-status-chip .dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--accent-3);
+  box-shadow: 0 0 8px var(--accent-3);
+}
+
+/* ─── KPI strip ──────────────────────────────────────────────────── */
+.dash-kpis {
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+.kpi-card {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.kpi-card:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-2px); }
+.kpi-icon {
+  font-size: 1.5rem;
+  width: 48px; height: 48px;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  flex-shrink: 0;
+}
+.kpi-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.5rem; font-weight: 700;
+  color: var(--text);
+  line-height: 1.1;
+}
+.kpi-label {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin-top: 0.15rem;
+}
+
+/* ─── Modules grid ───────────────────────────────────────────────── */
+.dash-modules { padding: 3rem 0; }
+.dash-section-title {
+  font-size: 1.5rem; font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.01em;
+}
+.modules-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.module-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.module-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 3px;
+  background: var(--module-color, var(--accent));
+}
+.module-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--module-color, var(--accent));
+  box-shadow: 0 12px 30px rgba(0,0,0,0.2);
+}
+.module-admin      { --module-color: #00d4ff; }
+.module-jobs       { --module-color: #a855f7; }
+.module-services   { --module-color: #10b981; }
+.module-research   { --module-color: #f59e0b; }
+.module-analytics  { --module-color: #ef4444; }
+.module-resume     { --module-color: #64748b; }
+
+.module-icon-wrap {
+  width: 52px; height: 52px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--module-color, var(--accent));
+  margin-bottom: 1rem;
+}
+.module-card h3 {
+  font-size: 1.125rem; font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+.module-card p {
+  font-size: 0.9375rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+.module-tags {
+  display: flex; flex-wrap: wrap; gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+.module-tags span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  padding: 0.2rem 0.55rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-muted);
+}
+.module-arrow {
+  font-size: 0.875rem; font-weight: 600;
+  color: var(--module-color, var(--accent));
+  letter-spacing: 0.02em;
+}
+
+/* ─── Activity panel ─────────────────────────────────────────────── */
+.dash-activity { padding: 2rem 0 4rem; }
+.activity-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1.5rem;
+}
+.activity-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+.activity-card h3 {
+  font-size: 1rem; font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--text);
+}
+.activity-list {
+  display: flex; flex-direction: column; gap: 0.5rem;
+  max-height: 280px; overflow-y: auto;
+}
+.activity-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  font-size: 0.875rem;
+}
+.activity-item .activity-time {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+}
+.activity-empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+}
+.activity-links {
+  list-style: none; padding: 0; margin: 0;
+  display: flex; flex-direction: column; gap: 0.4rem;
+}
+.activity-links a {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 0.875rem;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.activity-links a:hover {
+  border-color: var(--accent);
+  transform: translateX(3px);
+  color: var(--accent);
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .dash-header { padding: 5rem 0 1.5rem; }
+  .dash-header-row { flex-direction: column; align-items: flex-start; }
+  .activity-grid { grid-template-columns: 1fr; }
+}

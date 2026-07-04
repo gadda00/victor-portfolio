@@ -11,6 +11,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service worker for PWA/offline support (in progress)
 - Auto-update sitemap.xml lastmod dates via GitHub Action (in progress)
 
+## [2.3.0] — 2026-07-04
+
+### Added — Portfolio Review Plan Implementation
+- **Resume page** (`/resume/`) — full HTML resume with education, experience, skills matrix, selected projects, certifications, and languages. Print-optimized CSS produces a clean printed PDF.
+- **Downloadable resume PDF** (`/resume/Victor-Ndunda-Resume.pdf`) — generated via ReportLab, embedded in hero CTA, FAB, jobs portal, and dashboard.
+- **Education section** on homepage About — University of Embu (2014–2018) B.Sc. Computer Science, plus continuous-learning entry. Timeline UI with course tags.
+- **Resume download button** in hero CTA (alongside Explore My Work) and as a floating action button site-wide.
+- **Unified dashboard hub** (`/dashboard/`) — single entry point linking admin, jobs, services, research, analytics, and resume modules. Includes KPI strip (visits, resume downloads, job applications, last visit) powered by localStorage, plus a unified recent-activity feed.
+- **Testimonials / social proof section** on homepage — three testimonial cards with avatar, quote, and author metadata.
+- **Swahili / English language toggle** (`/i18n.js`) — persisted in localStorage, swaps `body[data-lang]`, translates elements with `data-i18n-key`. Toggle chip in nav.
+- **Floating action buttons** (resume + contact) on homepage — mobile-friendly, always-visible quick actions.
+- **Admin sidebar "Hub" section** — quick links to Dashboard Hub, Resume Page, and Jobs Portal from admin.
+- **Jobs portal polish** — added Resume + Dashboard nav links, redesigned hero with gradient background and inline CTA buttons (Download resume, My Dashboard).
+
+### Changed
+- Refactored homepage services "Packages quick view" — extracted all inline `style=""` attributes into classed `.svc-quick-*` selectors in `styles.css`. Same visual, now maintainable.
+- Refactored homepage services CTA button — replaced inline styles with `.services-cta-btn` class.
+- Service worker bumped to `vnd-v2.5.0`; pre-caches `/resume/`, `/dashboard/`, `/i18n.js`, and the resume PDF. Removed `/jobs/` from `NEVER_CACHE` so the jobs portal shell is now offline-capable.
+- Sitemap updated with `/resume/` and `/resume/Victor-Ndunda-Resume.pdf`.
+
+### Fixed
+- Resume download tracking now writes to `vn_resume_downloads` localStorage key, which the dashboard reads and surfaces in the activity feed.
+
 ## [2.2.0] — 2026-07-04
 
 ### Added — Job Portal Automation

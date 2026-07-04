@@ -10,7 +10,7 @@
  * Fetch: serves from cache, falls back to network, updates cache in background.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v2.4.0';
+const CACHE_VERSION = 'vnd-v2.5.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -21,6 +21,7 @@ const SHELL_URLS = [
   '/404.html',
   '/styles.css',
   '/app.js',
+  '/i18n.js',
   '/favicon.svg',
   '/favicon-32.png',
   '/favicon-16.png',
@@ -28,6 +29,15 @@ const SHELL_URLS = [
   '/manifest.webmanifest',
   '/og-image.png',
   '/logo.svg',
+  '/resume/',
+  '/resume/index.html',
+  '/resume/resume.css',
+  '/resume/resume.js',
+  '/resume/Victor-Ndunda-Resume.pdf',
+  '/dashboard/',
+  '/dashboard/index.html',
+  '/dashboard/dashboard.css',
+  '/dashboard/dashboard.js',
   '/services/',
   '/services/index.html',
   '/services/services.css',
@@ -45,7 +55,6 @@ const SHELL_URLS = [
 // Never cache these (would break OAuth + live job data)
 const NEVER_CACHE = [
   '/admin/',
-  '/jobs/',
   'accounts.google.com',
   'api.linkedin.com',
   'api.twitter.com',
