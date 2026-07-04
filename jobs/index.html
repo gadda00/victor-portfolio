@@ -28,7 +28,7 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="no-referrer" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://remotive.io https://www.weworkremotely.com https://himalayas.app https://jobicy.com https://www.kazi-remote.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
 <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
 <style>
 .jobs-hero { padding: 8rem 2rem 2rem; text-align: center; background: radial-gradient(ellipse 600px 300px at 50% 0%, rgba(0,212,255,0.08), transparent 70%); }
@@ -57,6 +57,19 @@
 .job-apply { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8125rem; font-weight: 600; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; text-decoration: none; transition: all 0.3s; }
 .job-apply:hover { transform: translateY(-2px); box-shadow: 0 4px 15px var(--glow); }
 .jobs-loading { text-align: center; padding: 3rem; color: var(--text-muted); }
+.jobs-source-stats { max-width: 1000px; margin: 0 auto; padding: 0 2rem 1rem; display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.source-pill { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.3rem 0.7rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 999px; font-size: 0.75rem; color: var(--text-muted); cursor: pointer; transition: all 0.2s var(--ease); }
+.source-pill:hover { border-color: var(--accent); color: var(--accent); }
+.source-pill.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; border-color: transparent; }
+.source-pill .count { font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.job-source-badge { display: inline-block; font-size: 0.65rem; font-weight: 600; padding: 0.15rem 0.45rem; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em; vertical-align: middle; margin-left: 0.4rem; }
+.job-source-badge.arbeitnow { background: rgba(0,212,255,0.12); color: #00d4ff; }
+.job-source-badge.remoteok { background: rgba(168,85,247,0.12); color: #a855f7; }
+.job-source-badge.remotive { background: rgba(16,185,129,0.12); color: #10b981; }
+.job-source-badge.jobicy { background: rgba(245,158,11,0.12); color: #f59e0b; }
+.job-source-badge.himalayas { background: rgba(99,102,241,0.12); color: #6366f1; }
+#refreshBtn.spinning svg { animation: spin 0.8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
 .jobs-empty { text-align: center; padding: 3rem; color: var(--text-muted); }
 .jobs-stats { max-width: 1000px; margin: 0 auto 1.5rem; padding: 0 2rem; display: flex; gap: 1.5rem; font-size: 0.8125rem; color: var(--text-muted); }
 .source-badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; }
@@ -207,13 +220,28 @@
   <button class="jobs-filter" data-filter="remote">Remote</button>
   <button class="jobs-filter" data-filter="onsite">Onsite</button>
   <button class="jobs-filter" data-filter="email">Email Apply</button>
+  <select class="jobs-filter" id="sourceFilter" aria-label="Filter by source">
+    <option value="">All Sources</option>
+    <option value="arbeitnow">Arbeitnow</option>
+    <option value="remoteok">RemoteOK</option>
+    <option value="remotive">Remotive</option>
+    <option value="jobicy">Jobicy</option>
+    <option value="himalayas">Himalayas</option>
+  </select>
   <select class="jobs-filter" id="minScore" aria-label="Minimum match score">
     <option value="0">Any Score</option>
     <option value="50">50+ Good</option>
     <option value="65">65+ Strong</option>
     <option value="80">80+ Excellent</option>
   </select>
+  <button class="jobs-filter" id="refreshBtn" title="Refresh jobs from all sources" aria-label="Refresh jobs" style="display:flex;align-items:center;gap:0.4rem">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+    Refresh
+  </button>
 </div>
+
+<!-- Source stats bar -->
+<div class="jobs-source-stats" id="sourceStats" aria-label="Jobs by source"></div>
 
 <!-- Jobs grid (rendered by app.js) -->
 <div class="jobs-grid" id="grid">
@@ -501,19 +529,43 @@ window.addEventListener('load', () => {
     let applyEmail = '';
     const descText = (j.description || '') + ' ' + (j.how_to_apply || '');
     const emailMatch = descText.match(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/);
-    if (emailMatch && /apply|careers?|jobs?@/i.test(emailMatch[0])) applyEmail = emailMatch[0];
-
-    // Salary extraction (rough)
-    let salaryMin, salaryMax, salaryCurrency;
-    const salaryMatch = (j.salary || j.description || '').match(/(\$|KES|USD|EUR|€)\s?(\d[\d,]*)\s?[-–to]+\s?(\$|KES|USD|EUR|€)?\s?(\d[\d,]*)/i);
-    if (salaryMatch) {
-      salaryMin = parseInt(salaryMatch[2].replace(/,/g, ''));
-      salaryMax = parseInt(salaryMatch[4].replace(/,/g, ''));
-      salaryCurrency = (salaryMatch[1] || salaryMatch[3] || '').replace(/[$€]/, 'USD').toUpperCase();
+    if (emailMatch) {
+      // Accept any email but prefer ones with apply/careers/jobs/hiring/recruit in the local part
+      const e = emailMatch[0].toLowerCase();
+      if (/apply|careers?|jobs?@|hiring|recruit|talent|hello@|hr@/.test(e)) applyEmail = emailMatch[0];
+      else applyEmail = emailMatch[0]; // still capture — better to have it than not
     }
+
+    // Salary extraction — supports ranges AND single values like "$100k" or "$100,000"
+    let salaryMin, salaryMax, salaryCurrency;
+    const salaryText = (j.salary || j.description || '');
+    // Try range first: $50k-$80k, $50,000-$80,000, KES 200K - 350K
+    const rangeMatch = salaryText.match(/(\$|KES|USD|EUR|€|£)\s?(\d[\d,]*)\s?(k|K)?\s?[-–to]+\s?(\$|KES|USD|EUR|€|£)?\s?(\d[\d,]*)\s?(k|K)?/i);
+    // Single value: $100k, $100,000, KES 200K
+    const singleMatch = !rangeMatch && salaryText.match(/(\$|KES|USD|EUR|€|£)\s?(\d[\d,]*)\s?(k|K)\b/i);
+    if (rangeMatch) {
+      const mult = (n, k) => k ? parseInt(n.replace(/,/g, '')) * 1000 : parseInt(n.replace(/,/g, ''));
+      salaryMin = mult(rangeMatch[2], rangeMatch[3]);
+      salaryMax = mult(rangeMatch[5], rangeMatch[6]);
+      salaryCurrency = (rangeMatch[1] || rangeMatch[4] || '').replace(/[$€£]/, 'USD').toUpperCase();
+    } else if (singleMatch) {
+      const val = parseInt(singleMatch[2].replace(/,/g, '')) * 1000;
+      salaryMin = val;
+      salaryMax = val;
+      salaryCurrency = singleMatch[1].replace(/[$€£]/, 'USD').toUpperCase();
+    }
+
+    // Experience years extraction: "5+ years", "3 years experience", "8 years of"
+    let experienceYears = 0;
+    const expMatch = descText.match(/(\d+)\+?\s*years?(?:\s+(?:of\s+)?(?:experience|exp|professional))?/i);
+    if (expMatch) experienceYears = parseInt(expMatch[1]);
 
     // Tech-stack heuristic: tags often include tech names
     const techStack = (j.tags || []).filter(Boolean);
+
+    // Remote detection — fix the operator precedence bug
+    const locText = (j.location || '').toLowerCase();
+    const isRemote = j.remote === true || locText.includes('remote') || locText.includes('anywhere') || locText.includes('worldwide');
 
     return {
       id,
@@ -521,7 +573,7 @@ window.addEventListener('load', () => {
       company: j.company_name || j.company || 'Unknown',
       description: (j.description || '').replace(/<[^>]*>/g, ' ').substring(0, 800),
       url: j.url || j.apply_url || j.slug || '#',
-      remote: j.remote !== false && (j.location || '').toLowerCase().includes('remote') || j.remote === true,
+      remote: isRemote,
       location: j.location || 'Remote',
       tags: j.tags || [],
       source,
@@ -529,13 +581,14 @@ window.addEventListener('load', () => {
       applyEmail,
       techStack,
       salaryMin, salaryMax, salaryCurrency,
+      experienceYears,
     };
   }
 
   async function fetchAllJobs() {
     const jobs = [];
 
-    // 1. Arbeitnow (aggregates RemoteOK, Jobicy, etc.)
+    // 1. Arbeitnow (aggregates RemoteOK, Jobicy, etc.) — no API key needed
     try {
       const r = await fetch('https://www.arbeitnow.com/api/job-board-api');
       if (r.ok) {
@@ -546,19 +599,53 @@ window.addEventListener('load', () => {
       }
     } catch (e) { console.warn('Arbeitnow fetch failed:', e); }
 
-    // 2. RemoteOK directly
+    // 2. RemoteOK directly — no API key needed
     try {
       const r2 = await fetch('https://remoteok.com/api?api=1');
       if (r2.ok) {
         const data2 = await r2.json();
         if (Array.isArray(data2) && data2.length > 1) {
-          data2.slice(1, 81).forEach(j => jobs.push(normaliseJob(j, 'remoteok')));
+          data2.slice(1, 121).forEach(j => jobs.push(normaliseJob(j, 'remoteok')));
         }
       }
     } catch (e) { console.warn('RemoteOK fetch failed:', e); }
 
-    // Filter for tech-relevant jobs (matches Victor's domain)
-    const keywords = ['ai', 'ml', 'machine learning', 'data', 'engineer', 'developer', 'python', 'typescript', 'react', 'node', 'fullstack', 'full-stack', 'backend', 'frontend', 'software', 'agriculture', 'agritech', 'llm', 'deep learning'];
+    // 3. Remotive — free public API
+    try {
+      const r3 = await fetch('https://remotive.io/api/remote-jobs?category=software-dev');
+      if (r3.ok) {
+        const data3 = await r3.json();
+        if (data3.jobs && Array.isArray(data3.jobs)) {
+          data3.jobs.slice(0, 100).forEach(j => jobs.push(normaliseJob(j, 'remotive')));
+        }
+      }
+    } catch (e) { console.warn('Remotive fetch failed:', e); }
+
+    // 4. Jobicy — free public API (aggregates remote tech jobs)
+    try {
+      const r4 = await fetch('https://jobicy.com/api/v2/remote-jobs?tag=ai');
+      if (r4.ok) {
+        const data4 = await r4.json();
+        if (data4.jobs && Array.isArray(data4.jobs)) {
+          data4.jobs.slice(0, 50).forEach(j => jobs.push(normaliseJob(j, 'jobicy')));
+        }
+      }
+    } catch (e) { console.warn('Jobicy fetch failed:', e); }
+
+    // 5. Himalayas — free public API
+    try {
+      const r5 = await fetch('https://himalayas.app/api/jobs?search=ai%20engineer');
+      if (r5.ok) {
+        const data5 = await r5.json();
+        const arr = data5.jobs || data5.data || (Array.isArray(data5) ? data5 : []);
+        if (Array.isArray(arr)) {
+          arr.slice(0, 50).forEach(j => jobs.push(normaliseJob(j, 'himalayas')));
+        }
+      }
+    } catch (e) { console.warn('Himalayas fetch failed:', e); }
+
+    // Filter for tech-relevant jobs (matches Victor's domain — expanded)
+    const keywords = ['ai', 'ml', 'machine learning', 'data', 'engineer', 'developer', 'python', 'typescript', 'react', 'node', 'nextjs', 'next.js', 'fullstack', 'full-stack', 'backend', 'frontend', 'software', 'agriculture', 'agritech', 'llm', 'deep learning', 'tensorflow', 'pytorch', 'flutter', 'data scientist', 'data engineer', 'mlops', 'devops', 'cloud', 'aws', 'gcp', 'azure', 'nlp', 'computer vision', 'rag', 'agent', 'multi-agent', 'api', 'graphql', 'postgresql', 'redis', 'kubernetes', 'docker'];
     const filtered = jobs.filter(j => {
       const text = (j.title + ' ' + j.description + ' ' + j.tags.join(' ')).toLowerCase();
       return keywords.some(k => text.includes(k));

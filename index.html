@@ -678,6 +678,21 @@
 <script src="/i18n.js" defer></script>
 <script src="/enhancements.js" defer></script>
 
+<!-- GA4 — replace G-XXXXXXXXXX with your Measurement ID from analytics.google.com -->
+<script>
+  window.GA4_ID = 'G-XXXXXXXXXX'; // ← Replace with your real ID
+  if (window.GA4_ID && window.GA4_ID !== 'G-XXXXXXXXXX') {
+    var s = document.createElement('script');
+    s.async = true;
+    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA4_ID;
+    document.head.appendChild(s);
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', window.GA4_ID, { anonymize_ip: true });
+  }
+</script>
+
 <!-- Floating action buttons (resume + contact) -->
 <div class="fab-stack" aria-hidden="false">
   <a href="/resume/Victor-Ndunda-Resume.pdf" download class="fab fab-resume" aria-label="Download resume PDF" title="Download resume">

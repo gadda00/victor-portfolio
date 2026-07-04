@@ -17,6 +17,8 @@
     search: '',
     minScore: 0,
     filter: 'all',         // 'all' | 'remote' | 'onsite' | 'email'
+    source: '',            // '' | 'arbeitnow' | 'remoteok' | 'remotive' | 'jobicy' | 'himalayas'
+    searchDebounce: null,
   };
 
   // ── Init ─────────────────────────────────────────────────────────────
@@ -41,12 +43,38 @@
       if (state.filter === 'remote' && !j.remote) return false;
       if (state.filter === 'onsite' && j.remote) return false;
       if (state.filter === 'email' && !j.applyEmail) return false;
+      if (state.source && j.source !== state.source) return false;
       if (state.minScore && (j._score ? j._score.total : 0) < state.minScore) return false;
       if (state.search) {
         const t = (j.title + ' ' + j.company + ' ' + (j.tags || []).join(' ') + ' ' + j.description).toLowerCase();
         if (!t.includes(state.search.toLowerCase())) return false;
       }
       return true;
+    });
+  }
+
+  // ── Source stats ─────────────────────────────────────────────────────
+  function renderSourceStats() {
+    const el = document.getElementById('sourceStats');
+    if (!el) return;
+    const counts = {};
+    state.jobs.forEach(j => { counts[j.source] = (counts[j.source] || 0) + 1; });
+    const sources = ['arbeitnow', 'remoteok', 'remotive', 'jobicy', 'himalayas'];
+    el.innerHTML = sources.map(s => {
+      const c = counts[s] || 0;
+      if (c === 0) return '';
+      return '<button class="source-pill' + (state.source === s ? ' active' : '') + '" data-source="' + s + '">' +
+             s.charAt(0).toUpperCase() + s.slice(1) + ' <span class="count">' + c + '</span></button>';
+    }).join('') + (state.source ? '<button class="source-pill" data-source="">Clear filter</button>' : '');
+
+    el.querySelectorAll('[data-source]').forEach(b => {
+      b.addEventListener('click', () => {
+        state.source = b.dataset.source;
+        // Sync the select dropdown
+        const sel = document.getElementById('sourceFilter');
+        if (sel) sel.value = state.source;
+        render();
+      });
     });
   }
 
@@ -74,7 +102,7 @@
     return `<article class="card">
       <div class="card-head">
         <div>
-          <div class="title">${esc(j.title)}</div>
+          <div class="title">${esc(j.title)}<span class="job-source-badge ${esc(j.source || '')}">${esc(j.source || '')}</span></div>
           <div class="company">${esc(j.company)} · ${esc(j.location || 'Remote')} · ${daysAgo === 0 ? 'today' : daysAgo + 'd ago'}</div>
         </div>
         ${scoreBadge(score)}
@@ -144,6 +172,8 @@
         <span>🟢 <b>${counts.offer || 0}</b> offers</span>
         <span>🔴 <b>${counts.rejected || 0}</b> rejected</span>`;
     }
+    // Source stats pills
+    renderSourceStats();
 
     if (state.view === 'history') {
       const hist = global.Tracking.history();
@@ -185,7 +215,10 @@
         setTimeout(render, 300);
         break;
       case 'apply-link':
-        global.Tracking.applyExternal(job);
+        // The anchor's default href + target=_blank opens the URL in a new tab.
+        // We only mark the job as applied here (don't call applyExternal which
+        // would call window.open(url) a second time — bug fix).
+        global.Tracking.markApplied(job, { via: 'external-link' });
         toast(`Marked applied & opened application page for ${job.company}.`);
         setTimeout(render, 300);
         break;
@@ -235,8 +268,12 @@
     grid.addEventListener('click', onGridClick);
     grid.addEventListener('change', onGridChange);
 
+    // Search with 150ms debounce (perf fix for 100+ jobs)
     document.getElementById('search').addEventListener('input', e => {
-      state.search = e.target.value; render();
+      clearTimeout(state.searchDebounce);
+      state.searchDebounce = setTimeout(() => {
+        state.search = e.target.value; render();
+      }, 150);
     });
     document.querySelectorAll('[data-filter]').forEach(b => {
       b.addEventListener('click', () => {
@@ -255,6 +292,20 @@
     document.getElementById('minScore').addEventListener('change', e => {
       state.minScore = parseInt(e.target.value, 10) || 0; render();
     });
+    const sourceFilter = document.getElementById('sourceFilter');
+    if (sourceFilter) {
+      sourceFilter.addEventListener('change', e => {
+        state.source = e.target.value; render();
+      });
+    }
+    const refreshBtn = document.getElementById('refreshBtn');
+    if (refreshBtn) {
+      refreshBtn.addEventListener('click', () => {
+        refreshBtn.classList.add('spinning');
+        // Reload the page to refetch all sources
+        setTimeout(() => location.reload(), 400);
+      });
+    }
     document.getElementById('exportBtn').addEventListener('click', () => {
       const blob = new Blob([JSON.stringify(global.JobStorage.exportAll(), null, 2)], { type: 'application/json' });
       const a = document.createElement('a');
