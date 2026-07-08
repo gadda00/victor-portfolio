@@ -803,3 +803,536 @@ p, li, .about-text, .resume-bullets li {
   .back-to-top { right: 0.875rem; bottom: 5rem; }
 }
 
+
+/* ═══════════════════════════════════════════════════════════════════
+   v3.0 ENHANCEMENTS — Toast, Tilt, GitHub Widget, Now Section,
+   Tech Stack, Reveal Animations, Premium Hero
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── Reveal Animation (staggered) ──────────────────────────────── */
+.reveal-target {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.reveal-target.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  .reveal-target { opacity: 1; transform: none; transition: none; }
+}
+
+/* ─── Toast Notification System ─────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: 5.5rem;
+  right: 1.25rem;
+  z-index: 3000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  pointer-events: none;
+  max-width: 320px;
+}
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.75rem 1rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+  font-size: 0.875rem;
+  color: var(--text);
+  opacity: 0;
+  transform: translateX(100%);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  pointer-events: auto;
+  backdrop-filter: blur(12px);
+}
+.toast.show { opacity: 1; transform: translateX(0); }
+.toast-icon {
+  width: 22px; height: 22px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  font-size: 0.75rem; font-weight: 700;
+  flex-shrink: 0;
+}
+.toast-success .toast-icon { background: rgba(16,185,129,0.15); color: var(--accent-3); }
+.toast-error .toast-icon { background: rgba(239,68,68,0.15); color: #ef4444; }
+.toast-info .toast-icon { background: rgba(0,212,255,0.15); color: var(--accent); }
+.toast-copy .toast-icon { background: rgba(168,85,247,0.15); color: var(--accent-2); }
+@media (max-width: 600px) {
+  .toast-container { left: 1rem; right: 1rem; bottom: 5rem; max-width: none; }
+}
+
+/* ─── Contact Copy Button ───────────────────────────────────────── */
+.contact-card { position: relative; }
+.contact-copy {
+  margin-left: auto;
+}
+
+/* ─── Tilt/Magnetic Card Effect ─────────────────────────────────── */
+.work-card.featured, .about-card {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.15s ease-out, border-color 0.3s, box-shadow 0.3s;
+}
+
+/* ─── Premium Hero Enhancements ─────────────────────────────────── */
+.hero {
+  background:
+    radial-gradient(ellipse 600px 400px at 20% 30%, rgba(0,212,255,0.08), transparent 60%),
+    radial-gradient(ellipse 500px 300px at 80% 70%, rgba(168,85,247,0.08), transparent 60%),
+    radial-gradient(ellipse 400px 200px at 50% 100%, rgba(16,185,129,0.05), transparent 60%);
+}
+.hero-badge {
+  backdrop-filter: blur(10px) saturate(180%);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+.hero-stat .num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Live status pulse */
+.live-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--accent-3);
+  font-family: 'JetBrains Mono', monospace;
+  transition: opacity 0.3s var(--ease);
+  margin-top: 0.5rem;
+}
+.live-status::before {
+  content: '';
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--accent-3);
+  box-shadow: 0 0 8px var(--accent-3);
+  animation: pulse 2s infinite;
+}
+
+/* ─── NOW Section (currently building) ──────────────────────────── */
+.now-section {
+  padding: 5rem 0;
+  position: relative;
+  overflow: hidden;
+}
+.now-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), transparent);
+}
+.now-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  margin-top: 3rem;
+  align-items: start;
+}
+.now-card {
+  padding: 1.75rem;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  transition: all 0.3s var(--ease);
+  position: relative;
+}
+.now-card:hover {
+  border-color: var(--accent);
+  border-left-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+.now-card.kilimo { border-left-color: var(--accent-3); }
+.now-card.busara { border-left-color: var(--accent); }
+.now-card.research { border-left-color: var(--accent-2); }
+.now-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+.now-card-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.now-card-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 99px;
+  background: rgba(16,185,129,0.1);
+  color: var(--accent-3);
+  border: 1px solid rgba(16,185,129,0.2);
+}
+.now-card-status::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent-3);
+  animation: pulse 2s infinite;
+}
+.now-card-body {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+.now-card-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.8125rem;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+}
+.now-progress-bar {
+  flex: 1;
+  height: 6px;
+  background: var(--bg-elev);
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.now-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 3px;
+  transition: width 1.5s var(--ease);
+}
+@media (max-width: 768px) {
+  .now-grid { grid-template-columns: 1fr; }
+}
+
+/* ─── GitHub Activity Widget ────────────────────────────────────── */
+.gh-widget {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+.gh-repo {
+  display: block;
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s var(--ease);
+  height: 100%;
+}
+.gh-repo:hover {
+  border-color: var(--accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.gh-repo-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.5rem;
+  color: var(--accent);
+}
+.gh-repo-name {
+  font-weight: 700;
+  font-size: 0.9375rem;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.gh-repo-desc {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.gh-repo-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  font-family: 'JetBrains Mono', monospace;
+}
+.gh-lang {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+.gh-lang::before {
+  content: '';
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--lang-color, #8b949e);
+}
+.gh-stars { color: #f59e0b; }
+.gh-empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 2rem;
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+}
+.gh-empty a { color: var(--accent); }
+
+/* ─── Interactive Tech Stack Section ────────────────────────────── */
+.techstack-section { padding: 5rem 0; }
+.techstack-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-bottom: 2.5rem;
+}
+.tech-filter {
+  padding: 0.5rem 1rem;
+  border-radius: 99px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s var(--ease);
+  font-family: inherit;
+}
+.tech-filter:hover { color: var(--text); border-color: var(--accent); }
+.tech-filter.active {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: white;
+  border-color: transparent;
+}
+.techstack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+.tech-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  text-align: center;
+  transition: all 0.3s var(--ease);
+  cursor: default;
+}
+.tech-item:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+}
+.tech-item.hidden { display: none; }
+.tech-item-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+.tech-item-name {
+  font-weight: 700;
+  font-size: 0.875rem;
+  color: var(--text);
+}
+.tech-item-cat {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.tech-item-level {
+  width: 100%;
+  height: 4px;
+  background: var(--bg-elev);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.25rem;
+}
+.tech-item-level-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 2px;
+}
+
+/* ─── Reading Progress Bar (blog articles) ──────────────────────── */
+.reading-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  z-index: 9998;
+  transition: width 0.1s ease-out;
+  pointer-events: none;
+}
+
+/* ─── Enhanced Marquee ──────────────────────────────────────────── */
+.marquee-section {
+  background: var(--bg-elev);
+  position: relative;
+}
+.marquee-section::before,
+.marquee-section::after {
+  content: '';
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 100px;
+  z-index: 2;
+  pointer-events: none;
+}
+.marquee-section::before {
+  left: 0;
+  background: linear-gradient(90deg, var(--bg-elev), transparent);
+}
+.marquee-section::after {
+  right: 0;
+  background: linear-gradient(270deg, var(--bg-elev), transparent);
+}
+
+/* ─── Premium Work Card Enhancements ────────────────────────────── */
+.work-card.featured {
+  position: relative;
+  overflow: hidden;
+}
+.work-card.featured::after {
+  content: '';
+  position: absolute;
+  top: -50%; right: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(0,212,255,0.05), transparent 50%);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+  pointer-events: none;
+}
+.work-card.featured:hover::after {
+  opacity: 1;
+}
+.dag-stage {
+  cursor: pointer;
+}
+.dag-stage:hover .stage-count {
+  color: white;
+}
+
+/* ─── Animated gradient border for hero CTA ─────────────────────── */
+.hero-cta .btn-primary {
+  position: relative;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  background-size: 200% 200%;
+  animation: gradientShift 3s ease infinite;
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ─── Custom cursor (desktop, optional) ─────────────────────────── */
+.cursor-dot {
+  position: fixed;
+  width: 8px; height: 8px;
+  background: var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99999;
+  mix-blend-mode: difference;
+  transition: transform 0.1s ease, opacity 0.2s;
+  opacity: 0;
+}
+.cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 2px solid var(--accent);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 99998;
+  transition: transform 0.15s ease, width 0.2s, height 0.2s, opacity 0.2s;
+  opacity: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .cursor-dot.active, .cursor-ring.active { opacity: 1; }
+}
+
+/* ─── Section connector line ────────────────────────────────────── */
+.section { position: relative; }
+
+/* ─── Newsletter signup ─────────────────────────────────────────── */
+.newsletter-band {
+  padding: 3rem 2rem;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 400px 200px at 50% 0%, rgba(0,212,255,0.06), transparent 70%),
+    var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  max-width: 700px;
+  margin: 3rem auto;
+}
+.newsletter-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+.newsletter-sub {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  margin-bottom: 1.5rem;
+}
+.newsletter-form {
+  display: flex;
+  gap: 0.5rem;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.newsletter-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-size: 0.9375rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.newsletter-input:focus { border-color: var(--accent); }
+@media (max-width: 500px) {
+  .newsletter-form { flex-direction: column; }
+}
+
+/* ─── Improved mobile menu animation ────────────────────────────── */
+.nav-links {
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+@media (max-width: 768px) {
+  .nav-links {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  .nav-links.open {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

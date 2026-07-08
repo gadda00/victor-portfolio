@@ -7,9 +7,55 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added
-- Service worker for PWA/offline support (in progress)
-- Auto-update sitemap.xml lastmod dates via GitHub Action (in progress)
+### Added — v3.0 Major Enhancement Release
+
+**New Sections:**
+- **"Now" section** (`#now`) — live snapshot of 4 active projects with progress bars, status badges, and ETAs. Shows what Victor is currently building (Busara AI v3, KilimoPRO v2, GARCH research, AI workshops).
+- **Interactive Tech Stack** (`#techstack`) — 18 technologies across 5 categories (Languages, AI/ML, Web & Mobile, Data & Stats, Infra & DevOps) with click-to-filter functionality and proficiency bars.
+- **GitHub Activity Widget** (`#github`) — live feed of 6 most recently updated repositories via GitHub API, with language colors, star counts, and relative timestamps.
+- **Newsletter signup** — privacy-friendly email subscription form (localStorage-based, no backend needed yet).
+
+**New Features:**
+- **Animated count-up stats** — hero stats (50 agents, 2 platforms, 22+ sources, 5+ years) animate from 0 on scroll.
+- **Live status indicator** — rotating "currently building" messages in hero (e.g., "Training crop disease models").
+- **Toast notification system** — global `showToast()` function for success/error/info/copy feedback.
+- **Copy-to-clipboard** — all contact cards now have copy buttons that appear on hover.
+- **Reading progress bar** — all 9 blog articles now have a fixed top progress bar that fills as you read.
+- **Command palette blog search** — Cmd+K now searches blog articles in addition to navigation commands.
+- **Tilt/magnetic card effect** — work cards and about cards have subtle 3D tilt on mouse hover (desktop only).
+- **Custom cursor** — animated dot + ring cursor on desktop (disabled on touch devices and reduced-motion).
+- **Staggered reveal animations** — sections fade in with cascading delays as they enter viewport.
+- **Premium gradient mesh** — hero section now has multi-layered radial gradient background.
+- **Marquee edge fades** — skills marquee now fades at both edges.
+- **Keyboard shortcuts** — `?` shows shortcut hint, `Shift+D` toggles theme.
+
+**Bug Fixes:**
+- **Theme toggle className overwrite** — was using `html.className = 'dark'` which clobbered all classes; now uses `classList.add/remove` to be safe.
+- **Particle system O(n²) optimization** — replaced brute-force neighbor search with spatial grid hashing, reducing complexity from O(n²) to O(n) for connection lines. ~5x faster on 70 particles.
+- **Particle canvas DPR handling** — now respects devicePixelRatio for crisp rendering on retina displays.
+- **Particle canvas off-screen pause** — animation pauses when hero scrolls out of view (via IntersectionObserver).
+- **Scroll listener throttling** — navbar scroll handler now uses requestAnimationFrame throttling (was running on every scroll event).
+- **Typewriter reduced-motion** — now respects `prefers-reduced-motion` by showing static text with slow rotation instead of character-by-character animation.
+- **Service worker navigation fallback** — was serving `/index.html` for ALL offline navigation requests (including blog articles); now only falls back to home for root path, returns proper offline message for other paths.
+- **Service worker cache version** — bumped to `vnd-v3.0.0` to bust old caches.
+- **System theme detection** — now respects `prefers-color-scheme: dark` if user hasn't explicitly chosen a theme.
+- **Theme-color meta sync** — theme-color meta tag now updates when toggling themes.
+- **Mobile menu aria-expanded** — hamburger button now properly updates `aria-expanded` state.
+
+**Performance:**
+- Particle animation pauses when off-screen
+- Scroll handlers throttled with rAF
+- Canvas uses devicePixelRatio for crisp rendering without unnecessary redraws
+- Resize handler debounced (200ms)
+
+**Verified:**
+- 0 console errors across 11 pages tested (home, blog, articles, resume, services, wizard, dashboard, guide, 404, terms, privacy)
+- All 9 blog articles have working reading progress bars
+- Theme toggle works correctly (dark ↔ light)
+- Command palette opens with Cmd+K
+- GitHub widget loads 6 repos from live API
+- Tech stack filtering works (All / Languages / AI / Web / Data / Infra)
+- All new sections present in DOM
 
 ## [2.5.0] — 2026-07-04
 

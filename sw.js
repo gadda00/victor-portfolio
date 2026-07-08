@@ -10,7 +10,7 @@
  * Fetch: serves from cache, falls back to network, updates cache in background.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v2.8.0';
+const CACHE_VERSION = 'vnd-v3.0.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -123,17 +123,34 @@ self.addEventListener('fetch', event => {
   if (NEVER_CACHE.some(n => url.href.includes(n))) return;
 
   // For navigation requests, try network-first (so user gets fresh content),
-  // fall back to cached shell if offline
+  // fall back to cached page if offline. Only fall back to /index.html for root.
   if (req.mode === 'navigate') {
     event.respondWith(
       fetch(req)
         .then(resp => {
           // Cache the latest navigation response
-          const copy = resp.clone();
-          caches.open(RUNTIME_CACHE).then(c => c.put(req, copy));
+          if (resp && resp.status === 200) {
+            const copy = resp.clone();
+            caches.open(RUNTIME_CACHE).then(c => c.put(req, copy));
+          }
           return resp;
         })
-        .catch(() => caches.match(req).then(r => r || caches.match('/index.html')))
+        .catch(() => {
+          // Try exact cache match first
+          return caches.match(req).then(r => {
+            if (r) return r;
+            // Only fall back to /index.html for root path requests
+            const url = new URL(req.url);
+            if (url.pathname === '/' || url.pathname === '/index.html') {
+              return caches.match('/index.html');
+            }
+            // For other paths, return a simple offline message
+            return new Response(
+              '<!DOCTYPE html><html><head><title>Offline</title></head><body style="font-family:sans-serif;text-align:center;padding:3rem"><h1>You are offline</h1><p>This page is not cached. Please reconnect to view it.</p><a href="/" style="color:#00d4ff">Go to Home</a></body></html>',
+              { headers: { 'Content-Type': 'text/html' }, status: 503 }
+            );
+          });
+        })
     );
     return;
   }
