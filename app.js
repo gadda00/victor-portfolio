@@ -750,22 +750,50 @@
   });
 
   // ═══════════════════════════════════════════════════════════════════
-  // 17. NEWSLETTER FORM (local storage based — no backend)
+  // 17. NEWSLETTER FORM — Web3Forms with mailto fallback
   // ═══════════════════════════════════════════════════════════════════
   const newsletterForm = document.getElementById('newsletterForm');
   if (newsletterForm) {
-    newsletterForm.addEventListener('submit', e => {
+    newsletterForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = newsletterForm.querySelector('input').value.trim();
+      const email = newsletterForm.querySelector('input[type="email"]').value.trim();
       if (!email) return;
-      // Store locally (replace with real backend / Mailchimp later)
+      const submitBtn = newsletterForm.querySelector('button[type="submit"]');
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Subscribing…'; }
+
+      // Store locally as backup
       try {
         const list = JSON.parse(localStorage.getItem('vn_subscribers') || '[]');
         if (!list.includes(email)) list.push(email);
         localStorage.setItem('vn_subscribers', JSON.stringify(list));
       } catch {}
-      newsletterForm.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--accent-3);font-weight:600">✓ You\'re subscribed! I\'ll only email when something big ships.</div>';
-      window.showToast('Subscribed successfully!', 'success', 3000);
+
+      // Try Web3Forms if a real key is configured (replace YOUR_ACCESS_KEY)
+      const WEB3FORMS_KEY = 'YOUR_ACCESS_KEY';
+      if (WEB3FORMS_KEY && WEB3FORMS_KEY !== 'YOUR_ACCESS_KEY') {
+        try {
+          const formData = new FormData();
+          formData.append('access_key', WEB3FORMS_KEY);
+          formData.append('subject', 'New newsletter subscriber');
+          formData.append('from_name', 'Victor Ndunda Portfolio');
+          formData.append('email', email);
+          formData.append('subscriber_email', email);
+          const response = await fetch('https://api.web3forms.com/submit', {
+            method: 'POST', body: formData,
+          });
+          const result = await response.json();
+          if (result.success) {
+            newsletterForm.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--accent-3);font-weight:600">✓ You\'re subscribed! I\'ll only email when something big ships.</div>';
+            window.showToast('Subscribed successfully!', 'success', 3000);
+            return;
+          }
+        } catch (err) { /* fall through to mailto */ }
+      }
+
+      // Fallback: open mailto with pre-filled subject
+      window.location.href = `mailto:mututandunda@gmail.com?subject=Newsletter%20Subscription&body=Please%20add%20me%20to%20your%20newsletter%3A%0A%0AEmail%3A%20${encodeURIComponent(email)}`;
+      newsletterForm.innerHTML = '<div style="text-align:center;padding:1rem;color:var(--accent-3);font-weight:600">✓ Opening your email client… (or email mututandunda@gmail.com directly)</div>';
+      window.showToast('Subscription opened in your email client', 'info', 4000);
     });
   }
 

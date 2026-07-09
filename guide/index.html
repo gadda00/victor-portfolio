@@ -84,7 +84,7 @@
       <a href="#public-pages">Public Pages</a>
       <a href="#services-flow">Services Flow</a>
       <a href="#jobs">Jobs Portal</a>
-      <a href="#admin">Admin Portal</a>
+      <a href="#admin">Dashboard</a>
       <a href="#content">Content Pipeline</a>
       <a href="#social">Social Media</a>
       <a href="#analytics">Analytics</a>
@@ -120,10 +120,9 @@
           <li><strong>/jobs/</strong> — Jobs portal (5 sources, AI matching, resume + cover letter generation, tracking)
             <ul><li>/jobs/lib/*.js — 9 modules (profile, scoring, storage, templates, resume, coverletter, gmail, tracking, app)</li></ul>
           </li>
-          <li><strong>/dashboard/</strong> — Unified dashboard hub (links admin, jobs, services, analytics, resume)</li>
-          <li><strong>/admin/</strong> — Admin portal (auth required, 8 sections)</li>
+          <li><strong>/dashboard/</strong> — Dashboard (auth required, 9 sections — replaces old /admin/)</li>
           <li><strong>/blog/</strong> — Blog index (9 articles)</li>
-          <li><strong>/articles/</strong> — Articles index</li>
+          <li><strong>/book/</strong> — Booking page (Cal.com + Web3Forms + direct contact)</li>
           <li><strong>/guide/</strong> — This page</li>
           <li>Root files: <code>/feed.xml</code> (RSS), <code>/sw.js</code> (service worker), <code>/manifest.webmanifest</code> (PWA), <code>/i18n.js</code> (Swahili), <code>/enhancements.js</code> (scroll progress, back-to-top, PWA install)</li>
         </ul>
@@ -249,8 +248,8 @@
 
     <!-- Admin -->
     <section id="admin" class="guide-section">
-      <h2>🔐 Admin Portal</h2>
-      <p>The management dashboard at <a href="/admin/">/admin/</a>. Login required.</p>
+      <h2>🔐 Dashboard (replaces Admin Portal)</h2>
+      <p>The management dashboard at <a href="/dashboard/">/dashboard/</a>. Login required (Google OAuth or password fallback).</p>
       <div class="guide-table">
         <div class="guide-row guide-row-head">
           <div>Section</div><div>What it does</div><div>Status</div>
@@ -258,14 +257,14 @@
         <div class="guide-row"><div><strong>Overview</strong></div><div>Activity log, login log, session timer</div><div>✅ Live</div></div>
         <div class="guide-row"><div><strong>Content</strong></div><div>Lists blog posts, copy URL, edit on GitHub</div><div>✅ Live</div></div>
         <div class="guide-row"><div><strong>Analytics</strong></div><div>Visitor metrics, traffic sources</div><div>⚠️ Needs GA4</div></div>
-        <div class="guide-row"><div><strong>Social</strong></div><div>Social media scheduling</div><div>⚠️ Use /admin/social.html</div></div>
+        <div class="guide-row"><div><strong>Social</strong></div><div>Social media post composer</div><div>✓ Built into /dashboard/ (Social Composer section)</div></div>
         <div class="guide-row"><div><strong>SEO</strong></div><div>SEO score, indexed pages</div><div>⚠️ Needs Search Console</div></div>
         <div class="guide-row"><div><strong>Security</strong></div><div>Login attempts, header audit</div><div>✅ Live</div></div>
         <div class="guide-row"><div><strong>Jobs</strong></div><div>Job portal stats</div><div>⚠️ Basic</div></div>
         <div class="guide-row"><div><strong>Settings</strong></div><div>Account, session, danger zone</div><div>✅ Live</div></div>
       </div>
       <div class="callout callout-info">
-        <strong>Auth:</strong> Google OAuth (primary) or password fallback. Allowlist: <code>mututandunda@gmail.com</code>, <code>torv54@gmail.com</code>. To change the password, edit <code>CONFIG.FALLBACK_AUTH</code> in <code>admin/admin.js</code> and <code>jobs/index.html</code> (both must match).
+        <strong>Auth:</strong> Google OAuth (primary) or password fallback. Allowlist: <code>mututandunda@gmail.com</code>, <code>torv54@gmail.com</code>. To change the password, edit <code>CONFIG.FALLBACK_AUTH</code> in <code>/auth.js</code> (shared by dashboard and jobs).
       </div>
     </section>
 
@@ -318,7 +317,7 @@
     <!-- Social Media -->
     <section id="social" class="guide-section">
       <h2>📱 Social Media</h2>
-      <p>Daily content posting tool at <a href="/admin/social.html">/admin/social.html</a>.</p>
+      <p>Daily content posting tool — now built into the <a href="/dashboard/">/dashboard/</a> Social Composer section.</p>
       <ul>
         <li>Generates platform-specific posts (LinkedIn, X, Facebook, Instagram, TikTok, WhatsApp)</li>
         <li>Based on your latest blog article or a custom topic</li>
@@ -444,7 +443,7 @@
         </div>
         <div class="feature-card">
           <h4>🔐 Change Password</h4>
-          <p>Edit <code>CONFIG.FALLBACK_AUTH.salt</code> + <code>hash</code> in BOTH <code>admin/admin.js</code> AND <code>jobs/index.html</code>. Run <code>scripts/generate_admin_credentials.py</code> to generate new hash.</p>
+          <p>Edit <code>CONFIG.FALLBACK_AUTH.salt</code> + <code>hash</code> in <code>/auth.js</code> (shared by dashboard and jobs). Generate new hash with: <code>node -e "const c=require('crypto');const s=c.randomBytes(16);const p='YOUR_PASSWORD';c.pbkdf2(p,s,100000,256,'sha256',(e,k)=>console.log('salt:',s.toString('base64'),'hash:',k.toString('base64')))"</code></p>
         </div>
       </div>
     </section>
@@ -462,7 +461,7 @@
         <li><input type="checkbox" /> <strong>Test the wizard</strong> — go through /services/wizard.html as a client</li>
         <li><input type="checkbox" /> <strong>Update jobs profile</strong> — edit <code>jobs/lib/profile.js</code> with your latest skills</li>
         <li><input type="checkbox" /> <strong>Publish 1 new blog article</strong> — see Content Pipeline section</li>
-        <li><input type="checkbox" /> <strong>Schedule 5 LinkedIn posts</strong> — use /admin/social.html</li>
+        <li><input type="checkbox" /> <strong>Schedule 5 LinkedIn posts</strong> — use /dashboard/ Social Composer</li>
       </ol>
     </section>
 

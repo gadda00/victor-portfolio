@@ -141,7 +141,7 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://www.googletagmanager.com https://assets.calendly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.calendly.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://calendly.com https://api.github.com; frame-src https://accounts.google.com https://calendly.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://www.googletagmanager.com https://app.cal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://api.github.com https://api.web3forms.com https://app.cal.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 </head>
 <body>
@@ -270,32 +270,32 @@
     </div>
     <div class="about-grid">
       <div class="about-text">
-        <p>I'm an AI engineer and founder based in <strong>Nairobi, Kenya</strong>. I build practical AI systems that solve real problems — the kind that help a farmer detect crop disease on a $80 phone, or help a business turn messy data into clear decisions.</p>
-        <p>I founded <strong>Busara AI</strong> — a platform with 50 AI agents working together like a team of analysts, each handling a specific task (data gathering, analysis, forecasting, reporting). Think of it as a digital research department that runs 24/7. <a href="https://busaraai.com" target="_blank">Try it live →</a></p>
-        <p>I also build <strong>KilimoPRO</strong> — an app that puts agricultural intelligence in farmers' hands. Take a photo of a diseased leaf, get an instant diagnosis and treatment plan. Check market prices before you sell. Get weather advisories in Swahili. All offline-capable. <a href="https://github.com/gadda00/kilimopro" target="_blank">See the code →</a></p>
-        <p>I care about <strong>building things that actually work</strong> — not demos, not hype. Real math, real users, real impact. I believe Africa's AI future will be built by people who understand both the technology and the context. That's the work I wake up for.</p>
-        <p>Whether you're a small business owner curious about AI, a fellow developer, or someone with an ambitious idea — <strong>I'd love to hear from you</strong>. Let's build something that matters.</p>
+        <p>I'm an AI engineer and founder based in <strong>Nairobi, Kenya</strong>. For the past 5+ years, I've been building production AI systems — from multi-agent platforms to on-device mobile ML — for clients across fintech, agriculture, logistics, and SMBs.</p>
+        <p>My work spans the full stack of applied AI: <strong>RAG chatbots</strong> that cite their sources, <strong>multi-agent pipelines</strong> that orchestrate 50+ specialized agents, <strong>forecasting engines</strong> powered by real statistical math (Holt-Winters, GARCH, OLS), <strong>on-device ML</strong> that runs on $80 phones, and <strong>multilingual assistants</strong> that work in Swahili and English. I take projects from zero to production — scoping audit, architecture, build, ship, and team training.</p>
+        <p>Before founding my own platforms, I spent three years (2019–2022) as an independent AI consultant, shipping financial forecasting systems for fintech clients, fraud-detection pipelines combining rules with ML anomaly detection, and customer-segmentation engines for marketing teams. That work taught me what actually matters in production: reliability, cost, and solving the right problem.</p>
+        <p>Today, I lead two flagship projects. <strong>Busara AI</strong> — a 50-agent data intelligence platform with a 7-stage DAG pipeline, live at <a href="https://busaraai.com" target="_blank">busaraai.com</a>. And <strong>KilimoPRO</strong> — an offline-first Flutter app for African farmers with on-device crop disease detection and market forecasting (<a href="https://github.com/gadda00/kilimopro" target="_blank">open-source</a>). Both are real systems serving real users, not demos.</p>
+        <p>I also take on select client work — AI audits, custom agent systems, and full-stack builds. If you have a problem that needs real engineering (not a wrapper around ChatGPT), <strong>I'd love to hear from you</strong>. Let's build something that matters.</p>
       </div>
       <div class="about-cards">
         <div class="about-card">
           <div class="card-icon">🤝</div>
-          <h4>Practical AI</h4>
-          <p>Systems that work in the real world — offline-capable, low-bandwidth, built for the constraints of African markets.</p>
+          <h4>End-to-End Builds</h4>
+          <p>From scoping audit to production deployment. Full-stack: Next.js, FastAPI, Flutter, PostgreSQL, Docker, Kubernetes.</p>
         </div>
         <div class="about-card">
           <div class="card-icon">🧠</div>
-          <h4>Multi-Agent Systems</h4>
-          <p>50 AI agents collaborating in a pipeline — each specialized, together solving complex problems that one AI can't handle alone.</p>
+          <h4>Multi-Agent & RAG</h4>
+          <p>50-agent DAG orchestration, RAG with pgvector/Pinecone, hybrid search, reranking. LangChain, LangGraph, CrewAI.</p>
         </div>
         <div class="about-card">
-          <div class="card-icon">🌱</div>
-          <h4>Impact-Driven</h4>
-          <p>KilimoPRO serves farmers. Busara AI serves businesses. The goal is technology that lifts people up, not just impresses them.</p>
+          <div class="card-icon">📊</div>
+          <h4>Real Math, Not Vibes</h4>
+          <p>Holt-Winters forecasting, GARCH/VaR, K-Means++, OLS regression, Granger causality — implemented from scratch.</p>
         </div>
         <div class="about-card">
-          <div class="card-icon">📚</div>
-          <h4>Always Learning</h4>
-          <p>Open-source contributor, continuous student of the math behind AI. B.Sc. Computer Science, University of Embu.</p>
+          <div class="card-icon">🌍</div>
+          <h4>Built for Africa</h4>
+          <p>Offline-first, low-bandwidth, Swahili-capable. Systems that work on $80 phones and over SMS/USSD.</p>
         </div>
       </div>
     </div>
@@ -573,27 +573,27 @@
     <div class="work-grid">
       <div class="work-card">
         <h4>IntelliFlow v2</h4>
-        <p>12-agent Python system that proved the multi-agent DAG architecture.</p>
-        <div class="work-tags"><span>Python</span><span>Multi-Agent</span></div>
-        <a href="https://github.com/gadda00" target="_blank" class="work-link">GitHub →</a>
+        <p>12-agent Python system that proved the multi-agent DAG architecture — the prototype that became Busara AI.</p>
+        <div class="work-tags"><span>Python</span><span>Multi-Agent</span><span>DAG</span></div>
+        <a href="https://github.com/gadda00/IntelliFlow" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
       </div>
       <div class="work-card">
         <h4>Financial Forecasting</h4>
-        <p>ARIMA, exponential smoothing, confidence intervals. Backtesting included.</p>
+        <p>ARIMA, exponential smoothing, confidence intervals. Backtesting included. Built for fintech clients.</p>
         <div class="work-tags"><span>Python</span><span>ARIMA</span><span>Holt-Winters</span></div>
-        <a href="https://github.com/gadda00" target="_blank" class="work-link">GitHub →</a>
+        <a href="https://github.com/gadda00?tab=repositories" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
       </div>
       <div class="work-card">
         <h4>Fraud Detection</h4>
-        <p>Rule-based scoring + ML anomaly detection for financial transactions.</p>
+        <p>Rule-based scoring + ML anomaly detection for financial transactions. Production pipeline.</p>
         <div class="work-tags"><span>Python</span><span>ML</span><span>Rules</span></div>
-        <a href="https://github.com/gadda00" target="_blank" class="work-link">GitHub →</a>
+        <a href="https://github.com/gadda00?tab=repositories" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
       </div>
       <div class="work-card">
         <h4>Customer Segmentation</h4>
-        <p>K-Means and DBSCAN clustering engine for marketing analytics.</p>
+        <p>K-Means and DBSCAN clustering engine for marketing analytics teams.</p>
         <div class="work-tags"><span>Python</span><span>K-Means</span><span>DBSCAN</span></div>
-        <a href="https://github.com/gadda00" target="_blank" class="work-link">GitHub →</a>
+        <a href="https://github.com/gadda00?tab=repositories" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
       </div>
     </div>
   </div>

@@ -68,7 +68,7 @@
     {
       "name": "Articles",
       "short_name": "Articles",
-      "url": "/articles/",
+      "url": "/blog/",
       "description": "Browse all articles",
       "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     },
