@@ -769,7 +769,7 @@
       } catch {}
 
       // Try Web3Forms if a real key is configured (replace YOUR_ACCESS_KEY)
-      const WEB3FORMS_KEY = 'YOUR_ACCESS_KEY';
+      const WEB3FORMS_KEY = 'f695c261-e59a-4b77-a6cf-55f4b4883427';
       if (WEB3FORMS_KEY && WEB3FORMS_KEY !== 'YOUR_ACCESS_KEY') {
         try {
           const formData = new FormData();

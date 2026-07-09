@@ -1336,3 +1336,239 @@ p, li, .about-text, .resume-bullets li {
     transform: translateY(0);
   }
 }
+/* ═══════════════════════════════════════════════════════════════════
+   v4.0 VISUAL POLISH — Premium shadows, micro-interactions, depth
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── Premium Card Shadows ──────────────────────────────────────── */
+.work-card, .service-card, .about-card, .testimonial-card,
+.blog-card, .tech-item, .gh-repo, .now-card, .kpi-card {
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.12);
+}
+.work-card:hover, .service-card:hover, .about-card:hover,
+.testimonial-card:hover, .blog-card:hover, .tech-item:hover,
+.gh-repo:hover, .now-card:hover {
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.12),
+    0 4px 12px rgba(0,0,0,0.08),
+    0 0 0 1px var(--accent) inset;
+}
+html.light .work-card:hover, html.light .service-card:hover,
+html.light .about-card:hover, html.light .testimonial-card:hover,
+html.light .blog-card:hover, html.light .tech-item:hover,
+html.light .gh-repo:hover, html.light .now-card:hover {
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.08),
+    0 4px 12px rgba(0,0,0,0.04),
+    0 0 0 1px var(--accent) inset;
+}
+
+/* ─── Gradient Border Glow on Hover ─────────────────────────────── */
+.work-card.featured {
+  position: relative;
+}
+.work-card.featured::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--radius);
+  padding: 1px;
+  background: linear-gradient(135deg, transparent, var(--accent), var(--accent-2), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 0.4s var(--ease);
+  pointer-events: none;
+}
+.work-card.featured:hover::before {
+  opacity: 1;
+}
+
+/* ─── Service Card Icons — Animated ─────────────────────────────── */
+.service-icon, .about-card .card-icon {
+  transition: transform 0.3s var(--ease);
+}
+.service-card:hover .service-icon,
+.about-card:hover .card-icon {
+  transform: scale(1.15) rotate(-5deg);
+}
+
+/* ─── Better Button Micro-interactions ──────────────────────────── */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+.btn::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 0; height: 0;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.5s, height 0.5s;
+  pointer-events: none;
+}
+.btn:active::after {
+  width: 300px; height: 300px;
+  transition: width 0.3s, height 0.3s;
+}
+.btn-primary {
+  background-size: 200% 200%;
+  transition: all 0.3s var(--ease), background-position 0.5s;
+}
+.btn-primary:hover {
+  background-position: 100% 100%;
+  transform: translateY(-2px);
+}
+
+/* ─── Nav Link Underline Animation ──────────────────────────────── */
+.nav-link {
+  position: relative;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 50%;
+  width: 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 1px;
+  transition: width 0.3s var(--ease), left 0.3s var(--ease);
+}
+.nav-link:hover::after, .nav-link.active::after {
+  width: 100%; left: 0;
+}
+
+/* ─── Tech Item Hover — Glow + Scale ────────────────────────────── */
+.tech-item {
+  position: relative;
+  overflow: hidden;
+}
+.tech-item::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0,212,255,0.08), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+  pointer-events: none;
+}
+.tech-item:hover::after {
+  opacity: 1;
+}
+.tech-item-level-fill {
+  transition: width 0.6s var(--ease);
+}
+
+/* ─── Section Head — Better spacing & gradient line ─────────────── */
+.section-head {
+  position: relative;
+}
+.section-head::after {
+  content: '';
+  display: block;
+  width: 60px; height: 3px;
+  margin: 1.5rem auto 0;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  border-radius: 2px;
+}
+
+/* ─── Hero Title — Gradient shimmer ─────────────────────────────── */
+.gradient-animated {
+  background-size: 200% auto;
+  animation: shimmer 3s linear infinite;
+}
+@keyframes shimmer {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+/* ─── Contact Card — Icon background animation ──────────────────── */
+.contact-card .contact-icon {
+  transition: all 0.3s var(--ease);
+}
+.contact-card:hover .contact-icon {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: white;
+  transform: scale(1.1);
+}
+
+/* ─── Now Card — Progress bar animation ─────────────────────────── */
+.now-progress-fill {
+  position: relative;
+  overflow: hidden;
+}
+.now-progress-fill::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  animation: progressShine 2s infinite;
+}
+@keyframes progressShine {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* ─── Footer — Better hover states ──────────────────────────────── */
+.footer-links a {
+  position: relative;
+  padding-left: 0;
+  transition: padding-left 0.2s var(--ease);
+}
+.footer-links a:hover {
+  padding-left: 0.5rem;
+}
+
+/* ─── Focus Ring — More visible ─────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+  box-shadow: 0 0 0 4px rgba(0,212,255,0.15);
+}
+
+/* ─── Scrollbar — Themed ─────────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 10px; height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent), var(--accent-2));
+  border-radius: 5px;
+  border: 2px solid var(--bg);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--accent-2), var(--accent));
+}
+
+/* ─── Selection — Better contrast ───────────────────────────────── */
+::selection {
+  background: rgba(0,212,255,0.3);
+  color: var(--text);
+}
+
+/* ─── Reduced Motion — Respect user preference ──────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  .gradient-animated { animation: none !important; }
+  .now-progress-fill::after { display: none; }
+}
+
+/* ─── Print Styles ──────────────────────────────────────────────── */
+@media print {
+  nav, .fab-stack, .back-to-top, .scroll-progress,
+  .cmd-palette, .pwa-install-banner, .cursor-dot, .cursor-ring {
+    display: none !important;
+  }
+  body { background: white !important; color: black !important; }
+  .work-card, .service-card, .about-card { box-shadow: none !important; border: 1px solid #ccc !important; }
+}

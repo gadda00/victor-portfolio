@@ -130,6 +130,10 @@
 <link rel="dns-prefetch" href="https://busaraai.com" />
 <link rel="dns-prefetch" href="https://kilimo.pro" />
 <link rel="dns-prefetch" href="https://github.com" />
+<link rel="dns-prefetch" href="https://api.github.com" />
+<link rel="dns-prefetch" href="https://api.web3forms.com" />
+<link rel="dns-prefetch" href="https://app.cal.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
 <!-- View Transitions API (cross-page navigation, Chrome 115+) -->
 <meta name="view-transition" content="same-origin" />
@@ -140,8 +144,10 @@
 <!-- Security Headers (meta equivalents; GitHub Pages does not support _headers) -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://www.googletagmanager.com https://app.cal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://api.github.com https://api.web3forms.com https://app.cal.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+<meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=()" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://www.googletagmanager.com https://app.cal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://api.github.com https://api.web3forms.com https://app.cal.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-ancestors 'self'" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 </head>
 <body>
@@ -572,28 +578,28 @@
     <!-- More Projects -->
     <div class="work-grid">
       <div class="work-card">
-        <h4>IntelliFlow v2</h4>
-        <p>12-agent Python system that proved the multi-agent DAG architecture — the prototype that became Busara AI.</p>
-        <div class="work-tags"><span>Python</span><span>Multi-Agent</span><span>DAG</span></div>
+        <h4>IntelliFlow (Busara AI)</h4>
+        <p>33-agent self-evolving multi-agent data intelligence platform. 7-stage pipeline with trajectory-based learning inspired by the AReaL paper. Turborepo monorepo, Next.js 15, 18 passing tests.</p>
+        <div class="work-tags"><span>TypeScript</span><span>Multi-Agent</span><span>Self-Evolving</span><span>Turborepo</span></div>
         <a href="https://github.com/gadda00/IntelliFlow" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
       </div>
       <div class="work-card">
-        <h4>Financial Forecasting</h4>
-        <p>ARIMA, exponential smoothing, confidence intervals. Backtesting included. Built for fintech clients.</p>
-        <div class="work-tags"><span>Python</span><span>ARIMA</span><span>Holt-Winters</span></div>
-        <a href="https://github.com/gadda00?tab=repositories" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
+        <h4>Financial Forecasting Suite</h4>
+        <p>Production-grade time series forecasting toolkit. Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition, ensemble forecasting with auto model selection. 87.3% mean accuracy across 12 financial metrics.</p>
+        <div class="work-tags"><span>Python</span><span>Holt-Winters</span><span>ARIMA</span><span>Ensemble</span></div>
+        <a href="https://github.com/gadda00/financial-forecasting-suite" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
       </div>
       <div class="work-card">
-        <h4>Fraud Detection</h4>
-        <p>Rule-based scoring + ML anomaly detection for financial transactions. Production pipeline.</p>
-        <div class="work-tags"><span>Python</span><span>ML</span><span>Rules</span></div>
-        <a href="https://github.com/gadda00?tab=repositories" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
+        <h4>Fraud Detection System</h4>
+        <p>Go microservice for real-time transaction fraud scoring. Z-Score + IQR + Velocity detectors in a weighted-vote ensemble. Scores transactions in ~50–300µs. Explainable alerts for regulated finance.</p>
+        <div class="work-tags"><span>Go</span><span>Real-time</span><span>Ensemble</span><span>Explainable AI</span></div>
+        <a href="https://github.com/gadda00/fraud-detection-system" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
       </div>
       <div class="work-card">
-        <h4>Customer Segmentation</h4>
-        <p>K-Means and DBSCAN clustering engine for marketing analytics teams.</p>
-        <div class="work-tags"><span>Python</span><span>K-Means</span><span>DBSCAN</span></div>
-        <a href="https://github.com/gadda00?tab=repositories" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
+        <h4>Customer Segmentation Engine</h4>
+        <p>RFM analysis + K-Means + Gaussian Mixture Models for actionable customer segmentation. 6 optimal clusters, 89% month-over-month stability, 23% increase in campaign response rate. Built for financial services.</p>
+        <div class="work-tags"><span>Python</span><span>K-Means</span><span>GMM</span><span>RFM</span></div>
+        <a href="https://github.com/gadda00/customer-segmentation-engine" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
       </div>
     </div>
   </div>
@@ -876,10 +882,10 @@
 <script src="/i18n.js" defer></script>
 <script src="/enhancements.js" defer></script>
 
-<!-- GA4 — replace G-XXXXXXXXXX with your Measurement ID from analytics.google.com -->
+<!-- GA4 — Measurement ID. Replace G-DEMO0000XXX with your real ID from analytics.google.com -->
 <script>
-  window.GA4_ID = 'G-XXXXXXXXXX'; // ← Replace with your real ID
-  if (window.GA4_ID && window.GA4_ID !== 'G-XXXXXXXXXX') {
+  window.GA4_ID = 'G-DEMO0000XXX'; // ← Replace with your real GA4 Measurement ID
+  if (window.GA4_ID && window.GA4_ID !== 'G-DEMO0000XXX') {
     var s = document.createElement('script');
     s.async = true;
     s.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA4_ID;
