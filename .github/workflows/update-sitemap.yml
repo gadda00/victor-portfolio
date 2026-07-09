@@ -1,10 +1,11 @@
-name: Update Sitemap
+name: Update Sitemap & Feed
 
 on:
   push:
     branches: [main]
     paths:
       - 'blog/articles/**'
+      - 'blog/posts.json'
       - 'index.html'
       - 'blog/index.html'
       - 'articles/index.html'
@@ -38,16 +39,78 @@ jobs:
           echo "Updated sitemap.xml:"
           cat sitemap.xml
 
+      - name: Auto-generate feed.xml from posts.json
+        run: |
+          echo "Generating feed.xml from blog/posts.json..."
+          python3 - << 'PYEOF'
+          import json, datetime
+          from html import escape
+
+          with open('blog/posts.json', 'r') as f:
+              data = json.load(f)
+
+          posts = sorted(data.get('posts', []), key=lambda p: p.get('date', ''), reverse=True)
+          author = data.get('author', {})
+          site = data.get('site', {})
+          now = datetime.datetime.now(datetime.timezone.utc).strftime('%a, %d %b %Y %H:%M:%S +0000')
+
+          items = []
+          for post in posts:
+              title = escape(post.get('title', ''))
+              url = f"https://victorndunda.com{post.get('url', '')}"
+              excerpt = escape(post.get('excerpt', ''))
+              try:
+                  dt = datetime.datetime.strptime(post.get('date', ''), '%Y-%m-%d')
+                  pub_date = dt.strftime('%a, %d %b %Y %H:%M:%S +0000')
+              except:
+                  pub_date = now
+              tags = post.get('tags', [])
+              cats = '\n'.join(f'      <category>{escape(t)}</category>' for t in tags)
+              items.append(f"""    <item>
+      <title>{title}</title>
+      <link>{url}</link>
+      <guid isPermaLink="true">{url}</guid>
+      <pubDate>{pub_date}</pubDate>
+      <description>{excerpt}</description>
+      <content:encoded><![CDATA[<p>{post.get('excerpt', '')}</p><p>Read time: {post.get('readTime', 'N/A')} · Word count: {post.get('wordCount', 'N/A')}</p><p><a href="{url}">Read full article →</a></p>]]></content:encoded>
+      <author>{escape(author.get('email', 'mututandunda@gmail.com'))} ({escape(author.get('name', 'Victor Ndunda'))})</author>{cats}
+    </item>""")
+
+          rss = f"""<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/feed.xsl"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>{escape(site.get('name', 'Victor Ndunda'))} — Blog</title>
+    <link>https://victorndunda.com/blog/</link>
+    <atom:link href="https://victorndunda.com/feed.xml" rel="self" type="application/rss+xml" />
+    <description>{escape(site.get('description', ''))}</description>
+    <language>en-us</language>
+    <lastBuildDate>{now}</lastBuildDate>
+    <managingEditor>{escape(author.get('email', 'mututandunda@gmail.com'))} ({escape(author.get('name', 'Victor Ndunda'))})</managingEditor>
+    <image>
+      <url>https://victorndunda.com/og-image.png</url>
+      <title>{escape(site.get('name', 'Victor Ndunda'))} — Blog</title>
+      <link>https://victorndunda.com/blog/</link>
+    </image>
+{chr(10).join(items)}
+  </channel>
+</rss>
+"""
+          with open('feed.xml', 'w') as f:
+              f.write(rss)
+          print(f"Generated feed.xml with {len(posts)} articles")
+          PYEOF
+
       - name: Commit if changed
         run: |
           TODAY=$(date -u +%Y-%m-%d)
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
-          git add sitemap.xml
+          git add sitemap.xml feed.xml
           if git diff --cached --quiet; then
-            echo "No changes to sitemap.xml"
+            echo "No changes to sitemap.xml or feed.xml"
           else
-            git commit -m "chore: Auto-update sitemap lastmod dates ($TODAY)"
+            git commit -m "chore: Auto-update sitemap & feed ($TODAY)"
             git push
-            echo "✓ Committed and pushed sitemap update"
+            echo "✓ Committed and pushed updates"
           fi

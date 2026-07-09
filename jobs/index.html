@@ -28,7 +28,7 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="no-referrer" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://remotive.io https://www.weworkremotely.com https://himalayas.app https://jobicy.com https://www.kazi-remote.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://remotive.io https://www.weworkremotely.com https://himalayas.app https://jobicy.com https://www.kazi-remote.com https://raw.githubusercontent.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
 <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
 <style>
 .jobs-hero { padding: 8rem 2rem 2rem; text-align: center; background: radial-gradient(ellipse 600px 300px at 50% 0%, rgba(0,212,255,0.08), transparent 70%); }
@@ -224,9 +224,14 @@
     <option value="">All Sources</option>
     <option value="arbeitnow">Arbeitnow</option>
     <option value="remoteok">RemoteOK</option>
-    <option value="remotive">Remotive</option>
-    <option value="jobicy">Jobicy</option>
+    <option value="remoteok-ai">RemoteOK AI</option>
+    <option value="remotive">Remotive (Software)</option>
+    <option value="remotive-data">Remotive (Data)</option>
+    <option value="remotive-devops">Remotive (DevOps)</option>
+    <option value="jobicy">Jobicy (AI)</option>
+    <option value="jobicy-eng">Jobicy (Engineering)</option>
     <option value="himalayas">Himalayas</option>
+    <option value="remoteintech">RemoteInTech</option>
   </select>
   <select class="jobs-filter" id="minScore" aria-label="Minimum match score">
     <option value="0">Any Score</option>
@@ -643,6 +648,70 @@ window.addEventListener('load', () => {
         }
       }
     } catch (e) { console.warn('Himalayas fetch failed:', e); }
+
+    // 6. RemoteOK — AI/ML specific search (broader AI roles)
+    try {
+      const r6 = await fetch('https://remoteok.com/api?api=1&tags=ai,ml');
+      if (r6.ok) {
+        const data6 = await r6.json();
+        if (Array.isArray(data6) && data6.length > 1) {
+          data6.slice(1, 61).forEach(j => jobs.push(normaliseJob(j, 'remoteok-ai')));
+        }
+      }
+    } catch (e) { console.warn('RemoteOK AI fetch failed:', e); }
+
+    // 7. Remotive — Data category (data science, data engineering)
+    try {
+      const r7 = await fetch('https://remotive.io/api/remote-jobs?category=data');
+      if (r7.ok) {
+        const data7 = await r7.json();
+        if (data7.jobs && Array.isArray(data7.jobs)) {
+          data7.jobs.slice(0, 80).forEach(j => jobs.push(normaliseJob(j, 'remotive-data')));
+        }
+      }
+    } catch (e) { console.warn('Remotive Data fetch failed:', e); }
+
+    // 8. Remotive — DevOps category
+    try {
+      const r8 = await fetch('https://remotive.io/api/remote-jobs?category=devops');
+      if (r8.ok) {
+        const data8 = await r8.json();
+        if (data8.jobs && Array.isArray(data8.jobs)) {
+          data8.jobs.slice(0, 50).forEach(j => jobs.push(normaliseJob(j, 'remotive-devops')));
+        }
+      }
+    } catch (e) { console.warn('Remotive DevOps fetch failed:', e); }
+
+    // 9. Jobicy — engineering tag (broader engineering roles)
+    try {
+      const r9 = await fetch('https://jobicy.com/api/v2/remote-jobs?tag=engineering');
+      if (r9.ok) {
+        const data9 = await r9.json();
+        if (data9.jobs && Array.isArray(data9.jobs)) {
+          data9.jobs.slice(0, 50).forEach(j => jobs.push(normaliseJob(j, 'jobicy-eng')));
+        }
+      }
+    } catch (e) { console.warn('Jobicy Eng fetch failed:', e); }
+
+    // 10. Curated remote jobs from GitHub Jobs JSON (community-maintained)
+    try {
+      const r10 = await fetch('https://raw.githubusercontent.com/remoteintech/remote-jobs/main/remote-jobs.json');
+      if (r10.ok) {
+        const data10 = await r10.json();
+        if (Array.isArray(data10)) {
+          data10.slice(0, 80).forEach(j => jobs.push(normaliseJob({
+            ...j,
+            title: j.title || j.position,
+            company_name: j.company || j.company_name,
+            description: j.description || j.summary || '',
+            url: j.url || j.apply_url || j.company_url || '#',
+            location: j.location || 'Remote',
+            tags: j.tags || [],
+            created_at: j.date || new Date().toISOString(),
+          }, 'remoteintech')));
+        }
+      }
+    } catch (e) { console.warn('RemoteInTech fetch failed:', e); }
 
     // Filter for tech-relevant jobs (matches Victor's domain — expanded)
     const keywords = ['ai', 'ml', 'machine learning', 'data', 'engineer', 'developer', 'python', 'typescript', 'react', 'node', 'nextjs', 'next.js', 'fullstack', 'full-stack', 'backend', 'frontend', 'software', 'agriculture', 'agritech', 'llm', 'deep learning', 'tensorflow', 'pytorch', 'flutter', 'data scientist', 'data engineer', 'mlops', 'devops', 'cloud', 'aws', 'gcp', 'azure', 'nlp', 'computer vision', 'rag', 'agent', 'multi-agent', 'api', 'graphql', 'postgresql', 'redis', 'kubernetes', 'docker'];

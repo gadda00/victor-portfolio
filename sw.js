@@ -10,7 +10,7 @@
  * Fetch: serves from cache, falls back to network, updates cache in background.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v3.0.0';
+const CACHE_VERSION = 'vnd-v3.1.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -71,6 +71,9 @@ const SHELL_URLS = [
   '/blog/posts.json',
   '/terms-of-service.html',
   '/privacy-policy.html',
+  '/auth.js',
+  '/book/',
+  '/book/index.html',
 ];
 
 // Never cache these (would break OAuth + live job data)

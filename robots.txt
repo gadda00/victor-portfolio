@@ -1,6 +1,7 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /dashboard/
 Disallow: /jobs/
 
 Sitemap: https://victorndunda.com/sitemap.xml

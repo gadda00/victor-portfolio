@@ -424,15 +424,23 @@
   const cmdOverlay = document.getElementById('cmdOverlay');
   let cmdSelectedIdx = 0;
   let blogPosts = [];
+  let blogPostsLoaded = false;
 
-  // Fetch blog posts for search
-  fetch('/blog/posts.json')
-    .then(r => r.json())
-    .then(data => { blogPosts = (data.posts || []).map(p => ({
-      icon: '📝', title: p.title, desc: p.excerpt.substring(0, 60) + '...',
-      action: () => window.location.href = p.url
-    })); })
-    .catch(() => {});
+  // Fetch blog posts for search (lazy — only when palette opens first time)
+  function loadBlogPosts() {
+    if (blogPostsLoaded) return Promise.resolve(blogPosts);
+    blogPostsLoaded = true;
+    return fetch('/blog/posts.json')
+      .then(r => r.json())
+      .then(data => {
+        blogPosts = (data.posts || []).map(p => ({
+          icon: '📝', title: p.title, desc: p.excerpt.substring(0, 60) + '...',
+          action: () => window.location.href = p.url
+        }));
+        return blogPosts;
+      })
+      .catch(() => []);
+  }
 
   const cmdCommands = [
     { icon: '🏠', title: 'Go to Home', desc: 'Back to the top', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
@@ -492,6 +500,10 @@
     cmdPalette.classList.add('open');
     cmdInput.value = '';
     renderCmdResults();
+    // Lazy load blog posts for search
+    loadBlogPosts().then(() => {
+      if (cmdPalette.classList.contains('open')) renderCmdResults(cmdInput.value);
+    });
     setTimeout(() => cmdInput.focus(), 50);
   }
   function closeCmd() { cmdPalette.classList.remove('open'); }
@@ -592,36 +604,57 @@
   }
 
   // ═══════════════════════════════════════════════════════════════════
-  // 13. GITHUB ACTIVITY WIDGET — Live recent repos
+  // 13. GITHUB ACTIVITY WIDGET — Lazy-loaded when visible
   // ═══════════════════════════════════════════════════════════════════
   const ghWidget = document.getElementById('githubActivity');
   if (ghWidget) {
-    fetch('https://api.github.com/users/gadda00/repos?sort=updated&per_page=6')
-      .then(r => r.json())
-      .then(repos => {
-        if (!Array.isArray(repos) || repos.length === 0) {
-          ghWidget.innerHTML = '<p class="gh-empty">Unable to load recent activity.</p>';
-          return;
-        }
-        const html = repos.slice(0, 6).map(repo => `
-          <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="gh-repo">
-            <div class="gh-repo-head">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
-              <span class="gh-repo-name">${repo.name}</span>
-            </div>
-            <p class="gh-repo-desc">${repo.description || 'No description provided.'}</p>
-            <div class="gh-repo-meta">
-              <span class="gh-lang" style="--lang-color: ${getLangColor(repo.language)}">${repo.language || 'Various'}</span>
-              <span class="gh-stars">★ ${repo.stargazers_count}</span>
-              <span class="gh-updated">${timeAgo(repo.updated_at)}</span>
-            </div>
-          </a>
-        `).join('');
-        ghWidget.innerHTML = html;
-      })
-      .catch(() => {
-        ghWidget.innerHTML = '<p class="gh-empty">GitHub API rate limited. <a href="https://github.com/gadda00" target="_blank">View profile →</a></p>';
-      });
+    let ghLoaded = false;
+    function loadGitHubRepos() {
+      if (ghLoaded) return;
+      ghLoaded = true;
+      fetch('https://api.github.com/users/gadda00/repos?sort=updated&per_page=6')
+        .then(r => r.json())
+        .then(repos => {
+          if (!Array.isArray(repos) || repos.length === 0) {
+            ghWidget.innerHTML = '<p class="gh-empty">Unable to load recent activity.</p>';
+            return;
+          }
+          const html = repos.slice(0, 6).map(repo => `
+            <a href="${repo.html_url}" target="_blank" rel="noopener noreferrer" class="gh-repo">
+              <div class="gh-repo-head">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
+                <span class="gh-repo-name">${repo.name}</span>
+              </div>
+              <p class="gh-repo-desc">${repo.description || 'No description provided.'}</p>
+              <div class="gh-repo-meta">
+                <span class="gh-lang" style="--lang-color: ${getLangColor(repo.language)}">${repo.language || 'Various'}</span>
+                <span class="gh-stars">★ ${repo.stargazers_count}</span>
+                <span class="gh-updated">${timeAgo(repo.updated_at)}</span>
+              </div>
+            </a>
+          `).join('');
+          ghWidget.innerHTML = html;
+        })
+        .catch(() => {
+          ghWidget.innerHTML = '<p class="gh-empty">GitHub API rate limited. <a href="https://github.com/gadda00" target="_blank">View profile →</a></p>';
+        });
+    }
+
+    // Lazy load when the section is near viewport
+    if ('IntersectionObserver' in window) {
+      const ghObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            loadGitHubRepos();
+            ghObserver.disconnect();
+          }
+        });
+      }, { rootMargin: '200px' });
+      ghObserver.observe(ghWidget);
+    } else {
+      // Fallback: load after 2s
+      setTimeout(loadGitHubRepos, 2000);
+    }
   }
 
   function getLangColor(lang) {

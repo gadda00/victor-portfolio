@@ -233,3 +233,65 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [2.1.0]: https://github.com/gadda00/victor-portfolio/compare/v2.0.0...v2.1.0
 [2.0.0]: https://github.com/gadda00/victor-portfolio/compare/v1.0.0...v2.0.0
 [1.0.0]: https://github.com/gadda00/victor-portfolio/releases/tag/v1.0.0
+
+## [3.1.0] — 2026-07-09
+
+### Major Restructure & Feature Additions
+
+**Section Reorder & About Rewrite:**
+- Moved Services ("What I can build for you") to right after About — better flow for visitors
+- Rewrote About section to be warmer, more approachable, less intimidating
+  - Old: "Turning data into intelligence" (technical, jargon-heavy)
+  - New: "Hi, I'm Victor — nice to meet you" (conversational, human)
+- Updated about-cards: Practical AI, Multi-Agent Systems, Impact-Driven, Always Learning
+
+**Blog/Articles/Feed Consolidation:**
+- `/articles/` now redirects to `/blog/` (was a near-duplicate with stale nav)
+- `feed.xml` now auto-generated from `posts.json` (prevents drift)
+- GitHub Action `update-sitemap.yml` now also regenerates `feed.xml` on every blog content push
+- Removed duplicate "Articles" nav link, consolidated to single "Blog"
+
+**Dashboard Overhaul (replaces /admin/):**
+- New `/dashboard/` with Google OAuth 2.0 login + PBKDF2 password fallback
+- Login overlay with Google Sign-In button + password form
+- 9 sections: Overview, Content, Client Briefs, Analytics, Jobs, Social Composer, SEO, Security, Settings
+- Transferred ALL admin features: activity logging, login attempt log, session timeout (30min idle), social composer, SEO checklist, security center
+- Client Briefs section: view all briefs from services wizard, status tracking
+- Jobs section: application pipeline tracking (saved/applied/interview/offer)
+- `/admin/` now redirects to `/dashboard/`
+- Shared `auth.js` module (eliminates duplicated OAuth code)
+
+**Job Portal Expansion:**
+- Added 5 new job sources (10 total): RemoteOK AI, Remotive Data, Remotive DevOps, Jobicy Engineering, RemoteInTech (GitHub community)
+- Updated source filter dropdown with all 10 sources
+- CSP updated to allow `raw.githubusercontent.com` for RemoteInTech
+- Global remote jobs, not just German/European
+
+**Booking System (`/book/`):**
+- New dedicated booking page with 3 tabs:
+  1. **Schedule a Call** — Cal.com embed (lazy-loaded, replaces Calendly)
+  2. **Send a Message** — Web3Forms backend (no server needed)
+  3. **Direct Contact** — WhatsApp, Email, Phone, LinkedIn cards
+- "What you get" section: AI audit, roadmap, budget reality, pilot ideas, no pressure, follow-up
+- Homepage hero CTA now "Book a Free Call" → /book/
+- Nav bar "Book a Call" button (gradient highlight)
+- Replaced Calendly embed on homepage with link to /book/
+
+**Performance Optimizations:**
+- GitHub Activity Widget now lazy-loads via IntersectionObserver (was fetching on page load)
+- Command palette blog posts now lazy-load on first open (was fetching on page load)
+- All scripts already deferred; service worker cache bumped to v3.1.0
+- New pages added to service worker pre-cache (auth.js, /book/)
+
+**Infrastructure:**
+- `robots.txt` now disallows `/dashboard/`
+- Service worker cache version bumped to `vnd-v3.1.0`
+- GitHub Action auto-generates feed.xml from posts.json on every push
+
+### Verified
+- 0 console errors across home, book, dashboard, blog pages
+- Articles redirect to blog successfully
+- Dashboard login overlay displays correctly (Google button + password form)
+- Book page 3 tabs work correctly
+- All JS syntax validated
+- All pages return HTTP 200
