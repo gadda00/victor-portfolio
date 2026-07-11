@@ -28,7 +28,7 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="no-referrer" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://remotive.io https://www.weworkremotely.com https://himalayas.app https://jobicy.com https://www.kazi-remote.com https://raw.githubusercontent.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://accounts.google.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://remotive.io https://www.weworkremotely.com https://himalayas.app https://jobicy.com https://www.kazi-remote.com https://raw.githubusercontent.com https://api.github.com https://api.search.brave.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
 <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), interest-cohort=()" />
 <style>
 .jobs-hero { padding: 8rem 2rem 2rem; text-align: center; background: radial-gradient(ellipse 600px 300px at 50% 0%, rgba(0,212,255,0.08), transparent 70%); }
@@ -526,6 +526,21 @@ window.addEventListener('load', () => {
 (async function () {
   const grid = document.getElementById('grid');
 
+  // ─── Job cache (memory + localStorage) — avoids re-fetching on every page load ──
+  let jobsCache = null;
+  let jobsCacheTime = 0;
+  const CACHE_TTL = 60 * 60 * 1000; // 1 hour
+
+  // Try to load from localStorage cache
+  try {
+    const cached = JSON.parse(localStorage.getItem('vn_jobs_cache') || 'null');
+    if (cached && cached.jobs && (Date.now() - cached.timestamp < CACHE_TTL)) {
+      jobsCache = cached.jobs;
+      jobsCacheTime = cached.timestamp;
+      console.log(`[Jobs] Loaded ${jobsCache.length} jobs from cache (age: ${Math.round((Date.now() - jobsCacheTime) / 60000)} min)`);
+    }
+  } catch {}
+
   function normaliseJob(j, source) {
     // Stable id across sources
     const id = source + ':' + (j.slug || j.id || (j.title + '|' + j.company_name));
@@ -714,9 +729,16 @@ window.addEventListener('load', () => {
 
     // Filter for tech-relevant jobs (matches Victor's domain — expanded)
     const keywords = ['ai', 'ml', 'machine learning', 'data', 'engineer', 'developer', 'python', 'typescript', 'react', 'node', 'nextjs', 'next.js', 'fullstack', 'full-stack', 'backend', 'frontend', 'software', 'agriculture', 'agritech', 'llm', 'deep learning', 'tensorflow', 'pytorch', 'flutter', 'data scientist', 'data engineer', 'mlops', 'devops', 'cloud', 'aws', 'gcp', 'azure', 'nlp', 'computer vision', 'rag', 'agent', 'multi-agent', 'api', 'graphql', 'postgresql', 'redis', 'kubernetes', 'docker'];
-    const filtered = jobs.filter(j => {
+    let filtered = jobs.filter(j => {
       const text = (j.title + ' ' + j.description + ' ' + j.tags.join(' ')).toLowerCase();
       return keywords.some(k => text.includes(k));
+    });
+
+    // Filter out stale jobs — only show jobs from the last 30 days
+    const thirtyDaysAgo = Date.now() - 30 * 24 * 60 * 60 * 1000;
+    filtered = filtered.filter(j => {
+      const created = new Date(j.createdAt).getTime();
+      return !isNaN(created) && created >= thirtyDaysAgo;
     });
 
     // Dedupe by title+company
@@ -730,13 +752,31 @@ window.addEventListener('load', () => {
 
     // Sort newest first
     deduped.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+    // Cache the results for 1 hour (memory + localStorage)
+    try {
+      const cache = { jobs: deduped, timestamp: Date.now() };
+      localStorage.setItem('vn_jobs_cache', JSON.stringify(cache));
+    } catch {}
+    jobsCache = deduped;
+    jobsCacheTime = Date.now();
     return deduped;
   }
 
   try {
-    const allJobs = await fetchAllJobs();
-    if (!allJobs.length) {
-      grid.innerHTML = '<div class="empty"><h3>No jobs loaded</h3><p>Could not fetch jobs from Arbeitnow or RemoteOK. Try again later.</p></div>';
+    // Check cache first — if we have recent jobs, use them
+    let allJobs;
+    if (jobsCache && jobsCache.length > 0 && (Date.now() - jobsCacheTime < CACHE_TTL)) {
+      console.log('[Jobs] Using cached jobs (no fresh fetch needed)');
+      allJobs = jobsCache;
+    } else {
+      // Show loading message with a "refresh" hint
+      grid.innerHTML = '<div class="empty"><h3>Fetching fresh jobs…</h3><p>Loading from 10+ remote job sources. This takes a few seconds.</p></div>';
+      allJobs = await fetchAllJobs();
+    }
+
+    if (!allJobs || !allJobs.length) {
+      grid.innerHTML = '<div class="empty"><h3>No jobs found</h3><p>No recent jobs (last 30 days) matched your profile. Try refreshing or adjust your search.</p><button onclick="location.reload()" style="margin-top:1rem;padding:0.5rem 1rem;border-radius:8px;background:var(--accent);color:#fff;border:none;cursor:pointer">Refresh Jobs</button></div>';
       return;
     }
 

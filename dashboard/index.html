@@ -66,17 +66,22 @@
   <!-- Top Nav -->
   <nav class="dash-nav">
     <div class="dash-nav-inner">
-      <a href="/" class="dash-logo">
-        <svg width="28" height="28" viewBox="0 0 100 100" fill="none" aria-hidden="true">
-          <defs><linearGradient id="dashLogo" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#00d4ff"/><stop offset="1" stop-color="#a855f7"/>
-          </linearGradient></defs>
-          <circle cx="50" cy="50" r="14" fill="url(#dashLogo)"/>
-          <circle cx="20" cy="25" r="5" fill="url(#dashLogo)"/><circle cx="80" cy="25" r="5" fill="url(#dashLogo)"/>
-          <circle cx="20" cy="75" r="5" fill="url(#dashLogo)"/><circle cx="80" cy="75" r="5" fill="url(#dashLogo)"/>
-        </svg>
-        <span>Dashboard</span>
-      </a>
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <button class="dash-sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <a href="/" class="dash-logo">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <defs><linearGradient id="dashLogo" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#00d4ff"/><stop offset="1" stop-color="#a855f7"/>
+            </linearGradient></defs>
+            <circle cx="50" cy="50" r="14" fill="url(#dashLogo)"/>
+            <circle cx="20" cy="25" r="5" fill="url(#dashLogo)"/><circle cx="80" cy="25" r="5" fill="url(#dashLogo)"/>
+            <circle cx="20" cy="75" r="5" fill="url(#dashLogo)"/><circle cx="80" cy="75" r="5" fill="url(#dashLogo)"/>
+          </svg>
+          <span>Dashboard</span>
+        </a>
+      </div>
       <div class="dash-nav-right">
         <div class="dash-user" id="dashUserInfo">
           <img id="userAvatar" alt="" />
@@ -91,18 +96,20 @@
   </nav>
 
   <main id="main" class="dash-main">
+    <div class="dash-sidebar-backdrop" id="sidebarBackdrop"></div>
     <!-- Sidebar -->
     <aside class="dash-sidebar" id="dashSidebar">
       <nav class="dash-side-nav">
-        <button class="dash-side-link active" data-section="overview"><span>📊</span> Overview</button>
-        <button class="dash-side-link" data-section="content"><span>📝</span> Content</button>
-        <button class="dash-side-link" data-section="clients"><span>💼</span> Client Briefs</button>
-        <button class="dash-side-link" data-section="analytics"><span>📈</span> Analytics</button>
-        <button class="dash-side-link" data-section="jobs"><span>🔍</span> Jobs</button>
-        <button class="dash-side-link" data-section="social"><span>💬</span> Social Composer</button>
-        <button class="dash-side-link" data-section="seo"><span>🔎</span> SEO</button>
-        <button class="dash-side-link" data-section="security"><span>🔒</span> Security</button>
-        <button class="dash-side-link" data-section="settings"><span>⚙️</span> Settings</button>
+        <button class="dash-side-link active" data-section="overview"><span>📊</span> <span>Overview</span></button>
+        <button class="dash-side-link" data-section="content"><span>📝</span> <span>Content</span></button>
+        <button class="dash-side-link" data-section="clients"><span>💼</span> <span>Client Briefs</span></button>
+        <button class="dash-side-link" data-section="clientsearch"><span>🎯</span> <span>Find Clients</span></button>
+        <button class="dash-side-link" data-section="analytics"><span>📈</span> <span>Analytics</span></button>
+        <button class="dash-side-link" data-section="jobs"><span>🔍</span> <span>Jobs</span></button>
+        <button class="dash-side-link" data-section="social"><span>💬</span> <span>Social Composer</span></button>
+        <button class="dash-side-link" data-section="seo"><span>🔎</span> <span>SEO</span></button>
+        <button class="dash-side-link" data-section="security"><span>🔒</span> <span>Security</span></button>
+        <button class="dash-side-link" data-section="settings"><span>⚙️</span> <span>Settings</span></button>
       </nav>
     </aside>
 

@@ -110,11 +110,43 @@
   // ─── Section Navigation ───────────────────────────────────────────
   const sideLinks = document.querySelectorAll('.dash-side-link');
   const dashContent = document.getElementById('dashContent');
+  const sidebar = document.getElementById('dashSidebar');
+  const sidebarToggle = document.getElementById('sidebarToggle');
+  const sidebarBackdrop = document.getElementById('sidebarBackdrop');
+
+  // Sidebar toggle — collapse on desktop, slide on mobile
+  sidebarToggle?.addEventListener('click', () => {
+    if (window.innerWidth <= 900) {
+      // Mobile: toggle open/close
+      sidebar.classList.toggle('open');
+      sidebarBackdrop.classList.toggle('show');
+    } else {
+      // Desktop: toggle collapse
+      sidebar.classList.toggle('collapsed');
+      localStorage.setItem('dash_sidebar_collapsed', sidebar.classList.contains('collapsed'));
+    }
+  });
+
+  // Close sidebar on backdrop click (mobile)
+  sidebarBackdrop?.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    sidebarBackdrop.classList.remove('show');
+  });
+
+  // Restore sidebar state on load
+  if (window.innerWidth > 900 && localStorage.getItem('dash_sidebar_collapsed') === 'true') {
+    sidebar.classList.add('collapsed');
+  }
 
   sideLinks.forEach(link => {
     link.addEventListener('click', () => {
       const section = link.getAttribute('data-section');
       switchSection(section);
+      // Close mobile sidebar on click
+      if (window.innerWidth <= 900) {
+        sidebar.classList.remove('open');
+        sidebarBackdrop.classList.remove('show');
+      }
     });
   });
 
@@ -135,6 +167,7 @@
     overview: renderOverview,
     content: renderContent,
     clients: renderClients,
+    clientsearch: renderClientSearch,
     analytics: renderAnalytics,
     jobs: renderJobs,
     social: renderSocial,
@@ -267,6 +300,137 @@
           </tbody>
         </table>
       ` : '<div class="empty-state"><div class="empty-state-icon">💼</div><p>No client briefs yet. Briefs appear here when clients submit the Project Scope Wizard.</p></div>'}
+    `;
+  }
+
+  // ─── Find Clients (lead generation) ───────────────────────────────
+  function renderClientSearch() {
+    return `
+      <div class="dash-section-head">
+        <h1>Find Clients</h1>
+        <p>Search for potential clients across platforms — freelancers, startups, and businesses that need AI services.</p>
+      </div>
+
+      <div class="quick-actions" style="margin-bottom:1.5rem">
+        <a href="https://www.upwork.com/nx/search/jobs/?q=AI+engineer+multi-agent" target="_blank" rel="noopener noreferrer" class="quick-action">
+          <div class="quick-action-icon">💼</div>Upwork AI Jobs
+        </a>
+        <a href="https://www.fiverr.com/categories/programming-tech/ai-services/ai-engineering" target="_blank" rel="noopener noreferrer" class="quick-action">
+          <div class="quick-action-icon">🎨</div>Fiverr AI Services
+        </a>
+        <a href="https://www.toptal.com/talent/apply" target="_blank" rel="noopener noreferrer" class="quick-action">
+          <div class="quick-action-icon">⭐</div>Toptal
+        </a>
+        <a href="https://www.linkedin.com/jobs/search/?keywords=AI%20consultant%20Nairobi" target="_blank" rel="noopener noreferrer" class="quick-action">
+          <div class="quick-action-icon">📌</div>LinkedIn AI Nairobi
+        </a>
+        <a href="https://www.linkedin.com/jobs/search/?keywords=AI%20engineer%20Kenya" target="_blank" rel="noopener noreferrer" class="quick-action">
+          <div class="quick-action-icon">🇰🇪</div>LinkedIn AI Kenya
+        </a>
+        <a href="https://wellfound.com/jobs?q=AI+engineer" target="_blank" rel="noopener noreferrer" class="quick-action">
+          <div class="quick-action-icon">🚀</div>Wellfound
+        </a>
+      </div>
+
+      <div class="activity-feed">
+        <h3>🎯 Lead Generation Sources</h3>
+        <div class="security-checklist">
+          <div class="security-item">
+            <div class="security-check ok">✓</div>
+            <div>
+              <strong>Upwork</strong> — Search for "AI engineer", "multi-agent", "RAG chatbot", "data analysis"
+              <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.25rem">
+                Tip: Filter by budget $5K+ and "Payment verified" for quality leads
+              </div>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-check ok">✓</div>
+            <div>
+              <strong>LinkedIn Sales Navigator</strong> — Search for CTOs/Founders at Nairobi startups
+              <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.25rem">
+                Search: "CTO" OR "Founder" + "Nairobi" + "AI" + company size 1-50
+              </div>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-check ok">✓</div>
+            <div>
+              <strong>Twitter/X Advanced Search</strong> — Find people asking for AI help
+              <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.25rem">
+                Search: "looking for AI engineer" OR "need AI chatbot" OR "hire AI consultant" min_faves:5
+              </div>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-check ok">✓</div>
+            <div>
+              <strong>Nairobi Tech Communities</strong> — iHub, Nairobi Garage, Nailab
+              <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.25rem">
+                Attend meetups, post in Slack groups, offer free AI audits
+              </div>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-check ok">✓</div>
+            <div>
+              <strong>Cold Outreach</strong> — Email SMBs about AI readiness audits
+              <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.25rem">
+                Target: 10 emails/week to Nairobi SMBs. Offer free 30-min AI audit call.
+              </div>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-check ok">✓</div>
+            <div>
+              <strong>Agritech Companies</strong> — KALRO, AgriBiz, Twiga Foods
+              <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.25rem">
+                Pitch KilimoPRO expertise: crop disease detection, market forecasting
+              </div>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-check ok">✓</div>
+            <div>
+              <strong>Fintech Companies</strong> — M-Pesa partners, Flutterwave merchants
+              <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.25rem">
+                Pitch fraud detection, financial forecasting, customer segmentation
+              </div>
+            </div>
+          </div>
+          <div class="security-item">
+            <div class="security-check ok">✓</div>
+            <div>
+              <strong>Content Marketing</strong> — Write blog articles + post on LinkedIn
+              <div style="font-size:0.75rem;color:var(--text-dim);margin-top:0.25rem">
+                Each blog post = inbound lead magnet. 1 post/week → 4 leads/month
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="activity-feed" style="margin-top:1.5rem">
+        <h3>📋 Outreach Tracker</h3>
+        <p style="color:var(--text-muted);font-size:0.875rem;margin-bottom:1rem">
+          Track your outreach efforts. Data stored locally in your browser.
+        </p>
+        <div id="outreachTracker">
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0.5rem;margin-bottom:1rem">
+            <input type="text" id="leadName" placeholder="Company / Lead name" style="padding:0.5rem;border-radius:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);font-size:0.875rem" />
+            <input type="text" id="leadSource" placeholder="Source (Upwork, LinkedIn...)" style="padding:0.5rem;border-radius:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);font-size:0.875rem" />
+            <select id="leadStatus" style="padding:0.5rem;border-radius:8px;background:var(--bg);border:1px solid var(--border);color:var(--text);font-size:0.875rem">
+              <option value="contacted">Contacted</option>
+              <option value="replied">Replied</option>
+              <option value="meeting">Meeting booked</option>
+              <option value="won">Won</option>
+              <option value="lost">Lost</option>
+            </select>
+            <button class="btn btn-primary btn-sm" id="addLeadBtn">Add</button>
+          </div>
+          <div id="leadsList"></div>
+        </div>
+      </div>
     `;
   }
 
@@ -505,6 +669,30 @@
     if (name === 'social') {
       document.getElementById('generateSocial')?.addEventListener('click', generateSocialPosts);
     }
+    if (name === 'clientsearch') {
+      // Lead tracker
+      document.getElementById('addLeadBtn')?.addEventListener('click', () => {
+        const nameEl = document.getElementById('leadName');
+        const sourceEl = document.getElementById('leadSource');
+        const statusEl = document.getElementById('leadStatus');
+        if (!nameEl.value.trim()) { toast('Enter a lead name', 'warn'); return; }
+        try {
+          const leads = JSON.parse(localStorage.getItem('vn_leads') || '[]');
+          leads.unshift({
+            name: nameEl.value.trim(),
+            source: sourceEl.value.trim() || '—',
+            status: statusEl.value,
+            date: new Date().toISOString(),
+          });
+          if (leads.length > 50) leads.length = 50;
+          localStorage.setItem('vn_leads', JSON.stringify(leads));
+        } catch {}
+        nameEl.value = ''; sourceEl.value = ''; statusEl.value = 'contacted';
+        toast('Lead added!');
+        renderLeadsList();
+      });
+      renderLeadsList();
+    }
     if (name === 'security') {
       document.getElementById('clearLogsBtn')?.addEventListener('click', () => {
         VNAuth.clearLogs();
@@ -609,6 +797,34 @@
   function getClientBriefs() {
     try { return JSON.parse(localStorage.getItem('vn_client_briefs') || '[]'); }
     catch { return []; }
+  }
+
+  function getLeads() {
+    try { return JSON.parse(localStorage.getItem('vn_leads') || '[]'); }
+    catch { return []; }
+  }
+
+  function renderLeadsList() {
+    const list = document.getElementById('leadsList');
+    if (!list) return;
+    const leads = getLeads();
+    if (!leads.length) {
+      list.innerHTML = '<p style="color:var(--text-muted);font-size:0.875rem;text-align:center;padding:2rem">No leads tracked yet. Add your first lead above.</p>';
+      return;
+    }
+    const statusColors = {
+      contacted: 'badge-blue', replied: 'badge-purple',
+      meeting: 'badge-yellow', won: 'badge-green', lost: 'badge-red',
+    };
+    list.innerHTML = leads.map((l, i) => `
+      <div style="display:flex;align-items:center;gap:0.75rem;padding:0.5rem 0;border-bottom:1px solid var(--border)">
+        <span style="flex:1;font-size:0.875rem;font-weight:500">${l.name}</span>
+        <span style="font-size:0.75rem;color:var(--text-muted)">${l.source}</span>
+        <span class="badge ${statusColors[l.status] || 'badge-gray'}">${l.status}</span>
+        <span style="font-size:0.75rem;color:var(--text-dim)">${timeAgo(l.date)}</span>
+        <button onclick="(() => { const l=JSON.parse(localStorage.getItem('vn_leads')||'[]'); l.splice(${i},1); localStorage.setItem('vn_leads',JSON.stringify(l)); document.getElementById('leadsList')&&renderLeadsList(); })()" style="background:none;border:none;color:var(--text-dim);cursor:pointer;font-size:1rem">×</button>
+      </div>
+    `).join('');
   }
 
   function getJobApplications() {

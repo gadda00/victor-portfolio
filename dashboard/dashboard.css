@@ -110,6 +110,15 @@ html.light .dash-nav { background: rgba(248,250,252,0.85); }
 }
 .dash-user span { color: var(--text); }
 
+/* Sidebar toggle button */
+.dash-sidebar-toggle {
+  display: none;
+  background: none; border: none; color: var(--text);
+  cursor: pointer; padding: 0.5rem;
+  align-items: center; justify-content: center;
+}
+.dash-sidebar-toggle svg { width: 22px; height: 22px; }
+
 .dash-main {
   padding-top: 60px;
   display: flex;
@@ -125,6 +134,32 @@ html.light .dash-nav { background: rgba(248,250,252,0.85); }
   height: calc(100vh - 60px);
   overflow-y: auto;
   padding: 1rem 0;
+  transition: width 0.3s var(--ease), transform 0.3s var(--ease);
+}
+.dash-sidebar.collapsed {
+  width: 60px;
+}
+.dash-sidebar.collapsed .dash-side-link span:last-child {
+  display: none;
+}
+.dash-sidebar.collapsed .dash-side-link {
+  justify-content: center;
+  padding: 0.75rem;
+}
+.dash-sidebar.collapsed .dash-side-link span:first-child {
+  font-size: 1.25rem;
+}
+.dash-sidebar-backdrop {
+  display: none;
+  position: fixed; inset: 60px 0 0 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 90;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.dash-sidebar-backdrop.show {
+  display: block;
+  opacity: 1;
 }
 .dash-side-nav {
   display: flex; flex-direction: column;
@@ -422,15 +457,28 @@ html.light .dash-nav { background: rgba(248,250,252,0.85); }
 
 /* ─── Responsive ─────────────────────────────────────────────────── */
 @media (max-width: 900px) {
+  .dash-sidebar-toggle { display: flex; }
   .dash-sidebar {
-    width: 60px;
-    padding: 0.5rem 0;
+    position: fixed;
+    top: 60px;
+    left: 0;
+    bottom: 0;
+    width: 240px;
+    z-index: 95;
+    transform: translateX(-100%);
+    transition: transform 0.3s var(--ease);
+    padding: 1rem 0;
+  }
+  .dash-sidebar.open {
+    transform: translateX(0);
+  }
+  .dash-sidebar .dash-side-link span:last-child {
+    display: inline;
   }
   .dash-side-link {
-    justify-content: center;
-    padding: 0.75rem;
+    justify-content: flex-start;
+    padding: 0.75rem 1rem;
   }
-  .dash-side-link span:last-child { display: none; }
 }
 @media (max-width: 600px) {
   .dash-content { padding: 1rem; }
