@@ -1572,3 +1572,158 @@ html.light .gh-repo:hover, html.light .now-card:hover {
   body { background: white !important; color: black !important; }
   .work-card, .service-card, .about-card { box-shadow: none !important; border: 1px solid #ccc !important; }
 }
+
+/* ─── Condensed Capabilities (subordinate to main packages) ────── */
+.svc-capabilities {
+  margin-top: 2rem;
+  padding: 2rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  position: relative;
+}
+.svc-capabilities::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 2rem; right: 2rem;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--accent-2), transparent);
+  border-radius: 1px;
+}
+.svc-capabilities-head {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+.svc-capabilities-label {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  margin-bottom: 0.25rem;
+}
+.svc-capabilities-sub {
+  font-size: 0.875rem;
+  color: var(--text-dim);
+}
+.svc-capabilities-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1rem;
+}
+.svc-cap {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.875rem;
+  padding: 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  transition: all 0.25s var(--ease);
+}
+.svc-cap:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+.svc-cap-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 8px;
+  background: var(--glass);
+  transition: all 0.25s var(--ease);
+}
+.svc-cap:hover .svc-cap-icon {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  transform: scale(1.1);
+}
+.svc-cap h4 {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: var(--text);
+}
+.svc-cap p {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+@media (max-width: 600px) {
+  .svc-capabilities-grid { grid-template-columns: 1fr; }
+  .svc-capabilities { padding: 1.5rem 1rem; }
+}
+
+/* ─── Certifications / Ongoing Courses ──────────────────────────── */
+.cert-ongoing {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 99px;
+  background: rgba(245,158,11,0.1);
+  color: #f59e0b;
+  border: 1px solid rgba(245,158,11,0.3);
+}
+.cert-ongoing::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #f59e0b;
+  animation: pulse 2s infinite;
+}
+.cert-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  border-radius: 12px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 3px solid #f59e0b;
+  transition: all 0.3s var(--ease);
+}
+.cert-card:hover {
+  border-color: var(--accent);
+  border-left-color: #f59e0b;
+  transform: translateY(-2px);
+}
+.cert-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+.cert-card h4 {
+  font-size: 0.9375rem;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.3;
+}
+.cert-card p {
+  font-size: 0.8125rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.cert-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-top: 0.5rem;
+}
+.cert-skills span {
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
