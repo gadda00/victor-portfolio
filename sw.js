@@ -10,7 +10,7 @@
  * Fetch: serves from cache, falls back to network, updates cache in background.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v3.3.0';
+const CACHE_VERSION = 'vnd-v3.4.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 

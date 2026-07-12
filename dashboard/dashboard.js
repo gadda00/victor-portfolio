@@ -121,7 +121,7 @@
       sidebar.classList.toggle('open');
       sidebarBackdrop.classList.toggle('show');
     } else {
-      // Desktop: toggle collapse (icon-only mode)
+      // Desktop: toggle between fully hidden and fully visible
       sidebar.classList.toggle('collapsed');
       localStorage.setItem('dash_sidebar_collapsed', sidebar.classList.contains('collapsed'));
     }
@@ -133,9 +133,14 @@
     sidebarBackdrop.classList.remove('show');
   });
 
-  // Restore sidebar state on load
-  if (window.innerWidth > 900 && localStorage.getItem('dash_sidebar_collapsed') === 'true') {
-    sidebar.classList.add('collapsed');
+  // On desktop, default to collapsed (sidebar hidden by default)
+  if (window.innerWidth > 900) {
+    // Always start collapsed unless user explicitly pinned it open
+    if (localStorage.getItem('dash_sidebar_pinned') === 'true') {
+      // Keep it open
+    } else {
+      sidebar.classList.add('collapsed');
+    }
   }
 
   sideLinks.forEach(link => {
@@ -147,9 +152,8 @@
         // Mobile: close the slide-in drawer
         sidebar.classList.remove('open');
         sidebarBackdrop.classList.remove('show');
-      } else if (!sidebar.classList.contains('collapsed')) {
-        // Desktop: auto-collapse if not already collapsed, unless user pinned it open
-        // Only auto-collapse if the user hasn't explicitly pinned the sidebar open
+      } else {
+        // Desktop: always collapse after selecting (unless pinned)
         if (localStorage.getItem('dash_sidebar_pinned') !== 'true') {
           sidebar.classList.add('collapsed');
           localStorage.setItem('dash_sidebar_collapsed', 'true');
@@ -158,11 +162,20 @@
     });
   });
 
-  // Double-click on toggle = pin/unpin sidebar (keep it open)
+  // Double-click on toggle = pin/unpin sidebar (keep it open permanently)
   sidebarToggle?.addEventListener('dblclick', () => {
     const pinned = localStorage.getItem('dash_sidebar_pinned') === 'true';
-    localStorage.setItem('dash_sidebar_pinned', !pinned);
-    toast(pinned ? 'Sidebar auto-collapse enabled' : 'Sidebar pinned open');
+    if (pinned) {
+      // Unpin — enable auto-collapse
+      localStorage.setItem('dash_sidebar_pinned', 'false');
+      sidebar.classList.add('collapsed');
+      toast('Sidebar auto-collapse enabled');
+    } else {
+      // Pin — keep open permanently
+      localStorage.setItem('dash_sidebar_pinned', 'true');
+      sidebar.classList.remove('collapsed');
+      toast('Sidebar pinned open — won\'t auto-collapse');
+    }
   });
 
   function switchSection(name) {

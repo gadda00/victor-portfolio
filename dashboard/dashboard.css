@@ -123,13 +123,13 @@ html.light .dash-nav { background: rgba(248,250,252,0.85); }
   transition: width 0.3s var(--ease), transform 0.3s var(--ease);
   z-index: 95;
 }
-/* Collapsed state (desktop) — icon only */
-.dash-sidebar.collapsed { width: 60px; }
-.dash-sidebar.collapsed .dash-side-link span:last-child { display: none; }
-.dash-sidebar.collapsed .dash-side-link {
-  justify-content: center; padding: 0.75rem;
+/* Collapsed state (desktop) — completely hidden, content takes full width */
+.dash-sidebar.collapsed {
+  width: 0;
+  padding: 0;
+  border-right: none;
+  overflow: hidden;
 }
-.dash-sidebar.collapsed .dash-side-link span:first-child { font-size: 1.25rem; }
 
 .dash-sidebar-backdrop {
   display: none; position: fixed; inset: 60px 0 0 0;

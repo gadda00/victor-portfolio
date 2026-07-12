@@ -24,75 +24,12 @@
   // For same-document (SPA) navigations, we could use startViewTransition(),
   // but this site doesn't do SPA routing. Leaving this as a no-op.
 
-  // ── 2. PWA install prompt ─────────────────────────────────────────
-  var deferredPrompt = null;
-  var DISMISS_KEY = 'vn_pwa_install_dismissed';
-  var DISMISS_TTL = 7 * 24 * 60 * 60 * 1000; // 7 days
-
+  // ── 2. PWA install prompt — DISABLED ──────────────────────────────
+  // User requested removal of the install popup.
+  // The beforeinstallprompt event is still captured (to prevent Chrome's
+  // default mini-infobar) but no custom banner is shown.
   window.addEventListener('beforeinstallprompt', function (e) {
-    e.preventDefault();
-    deferredPrompt = e;
-    // Check if user previously dismissed
-    try {
-      var raw = localStorage.getItem(DISMISS_KEY);
-      if (raw) {
-        var dismissed = parseInt(raw, 10);
-        if (Date.now() - dismissed < DISMISS_TTL) return;
-      }
-    } catch (e) { /* ignore */ }
-    showInstallBanner();
-  });
-
-  function showInstallBanner() {
-    if (!deferredPrompt) return;
-    // Don't show on admin/jobs (they have their own UX)
-    if (location.pathname.startsWith('/admin') || location.pathname.startsWith('/jobs')) return;
-    // Don't double-insert
-    if (document.querySelector('.pwa-install-banner')) return;
-
-    var banner = document.createElement('div');
-    banner.className = 'pwa-install-banner';
-    banner.setAttribute('role', 'dialog');
-    banner.setAttribute('aria-label', 'Install app prompt');
-    banner.innerHTML =
-      '<div class="pwa-icon" aria-hidden="true">📱</div>' +
-      '<div class="pwa-text">' +
-        '<div class="pwa-title">Install Victor\'s Portfolio</div>' +
-        '<div class="pwa-sub">Quick access · Works offline</div>' +
-      '</div>' +
-      '<div class="pwa-actions">' +
-        '<button class="pwa-btn pwa-btn-dismiss" aria-label="Dismiss">Not now</button>' +
-        '<button class="pwa-btn pwa-btn-primary">Install</button>' +
-      '</div>';
-
-    document.body.appendChild(banner);
-    // Trigger reflow + show
-    requestAnimationFrame(function () { banner.classList.add('visible'); });
-
-    banner.querySelector('.pwa-btn-primary').addEventListener('click', function () {
-      if (!deferredPrompt) return;
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(function (choice) {
-        banner.classList.remove('visible');
-        setTimeout(function () { banner.remove(); }, 400);
-        if (choice.outcome === 'accepted') {
-          try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch (e) {}
-        }
-        deferredPrompt = null;
-      });
-    });
-
-    banner.querySelector('.pwa-btn-dismiss').addEventListener('click', function () {
-      banner.classList.remove('visible');
-      setTimeout(function () { banner.remove(); }, 400);
-      try { localStorage.setItem(DISMISS_KEY, String(Date.now())); } catch (e) {}
-    });
-  }
-
-  window.addEventListener('appinstalled', function () {
-    var b = document.querySelector('.pwa-install-banner');
-    if (b) { b.classList.remove('visible'); setTimeout(function () { b.remove(); }, 400); }
-    deferredPrompt = null;
+    e.preventDefault(); // Prevent Chrome's default mini-infobar
   });
 
   // ── 3. Scroll progress indicator ──────────────────────────────────
