@@ -6,126 +6,229 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
 <meta http-equiv="Pragma" content="no-cache" />
 <meta http-equiv="Expires" content="0" />
-<title>Dashboard — Victor Ndunda | Control Center</title>
-<meta name="description" content="Private dashboard for Victor Ndunda — analytics, content management, client briefs, job applications, and security center." />
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex" />
+<title>Dashboard — Victor Ndunda</title>
+<meta name="robots" content="noindex, nofollow, noarchive" />
 <meta name="theme-color" content="#0a0e1a" />
-<meta name="color-scheme" content="dark light" />
-<link rel="canonical" href="https://victorndunda.com/dashboard/" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-<link rel="manifest" href="/manifest.webmanifest" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<meta name="view-transition" content="same-origin" />
-<link rel="stylesheet" href="/styles.css" />
-<link rel="stylesheet" href="/dashboard/dashboard.css?v=3.5" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a25;--txt:#e2e8f0;--txt2:#8892b0;--txt3:#64748b;--acc:#00d4ff;--acc2:#a855f7;--acc3:#10b981;--border:rgba(255,255,255,0.08);--glass:rgba(255,255,255,0.05);--r:14px;--r2:10px;--ease:cubic-bezier(0.22,1,0.36,1)}
+.light{--bg:#f8fafc;--bg2:#ffffff;--bg3:#f1f5f9;--txt:#0f172a;--txt2:#475569;--txt3:#64748b;--border:rgba(0,0,0,0.08);--glass:rgba(0,0,0,0.03)}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--txt);line-height:1.6;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer}
+::selection{background:rgba(0,212,255,0.25)}
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--acc);border-radius:3px}
 
-<!-- Security Headers -->
-<meta http-equiv="X-Content-Type-Options" content="nosniff" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="referrer" content="strict-origin-when-cross-origin" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://remotive.io https://himalayas.app https://jobicy.com https://api.github.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
+/* === AUTH OVERLAY === */
+#authOverlay{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;background:var(--bg);padding:2rem}
+.auth-box{max-width:400px;width:100%;background:var(--bg2);border:1px solid var(--border);border-radius:20px;padding:2.5rem;box-shadow:0 20px 60px rgba(0,0,0,0.4)}
+.auth-box h1{font-size:1.5rem;margin-bottom:0.5rem;text-align:center}
+.auth-box>p{text-align:center;color:var(--txt2);font-size:0.875rem;margin-bottom:1.5rem}
+#googleSignInBtn{display:flex;justify-content:center;min-height:40px;margin-bottom:1rem}
+.auth-div{text-align:center;margin:1rem 0;color:var(--txt3);font-size:0.8rem;position:relative}
+.auth-div::before,.auth-div::after{content:'';position:absolute;top:50%;width:35%;height:1px;background:var(--border)}
+.auth-div::before{left:0}.auth-div::after{right:0}
+.auth-form{display:flex;flex-direction:column;gap:0.75rem}
+.auth-form input{padding:0.75rem 1rem;border-radius:10px;background:var(--bg);border:1px solid var(--border);color:var(--txt);font-size:0.9375rem;outline:none;font-family:inherit}
+.auth-form input:focus{border-color:var(--acc)}
+.auth-form button{padding:0.75rem;border-radius:10px;border:none;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-weight:600;font-size:0.9375rem;font-family:inherit}
+#authError{color:#ef4444;font-size:0.8rem;text-align:center;margin-top:0.5rem;display:none}
+.auth-back{display:block;text-align:center;margin-top:1.5rem;color:var(--txt2);font-size:0.8rem}
+
+/* === APP LAYOUT === */
+#dashApp{display:none}
+.topbar{position:fixed;top:0;left:0;right:0;height:56px;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 1rem;background:rgba(10,10,15,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.light .topbar{background:rgba(255,255,255,0.9)}
+.topbar-left{display:flex;align-items:center;gap:0.75rem}
+.hamburger{background:none;border:none;color:var(--txt);padding:0.5rem;border-radius:8px;display:flex;align-items:center;justify-content:center;transition:background 0.2s}
+.hamburger:hover{background:var(--glass)}
+.hamburger svg{width:22px;height:22px}
+.topbar-logo{display:flex;align-items:center;gap:0.5rem;font-weight:800;font-size:1.1rem}
+.topbar-logo span{background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.topbar-right{display:flex;align-items:center;gap:0.75rem}
+.user-info{display:flex;align-items:center;gap:0.4rem;font-size:0.85rem}
+.user-info img{width:28px;height:28px;border-radius:50%;object-fit:cover}
+.theme-btn,.logout-btn{background:none;border:1px solid var(--border);color:var(--txt2);padding:0.4rem 0.75rem;border-radius:8px;font-size:0.8rem;font-family:inherit;transition:all 0.2s}
+.theme-btn:hover,.logout-btn:hover{border-color:var(--acc);color:var(--acc)}
+.theme-btn svg{width:16px;height:16px;vertical-align:middle}
+
+/* === SIDEBAR === */
+.sidebar{position:fixed;top:56px;left:0;bottom:0;width:240px;background:var(--bg2);border-right:1px solid var(--border);z-index:90;overflow-y:auto;transition:transform 0.3s var(--ease);padding:0.5rem 0}
+.sidebar.hidden{transform:translateX(-100%)}
+.sidebar-backdrop{position:fixed;top:56px;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);z-index:89;display:none}
+.sidebar-backdrop.show{display:block}
+.side-link{display:flex;align-items:center;gap:0.75rem;padding:0.7rem 1.25rem;border:none;background:none;color:var(--txt2);font-size:0.9rem;font-weight:500;font-family:inherit;width:100%;text-align:left;transition:all 0.15s;border-left:3px solid transparent}
+.side-link:hover{background:var(--glass);color:var(--txt)}
+.side-link.active{color:var(--acc);background:rgba(0,212,255,0.08);border-left-color:var(--acc)}
+.side-link .icon{font-size:1.1rem;width:20px;text-align:center;flex-shrink:0}
+
+/* === CONTENT === */
+.content{margin-top:56px;margin-left:240px;padding:2rem;transition:margin-left 0.3s var(--ease);min-height:calc(100vh - 56px)}
+.content.full{margin-left:0}
+.page-head{margin-bottom:1.5rem}
+.page-head h1{font-size:1.6rem;font-weight:800;margin-bottom:0.25rem}
+.page-head p{color:var(--txt2);font-size:0.9rem}
+
+/* === CARDS === */
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem;margin-bottom:1rem}
+.card h3{font-size:0.95rem;font-weight:700;margin-bottom:0.75rem}
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:0.75rem;margin-bottom:1.5rem}
+.stat{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:1.25rem}
+.stat-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;color:var(--txt2);margin-bottom:0.4rem}
+.stat-val{font-size:1.6rem;font-weight:800;font-family:'JetBrains Mono',monospace;background:linear-gradient(135deg,var(--acc),var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-sub{font-size:0.7rem;color:var(--txt3);margin-top:0.2rem}
+
+/* === TABLE === */
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;padding:0.6rem 0.75rem;font-size:0.7rem;font-weight:700;text-transform:uppercase;color:var(--txt2);border-bottom:1px solid var(--border)}
+.tbl td{padding:0.6rem 0.75rem;font-size:0.85rem;border-bottom:1px solid var(--border)}
+.tbl tr:hover td{background:var(--glass)}
+
+/* === BADGE === */
+.badge{display:inline-block;padding:0.15rem 0.5rem;border-radius:99px;font-size:0.65rem;font-weight:700;text-transform:uppercase}
+.b-green{background:rgba(16,185,129,0.15);color:var(--acc3)}
+.b-blue{background:rgba(0,212,255,0.15);color:var(--acc)}
+.b-purple{background:rgba(168,85,247,0.15);color:var(--acc2)}
+.b-yellow{background:rgba(245,158,11,0.15);color:#f59e0b}
+.b-red{background:rgba(239,68,68,0.15);color:#ef4444}
+.b-gray{background:rgba(100,116,139,0.15);color:var(--txt2)}
+
+/* === QUICK ACTIONS === */
+.actions{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0.6rem;margin-bottom:1.5rem}
+.action{display:flex;flex-direction:column;align-items:center;gap:0.4rem;padding:1rem;border-radius:var(--r2);background:var(--bg2);border:1px solid var(--border);color:inherit;text-decoration:none;font-size:0.8rem;font-weight:600;transition:all 0.2s}
+.action:hover{border-color:var(--acc);color:var(--acc);transform:translateY(-2px)}
+.action .icon{font-size:1.4rem}
+
+/* === ACTIVITY === */
+.activity{display:flex;gap:0.6rem;padding:0.5rem 0;border-bottom:1px solid var(--border);font-size:0.85rem}
+.activity:last-child{border:none}
+.activity .icon{width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:6px;background:var(--glass);font-size:0.9rem;flex-shrink:0}
+.activity .txt{flex:1}
+.activity .time{color:var(--txt3);font-size:0.7rem}
+
+/* === CHECKLIST === */
+.check-item{display:flex;gap:0.6rem;padding:0.4rem 0;font-size:0.85rem;align-items:center}
+.check{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;flex-shrink:0}
+.check.ok{background:rgba(16,185,129,0.15);color:var(--acc3)}
+.check.warn{background:rgba(245,158,11,0.15);color:#f59e0b}
+
+/* === FORM === */
+.input,.select,.textarea{width:100%;padding:0.6rem 0.8rem;border-radius:8px;background:var(--bg);border:1px solid var(--border);color:var(--txt);font-size:0.875rem;font-family:inherit;outline:none;margin-bottom:0.75rem}
+.input:focus,.select:focus,.textarea:focus{border-color:var(--acc)}
+.label{display:block;font-size:0.8rem;font-weight:600;margin-bottom:0.3rem}
+.btn{padding:0.6rem 1.2rem;border-radius:8px;border:none;font-weight:600;font-size:0.85rem;font-family:inherit;background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;cursor:pointer;transition:transform 0.2s}
+.btn:hover{transform:translateY(-1px)}
+.btn-sm{padding:0.4rem 0.8rem;font-size:0.8rem}
+.btn-ghost{background:var(--glass);border:1px solid var(--border);color:var(--txt)}
+.btn-ghost:hover{border-color:var(--acc);color:var(--acc)}
+
+/* === SOCIAL === */
+.post-card{padding:0.8rem;border-radius:8px;background:var(--bg3);border:1px solid var(--border);margin-bottom:0.6rem;font-size:0.8rem}
+.post-head{display:flex;justify-content:space-between;margin-bottom:0.3rem}
+.post-name{font-weight:700;font-size:0.85rem}
+.post-count{font-size:0.65rem;color:var(--txt3);font-family:monospace}
+.post-body{color:var(--txt2);max-height:80px;overflow-y:auto;margin-bottom:0.3rem;line-height:1.4}
+.post-actions{display:flex;gap:0.4rem}
+.post-actions button{padding:0.2rem 0.5rem;border-radius:5px;border:1px solid var(--border);background:var(--glass);color:var(--txt);font-size:0.7rem;font-family:inherit;cursor:pointer}
+.post-actions button:hover{border-color:var(--acc);color:var(--acc)}
+
+/* === SETTINGS === */
+.set-row{display:flex;justify-content:space-between;align-items:center;padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.85rem}
+.set-row:last-child{border:none}
+.set-label{color:var(--txt2)}
+.set-val{font-weight:600}
+.danger{border:1px solid rgba(239,68,68,0.3)!important}
+
+/* === EMPTY === */
+.empty{text-align:center;padding:3rem 1rem;color:var(--txt2)}
+.empty .icon{font-size:2.5rem;margin-bottom:0.5rem;opacity:0.5}
+
+/* === TOAST === */
+#toastContainer{position:fixed;bottom:1rem;right:1rem;z-index:9000;display:flex;flex-direction:column;gap:0.4rem}
+.toast{padding:0.7rem 1rem;background:var(--bg2);border:1px solid var(--acc);border-radius:8px;font-size:0.85rem;box-shadow:0 4px 20px rgba(0,0,0,0.3);opacity:0;transform:translateX(100%);transition:all 0.3s var(--ease)}
+.toast.show{opacity:1;transform:translateX(0)}
+.toast.warn{border-color:#f59e0b}
+.toast.error{border-color:#ef4444}
+
+/* === RESPONSIVE === */
+@media(max-width:768px){
+  .sidebar{transform:translateX(-100%)}
+  .sidebar.show{transform:translateX(0)}
+  .content{margin-left:0;padding:1rem}
+  .user-info span{display:none}
+  .stat-grid{grid-template-columns:1fr 1fr}
+}
+</style>
 </head>
 <body>
 
-<!-- Skip link -->
-<a href="#main" class="skip-link">Skip to content</a>
-
-<!-- Login Overlay -->
-<div class="auth-overlay" id="authOverlay">
+<!-- AUTH OVERLAY -->
+<div id="authOverlay">
   <div class="auth-box">
-    <div class="auth-header">
-      <svg width="48" height="48" viewBox="0 0 100 100" fill="none" aria-hidden="true">
-        <defs><linearGradient id="authLogo" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#00d4ff"/><stop offset="0.5" stop-color="#a855f7"/><stop offset="1" stop-color="#10b981"/>
-        </linearGradient></defs>
-        <circle cx="50" cy="50" r="14" fill="url(#authLogo)"/>
-        <circle cx="20" cy="25" r="5" fill="url(#authLogo)"/><circle cx="80" cy="25" r="5" fill="url(#authLogo)"/>
-        <circle cx="20" cy="75" r="5" fill="url(#authLogo)"/><circle cx="80" cy="75" r="5" fill="url(#authLogo)"/>
-        <line x1="50" y1="50" x2="20" y2="25" stroke="url(#authLogo)" stroke-width="2" opacity="0.5"/>
-        <line x1="50" y1="50" x2="80" y2="25" stroke="url(#authLogo)" stroke-width="2" opacity="0.5"/>
-        <line x1="50" y1="50" x2="20" y2="75" stroke="url(#authLogo)" stroke-width="2" opacity="0.5"/>
-        <line x1="50" y1="50" x2="80" y2="75" stroke="url(#authLogo)" stroke-width="2" opacity="0.5"/>
-      </svg>
-      <h1>Dashboard Access</h1>
-      <p>Sign in to manage your portfolio, clients, and applications.</p>
-    </div>
-    <div id="googleSignInBtn" class="google-btn-container"></div>
-    <div class="auth-divider"><span>or</span></div>
+    <h1>Dashboard Access</h1>
+    <p>Sign in to manage your portfolio, clients, and applications.</p>
+    <div id="googleSignInBtn"></div>
+    <div class="auth-div">or</div>
     <form id="passwordLoginForm" class="auth-form">
       <input type="text" id="usernameInput" placeholder="Username" autocomplete="username" required />
       <input type="password" id="passwordInput" placeholder="Password" autocomplete="current-password" required />
-      <button type="submit" class="btn btn-primary btn-block">Sign in with password</button>
+      <button type="submit">Sign in</button>
     </form>
-    <div id="authError" class="auth-error" style="display:none"></div>
-    <p class="auth-note">Authorized access only. All login attempts are logged.</p>
+    <div id="authError"></div>
+    <p style="margin-top:1rem;font-size:0.7rem;color:var(--txt3);text-align:center">Authorized access only.</p>
     <a href="/" class="auth-back">← Back to site</a>
   </div>
 </div>
 
-<!-- Main Dashboard (hidden until auth) -->
-<div id="dashApp" style="display:none">
-  <!-- Top Nav -->
-  <nav class="dash-nav">
-    <div class="dash-nav-inner">
-      <div style="display:flex;align-items:center;gap:0.75rem">
-        <button class="dash-sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar" title="Click: collapse sidebar · Double-click: pin open">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-        <a href="/" class="dash-logo">
-          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" aria-hidden="true">
-            <defs><linearGradient id="dashLogo" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#00d4ff"/><stop offset="1" stop-color="#a855f7"/>
-            </linearGradient></defs>
-            <circle cx="50" cy="50" r="14" fill="url(#dashLogo)"/>
-            <circle cx="20" cy="25" r="5" fill="url(#dashLogo)"/><circle cx="80" cy="25" r="5" fill="url(#dashLogo)"/>
-            <circle cx="20" cy="75" r="5" fill="url(#dashLogo)"/><circle cx="80" cy="75" r="5" fill="url(#dashLogo)"/>
-          </svg>
-          <span>Dashboard</span>
-        </a>
-      </div>
-      <div class="dash-nav-right">
-        <div class="dash-user" id="dashUserInfo">
-          <img id="userAvatar" alt="" />
-          <span id="userName">User</span>
-        </div>
-        <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
-        </button>
-        <button class="btn btn-ghost btn-sm" id="logoutBtn">Sign out</button>
-      </div>
+<!-- APP -->
+<div id="dashApp">
+  <div class="topbar">
+    <div class="topbar-left">
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+      <a href="/" class="topbar-logo"><span>Dashboard</span></a>
     </div>
+    <div class="topbar-right">
+      <div class="user-info">
+        <img id="userAvatar" alt="" style="display:none" />
+        <span id="userName">User</span>
+      </div>
+      <button class="theme-btn" id="themeToggle" aria-label="Toggle theme">
+        <svg id="themeIcon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="logout-btn" id="logoutBtn">Sign out</button>
+    </div>
+  </div>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  <nav class="sidebar" id="sidebar">
+    <button class="side-link active" data-section="overview"><span class="icon">📊</span> Overview</button>
+    <button class="side-link" data-section="content"><span class="icon">📝</span> Content</button>
+    <button class="side-link" data-section="clients"><span class="icon">💼</span> Client Briefs</button>
+    <button class="side-link" data-section="findclients"><span class="icon">🎯</span> Find Clients</button>
+    <button class="side-link" data-section="analytics"><span class="icon">📈</span> Analytics</button>
+    <button class="side-link" data-section="jobs"><span class="icon">🔍</span> Jobs</button>
+    <button class="side-link" data-section="social"><span class="icon">💬</span> Social</button>
+    <button class="side-link" data-section="seo"><span class="icon">🔎</span> SEO</button>
+    <button class="side-link" data-section="security"><span class="icon">🔒</span> Security</button>
+    <button class="side-link" data-section="settings"><span class="icon">⚙️</span> Settings</button>
   </nav>
 
-  <main id="main" class="dash-main">
-    <div class="dash-sidebar-backdrop" id="sidebarBackdrop"></div>
-    <!-- Sidebar -->
-    <aside class="dash-sidebar" id="dashSidebar">
-      <nav class="dash-side-nav">
-        <button class="dash-side-link active" data-section="overview"><span>📊</span> <span>Overview</span></button>
-        <button class="dash-side-link" data-section="content"><span>📝</span> <span>Content</span></button>
-        <button class="dash-side-link" data-section="clients"><span>💼</span> <span>Client Briefs</span></button>
-        <button class="dash-side-link" data-section="clientsearch"><span>🎯</span> <span>Find Clients</span></button>
-        <button class="dash-side-link" data-section="analytics"><span>📈</span> <span>Analytics</span></button>
-        <button class="dash-side-link" data-section="jobs"><span>🔍</span> <span>Jobs</span></button>
-        <button class="dash-side-link" data-section="social"><span>💬</span> <span>Social Composer</span></button>
-        <button class="dash-side-link" data-section="seo"><span>🔎</span> <span>SEO</span></button>
-        <button class="dash-side-link" data-section="security"><span>🔒</span> <span>Security</span></button>
-        <button class="dash-side-link" data-section="settings"><span>⚙️</span> <span>Settings</span></button>
-      </nav>
-    </aside>
-
-    <!-- Content area -->
-    <div class="dash-content" id="dashContent">
-      <!-- Sections rendered dynamically by dashboard.js -->
-    </div>
-  </main>
+  <div class="content" id="content"></div>
 </div>
 
-<!-- Google Identity Services -->
+<div id="toastContainer"></div>
+
+<!-- Google Identity -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
-<script src="/auth.js" defer></script>
-<script src="/dashboard/dashboard.js?v=3.5" defer></script>
+<script src="/auth.js?v=4" defer></script>
+<script src="/dashboard/dashboard.js?v=4" defer></script>
 </body>
 </html>
