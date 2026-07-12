@@ -448,7 +448,7 @@
     {
       "id": "busara-ai",
       "name": "Busara AI",
-      "url": "https://busaraai.com",
+      "url": "https://busara.ai",
       "tagline": "50-agent multi-agent data intelligence platform",
       "stats": [
         {
@@ -465,7 +465,7 @@
         },
         {
           "label": "Live",
-          "value": "busaraai.com"
+          "value": "busara.ai"
         }
       ],
       "description": "A multi-agent DAG pipeline with 50 specialized agents across 7 stages. Kahn's topological sort, circuit breakers, O(1) LRU caching, real statistical algorithms — Holt-Winters, OLS, K-Means++, GARCH.",
