@@ -185,12 +185,12 @@
   // 2. TYPEWRITER EFFECT — Reduced-motion aware
   // ═══════════════════════════════════════════════════════════════════
   const taglines = [
-    'Building multi-agent intelligence systems.',
-    'Founder of Busara AI — 50 agents, one mind.',
-    'Building KilimoPRO — AI for African farmers.',
+    'I build production AI systems — not demos.',
+    'Founder of Busara AI · Creator of AgentReplay · Builder of KilimoPRO.',
+    'Multi-agent orchestration. Real statistical math. On-device ML.',
+    'Shipping from Nairobi to the world. 🇰🇪',
+    'Open-source: AgentReplay, KilimoPRO, IntelliFlow.',
     'Real math, not vibes.',
-    'Shipping production AI from Nairobi.',
-    '22+ data sources integrated. Live in production.',
   ];
   const twEl = document.getElementById('typewriter');
 

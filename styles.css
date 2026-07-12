@@ -1690,3 +1690,202 @@ html.light .gh-repo:hover, html.light .now-card:hover {
 @media (prefers-reduced-motion: reduce) {
   .cursor-dot, .cursor-ring { display: none !important; }
 }
+
+/* ─── Quality polish: booking CTA, shipped cards, newsletter, scroll reveal ─── */
+
+/* Booking CTA band — replaces inline styles in Contact section */
+.booking-cta-band {
+  max-width: 700px;
+  margin: 3rem auto 0;
+  padding: 2.5rem;
+  text-align: center;
+  background:
+    radial-gradient(ellipse 400px 200px at 50% 0%, var(--glow), transparent 70%),
+    var(--bg-card);
+  border: 1px solid rgba(0,212,255,0.2);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.booking-cta-band::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 0%, rgba(168,85,247,0.04) 100%);
+  pointer-events: none;
+}
+.booking-cta-eyebrow {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+.booking-cta-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
+}
+.booking-cta-body {
+  color: var(--text-muted);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.booking-cta-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.booking-cta-footnote {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+}
+.booking-cta-footnote a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.booking-cta-footnote a:hover {
+  color: var(--accent-2);
+}
+
+/* Shipped Now card — distinct green accent for completed projects */
+.now-card-shipped {
+  border-color: rgba(16,185,129,0.25) !important;
+  background: linear-gradient(135deg, rgba(16,185,129,0.04), var(--bg-card)) !important;
+}
+.now-card-shipped .now-progress-fill {
+  background: linear-gradient(90deg, var(--accent-3), #34d399) !important;
+}
+.now-status-shipped {
+  color: var(--accent-3) !important;
+  background: rgba(16,185,129,0.1) !important;
+  border-color: rgba(16,185,129,0.3) !important;
+  font-weight: 700 !important;
+}
+
+/* Newsletter section — cleaner spacing */
+.newsletter-section {
+  padding: 2rem 0 4rem;
+}
+.newsletter-footnote {
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* Scroll reveal — subtle, professional, reduced-motion aware */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal-delay-1 { transition-delay: 0.08s; }
+.reveal-delay-2 { transition-delay: 0.16s; }
+.reveal-delay-3 { transition-delay: 0.24s; }
+.reveal-delay-4 { transition-delay: 0.32s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* Hero stats — bigger numbers, tighter labels */
+.hero-stat .num {
+  font-size: clamp(1.75rem, 3vw, 2.25rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: -0.02em;
+}
+
+/* Section spacing refinement */
+.section { padding: 5.5rem 0; }
+.section-head { margin-bottom: 3.5rem; }
+
+/* Work cards — more tactile hover */
+.work-card.featured {
+  transition: transform 0.4s var(--ease), border-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
+}
+.work-card.featured:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.25), 0 0 0 1px var(--accent);
+}
+
+/* Testimonial cards — tighter, more scannable */
+.testimonial-card {
+  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease);
+}
+.testimonial-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--accent);
+}
+.testimonial-card .testimonial-avatar {
+  font-size: 1.5rem;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+
+/* Contact cards — better icon container */
+.contact-card .contact-icon {
+  transition: transform 0.3s var(--ease), background 0.3s var(--ease);
+}
+.contact-card:hover .contact-icon {
+  transform: scale(1.08);
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: white;
+}
+
+/* Nav CTA button — replaces inline styles */
+.nav-link-cta {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: white !important;
+  padding: 0.5rem 1rem !important;
+  border-radius: 10px;
+  font-weight: 700;
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+.nav-link-cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 20px rgba(0,212,255,0.4);
+  color: white !important;
+  background: linear-gradient(135deg, var(--accent-2), var(--accent));
+}
+
+/* Services CTA secondary button spacing */
+.services-cta-btn-secondary {
+  margin-left: 0.5rem;
+}
+@media (max-width: 640px) {
+  .services-cta-btn-secondary { margin-left: 0; margin-top: 0.5rem; }
+}

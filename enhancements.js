@@ -113,4 +113,36 @@
     progressEl.style.display = '';
     backTop.style.display = '';
   });
+
+  // ── 7. Scroll reveal — subtle, professional, reduced-motion aware ──
+  // Adds .reveal to key sections, then toggles .is-visible via
+  // IntersectionObserver. Honors prefers-reduced-motion (elements
+  // appear immediately, no transform/opacity animation).
+  if ('IntersectionObserver' in window && !REDUCED_MOTION) {
+    var revealTargets = document.querySelectorAll(
+      '.section-head, .work-card, .now-card, .testimonial-card, ' +
+      '.about-card, .svc-quick-card, .contact-card, .tech-item, ' +
+      '.booking-cta-band, .newsletter-band, .edu-card'
+    );
+    revealTargets.forEach(function (el, i) {
+      el.classList.add('reveal');
+      // Stagger by position within parent, capped at 4
+      var siblings = Array.prototype.slice.call(el.parentElement.children).filter(function (c) {
+        return c.classList && c.classList.contains('reveal');
+      });
+      var idx = siblings.indexOf(el) % 4;
+      if (idx > 0) el.classList.add('reveal-delay-' + idx);
+    });
+
+    var revealObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+
+    revealTargets.forEach(function (el) { revealObserver.observe(el); });
+  }
 })();
