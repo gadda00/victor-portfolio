@@ -1,133 +1,159 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<ns0:urlset xmlns:ns0="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://victorndunda.com/</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/resume/</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.95</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/resume/Victor-Ndunda-Resume.pdf</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/services/</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.95</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/services/wizard.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/book/</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.95</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.9</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/terms-of-service.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.3</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/privacy-policy.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.3</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/services/guides/chatgpt-business.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/services/guides/prompt-engineering.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/services/guides/ai-tools-smb.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/services/guides/no-code-chatbot.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/services/guides/automate-business-tasks.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/services/guides/ai-for-farmers.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/services/guides/swahili-ai.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/services/guides/rag-in-one-day.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.8</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/building-50-agent-dag.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/chinese-smart-agriculture.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/real-math-not-vibes.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/multi-llm-council.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/quant-finance-for-agriculture.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/22-data-sources.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/on-device-disease-detection.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/nasip-2026-2030-opportunity.html</loc>
     <lastmod>2026-07-09</lastmod>
     <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
   </url>
-</ns0:urlset>
+</urlset>

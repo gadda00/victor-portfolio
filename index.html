@@ -15,11 +15,11 @@
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
 <link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
-<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
 <link rel="manifest" href="/manifest.webmanifest" />
 <meta name="apple-mobile-web-app-title" content="Victor Ndunda" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
 <meta name="mobile-web-app-capable" content="yes" />
 
 <!-- SEO: Structured Data -->
@@ -144,6 +144,7 @@
 <meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=()" />
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://www.googletagmanager.com https://app.cal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://api.github.com https://api.web3forms.com https://app.cal.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-ancestors 'self'" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+<script>try{var l=localStorage.getItem("vn_lang");if(l)document.documentElement.lang=l;}catch(e){}</script>
 </head>
 <body>
 
@@ -172,7 +173,7 @@
       <span>Victor Ndunda</span>
     </a>
     <div class="nav-links" id="navLinks">
-      <a href="#hero" class="nav-link active" data-i18n-key="nav.home">Home</a>
+      <a href="#hero" class="nav-link active" aria-current="page" data-i18n-key="nav.home">Home</a>
       <a href="#about" class="nav-link" data-i18n-key="nav.about">About</a>
       <a href="#work" class="nav-link" data-i18n-key="nav.work">Work</a>
       <a href="/resume/" class="nav-link" data-i18n-key="nav.resume">Resume</a>
@@ -898,20 +899,7 @@
 <script src="/i18n.js" defer></script>
 <script src="/enhancements.js" defer></script>
 
-<!-- GA4 — Measurement ID. Replace G-DEMO0000XXX with your real ID from analytics.google.com -->
-<script>
-  window.GA4_ID = 'G-DEMO0000XXX'; // ← Replace with your real GA4 Measurement ID
-  if (window.GA4_ID && window.GA4_ID !== 'G-DEMO0000XXX') {
-    var s = document.createElement('script');
-    s.async = true;
-    s.src = 'https://www.googletagmanager.com/gtag/js?id=' + window.GA4_ID;
-    document.head.appendChild(s);
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', window.GA4_ID, { anonymize_ip: true });
-  }
-</script>
+
 
 <!-- Floating action buttons (resume + contact) -->
 <div class="fab-stack" aria-hidden="false">

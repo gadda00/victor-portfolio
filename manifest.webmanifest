@@ -65,19 +65,9 @@
       "description": "Read latest articles",
       "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     },
-    {
-      "name": "Articles",
-      "short_name": "Articles",
-      "url": "/blog/",
-      "description": "Browse all articles",
-      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    ]
     },
-    {
-      "name": "Jobs Portal",
-      "short_name": "Jobs",
-      "url": "/jobs/",
-      "description": "AI engineering job search",
-      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
+    ]
     }
   ]
 }

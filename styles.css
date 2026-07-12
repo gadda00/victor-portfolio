@@ -1686,3 +1686,7 @@ html.light .gh-repo:hover, html.light .now-card:hover {
   border: 1px solid var(--border);
   color: var(--text-muted);
 }
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor-dot, .cursor-ring { display: none !important; }
+}

@@ -723,7 +723,7 @@
     }
   });
 
-  console.log('%c Victor Ndunda Portfolio v3.0 ', 'background:linear-gradient(135deg,#00d4ff,#a855f7);color:#fff;font-weight:bold;padding:4px 8px;border-radius:4px;');
+  if (window.location.hostname === 'localhost') console.log('%c Victor Ndunda Portfolio ', 'background:linear-gradient(135deg,#00d4ff,#a855f7);color:#fff;font-weight:bold;padding:4px 8px;border-radius:4px;');
 
   // ═══════════════════════════════════════════════════════════════════
   // 16. TECH STACK FILTERING
