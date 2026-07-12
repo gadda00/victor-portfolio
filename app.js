@@ -798,7 +798,7 @@
   }
 
   // ═══════════════════════════════════════════════════════════════════
-  // 17. CUSTOM CURSOR (desktop only, non-reduced-motion)
+  // 18. CUSTOM CURSOR (desktop only, non-reduced-motion)
   // ═══════════════════════════════════════════════════════════════════
   if (supportsHover && !REDUCED_MOTION) {
     const dot = document.createElement('div');

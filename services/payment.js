@@ -71,7 +71,7 @@
       name: 'Flutterwave',
       desc: 'Card, bank transfer, M-Pesa, mobile money across Africa. Multi-currency.',
       details: [
-        { label: 'Link', value: 'https://flutterwave.com/pay/victor-ndunda' },
+        { label: 'Link', value: 'mailto:mututandunda@gmail.com?subject=Payment%20for%20AI%20Services' },
         { label: 'Currencies', value: 'USD, KES, NGN, GHS, ZAR' }
       ],
       cta: 'Pay with Flutterwave ↗'
@@ -82,7 +82,7 @@
       name: 'Stripe (International)',
       desc: 'For international clients — Visa, Mastercard, Amex, Apple Pay, Google Pay.',
       details: [
-        { label: 'Link', value: 'https://buy.stripe.com/victor-ndunda' },
+        { label: 'Link', value: 'mailto:mututandunda@gmail.com?subject=Payment%20for%20AI%20Services' },
         { label: 'Currencies', value: 'USD, EUR, GBP, +135' }
       ],
       cta: 'Pay with Stripe ↗'
