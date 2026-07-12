@@ -123,7 +123,18 @@
     if (typeof google !== 'undefined' && google.accounts) {
       try { google.accounts.id.disableAutoSelect(); } catch {}
     }
-    location.reload();
+    // Force a full page reload with cache-bust to avoid SW serving cached dashboard
+    if ('caches' in window) {
+      caches.keys().then(keys => {
+        Promise.all(keys.map(k => caches.delete(k))).then(() => {
+          window.location.href = '/dashboard/?logout=' + Date.now();
+        });
+      }).catch(() => {
+        window.location.href = '/dashboard/?logout=' + Date.now();
+      });
+    } else {
+      window.location.href = '/dashboard/?logout=' + Date.now();
+    }
   }
 
   // ─── Activity monitor (idle timeout) ───────────────────────────────

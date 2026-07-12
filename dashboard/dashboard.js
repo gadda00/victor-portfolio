@@ -114,14 +114,14 @@
   const sidebarToggle = document.getElementById('sidebarToggle');
   const sidebarBackdrop = document.getElementById('sidebarBackdrop');
 
-  // Sidebar toggle — collapse on desktop, slide on mobile
+  // Sidebar toggle — works on ALL screen sizes
   sidebarToggle?.addEventListener('click', () => {
     if (window.innerWidth <= 900) {
-      // Mobile: toggle open/close
+      // Mobile: toggle slide in/out
       sidebar.classList.toggle('open');
       sidebarBackdrop.classList.toggle('show');
     } else {
-      // Desktop: toggle collapse
+      // Desktop: toggle collapse (icon-only mode)
       sidebar.classList.toggle('collapsed');
       localStorage.setItem('dash_sidebar_collapsed', sidebar.classList.contains('collapsed'));
     }
@@ -142,12 +142,27 @@
     link.addEventListener('click', () => {
       const section = link.getAttribute('data-section');
       switchSection(section);
-      // Close mobile sidebar on click
+      // Auto-close sidebar after selecting a section
       if (window.innerWidth <= 900) {
+        // Mobile: close the slide-in drawer
         sidebar.classList.remove('open');
         sidebarBackdrop.classList.remove('show');
+      } else if (!sidebar.classList.contains('collapsed')) {
+        // Desktop: auto-collapse if not already collapsed, unless user pinned it open
+        // Only auto-collapse if the user hasn't explicitly pinned the sidebar open
+        if (localStorage.getItem('dash_sidebar_pinned') !== 'true') {
+          sidebar.classList.add('collapsed');
+          localStorage.setItem('dash_sidebar_collapsed', 'true');
+        }
       }
     });
+  });
+
+  // Double-click on toggle = pin/unpin sidebar (keep it open)
+  sidebarToggle?.addEventListener('dblclick', () => {
+    const pinned = localStorage.getItem('dash_sidebar_pinned') === 'true';
+    localStorage.setItem('dash_sidebar_pinned', !pinned);
+    toast(pinned ? 'Sidebar auto-collapse enabled' : 'Sidebar pinned open');
   });
 
   function switchSection(name) {
