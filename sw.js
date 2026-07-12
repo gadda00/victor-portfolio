@@ -10,11 +10,13 @@
  * Fetch: serves from cache, falls back to network, updates cache in background.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v3.4.0';
+const CACHE_VERSION = 'vnd-v3.5.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
 // Resources to pre-cache on install (the "app shell")
+// NOTE: Dashboard files are NOT pre-cached — they change frequently and
+// should always be fetched from network first to avoid stale UI.
 const SHELL_URLS = [
   '/',
   '/index.html',
@@ -25,12 +27,6 @@ const SHELL_URLS = [
   '/enhancements.js',
   '/feed.xml',
   '/feed.xsl',
-  '/guide/',
-  '/guide/index.html',
-  '/guide/guide.css',
-  '/admin/social.html',
-  '/admin/social.css',
-  '/admin/social.js',
   '/favicon.svg',
   '/favicon-32.png',
   '/favicon-16.png',
@@ -38,47 +34,14 @@ const SHELL_URLS = [
   '/manifest.webmanifest',
   '/og-image.png',
   '/logo.svg',
-  '/resume/',
-  '/resume/index.html',
-  '/resume/resume.css',
-  '/resume/resume.js',
-  '/resume/Victor-Ndunda-Resume.pdf',
-  '/dashboard/',
-  '/dashboard/index.html',
-  '/dashboard/dashboard.css',
-  '/dashboard/dashboard.js',
-  '/services/',
-  '/services/index.html',
-  '/services/services.css',
-  '/services/services.js',
-  '/services/data.json',
-  '/services/wizard.html',
-  '/services/wizard.css',
-  '/services/wizard.js',
-  '/services/client-dashboard.html',
-  '/services/portal.css',
-  '/services/portal.js',
-  '/services/contract.html',
-  '/services/contract.css',
-  '/services/contract.js',
-  '/services/payment.html',
-  '/services/payment.css',
-  '/services/payment.js',
-  '/blog/',
-  '/blog/index.html',
-  '/articles/',
-  '/articles/index.html',
-  '/blog/posts.json',
-  '/terms-of-service.html',
-  '/privacy-policy.html',
-  '/auth.js',
-  '/book/',
-  '/book/index.html',
 ];
 
-// Never cache these (would break OAuth + live job data)
+// Never cache these (would break OAuth + live job data + dashboard freshness)
 const NEVER_CACHE = [
   '/admin/',
+  '/dashboard/',
+  '/jobs/',
+  '/book/',
   'accounts.google.com',
   'api.linkedin.com',
   'api.twitter.com',
