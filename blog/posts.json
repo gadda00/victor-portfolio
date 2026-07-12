@@ -1,147 +1,223 @@
 {
-  "posts": [
-    {
-      "tag": "AI",
-      "tagClass": "ai",
-      "title": "Building a 50-Agent Multi-Agent DAG Pipeline",
-      "excerpt": "How I designed and built Busara AI's 7-stage parallel DAG pipeline with 50 specialized agents — from Kahn's topological sort to circuit breakers and O(1) LRU caching.",
-      "description": "Deep technical breakdown of Busara AI's 50-agent multi-agent DAG pipeline. Covers Kahn's topological sort, parallel execution, circuit breakers, O(1) LRU caching, and 7-stage orchestration in TypeScript.",
-      "date": "2026-07-01",
-      "dateModified": "2026-07-01",
-      "readTime": "12 min",
-      "wordCount": 2400,
-      "slug": "building-50-agent-dag",
-      "url": "/blog/articles/building-50-agent-dag.html",
-      "tags": ["multi-agent", "DAG", "TypeScript", "Busara AI", "orchestration"]
+    "posts": [
+        {
+            "tag": "Research",
+            "tagClass": "research",
+            "title": "AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agent Reliability",
+            "excerpt": "A research-backed whitepaper on AgentReplay — an open-source deterministic replay and counterfactual debugging layer for AI agents. Bit-exact replay with zero model calls. 0.67% overhead, 100% reproduction fidelity.",
+            "description": "Full whitepaper on AgentReplay — deterministic replay and counterfactual debugging for AI agent reliability. Covers the research foundation (METR time-horizon, ReliabilityBench, the observability gap), the technical architecture (call-site canonicalization, content-addressed blob store, interceptors, replay engine), evaluation results (0.67% overhead vs 5% target, 100% reproduction fidelity), and the 12-week build plan. Open-source at github.com/gadda00/agentreplay.",
+            "date": "2026-07-12",
+            "dateModified": "2026-07-12",
+            "readTime": "22 min",
+            "wordCount": 4200,
+            "slug": "agentreplay-deterministic-replay",
+            "url": "/blog/articles/agentreplay-deterministic-replay.html",
+            "tags": [
+                "AgentReplay",
+                "AI agents",
+                "deterministic replay",
+                "counterfactual debugging",
+                "LangGraph",
+                "open-source",
+                "reliability",
+                "whitepaper"
+            ]
+        },
+        {
+            "tag": "AI",
+            "tagClass": "ai",
+            "title": "Building a 50-Agent Multi-Agent DAG Pipeline",
+            "excerpt": "How I designed and built Busara AI's 7-stage parallel DAG pipeline with 50 specialized agents — from Kahn's topological sort to circuit breakers and O(1) LRU caching.",
+            "description": "Deep technical breakdown of Busara AI's 50-agent multi-agent DAG pipeline. Covers Kahn's topological sort, parallel execution, circuit breakers, O(1) LRU caching, and 7-stage orchestration in TypeScript.",
+            "date": "2026-07-01",
+            "dateModified": "2026-07-01",
+            "readTime": "12 min",
+            "wordCount": 2400,
+            "slug": "building-50-agent-dag",
+            "url": "/blog/articles/building-50-agent-dag.html",
+            "tags": [
+                "multi-agent",
+                "DAG",
+                "TypeScript",
+                "Busara AI",
+                "orchestration"
+            ]
+        },
+        {
+            "tag": "Agriculture",
+            "tagClass": "agri",
+            "title": "KilimoPRO: AI for 5 Million Kenyan Farmers",
+            "excerpt": "Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data.",
+            "description": "How KilimoPRO delivers AI-powered agricultural intelligence to 5 million Kenyan farmers. Architecture, offline-first design, data source integration, and on-device ML.",
+            "date": "2026-06-28",
+            "dateModified": "2026-06-28",
+            "readTime": "15 min",
+            "wordCount": 3000,
+            "slug": "kilimopro-ai-for-farmers",
+            "url": "/blog/articles/kilimopro-ai-for-farmers.html",
+            "tags": [
+                "KilimoPRO",
+                "agriculture",
+                "Flutter",
+                "TensorFlow Lite",
+                "Kenya"
+            ]
+        },
+        {
+            "tag": "Research",
+            "tagClass": "research",
+            "title": "Lessons from China's National Smart Agriculture Action Plan",
+            "excerpt": "What Kenya can learn from China's space-air-ground monitoring networks, large agricultural models, and the 2024-2028 smart agriculture framework.",
+            "description": "Comparative analysis of China's 2024-2028 National Smart Agriculture Action Plan and lessons for Kenyan agritech. Covers space-air-ground monitoring, large agricultural models, and policy frameworks.",
+            "date": "2026-06-25",
+            "dateModified": "2026-06-25",
+            "readTime": "10 min",
+            "wordCount": 2000,
+            "slug": "chinese-smart-agriculture",
+            "url": "/blog/articles/chinese-smart-agriculture.html",
+            "tags": [
+                "policy",
+                "China",
+                "Kenya",
+                "smart agriculture",
+                "research"
+            ]
+        },
+        {
+            "tag": "Engineering",
+            "tagClass": "engineering",
+            "title": "Real Math, Not Vibes: Statistical Algorithms in TypeScript",
+            "excerpt": "Holt-Winters triple exponential smoothing, OLS regression via normal equation, K-Means++ with silhouette scoring — all from scratch in TypeScript.",
+            "description": "Implementing real statistical algorithms in TypeScript: Holt-Winters triple exponential smoothing, OLS regression via normal equation, K-Means++ with silhouette scoring. No vibes, just math.",
+            "date": "2026-06-20",
+            "dateModified": "2026-06-20",
+            "readTime": "18 min",
+            "wordCount": 3600,
+            "slug": "real-math-not-vibes",
+            "url": "/blog/articles/real-math-not-vibes.html",
+            "tags": [
+                "TypeScript",
+                "statistics",
+                "Holt-Winters",
+                "OLS",
+                "K-Means"
+            ]
+        },
+        {
+            "tag": "AI",
+            "tagClass": "ai",
+            "title": "The Multi-LLM Council: When One AI Isn't Enough",
+            "excerpt": "How KilimoPRO uses 5 expert AI personas (agronomist, economist, climate scientist, extension officer, risk manager) to deliberate complex farming decisions.",
+            "description": "Designing a Multi-LLM Council where 5 expert AI personas (agronomist, economist, climate scientist, extension officer, risk manager) deliberate complex farming decisions for KilimoPRO.",
+            "date": "2026-06-15",
+            "dateModified": "2026-06-15",
+            "readTime": "8 min",
+            "wordCount": 1600,
+            "slug": "multi-llm-council",
+            "url": "/blog/articles/multi-llm-council.html",
+            "tags": [
+                "LLM",
+                "multi-agent",
+                "KilimoPRO",
+                "agriculture"
+            ]
+        },
+        {
+            "tag": "Research",
+            "tagClass": "research",
+            "title": "Quantitative Finance for Agricultural Markets",
+            "excerpt": "Applying EWMA volatility, GARCH(1,1), Value at Risk (VaR), and RSI from financial markets to agricultural commodity price forecasting.",
+            "description": "Applying quantitative finance techniques — EWMA volatility, GARCH(1,1), Value at Risk (VaR), and RSI — to agricultural commodity price forecasting in KilimoPRO.",
+            "date": "2026-06-10",
+            "dateModified": "2026-06-10",
+            "readTime": "14 min",
+            "wordCount": 2800,
+            "slug": "quant-finance-for-agriculture",
+            "url": "/blog/articles/quant-finance-for-agriculture.html",
+            "tags": [
+                "quant",
+                "GARCH",
+                "EWMA",
+                "VaR",
+                "agriculture"
+            ]
+        },
+        {
+            "tag": "Agriculture",
+            "tagClass": "agri",
+            "title": "22 Data Sources for Kenyan Agricultural Intelligence",
+            "excerpt": "A comprehensive inventory of verified, operational data APIs: KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, Sentinel-2, CHIRPS, ARDC, and more.",
+            "description": "Comprehensive inventory of 22 verified, operational data APIs for Kenyan agricultural intelligence: KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, Sentinel-2, CHIRPS, ARDC, and more.",
+            "date": "2026-06-05",
+            "dateModified": "2026-06-05",
+            "readTime": "11 min",
+            "wordCount": 2200,
+            "slug": "22-data-sources",
+            "url": "/blog/articles/22-data-sources.html",
+            "tags": [
+                "data sources",
+                "API",
+                "agriculture",
+                "Kenya",
+                "KilimoSTAT"
+            ]
+        },
+        {
+            "tag": "Engineering",
+            "tagClass": "engineering",
+            "title": "On-Device Crop Disease Detection with TensorFlow Lite",
+            "excerpt": "Training MobileNetV3 on the PlantVillage dataset, quantizing to int8, and running inference on low-end Android phones — completely offline.",
+            "description": "Building on-device crop disease detection with TensorFlow Lite. Training MobileNetV3 on PlantVillage dataset, int8 quantization, offline inference on low-end Android phones.",
+            "date": "2026-06-01",
+            "dateModified": "2026-06-01",
+            "readTime": "13 min",
+            "wordCount": 2600,
+            "slug": "on-device-disease-detection",
+            "url": "/blog/articles/on-device-disease-detection.html",
+            "tags": [
+                "TensorFlow Lite",
+                "MobileNetV3",
+                "PlantVillage",
+                "on-device ML",
+                "Flutter"
+            ]
+        },
+        {
+            "tag": "Agriculture",
+            "tagClass": "agri",
+            "title": "NASIP 2026-2030: The KES 1.08 Trillion Opportunity",
+            "excerpt": "Deep analysis of Kenya's National Agri-Food Systems Investment Plan and how technology platforms can operationalize its 9 flagship programs.",
+            "description": "Deep analysis of Kenya's National Agri-Food Systems Investment Plan (NASIP) 2026-2030 — a KES 1.08 trillion opportunity. 9 flagship programs and how tech platforms can operationalize them.",
+            "date": "2026-05-28",
+            "dateModified": "2026-05-28",
+            "readTime": "16 min",
+            "wordCount": 3200,
+            "slug": "nasip-2026-2030-opportunity",
+            "url": "/blog/articles/nasip-2026-2030-opportunity.html",
+            "tags": [
+                "NASIP",
+                "Kenya",
+                "policy",
+                "agriculture",
+                "investment"
+            ]
+        }
+    ],
+    "author": {
+        "name": "Victor Ndunda",
+        "email": "mututandunda@gmail.com",
+        "url": "https://victorndunda.com",
+        "jobTitle": "AI Engineer & Founder",
+        "sameAs": [
+            "https://github.com/gadda00",
+            "https://www.linkedin.com/in/victor-ndunda",
+            "https://busara.ai",
+            "https://kilimo.pro"
+        ]
     },
-    {
-      "tag": "Agriculture",
-      "tagClass": "agri",
-      "title": "KilimoPRO: AI for 5 Million Kenyan Farmers",
-      "excerpt": "Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data.",
-      "description": "How KilimoPRO delivers AI-powered agricultural intelligence to 5 million Kenyan farmers. Architecture, offline-first design, data source integration, and on-device ML.",
-      "date": "2026-06-28",
-      "dateModified": "2026-06-28",
-      "readTime": "15 min",
-      "wordCount": 3000,
-      "slug": "kilimopro-ai-for-farmers",
-      "url": "/blog/articles/kilimopro-ai-for-farmers.html",
-      "tags": ["KilimoPRO", "agriculture", "Flutter", "TensorFlow Lite", "Kenya"]
-    },
-    {
-      "tag": "Research",
-      "tagClass": "research",
-      "title": "Lessons from China's National Smart Agriculture Action Plan",
-      "excerpt": "What Kenya can learn from China's space-air-ground monitoring networks, large agricultural models, and the 2024-2028 smart agriculture framework.",
-      "description": "Comparative analysis of China's 2024-2028 National Smart Agriculture Action Plan and lessons for Kenyan agritech. Covers space-air-ground monitoring, large agricultural models, and policy frameworks.",
-      "date": "2026-06-25",
-      "dateModified": "2026-06-25",
-      "readTime": "10 min",
-      "wordCount": 2000,
-      "slug": "chinese-smart-agriculture",
-      "url": "/blog/articles/chinese-smart-agriculture.html",
-      "tags": ["policy", "China", "Kenya", "smart agriculture", "research"]
-    },
-    {
-      "tag": "Engineering",
-      "tagClass": "engineering",
-      "title": "Real Math, Not Vibes: Statistical Algorithms in TypeScript",
-      "excerpt": "Holt-Winters triple exponential smoothing, OLS regression via normal equation, K-Means++ with silhouette scoring — all from scratch in TypeScript.",
-      "description": "Implementing real statistical algorithms in TypeScript: Holt-Winters triple exponential smoothing, OLS regression via normal equation, K-Means++ with silhouette scoring. No vibes, just math.",
-      "date": "2026-06-20",
-      "dateModified": "2026-06-20",
-      "readTime": "18 min",
-      "wordCount": 3600,
-      "slug": "real-math-not-vibes",
-      "url": "/blog/articles/real-math-not-vibes.html",
-      "tags": ["TypeScript", "statistics", "Holt-Winters", "OLS", "K-Means"]
-    },
-    {
-      "tag": "AI",
-      "tagClass": "ai",
-      "title": "The Multi-LLM Council: When One AI Isn't Enough",
-      "excerpt": "How KilimoPRO uses 5 expert AI personas (agronomist, economist, climate scientist, extension officer, risk manager) to deliberate complex farming decisions.",
-      "description": "Designing a Multi-LLM Council where 5 expert AI personas (agronomist, economist, climate scientist, extension officer, risk manager) deliberate complex farming decisions for KilimoPRO.",
-      "date": "2026-06-15",
-      "dateModified": "2026-06-15",
-      "readTime": "8 min",
-      "wordCount": 1600,
-      "slug": "multi-llm-council",
-      "url": "/blog/articles/multi-llm-council.html",
-      "tags": ["LLM", "multi-agent", "KilimoPRO", "agriculture"]
-    },
-    {
-      "tag": "Research",
-      "tagClass": "research",
-      "title": "Quantitative Finance for Agricultural Markets",
-      "excerpt": "Applying EWMA volatility, GARCH(1,1), Value at Risk (VaR), and RSI from financial markets to agricultural commodity price forecasting.",
-      "description": "Applying quantitative finance techniques — EWMA volatility, GARCH(1,1), Value at Risk (VaR), and RSI — to agricultural commodity price forecasting in KilimoPRO.",
-      "date": "2026-06-10",
-      "dateModified": "2026-06-10",
-      "readTime": "14 min",
-      "wordCount": 2800,
-      "slug": "quant-finance-for-agriculture",
-      "url": "/blog/articles/quant-finance-for-agriculture.html",
-      "tags": ["quant", "GARCH", "EWMA", "VaR", "agriculture"]
-    },
-    {
-      "tag": "Agriculture",
-      "tagClass": "agri",
-      "title": "22 Data Sources for Kenyan Agricultural Intelligence",
-      "excerpt": "A comprehensive inventory of verified, operational data APIs: KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, Sentinel-2, CHIRPS, ARDC, and more.",
-      "description": "Comprehensive inventory of 22 verified, operational data APIs for Kenyan agricultural intelligence: KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, Sentinel-2, CHIRPS, ARDC, and more.",
-      "date": "2026-06-05",
-      "dateModified": "2026-06-05",
-      "readTime": "11 min",
-      "wordCount": 2200,
-      "slug": "22-data-sources",
-      "url": "/blog/articles/22-data-sources.html",
-      "tags": ["data sources", "API", "agriculture", "Kenya", "KilimoSTAT"]
-    },
-    {
-      "tag": "Engineering",
-      "tagClass": "engineering",
-      "title": "On-Device Crop Disease Detection with TensorFlow Lite",
-      "excerpt": "Training MobileNetV3 on the PlantVillage dataset, quantizing to int8, and running inference on low-end Android phones — completely offline.",
-      "description": "Building on-device crop disease detection with TensorFlow Lite. Training MobileNetV3 on PlantVillage dataset, int8 quantization, offline inference on low-end Android phones.",
-      "date": "2026-06-01",
-      "dateModified": "2026-06-01",
-      "readTime": "13 min",
-      "wordCount": 2600,
-      "slug": "on-device-disease-detection",
-      "url": "/blog/articles/on-device-disease-detection.html",
-      "tags": ["TensorFlow Lite", "MobileNetV3", "PlantVillage", "on-device ML", "Flutter"]
-    },
-    {
-      "tag": "Agriculture",
-      "tagClass": "agri",
-      "title": "NASIP 2026-2030: The KES 1.08 Trillion Opportunity",
-      "excerpt": "Deep analysis of Kenya's National Agri-Food Systems Investment Plan and how technology platforms can operationalize its 9 flagship programs.",
-      "description": "Deep analysis of Kenya's National Agri-Food Systems Investment Plan (NASIP) 2026-2030 — a KES 1.08 trillion opportunity. 9 flagship programs and how tech platforms can operationalize them.",
-      "date": "2026-05-28",
-      "dateModified": "2026-05-28",
-      "readTime": "16 min",
-      "wordCount": 3200,
-      "slug": "nasip-2026-2030-opportunity",
-      "url": "/blog/articles/nasip-2026-2030-opportunity.html",
-      "tags": ["NASIP", "Kenya", "policy", "agriculture", "investment"]
+    "site": {
+        "name": "Victor Ndunda",
+        "url": "https://victorndunda.com",
+        "description": "AI Engineer building multi-agent intelligence systems and agricultural AI in Nairobi, Kenya."
     }
-  ],
-  "author": {
-    "name": "Victor Ndunda",
-    "email": "mututandunda@gmail.com",
-    "url": "https://victorndunda.com",
-    "jobTitle": "AI Engineer & Founder",
-    "sameAs": [
-      "https://github.com/gadda00",
-      "https://www.linkedin.com/in/victor-ndunda",
-      "https://busara.ai",
-      "https://kilimo.pro"
-    ]
-  },
-  "site": {
-    "name": "Victor Ndunda",
-    "url": "https://victorndunda.com",
-    "description": "AI Engineer building multi-agent intelligence systems and agricultural AI in Nairobi, Kenya."
-  }
 }

@@ -1,6 +1,6 @@
 # Victor Ndunda — Portfolio
 
-> Personal portfolio, blog, and private admin dashboard for **Victor Ndunda** — AI Engineer & Founder of Busara AI and KilimoPRO. Built in Nairobi, Kenya 🇰🇪.
+> Personal portfolio, blog, and private admin dashboard for **Victor Ndunda** — AI Engineer & Founder of Busara AI and KilimoPRO, and creator of AgentReplay. Built in Nairobi, Kenya 🇰🇪.
 
 **Live**: [victorndunda.com](https://victorndunda.com)
 
@@ -9,7 +9,7 @@
 A multi-page static site (no build step) deployed on GitHub Pages with a custom domain. Features:
 
 - **Public site** — Home, About, Work, Services, Contact sections + Blog + Articles listing
-- **Blog** — 9 long-form technical articles on multi-agent AI, agricultural intelligence, and statistical engineering
+- **Blog** — 10 long-form technical articles on multi-agent AI, agricultural intelligence, statistical engineering, and agent reliability research
 - **Admin dashboard** (`/admin/`) — Private Google OAuth-protected dashboard with content management, analytics, social media monitoring, SEO tools, and security center
 - **Job portal** (`/jobs/`) — Private Google OAuth-protected remote job aggregator (Arbeitnow + RemoteOK APIs)
 - **404 page** — Custom branded 404 with smart redirect suggestions
@@ -185,6 +185,7 @@ Set these in repo → Settings → Secrets and variables → Actions:
 - **GitHub**: [gadda00](https://github.com/gadda00)
 - **Busara AI**: [busaraai.com](https://busaraai.com)
 - **KilimoPRO**: [kilimo.pro](https://kilimo.pro)
+- **AgentReplay**: [github.com/gadda00/agentreplay](https://github.com/gadda00/agentreplay) — open-source deterministic replay & counterfactual debugging for AI agents (whitepaper: [victorndunda.com/blog/articles/agentreplay-deterministic-replay.html](https://victorndunda.com/blog/articles/agentreplay-deterministic-replay.html))
 
 ---
 

@@ -274,7 +274,7 @@
       <div class="about-text">
         <p>I'm an AI engineer and consultant based in <strong>Nairobi, Kenya</strong>. I started in data science and analytics (2019–2022) — building forecasting systems, fraud detection pipelines, and customer segmentation engines for fintech and financial services clients. When generative AI matured in 2022, I shifted to AI consulting and have been building production AI systems ever since — multi-agent platforms, RAG pipelines, on-device ML, and multilingual assistants for clients across fintech, agriculture, logistics, and SMBs.</p>
         <p>My work spans the full stack of applied AI: <strong>RAG chatbots</strong> that cite their sources, <strong>multi-agent pipelines</strong> that orchestrate 50+ specialized agents, <strong>forecasting engines</strong> powered by real statistical math (Holt-Winters, GARCH, OLS), <strong>on-device ML</strong> that runs on $80 phones, and <strong>multilingual assistants</strong> that work in Swahili and English. I take projects from zero to production — scoping audit, architecture, build, ship, and team training.</p>
-        <p>Today, I lead two flagship projects. <strong>Busara AI</strong> — a multi-agent data intelligence platform with a 7-stage analysis pipeline, live at <a href="https://busara.ai" target="_blank" rel="noopener noreferrer">busara.ai</a>. And <strong>KilimoPRO</strong> — an offline-first Flutter app for African farmers with on-device crop disease detection and market forecasting (<a href="https://github.com/gadda00/kilimopro" target="_blank" rel="noopener noreferrer">open-source</a>). Both are real systems serving real users, not demos.</p>
+        <p>Today, I lead two flagship projects. <strong>Busara AI</strong> — a multi-agent data intelligence platform with a 7-stage analysis pipeline, live at <a href="https://busara.ai" target="_blank" rel="noopener noreferrer">busara.ai</a>. And <strong>KilimoPRO</strong> — an offline-first Flutter app for African farmers with on-device crop disease detection and market forecasting (<a href="https://github.com/gadda00/kilimopro" target="_blank" rel="noopener noreferrer">open-source</a>). I also just shipped <strong><a href="https://github.com/gadda00/agentreplay" target="_blank" rel="noopener noreferrer">AgentReplay</a></strong> — an open-source deterministic-replay debugger for AI agents that reproduces agent failures bit-exact with zero model calls. All three are real systems serving real users, not demos.</p>
         <p>I also take on select client work — AI audits, custom agent systems, and full-stack builds. If you have a problem that needs real engineering (not a wrapper around ChatGPT), <strong>I'd love to hear from you</strong>. Let's build something that matters.</p>
       </div>
       <div class="about-cards">
@@ -326,7 +326,7 @@
             <div class="edu-period">Ongoing</div>
             <h4 class="edu-degree">Continuous Learning &amp; Certifications</h4>
             <div class="edu-school">Self-directed · Open source · AI certifications</div>
-            <p class="edu-detail">Active builder and maintainer of open-source AI projects (KilimoPRO, IntelliFlow, Busara AI). Currently pursuing <strong>AI Engineer for Data Scientists Associate</strong> and <strong>AI Engineer for Developers Associate</strong> certifications — covering data management, model development, AI app deployment, and responsible AI. Aligned with Kenya's NASIP 2026-2030 agricultural strategy.</p>
+            <p class="edu-detail">Active builder and maintainer of open-source AI projects (AgentReplay, KilimoPRO, IntelliFlow, Busara AI). Currently pursuing <strong>AI Engineer for Data Scientists Associate</strong> and <strong>AI Engineer for Developers Associate</strong> certifications — covering data management, model development, AI app deployment, and responsible AI. Aligned with Kenya's NASIP 2026-2030 agricultural strategy.</p>
             <div class="edu-tags">
               <span>AI Engineer Cert (Ongoing)</span><span>Multi-Agent AI</span><span>Statistical ML</span><span>On-Device ML</span>
             </div>
@@ -510,6 +510,20 @@
       </div>
       <div class="now-card research">
         <div class="now-card-header">
+          <div class="now-card-title">🔄 AgentReplay — Deterministic Replay for AI Agents</div>
+          <div class="now-card-status">Just Shipped · v0.1.0</div>
+        </div>
+        <div class="now-card-body">
+          Open-source SDK + CLI that captures every non-deterministic input to an agent run (LLM calls, tools, clock, RNG) and replays it bit-exact — with <strong>zero model calls</strong>. 0.67% overhead, 100% reproduction fidelity, 99 tests. Counterfactual mutation + CI regression corpus. Built on the research in my new whitepaper.
+        </div>
+        <div class="now-card-progress">
+          <span>100%</span>
+          <div class="now-progress-bar"><div class="now-progress-fill" style="width:100%"></div></div>
+          <span>Live on GitHub</span>
+        </div>
+      </div>
+      <div class="now-card research">
+        <div class="now-card-header">
           <div class="now-card-title">📊 Research — GARCH for Agri Markets</div>
           <div class="now-card-status">Writing</div>
         </div>
@@ -588,6 +602,20 @@
         <div class="work-links">
           <a href="https://github.com/gadda00/kilimopro" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">GitHub ↗</a>
           <a href="https://kilimo.pro" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">Website</a>
+        </div>
+      </div>
+
+      <!-- AgentReplay -->
+      <div class="work-card featured">
+        <div class="work-badge research">🔄 Open-Source · Agent Reliability</div>
+        <h3>AgentReplay</h3>
+        <p>Deterministic replay and counterfactual debugging for AI agents. Captures every LLM call, tool response, clock read, and RNG draw — then replays the run bit-exact with <strong>zero model calls</strong>. 0.67% overhead (vs. 5% target), 100% reproduction fidelity, 99 tests. LangGraph-first. Ships with counterfactual mutation + CI regression corpus. Backed by a research whitepaper.</p>
+        <div class="work-tags">
+          <span>Python</span><span>LangGraph</span><span>OpenAI SDK</span><span>Anthropic SDK</span><span>Deterministic Replay</span><span>Counterfactual</span><span>CI Regression</span>
+        </div>
+        <div class="work-links">
+          <a href="https://github.com/gadda00/agentreplay" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">GitHub ↗</a>
+          <a href="/blog/articles/agentreplay-deterministic-replay.html" class="btn btn-ghost btn-sm">Whitepaper</a>
         </div>
       </div>
     </div>
@@ -883,7 +911,7 @@
       </div>
       <div class="footer-links">
         <div><h5>Navigate</h5><a href="#about">About</a><a href="#work">Work</a><a href="/blog/">Blog</a><a href="#services">Services</a><a href="#contact">Contact</a></div>
-        <div><h5>Projects</h5><a href="https://busara.ai">Busara AI</a><a href="https://github.com/gadda00/kilimopro">KilimoPRO</a><a href="https://github.com/gadda00/IntelliFlow">IntelliFlow</a></div>
+        <div><h5>Projects</h5><a href="https://busara.ai">Busara AI</a><a href="https://github.com/gadda00/kilimopro">KilimoPRO</a><a href="https://github.com/gadda00/agentreplay">AgentReplay</a><a href="https://github.com/gadda00/IntelliFlow">IntelliFlow</a></div>
         <div><h5>Legal</h5><a href="/terms-of-service.html">Terms of Service</a><a href="/privacy-policy.html">Privacy Policy</a></div>
         <div><h5>Connect</h5><a href="mailto:mututandunda@gmail.com">Email</a><a href="tel:+254724346971">Phone</a><a href="https://wa.me/254724346971">WhatsApp</a><a href="https://github.com/gadda00">GitHub</a><a href="https://www.linkedin.com/in/victor-ndunda">LinkedIn</a></div>
       </div>

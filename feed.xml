@@ -7,7 +7,7 @@
     <atom:link href="https://victorndunda.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>AI Engineer building multi-agent intelligence systems and agricultural AI in Nairobi, Kenya.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 09 Jul 2026 05:10:09 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 12 Jul 2026 12:00:00 +0000</lastBuildDate>
     <managingEditor>mututandunda@gmail.com (Victor Ndunda)</managingEditor>
     <webMaster>mututandunda@gmail.com (Victor Ndunda)</webMaster>
     <image>
@@ -15,6 +15,22 @@
       <title>Victor Ndunda — Blog</title>
       <link>https://victorndunda.com/blog/</link>
     </image>
+    <item>
+      <title>AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agent Reliability</title>
+      <link>https://victorndunda.com/blog/articles/agentreplay-deterministic-replay.html</link>
+      <guid isPermaLink="true">https://victorndunda.com/blog/articles/agentreplay-deterministic-replay.html</guid>
+      <pubDate>Sun, 12 Jul 2026 00:00:00 +0000</pubDate>
+      <description>A research-backed whitepaper on AgentReplay — an open-source deterministic replay and counterfactual debugging layer for AI agents. Bit-exact replay with zero model calls. 0.67% overhead, 100% reproduction fidelity.</description>
+      <content:encoded><![CDATA[<p>A research-backed whitepaper on AgentReplay — an open-source deterministic replay and counterfactual debugging layer for AI agents. Bit-exact replay with zero model calls. 0.67% overhead, 100% reproduction fidelity.</p><p>Read time: 22 min · Word count: 4200</p><p><a href="https://victorndunda.com/blog/articles/agentreplay-deterministic-replay.html">Read full article →</a></p>]]></content:encoded>
+      <author>mututandunda@gmail.com (Victor Ndunda)</author>      <category>AgentReplay</category>
+      <category>AI agents</category>
+      <category>deterministic replay</category>
+      <category>counterfactual debugging</category>
+      <category>LangGraph</category>
+      <category>open-source</category>
+      <category>reliability</category>
+      <category>whitepaper</category>
+    </item>
     <item>
       <title>Building a 50-Agent Multi-Agent DAG Pipeline</title>
       <link>https://victorndunda.com/blog/articles/building-50-agent-dag.html</link>

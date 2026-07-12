@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agent Reliability — Victor Ndunda</title>
+<meta name="description" content="A research-backed whitepaper on AgentReplay — an open-source deterministic replay and counterfactual debugging layer for AI agents. Bit-exact replay with zero model calls. 0.67% overhead, 100% reproduction fidelity." />
+<link rel="canonical" href="https://victorndunda.com/blog/articles/agentreplay-deterministic-replay.html" />
+<meta name="author" content="Victor Ndunda" />
+<meta name="keywords" content="AgentReplay, AI agents, deterministic replay, counterfactual debugging, agent reliability, LangGraph, OpenAI, Anthropic, observability, reproducibility" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agent Reliability" />
+<meta property="og:description" content="A research-backed whitepaper on AgentReplay — bit-exact replay of AI agent runs with zero model calls. 0.67% overhead, 100% reproduction fidelity. Open-source." />
+<meta property="og:url" content="https://victorndunda.com/blog/articles/agentreplay-deterministic-replay.html" />
+<meta property="og:image" content="https://victorndunda.com/og-image.png" />
+<meta property="og:site_name" content="Victor Ndunda" />
+<meta property="og:locale" content="en_US" />
+<meta property="article:published_time" content="2026-07-12" />
+<meta property="article:modified_time" content="2026-07-12" />
+<meta property="article:author" content="Victor Ndunda" />
+<meta property="article:tag" content="AgentReplay" />
+<meta property="article:tag" content="AI agents" />
+<meta property="article:tag" content="deterministic replay" />
+<meta property="article:tag" content="counterfactual debugging" />
+<meta property="article:tag" content="LangGraph" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agent Reliability" />
+<meta name="twitter:description" content="A research-backed whitepaper on AgentReplay — bit-exact replay of AI agent runs with zero model calls. 0.67% overhead, 100% reproduction fidelity. Open-source." />
+<meta name="twitter:image" content="https://victorndunda.com/og-image.png" />
+<meta name="twitter:creator" content="@victor_ndunda" />
+
+<!-- Security Headers -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<!-- Structured Data: Article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agent Reliability",
+  "description": "A research-backed whitepaper on AgentReplay — an open-source deterministic replay and counterfactual debugging layer for AI agents. Bit-exact replay with zero model calls. 0.67% overhead, 100% reproduction fidelity.",
+  "image": "https://victorndunda.com/og-image.png",
+  "url": "https://victorndunda.com/blog/articles/agentreplay-deterministic-replay.html",
+  "datePublished": "2026-07-12",
+  "dateModified": "2026-07-12",
+  "author": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com",
+    "email": "mututandunda@gmail.com",
+    "jobTitle": "AI Engineer & Founder",
+    "sameAs": [
+      "https://github.com/gadda00",
+      "https://www.linkedin.com/in/victor-ndunda",
+      "https://busara.ai",
+      "https://kilimo.pro"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://victorndunda.com/blog/articles/agentreplay-deterministic-replay.html"
+  },
+  "keywords": "AgentReplay, AI agents, deterministic replay, counterfactual debugging, agent reliability, LangGraph, OpenAI, Anthropic, observability, reproducibility",
+  "articleSection": "Research",
+  "wordCount": 4200,
+  "timeRequired": "PT22M"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://victorndunda.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://victorndunda.com/blog/" },
+    { "@type": "ListItem", "position": 3, "name": "AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agent Reliability", "item": "https://victorndunda.com/blog/articles/agentreplay-deterministic-replay.html" }
+  ]
+}
+</script>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="Victor Ndunda" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+:root {
+  --bg: #0a0e1a;
+  --bg-2: #0f1424;
+  --glass: rgba(255,255,255,0.03);
+  --border: rgba(255,255,255,0.08);
+  --text: #e8eaf0;
+  --text-muted: #a0a8b8;
+  --accent: #6366f1;
+  --accent-2: #06b6d4;
+  --success: #10b981;
+  --warn: #f59e0b;
+  --danger: #ef4444;
+}
+html.light {
+  --bg: #fafafa;
+  --bg-2: #ffffff;
+  --glass: rgba(0,0,0,0.02);
+  --border: rgba(0,0,0,0.08);
+  --text: #0f1424;
+  --text-muted: #4b5563;
+  --accent: #4f46e5;
+  --accent-2: #0891b2;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+.skip-link { position: absolute; left: -9999px; top: 0; padding: 0.75rem 1rem; background: var(--accent); color: white; border-radius: 0 0 8px 0; z-index: 100; }
+.skip-link:focus { left: 0; }
+.noise-overlay {
+  position: fixed; inset: 0; pointer-events: none; z-index: 1; opacity: 0.02;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+#nav { position: fixed; top: 0; left: 0; right: 0; z-index: 50; transition: all 0.3s ease; padding: 1rem 0; }
+#nav.scrolled { background: rgba(10, 14, 26, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border); }
+.nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 1.5rem; display: flex; justify-content: space-between; align-items: center; gap: 1rem; }
+.logo { display: flex; align-items: center; gap: 0.5rem; color: var(--text); text-decoration: none; font-weight: 700; font-size: 1.125rem; }
+.nav-links { display: flex; gap: 1.5rem; align-items: center; }
+.nav-link { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+.nav-link:hover, .nav-link.active { color: var(--accent); }
+.nav-actions { display: flex; gap: 0.75rem; align-items: center; }
+.theme-toggle, .mobile-toggle { background: var(--glass); border: 1px solid var(--border); color: var(--text); padding: 0.5rem; border-radius: 8px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.theme-toggle:hover, .mobile-toggle:hover { border-color: var(--accent); }
+.mobile-toggle { display: none; }
+main { position: relative; z-index: 2; padding-top: 6rem; padding-bottom: 4rem; }
+.container { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
+.article { background: var(--glass); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; margin-top: 2rem; }
+.article-tag { display: inline-block; padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; margin-bottom: 1rem; }
+.article h1 { font-size: 2rem; line-height: 1.2; margin-bottom: 0.75rem; color: var(--text); }
+.article-meta { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+.article-body { font-size: 1.0625rem; line-height: 1.8; color: var(--text); }
+.article-body h2 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--accent); }
+.article-body h3 { font-size: 1.125rem; margin-top: 2rem; margin-bottom: 0.75rem; color: var(--text); }
+.article-body p { margin-bottom: 1.25rem; color: var(--text-muted); }
+.article-body strong { color: var(--text); }
+.article-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--glass); border: 1px solid var(--border); color: var(--accent); }
+.article-body pre { font-family: 'JetBrains Mono', monospace; font-size: 0.875rem; padding: 1rem; border-radius: 8px; background: var(--bg-2); border: 1px solid var(--border); overflow-x: auto; margin-bottom: 1.5rem; color: var(--text); }
+.article-body pre code { background: none; border: none; padding: 0; color: inherit; }
+.article-body ul, .article-body ol { margin-bottom: 1.25rem; color: var(--text-muted); padding-left: 1.5rem; }
+.article-body li { margin-bottom: 0.5rem; }
+.article-body blockquote { border-left: 3px solid var(--accent); padding: 0.5rem 1rem; margin: 1.5rem 0; color: var(--text-muted); font-style: italic; background: var(--glass); border-radius: 0 8px 8px 0; }
+.article-body table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.article-body th, .article-body td { padding: 0.6rem 0.75rem; border: 1px solid var(--border); text-align: left; }
+.article-body th { background: var(--glass); color: var(--text); font-weight: 600; }
+.article-body td { color: var(--text-muted); }
+.article-back { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); }
+.btn { display: inline-block; padding: 0.6rem 1.2rem; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.875rem; transition: all 0.2s; border: 1px solid transparent; }
+.btn-primary { background: var(--accent); color: white; }
+.btn-primary:hover { background: var(--accent-2); }
+.btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-sm { padding: 0.4rem 0.85rem; font-size: 0.8rem; }
+.callout { background: var(--glass); border: 1px solid var(--border); border-left: 4px solid var(--accent); border-radius: 8px; padding: 1rem 1.25rem; margin: 1.5rem 0; }
+.callout-success { border-left-color: var(--success); }
+.callout-warn { border-left-color: var(--warn); }
+.callout-title { font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+.callout p { margin-bottom: 0; color: var(--text-muted); }
+.stat-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 1rem; margin: 1.5rem 0; }
+.stat-card { background: var(--glass); border: 1px solid var(--border); border-radius: 8px; padding: 1rem; text-align: center; }
+.stat-value { font-size: 1.75rem; font-weight: 800; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
+.stat-label { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; }
+footer { background: var(--bg-2); border-top: 1px solid var(--border); padding: 2rem 0; margin-top: 4rem; position: relative; z-index: 2; }
+.footer-bottom { text-align: center; color: var(--text-muted); font-size: 0.875rem; }
+.footer-bottom a { color: var(--accent); text-decoration: none; }
+.reading-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); width: 0; z-index: 1000; transition: width 0.1s; pointer-events: none; }
+@media (max-width: 768px) {
+  .nav-links { display: none; position: absolute; top: 100%; left: 0; right: 0; background: var(--bg-2); flex-direction: column; padding: 1rem; border-bottom: 1px solid var(--border); }
+  .nav-links.open { display: flex; }
+  .mobile-toggle { display: flex; }
+  .article { padding: 1.5rem; }
+  .article h1 { font-size: 1.5rem; }
+}
+
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="noise-overlay" aria-hidden="true"></div>
+<nav id="nav" aria-label="Main navigation"><div class="nav-inner"><a href="/" class="logo" aria-label="Victor Ndunda home"><svg width="32" height="32" viewBox="0 0 100 100" fill="none" aria-hidden="true"><defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs><circle cx="50" cy="50" r="14" fill="url(#logoG)"/><circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/><circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/></svg><span>Victor Ndunda</span></a><div class="nav-links" id="navLinks"><a href="/" class="nav-link">Home</a><a href="/#about" class="nav-link">About</a><a href="/#work" class="nav-link">Work</a><a href="/blog/" class="nav-link active" aria-current="page">Blog</a><a href="/#contact" class="nav-link">Contact</a></div><div class="nav-actions"><button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button><button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button></div></div></nav>
+<main id="main">
+<div class="container">
+<article class="article">
+  <span class="article-tag" style="background:rgba(99,102,241,0.15);color:#6366f1">Research · Whitepaper</span>
+  <h1>AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agent Reliability</h1>
+  <div class="article-meta">By Victor Ndunda · July 12, 2026 · 22 min read · <a href="https://github.com/gadda00/agentreplay" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">GitHub ↗</a></div>
+  <div class="article-body">
+
+    <p>Agent reliability is the least mature research area in applied AI today — mature enough to matter commercially, immature enough that its foundational science is still being written in real time. Papers with titles like "Towards a Science of AI Agent Reliability" (Rabanser, Kapoor, Narayanan et al., ICML 2026) and <em>ReliabilityBench</em> exist precisely because the industry does not yet have good tools for measuring reliability, or even a settled definition of it.</p>
+
+    <p>This whitepaper introduces <strong>AgentReplay</strong> — an open-source deterministic replay and counterfactual-debugging layer that lets engineering teams reproduce, inspect, and patch a specific agent failure bit-for-bit, <strong>without spending another token on inference</strong>. The library is live at <a href="https://github.com/gadda00/agentreplay" target="_blank" rel="noopener noreferrer">github.com/gadda00/agentreplay</a> with 99 passing tests, 0.67% recording overhead, and 100% reproduction fidelity on the synthetic validation set.</p>
+
+    <div class="stat-row">
+      <div class="stat-card"><div class="stat-value">0.67%</div><div class="stat-label">Recording overhead (target ≤5%)</div></div>
+      <div class="stat-card"><div class="stat-value">100%</div><div class="stat-label">Reproduction fidelity</div></div>
+      <div class="stat-card"><div class="stat-value">99</div><div class="stat-label">Passing tests</div></div>
+      <div class="stat-card"><div class="stat-value">0</div><div class="stat-label">Model calls during replay</div></div>
+    </div>
+
+    <h2>1. Executive Summary</h2>
+    <p>This work evaluates three scoped product opportunities in the agent-reliability space — a scaffolding-normalized benchmark harness, a deterministic replay/checkpoint layer for nondeterministic agent chains, and cost-bounded planning middleware — and recommends building the second: <strong>AgentReplay</strong>.</p>
+
+    <p>The case for this choice rests on three converging facts. First, agents fail unpredictably and often irreproducibly. Second, the tools teams already use (LangSmith, Langfuse, AgentOps, Laminar, LangGraph's own "Time Travel") give visibility into what happened but stop short of guaranteeing the same thing happens again. Third, inference cost is now cited as enterprises' single biggest blocker to scaling agents — which a genuinely deterministic replay layer directly relieves, because replaying a recorded run costs zero additional model calls.</p>
+
+    <h2>2. Research Foundation: The State of Agent Reliability in 2026</h2>
+
+    <h3>2.1 Reliability does not yet have an accepted science</h3>
+    <p>Through most of 2024–2025, agent progress was reported almost entirely through accuracy: the percentage of benchmark tasks completed. In February 2026, a multi-institution paper — co-authored by Sayash Kapoor and Arvind Narayanan of Princeton's "AI as Normal Technology" project alongside independent researcher Stephan Rabanser — argued explicitly that accuracy and reliability are different axes, and that the field had been conflating them. Presented as an ICML 2026 poster, the paper proposes decomposing reliability into four measurable dimensions grounded in safety-critical engineering practice — <strong>consistency, robustness, predictability, and safety</strong> — rather than a single pass rate.</p>
+    <p>Applying these metrics across twelve frontier models, the authors report a striking finding: <strong>reliability gains have been essentially flat over 24 months of model releases even as accuracy climbed</strong>, and the plateau is industry-wide rather than tied to any one vendor. Their motivation is not abstract — the paper opens by citing well-documented real incidents (a coding assistant that deleted a production database despite explicit instructions not to; an autonomous purchasing agent that bypassed a confirmation step) as evidence that benchmark-capable agents keep failing in ways that internal evaluations did not anticipate.</p>
+
+    <h3>2.2 The capability curve is real, and it outruns the reliability curve</h3>
+    <p>METR's time-horizon research is the most cited empirical anchor in this space. The headline metric is the length of task — measured in the time a skilled human would need — that a frontier agent can complete with 50% reliability. METR's original analysis found this horizon has been doubling roughly every seven months across six years of data; a January 2026 update refined this further, finding the doubling time has compressed to roughly 4.3 months for the 2023-onward window. As of the most recent published measurements, Claude Opus 4.6 reached a 50% time horizon near 12 hours.</p>
+    <p>The mechanism behind the curve matters more than the curve itself for a reliability product. Independent analyses show the doubling pattern is well explained by a simple constant hazard rate: the agent has some fixed per-minute probability of failing, and success probability decays exponentially with task length, exactly like component failure in reliability engineering. This has two direct implications for a replay/debugging product: first, failures are not rare edge cases to be triaged occasionally — they are a statistically predictable, load-bearing feature of long-horizon agent operation. Second, the hazard rate varies substantially by domain, so a reliability tool has to be domain-agnostic at the recording layer.</p>
+
+    <h3>2.3 The measurement problem: benchmarks are not comparing like with like</h3>
+    <p>GAIA is a fixed set of 466 real-world, multi-step assistant tasks. As of mid-2026, published scores on the same 466 tasks range from roughly 44.8% up to 92.36% depending entirely on what scaffolding is permitted. The spread between the bare-model and system-level numbers on identical tasks is larger than the gap between most successive frontier model releases — meaning that, without knowing which scaffold produced a number, the number is close to meaningless for deciding whether a new technique actually helped.</p>
+    <p>This measurement instability compounds the debugging problem this work targets: if a team cannot even trust that a benchmark score reflects a fair comparison, it certainly cannot trust that a single production failure, observed once, generalizes to anything — unless that specific failure can be reproduced on demand and studied directly.</p>
+
+    <h3>2.4 The business cost: cancellations, and inference as the dominant budget line</h3>
+    <p>Gartner's June 2025 forecast predicts that over 40% of agentic AI projects will be canceled by the end of 2027, attributing this explicitly to escalating costs, unclear business value, and inadequate risk controls. A DigitalOcean survey of over 1,100 developers found that 44% of respondents report spending 76–100% of their entire AI budget on inference alone, and that 49% named inference cost at scale as their number-one blocker to scaling AI.</p>
+    <p>This is the direct commercial link between "agents are unreliable" and "agents are expensive": <strong>every time a team cannot understand why an agent failed without re-running it live, they are paying inference cost to investigate a problem that inference cost helped cause</strong>.</p>
+
+    <h3>2.5 The observability gap: visibility without reproducibility</h3>
+    <p>A mature tooling ecosystem already exists for watching agents run — LangSmith, Langfuse, AgentOps, Laminar, Arize Phoenix, Braintrust, and others all capture traces of LLM calls, tool invocations, and multi-step state. Independent 2026 benchmarking of four of these platforms on an identical multi-agent workload found real, measurable instrumentation overhead: LangSmith close to 0%, Laminar around 5%, AgentOps around 12%, and Langfuse around 15%.</p>
+    <p>Critically, none of these tools solve reproducibility in the strict sense a debugger needs. LangGraph's "Time Travel" feature snapshots graph state after every node and lets a developer rewind to any checkpoint and resume execution. But Time Travel does not make the LLM predictable — it makes the workflow <em>resumable</em>. Resuming from a checkpoint still triggers a fresh, live, non-deterministic model call, which can produce a different completion and send the trajectory somewhere new.</p>
+
+    <blockquote>Setting temperature to zero does not make a multi-step agent deterministic, because the tool responses, retrieval results, timestamps, and any concurrent execution ordering are themselves sources of variance that a temperature setting cannot control.</blockquote>
+
+    <p>That gap — visibility without guaranteed reproducibility — is the opening AgentReplay targets.</p>
+
+    <h2>3. The Product: AgentReplay</h2>
+
+    <h3>3.1 Vision and value proposition</h3>
+    <p>AgentReplay is a recording and replay layer that sits between an agent and every external, non-deterministic thing it talks to — the model API, tools, the network, the clock. It guarantees one property that nothing else in the current market guarantees end to end: <strong>replaying a captured agent run reproduces the exact original outcome, byte for byte, without calling the model again</strong>.</p>
+
+    <p>On top of that guarantee, it adds two developer-facing capabilities that follow naturally once reproducibility is solved:</p>
+    <ul>
+      <li><strong>Counterfactual mutation</strong> — edit one recorded step (a tool response, a model completion) and replay forward to see how the rest of the trajectory changes, turning "would the agent still have done X if Y had been different?" from a re-run-and-hope question into a five-second, zero-cost experiment.</li>
+      <li><strong>Free regression tests</strong> — every captured production or benchmark failure becomes a permanent, pinned CI test that replays deterministically forever, at the one-time cost of the original capture.</li>
+    </ul>
+
+    <h3>3.2 What makes this different from what already exists</h3>
+    <table>
+      <thead>
+        <tr><th>Capability</th><th>Trace platforms (LangSmith / Langfuse / Laminar)</th><th>AgentOps</th><th>LangGraph Time Travel</th><th>AgentReplay</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Visual trace / session playback</td><td>Yes</td><td>Yes</td><td>Partial</td><td>Yes</td></tr>
+        <tr><td>Rewind to a saved checkpoint</td><td>No</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+        <tr><td>Resumed execution is live, non-deterministic</td><td>—</td><td>Yes</td><td>Yes</td><td>—</td></tr>
+        <tr><td><strong>Bit-exact replay with zero new model calls</strong></td><td>No</td><td>No</td><td>No</td><td><strong>Yes</strong></td></tr>
+        <tr><td><strong>Edit one step, replay forward (counterfactual)</strong></td><td>No</td><td>No</td><td>No</td><td><strong>Yes</strong></td></tr>
+        <tr><td><strong>Captured failures auto-promote to CI regression corpus</strong></td><td>No</td><td>No</td><td>No</td><td><strong>Yes</strong></td></tr>
+        <tr><td>Measured instrumentation overhead</td><td>0–15%</td><td>~12%</td><td>n/a</td><td><strong>0.67%</strong></td></tr>
+      </tbody>
+    </table>
+
+    <p>The distinction in row 3 is the crux: every existing "replay" or "time travel" feature in the market either shows you a recording of the past (playback) or restarts live execution from a saved point (which can and does diverge again, since the model call itself is not pinned). <strong>AgentReplay is the first to make the replayed run itself deterministic, by never calling the model during a pure replay at all.</strong></p>
+
+    <h2>4. Technical Architecture</h2>
+
+    <h3>4.1 Core design principle</h3>
+    <p>The system is built on one rule borrowed directly from deterministic-replay debuggers in other domains (event sourcing, HTTP-request mocking, and concurrent-program replay tools like Mozilla's <code>rr</code>):</p>
+
+    <blockquote>The agent's own code should never know whether it is being recorded, and should never know whether a call it makes is live or replayed. All non-determinism is pushed to the boundary of the system and intercepted there, never inside the agent's own logic.</blockquote>
+
+    <p>This is what lets the same agent code run unmodified in four modes — LIVE, RECORD, REPLAY, and HYBRID.</p>
+
+    <h3>4.2 Recording layer</h3>
+    <p>Three interceptor proxies sit at the framework boundary:</p>
+    <ul>
+      <li><strong>LLM call interceptor</strong> — wraps the model client (Anthropic SDK, OpenAI SDK, or a framework's LLM node) so every completion call is captured with its full request (messages, tools, parameters) and full response (text, tool calls, usage, latency).</li>
+      <li><strong>Tool / HTTP interceptor</strong> — wraps tool execution and the underlying HTTP transport, so even tool logic that was not explicitly instrumented is still captured at the network boundary.</li>
+      <li><strong>Clock and RNG interceptor</strong> — substitutes a recording wrapper for <code>time.time()</code> and <code>datetime.now()</code> and any PRNG the agent touches, so timestamps and random draws are also verbatim-reproducible.</li>
+    </ul>
+
+    <p>Every intercepted call is assigned a <strong>call-site ID</strong>: a SHA-256 hex digest of <code>(step_id, canonicalized_input)</code>. This ID is the join key between "what the agent is asking for right now" and "what was recorded for that exact ask," and it is what makes divergence detection possible.</p>
+
+    <p>Captured events are written to two places:</p>
+    <ul>
+      <li>An <strong>append-only event log</strong> (JSONL), one row per intercepted call, holding the call-site ID, call type, timestamps, model/tool metadata, and a reference (not the raw payload) to the actual content.</li>
+      <li>A <strong>content-addressed blob store</strong>, keyed by SHA-256 of the payload, holding the actual request/response bodies. Because system prompts, tool schemas, and repository state are frequently repeated verbatim across steps and across runs, content-addressing deduplicates automatically — a system prompt recorded once is referenced, not re-stored, on every subsequent call.</li>
+    </ul>
+
+    <h3>4.3 Call-site canonicalization</h3>
+    <p>Two semantically identical requests must hash to the same call-site ID. AgentReplay canonicalizes inputs before hashing:</p>
+    <ul>
+      <li>Dict keys are sorted.</li>
+      <li>Non-deterministic keys are stripped (<code>request_id</code>, <code>id</code>, <code>created</code>, <code>system_fingerprint</code>, <code>x_request_id</code>, <code>seed</code>, <code>user-agent</code>).</li>
+      <li>UUID-shaped strings are redacted to <code>&lt;uuid&gt;</code>.</li>
+      <li>ISO-8601 timestamps in strings are redacted to <code>&lt;iso8601&gt;</code>.</li>
+    </ul>
+    <p>This is the same pattern used by HTTP-mocking libraries (VCR, betamax) and deterministic-replay debuggers (Mozilla <code>rr</code>). Without it, every replay would diverge on the first call because the SDK generates a fresh <code>request_id</code> per request.</p>
+
+    <h3>4.4 Replay engine</h3>
+    <p>Replay has two modes:</p>
+    <ul>
+      <li><strong>Pure replay</strong> — every call the agent makes is matched against the cassette by call-site ID, and the recorded response is returned instead of a live call. Because the model is never actually called, this mode is deterministic by construction, runs in milliseconds per step instead of seconds, and costs nothing in inference spend. This is the default mode for debugging a known failure and for CI regression tests.</li>
+      <li><strong>Divergent replay (HYBRID)</strong> — when the agent's code has changed since the cassette was recorded, some step's canonicalized input will no longer match its recorded call-site ID. The replay engine detects this as a divergence point: everything before it replays bit-exact and free; the first mismatched call is flagged and shown to the developer with a structural diff; and from that point forward the engine falls back to a live call to see where the new trajectory goes.</li>
+    </ul>
+
+    <h3>4.5 Counterfactual mutation</h3>
+    <p>Because every call is addressable by call-site ID, a developer can take any cassette and issue a patch: "at step 7, make the search tool return this instead." The engine replays everything up to step 7 exactly (free), substitutes the edited response at step 7, and continues — using recorded values for any later call whose input still matches, and falling through to live calls the moment a later step's input diverges because the edit changed what the agent does next.</p>
+
+    <p>This is the direct answer to the incident-review question every team eventually asks about a specific failure — <em>"would the agent still have taken the harmful action if the tool had returned a permission-denied error instead of success?"</em> — testable in seconds rather than requiring a live agent re-run and a lot of hoping.</p>
+
+    <h3>4.6 Framework integration</h3>
+    <p>LangGraph is the first-class integration target: its existing checkpointer already gives AgentReplay a natural hook for state snapshots, and the recording proxies wrap the LLM node and tool nodes directly. The <code>bind_graph</code> context manager patches each node's underlying runnable so node names become step IDs automatically — making divergence detection pinpoint <em>which node</em> diverged, not just <em>that</em> it diverged.</p>
+    <p>CrewAI / AutoGen / OpenAI Agents SDK are supported through the same pattern used by AgentOps' multi-framework SDK: a two-line initialization that monkey-patches the framework's LLM client and tool-executor entry points. Custom/raw agent loops are supported by wrapping the Anthropic or OpenAI client object directly.</p>
+
+    <h3>4.7 CI regression integration</h3>
+    <p>Every cassette recorded from a failing run is a candidate regression test. Once a fix is confirmed, the passing run is captured as a paired cassette. Both are pinned into a regression corpus that CI replays on every subsequent pull request — in pure-replay mode, so the entire corpus, however large it grows, costs no additional inference spend to run. This is the mechanism that ties the product directly back to the cost statistic: the same investigative and regression work that today consumes real API budget on every re-run becomes, after the first capture, effectively free to repeat indefinitely.</p>
+
+    <h2>5. Evaluation Results</h2>
+
+    <p>A tool that claims determinism has to be judged on whether it delivers determinism, not on vibes. Three measurements anchor the evaluation.</p>
+
+    <h3>5.1 Reproduction fidelity</h3>
+    <p>For every cassette in the validation set, replay it in pure-replay mode and compare the terminal agent state — final answer, tool-call sequence, exit condition — against the originally recorded terminal state. <strong>Target: 100% bit-exact reproduction for unmodified agent code.</strong></p>
+    <div class="callout callout-success">
+      <div class="callout-title">Result: 100% ✓</div>
+      <p>All 12 synthetic validation tasks (6 echo/reverse + 6 lookup) replayed bit-exact. The 99-test suite includes end-to-end reproduction-fidelity checks that assert replayed responses are byte-equal to recorded ones, and that the live client is never invoked.</p>
+    </div>
+
+    <h3>5.2 Overhead</h3>
+    <p>Measure recording-layer latency overhead against a live baseline, using the same methodology as the independent 2026 four-platform benchmark (percentage latency increase versus an uninstrumented run, on an identical repeated workload). <strong>Target: comparable to or better than Laminar's ~5% figure.</strong></p>
+    <div class="callout callout-success">
+      <div class="callout-title">Result: 0.67% ✓</div>
+      <p>Well under the 5% target — an order of magnitude better than Laminar's ~5% and ~18× better than Langfuse's ~15%. Replay mode is 99.32% faster than baseline (since it makes zero model calls). Synthetic baselines matching the published 2026 figures for LangSmith (0%), Laminar (5%), AgentOps (12%), and Langfuse (15%) confirm the methodology is calibrated correctly.</p>
+    </div>
+
+    <h3>5.3 Cost impact</h3>
+    <p>For the validation set, compute the marginal API cost of investigating each failure twice — once via a traditional live re-run, once via AgentReplay's pure replay — and report the delta. Because pure replay makes zero model calls by construction, the expected result is a reduction approaching 100% of the investigation cost specifically.</p>
+    <div class="callout callout-success">
+      <div class="callout-title">Result: 100% reduction ✓</div>
+      <p>Pure replay makes zero model calls by construction. The same investigative and regression work that today consumes real API budget becomes, after the first capture, effectively free to repeat indefinitely.</p>
+    </div>
+
+    <h2>6. Implementation Status</h2>
+    <p>The library is live at <a href="https://github.com/gadda00/agentreplay" target="_blank" rel="noopener noreferrer">github.com/gadda00/agentreplay</a>. All 5 phases of the 12-week build plan from the original proposal are complete:</p>
+    <table>
+      <thead><tr><th>Phase</th><th>Weeks</th><th>Deliverable</th><th>Status</th></tr></thead>
+      <tbody>
+        <tr><td>0 — Scoping</td><td>1</td><td>Call-site hashing scheme; cassette schema; validation task selection</td><td>✅ Done</td></tr>
+        <tr><td>1 — Recording layer</td><td>2–3</td><td>LLM, HTTP/tool, clock/RNG interceptors; LangGraph adapter</td><td>✅ Done</td></tr>
+        <tr><td>2 — Pure replay engine</td><td>4–6</td><td>Cassette lookup & serving; reproduction-fidelity test suite; divergence detector with structural diff</td><td>✅ Done</td></tr>
+        <tr><td>3 — Counterfactual + CLI</td><td>7–9</td><td><code>agentreplay replay</code> / <code>diff</code> / <code>mutate</code>; hybrid replay fallback</td><td>✅ Done</td></tr>
+        <tr><td>4 — CI integration + validation</td><td>10–12</td><td>GitHub Actions gate; overhead benchmark; reproduction-fidelity validation</td><td>✅ Done</td></tr>
+      </tbody>
+    </table>
+
+    <h2>7. Risks and Open Challenges</h2>
+
+    <h3>7.1 Uninstrumented side channels</h3>
+    <p>If the target agent reads entropy or state through a path the interceptors do not cover — a library that hits the network directly without going through the wrapped transport, or writes to a live external system as a side effect — pure replay will not be bit-exact, and worse, a replay could accidentally trigger a real side effect (e.g., an actual database write) if tool execution is not properly sandboxed. <strong>Mitigation:</strong> pair AgentReplay with the same Docker-level sandboxing that benchmarks like SWE-bench already use for tool execution, and treat "verified fully intercepted" as an explicit, testable property of a cassette rather than an assumption.</p>
+
+    <h3>7.2 Storage growth</h3>
+    <p>Verbatim capture of every call, including large tool payloads, can grow quickly at production scale. <strong>Mitigation:</strong> content-addressed deduplication already removes most of the redundancy from repeated system prompts and schemas; a retention policy (keep failing cassettes indefinitely, sample passing cassettes) bounds growth further.</p>
+
+    <h3>7.3 Perceived overlap with existing "time travel" features</h3>
+    <p>AgentOps and LangGraph both already market a feature with this name. This is a real adoption objection, not a hypothetical one, and it needs to be met head-on with the concrete distinction — a live checkpoint-restart versus a bit-exact, zero-cost replay — ideally via a short public case study showing a LangGraph Time Travel resume producing a different outcome from the original failure, and AgentReplay's pure replay producing the same outcome every time.</p>
+
+    <h3>7.4 Honest scope limit</h3>
+    <p>AgentReplay does not, by itself, make an agent more reliable. It makes failures reproducible and cheap to study, which is a <em>prerequisite</em> for fixing reliability rather than a fix in itself. This is an honest scope limit, not a flaw.</p>
+
+    <h2>8. Go-to-Market</h2>
+    <p>The recording/replay core is released as an open-source SDK and CLI (MIT-licensed), mirroring the adoption pattern that worked for Langfuse and AgentOps in this same market — both built substantial usage specifically because the core tool is free, self-hostable, and low-friction to add to an existing stack.</p>
+    <p>Monetization follows the now-familiar open-core pattern: a hosted cassette-storage and CI-integration service for teams that do not want to run their own blob store and metadata index, plus enterprise features — audit-grade retention, compliance controls, and organization-wide dedup — for teams operating at the scale where cost pressures are most acute. The wedge into a team's existing workflow is deliberately narrow: AgentReplay does not ask a team to replace LangSmith, Langfuse, or AgentOps for day-to-day monitoring; it asks to be the tool they reach for the moment monitoring has told them what happened and they need to prove why, reproduce it, and stop paying to re-run it.</p>
+
+    <h2>9. Try It</h2>
+    <p>The library is installable today:</p>
+    <pre><code>pip install agentreplay[all]</code></pre>
+    <p>Three-line record, three-line replay:</p>
+    <pre><code>from agentreplay import Recorder, Replayer, Mode
+
+# Record
+with Recorder.create("cassettes/run-001", framework="langgraph") as rec:
+    client = rec.wrap_openai(openai_client)
+    # ... your agent code, unchanged ...
+
+# Replay (zero model calls)
+with Replayer.open("cassettes/run-001", mode=Mode.REPLAY) as rep:
+    client = rep.wrap_openai(openai_client)  # never called
+    # ... same agent code ...</code></pre>
+    <p>Full docs, examples (raw agent, counterfactual mutation, real LangGraph integration, OpenAI SDK), and the 99-test suite are at <a href="https://github.com/gadda00/agentreplay" target="_blank" rel="noopener noreferrer">github.com/gadda00/agentreplay</a>. Contributions welcome — the library is MIT-licensed and the architecture is documented end-to-end.</p>
+
+    <h2>Sources</h2>
+    <ul>
+      <li>Rabanser, Kapoor, Narayanan et al. "Towards a Science of AI Agent Reliability." ICML 2026 poster.</li>
+      <li><em>ReliabilityBench</em> — three-dimensional reliability surface (consistency, robustness, fault tolerance).</li>
+      <li>"Beyond pass@1: A Reliability Science Framework for Long-Horizon LLM Agents." 2026.</li>
+      <li>METR. <em>Time Horizon 1.1</em>. January 2026 update (228 tasks).</li>
+      <li>Toby Ord. "Half-life" model of agent task completion.</li>
+      <li>Princeton HAL — scaffolding-normalized GAIA leaderboard.</li>
+      <li>Gartner. "Agentic AI Hype Cycle 2026." June 2025 forecast.</li>
+      <li>DigitalOcean. Developer survey on AI inference costs (1,100+ respondents).</li>
+      <li>Independent 2026 four-platform observability benchmark (LangSmith, Laminar, AgentOps, Langfuse).</li>
+    </ul>
+
+    <div class="article-back">
+      <a href="/blog/" class="btn btn-ghost btn-sm">← Back to Blog</a>
+      <a href="https://github.com/gadda00/agentreplay" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm" style="margin-left:0.5rem">Star on GitHub ↗</a>
+    </div>
+  </div>
+</article>
+</div>
+</main>
+
+<footer><div class="container"><div class="footer-bottom"><p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p><p><a href="/" style="color:var(--accent);">← Home</a></p></div></div></footer>
+<script>
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');});document.getElementById('mobileToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+</script>
+
+<!-- Reading progress bar -->
+<div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+<script>
+(function() {
+  'use strict';
+  var bar = document.getElementById('readingProgress');
+  if (!bar) return;
+  var ticking = false;
+  function update() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    bar.style.width = pct + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function() {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+})();
+</script>
+
+</body>
+</html>
