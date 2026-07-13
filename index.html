@@ -119,11 +119,11 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=5.0.0" />
+<link rel="stylesheet" href="styles.css?v=5.1.0" />
 
 <!-- Performance: Preload critical resources -->
-<link rel="preload" href="/styles.css?v=5.0.0" as="style" />
-<link rel="preload" href="/app.js?v=5.0.0" as="script" crossorigin />
+<link rel="preload" href="/styles.css?v=5.1.0" as="style" />
+<link rel="preload" href="/app.js?v=5.1.0" as="script" crossorigin />
 <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 <link rel="dns-prefetch" href="https://busara.ai" />
@@ -853,9 +853,9 @@
   </div>
 </footer>
 
-<script src="app.js?v=5.0.0" defer></script>
-<script src="/i18n.js?v=5.0.0" defer></script>
-<script src="/enhancements.js?v=5.0.0" defer></script>
+<script src="app.js?v=5.1.0" defer></script>
+<script src="/i18n.js?v=5.1.0" defer></script>
+<script src="/enhancements.js?v=5.1.0" defer></script>
 
 
 
@@ -882,15 +882,16 @@
       navigator.serviceWorker.register('/sw.js', { scope: '/', updateViaCache: 'none' })
         .then(reg => {
           console.log('[SW] registered with scope:', reg.scope);
-          // Check for SW updates on every page load (browsers otherwise
-          // only check once per 24h). This ensures visitors who have an
-          // old SW cached pick up the new version within one page load.
+          // Listen for SW updates. When a new SW installs, tell it to
+          // skipWaiting so it activates immediately. Do NOT auto-reload —
+          // reloading can cause a flash where the browser's HTTP cache
+          // serves stale HTML. The new SW will be active on the NEXT
+          // navigation, which is non-jarring and correct.
           reg.addEventListener('updatefound', () => {
             const newWorker = reg.installing;
             if (newWorker) {
               newWorker.addEventListener('statechange', () => {
                 if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                  // New SW installed; skipWaiting so it activates on next navigation.
                   newWorker.postMessage('SKIP_WAITING');
                   console.log('[SW] new version installed; will activate on next navigation');
                 }
@@ -899,14 +900,6 @@
           });
         })
         .catch(err => console.warn('[SW] registration failed:', err));
-      // Also listen for controller change (new SW taking over) and reload once.
-      let refreshed = false;
-      navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (refreshed) return;
-        refreshed = true;
-        console.log('[SW] controller changed; reloading to pick up new shell');
-        window.location.reload();
-      });
     });
   }
 </script>

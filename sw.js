@@ -15,7 +15,7 @@
  * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v5.0.0';
+const CACHE_VERSION = 'vnd-v5.1.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -93,11 +93,16 @@ self.addEventListener('fetch', event => {
   // Skip never-cache URLs
   if (NEVER_CACHE.some(n => url.href.includes(n))) return;
 
-  // For navigation requests, try network-first (so user gets fresh content),
-  // fall back to cached page if offline. Only fall back to /index.html for root.
+  // For navigation requests, try network-first with cache bypass (so user
+  // ALWAYS gets fresh HTML — never a stale HTTP-cached version), fall back
+  // to cached page only if offline. Only fall back to /index.html for root.
   if (req.mode === 'navigate') {
     event.respondWith(
-      fetch(req)
+      // { cache: 'no-cache' } forces the browser to ALWAYS validate with the
+      // server, bypassing the HTTP cache. GitHub Pages sets max-age=600 on
+      // HTML, so without this the SW could serve a stale HTML response for
+      // up to 10 minutes after a deploy.
+      fetch(req, { cache: 'no-cache' })
         .then(resp => {
           // Cache the latest navigation response
           if (resp && resp.status === 200) {
