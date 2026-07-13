@@ -6,11 +6,16 @@
  * and Google OAuth requests.
  *
  * Install: pre-caches the shell.
- * Activate: cleans up old cache versions.
+ * Activate: cleans up old cache versions + claims clients immediately.
  * Fetch: serves from cache, falls back to network, updates cache in background.
+ *
+ * CACHE_VERSION is bumped on every content change so returning visitors
+ * pick up the new shell within one page load. The page-side registration
+ * (in index.html) listens for 'updatefound' and posts SKIP_WAITING so
+ * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v4.3.0';
+const CACHE_VERSION = 'vnd-v5.0.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
