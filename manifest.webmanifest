@@ -1,5 +1,5 @@
 {
-  "name": "Victor Ndunda \u2014 AI Engineer & Founder",
+  "name": "Victor Ndunda — AI Engineer & Founder",
   "short_name": "Victor Ndunda",
   "description": "AI Engineer, Founder of Busara AI, Creator of AgentReplay, Builder of KilimoPRO. Based in Nairobi, Kenya.",
   "start_url": "/",
@@ -43,6 +43,14 @@
     "productivity",
     "developer"
   ],
+  "screenshots": [
+    {
+      "src": "/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ],
   "shortcuts": [
     {
       "name": "Resume",
@@ -52,22 +60,18 @@
       "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     },
     {
-      "name": "Dashboard Hub",
-      "short_name": "Dashboard",
-      "url": "/dashboard/",
-      "description": "Unified control center",
-      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
-    },
-    {
       "name": "Blog",
       "short_name": "Blog",
       "url": "/blog/",
-      "description": "Read latest articles",
+      "description": "Read latest articles and research",
       "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     },
-    ]
-    },
-    ]
+    {
+      "name": "Services",
+      "short_name": "Services",
+      "url": "/#services",
+      "description": "AI engineering services",
+      "icons": [{ "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }]
     }
   ]
 }

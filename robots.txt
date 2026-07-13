@@ -1,7 +1,42 @@
+# Victor Ndunda Portfolio — robots.txt
+# This file guides search engines and bots on how to crawl the site
+
 User-agent: *
 Allow: /
+Allow: /blog/
+Allow: /resume/
+Allow: /services/
+Allow: /feed.xml
+
+# Disallow private/admin areas
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /jobs/
+Disallow: /auth.js
+Disallow: /*.js$
+Disallow: /*.css$
 
+# Crawl delay (be respectful)
+Crawl-delay: 1
+
+# Sitemap location
 Sitemap: https://victorndunda.com/sitemap.xml
+
+# Additional directives for specific bots
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0.5
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 1
+
+# Block bad bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /

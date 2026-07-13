@@ -55,7 +55,17 @@
       'contact.label': 'Contact',
       'contact.title.pre': 'Let\'s build ',
       'contact.title.post': 'something.',
-      'footer.rights': '© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪'
+      'footer.rights': '© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪',
+      'services.package.audit': 'AI Audit',
+      'services.package.starter': 'AI Starter',
+      'services.package.growth': 'AI Growth',
+      'services.package.enterprise': 'AI Enterprise',
+      'now.label': 'Now',
+      'now.title.pre': 'What I\'m building ',
+      'now.title.post': 'right now.',
+      'blog.label': 'Blog',
+      'blog.title.pre': 'Research & ',
+      'blog.title.post': 'insights.'
     },
     sw: {
       'nav.home': 'Nyumbani',
@@ -99,7 +109,17 @@
       'contact.label': 'Wasiliana',
       'contact.title.pre': 'Tujenge ',
       'contact.title.post': 'jambo.',
-      'footer.rights': '© 2026 Victor Ndunda · Imejengwa Nairobi, Kenya 🇰🇪'
+      'footer.rights': '© 2026 Victor Ndunda · Imejengwa Nairobi, Kenya 🇰🇪',
+      'services.package.audit': '🔍 Ukaguzi wa AI',
+      'services.package.starter': '🚀 Mwanzo wa AI',
+      'services.package.growth': '📈 Ukuaji wa AI',
+      'services.package.enterprise': '🏢 AI kwa Biashara',
+      'now.label': 'Sasa',
+      'now.title.pre': 'Ninachojengea ',
+      'now.title.post': 'sasa.',
+      'blog.label': 'Blogu',
+      'blog.title.pre': 'Utafiti na ',
+      'blog.title.post': 'maoni.'
     }
   };
 
