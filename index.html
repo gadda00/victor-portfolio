@@ -875,7 +875,11 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      // updateViaCache: 'none' forces the browser to ALWAYS check for a new
+      // sw.js (bypassing the 24h HTTP cache). This is critical for content
+      // freshness — without it, returning visitors can be stuck with the
+      // old SW (and its stale cached shell) for up to 24 hours.
+      navigator.serviceWorker.register('/sw.js', { scope: '/', updateViaCache: 'none' })
         .then(reg => {
           console.log('[SW] registered with scope:', reg.scope);
           // Check for SW updates on every page load (browsers otherwise
