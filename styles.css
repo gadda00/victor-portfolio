@@ -192,6 +192,7 @@ html.light .theme-toggle .icon-moon { display: none; }
 .work-badge.kilimo { background: rgba(16,185,129,0.1); color: var(--accent-3); border: 1px solid rgba(16,185,129,0.2); }
 .work-badge.verxlite { background: rgba(168,85,247,0.12); color: var(--accent-2); border: 1px solid rgba(168,85,247,0.25); }
 .work-badge.research { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
+.work-badge.fraud { background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.25); }
 .work-card h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
 .work-card h4 { font-size: 1.125rem; margin-bottom: 0.5rem; }
 .work-card p { color: var(--text-muted); margin-bottom: 1rem; line-height: 1.7; }
