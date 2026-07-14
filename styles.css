@@ -182,12 +182,16 @@ html.light .theme-toggle .icon-moon { display: none; }
 
 /* ─── Work ───────────────────────────────────────────────────────── */
 .work-featured { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
-.work-card { padding: 2rem; border-radius: var(--radius); background: var(--bg-card); border: 1px solid var(--border); transition: all 0.4s; }
+.work-card { padding: 2rem; border-radius: var(--radius); background: var(--bg-card); border: 1px solid var(--border); transition: all 0.4s; position: relative; overflow: hidden; }
 .work-card.featured { padding: 2.5rem; }
+.work-card::before { content: ""; position: absolute; inset: 0; border-radius: var(--radius); padding: 1px; background: linear-gradient(135deg, transparent 40%, var(--accent) 60%, transparent 80%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity: 0; transition: opacity 0.4s; pointer-events: none; }
+.work-card:hover::before { opacity: 1; }
 .work-card:hover { border-color: var(--accent); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
 .work-badge { display: inline-flex; padding: 0.35rem 0.875rem; border-radius: 99px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 1rem; }
 .work-badge.busara { background: rgba(0,212,255,0.1); color: var(--accent); border: 1px solid rgba(0,212,255,0.2); }
 .work-badge.kilimo { background: rgba(16,185,129,0.1); color: var(--accent-3); border: 1px solid rgba(16,185,129,0.2); }
+.work-badge.verxlite { background: rgba(168,85,247,0.12); color: var(--accent-2); border: 1px solid rgba(168,85,247,0.25); }
+.work-badge.research { background: rgba(251,191,36,0.12); color: #fbbf24; border: 1px solid rgba(251,191,36,0.25); }
 .work-card h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
 .work-card h4 { font-size: 1.125rem; margin-bottom: 0.5rem; }
 .work-card p { color: var(--text-muted); margin-bottom: 1rem; line-height: 1.7; }
@@ -914,6 +918,8 @@ p, li, .about-text, .resume-bullets li {
 .now-card.kilimo { border-left-color: var(--accent-3); }
 .now-card.busara { border-left-color: var(--accent); }
 .now-card.research { border-left-color: var(--accent-2); }
+.now-card.verxlite { border-left-color: var(--accent-2); }
+.now-card.verxlite:hover { border-color: var(--accent-2); border-left-color: var(--accent-2); }
 .now-card-header {
   display: flex;
   align-items: center;
