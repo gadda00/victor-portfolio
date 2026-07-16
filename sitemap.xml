@@ -2,8 +2,14 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://victorndunda.com/</loc>
-    <lastmod>2026-07-13</lastmod>
+    <lastmod>2026-07-14</lastmod>
     <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/</loc>
+    <lastmod>2026-07-14</lastmod>
+    <priority>0.95</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>

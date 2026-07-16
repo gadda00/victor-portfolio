@@ -1,0 +1,289 @@
+{
+  "projects": [
+    {
+      "id": "busara-ai",
+      "name": "Busara AI",
+      "tagline": "Multi-agent data intelligence platform",
+      "description": "A multi-agent data intelligence PWA running a multi-agent system across a 7-stage parallel DAG pipeline (v7.0). Ingest → Engineer → Detect → Forecast → Infer → Report. Real statistical algorithms, not wrapper code. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA).",
+      "category": "AI Platform",
+      "status": "production",
+      "featured": true,
+      "priority": 1,
+      "github": null,
+      "liveUrl": "https://busaraai.com",
+      "repo": null,
+      "technologies": ["TypeScript", "Next.js 15", "Multi-Agent System", "7-Stage DAG", "GLM-4.6", "PostgreSQL", "PWA", "Flutterwave"],
+      "metrics": {
+        "stars": null,
+        "forks": null,
+        "languages": { "TypeScript": 85, "CSS": 10, "Other": 5 }
+      },
+      "visual": "dag-pipeline",
+      "accentColor": "#00d4ff",
+      "icon": "🚀",
+      "badge": "Flagship · Data Intelligence",
+      "badgeClass": "busara",
+      "links": [
+        { "label": "Live Demo", "url": "https://busaraai.com", "type": "primary" },
+        { "label": "GitHub", "url": "https://github.com/gadda00/IntelliFlow", "type": "secondary" }
+      ],
+      "highlights": [
+        "50 AI agents across 7 parallel DAG stages",
+        "Real statistical algorithms (Holt-Winters, OLS, K-Means++, GARCH)",
+        "4 pricing tiers with 99.9% SLA",
+        "Africa Market Intelligence agent (M-Pesa, AfCFTA, forex)"
+      ]
+    },
+    {
+      "id": "kilimopro",
+      "name": "KilimoPRO",
+      "tagline": "AI agricultural intelligence for 8 IGAD countries",
+      "description": "AI-powered agricultural intelligence for 8 IGAD countries (300M+ people). On-device crop disease detection (TFLite) for 15 crops, market forecasting with GARCH/VaR, multi-LLM advisory council in Swahili + English, 9 free keyless API endpoints, SMS webhook for feature phones. $0/month to operate — all 4 data sources free.",
+      "category": "Agricultural AI",
+      "status": "active",
+      "featured": true,
+      "priority": 2,
+      "github": "gadda00/kilimopro",
+      "liveUrl": null,
+      "repo": "https://github.com/gadda00/kilimopro",
+      "technologies": ["Next.js 14", "Drizzle ORM", "TFLite", "Open-Meteo", "FAOSTAT", "ICPAC", "Multi-LLM Council", "SMS", "Offline-First"],
+      "metrics": {
+        "stars": 1,
+        "forks": 0,
+        "languages": { "TypeScript": 70, "Python": 20, "Dart": 5, "Other": 5 }
+      },
+      "visual": "crop-scan",
+      "accentColor": "#10b981",
+      "icon": "🌱",
+      "badge": "Agricultural Intelligence",
+      "badgeClass": "kilimo",
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/gadda00/kilimopro", "type": "primary" },
+        { "label": "Case Study", "url": "/blog/articles/kilimopro-ai-for-farmers.html", "type": "secondary" }
+      ],
+      "highlights": [
+        "Serves 300M+ people across 8 IGAD countries",
+        "On-device crop disease detection for 15 crops (TFLite)",
+        "GARCH/VaR market price forecasting",
+        "Multi-LLM advisory council in Swahili + English",
+        "$0/month operating cost — all data sources free"
+      ]
+    },
+    {
+      "id": "fraud-detection-system",
+      "name": "Fraud Detection System",
+      "tagline": "Enterprise-grade real-time fraud scoring in Go",
+      "description": "A real-time transaction fraud scoring engine in Go — 7 statistical detectors (Z-Score, IQR, Velocity, Geo-Distance, Device Fingerprint, Merchant Risk, Behavioral Anomaly) fused by a weighted-vote ensemble, calibrated by logistic regression, overlaid with a deterministic rules engine. Scores in ~33 µs per transaction. Full case-management workflow, RBAC auth, Prometheus metrics, OTel tracing, and Slack alerts. 84% recall, 1.37% false-positive rate. Built for PCI-DSS / PSD2 / GDPR Article 22 compliance.",
+      "category": "Enterprise · Fintech",
+      "status": "active",
+      "featured": true,
+      "priority": 3,
+      "github": "gadda00/fraud-detection-system",
+      "liveUrl": null,
+      "repo": "https://github.com/gadda00/fraud-detection-system",
+      "technologies": ["Go 1.22", "Gin", "7 Detectors", "Weighted Ensemble", "Logistic Calibration", "Rules Engine", "Case Management", "RBAC + JWT", "Prometheus", "OpenTelemetry", "Slack Alerts", "Kubernetes"],
+      "metrics": {
+        "stars": 0,
+        "forks": 0,
+        "languages": { "Go": 92, "Dockerfile": 4, "Other": 4 }
+      },
+      "visual": "architecture-wireframe",
+      "accentColor": "#ef4444",
+      "icon": "🛡️",
+      "badge": "Enterprise · Regulated Finance",
+      "badgeClass": "fraud",
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/gadda00/fraud-detection-system", "type": "primary" },
+        { "label": "Architecture", "url": "https://github.com/gadda00/fraud-detection-system/blob/main/README.md", "type": "secondary" }
+      ],
+      "highlights": [
+        "7 statistical detectors with weighted-vote ensemble",
+        "~33 µs per-transaction scoring latency",
+        "84% recall, 1.37% false-positive rate",
+        "Full case management + RBAC + Prometheus + OTel",
+        "PCI-DSS / PSD2 / GDPR Article 22 compliant",
+        "Postgres + Kafka + Stripe + Email/SMS + Grafana + retraining pipeline"
+      ]
+    },
+    {
+      "id": "verxlite",
+      "name": "Verxlite",
+      "tagline": "Universal AI workflow agent for sales & ops",
+      "description": "A universal AI workflow agent for sales & ops teams. Automates post-meeting followups, lead assignment, support triage, approval routing, and weekly summaries across Gmail, Google Calendar, and HubSpot. Multi-tenant SaaS with real auth, OAuth, encrypted tokens, Celery workers, and Langfuse observability. Shipped with a transparent 281-defect code review and full P0/P1 remediation — 83 backend tests passing.",
+      "category": "SaaS · Sales & Ops",
+      "status": "active",
+      "featured": true,
+      "priority": 4,
+      "github": "gadda00/verxlite",
+      "liveUrl": null,
+      "repo": "https://github.com/gadda00/verxlite",
+      "technologies": ["Python", "FastAPI", "Celery", "Next.js 14", "SQLAlchemy 2", "Alembic", "Google OAuth", "HubSpot OAuth", "Langfuse", "Fernet"],
+      "metrics": {
+        "stars": 0,
+        "forks": 0,
+        "languages": { "Python": 60, "TypeScript": 30, "CSS": 7, "Other": 3 }
+      },
+      "visual": "workflow-pipeline",
+      "accentColor": "#a855f7",
+      "icon": "⚡",
+      "badge": "Sales & Ops Automation",
+      "badgeClass": "verxlite",
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/gadda00/verxlite", "type": "primary" },
+        { "label": "Code Review", "url": "https://github.com/gadda00/verxlite/blob/main/COMPREHENSIVE_CODE_REVIEW.md", "type": "secondary" }
+      ],
+      "highlights": [
+        "Multi-tenant SaaS with real auth (JWT + Clerk)",
+        "Google Workspace + HubSpot OAuth with token refresh",
+        "Fernet encryption for tokens at rest",
+        "Langfuse observability for every workflow step",
+        "281-defect code review + full P0/P1 remediation",
+        "83 backend tests, CI/CD all green"
+      ]
+    },
+    {
+      "id": "agentreplay",
+      "name": "AgentReplay",
+      "tagline": "Deterministic replay for AI agents — zero model calls",
+      "description": "Deterministic replay and counterfactual debugging for AI agents. Captures every LLM call, tool response, clock read, and RNG draw — then replays the run bit-exact with zero model calls. 0.67% overhead, 100% reproduction fidelity, 99 tests. LangGraph-first. Backed by a research whitepaper.",
+      "category": "Open-Source · Developer Tools",
+      "status": "shipped",
+      "featured": true,
+      "priority": 5,
+      "github": "gadda00/agentreplay",
+      "liveUrl": null,
+      "repo": "https://github.com/gadda00/agentreplay",
+      "technologies": ["Python", "LangGraph", "OpenAI SDK", "Anthropic SDK", "Deterministic Replay", "Counterfactual", "CI Regression"],
+      "metrics": {
+        "stars": 0,
+        "forks": 0,
+        "languages": { "Python": 95, "Other": 5 }
+      },
+      "visual": "replay-loop",
+      "accentColor": "#fbbf24",
+      "icon": "🔄",
+      "badge": "Open-Source · Agent Reliability",
+      "badgeClass": "research",
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/gadda00/agentreplay", "type": "primary" },
+        { "label": "Whitepaper", "url": "/blog/articles/agentreplay-deterministic-replay.html", "type": "secondary" }
+      ],
+      "highlights": [
+        "0.67% overhead, 100% reproduction fidelity",
+        "99 tests, MIT-licensed",
+        "Counterfactual mutation + CI regression corpus",
+        "LangGraph-first with adapters for OpenAI, Anthropic, CrewAI, AutoGen",
+        "Backed by a research whitepaper"
+      ]
+    },
+    {
+      "id": "intelliflow",
+      "name": "IntelliFlow",
+      "tagline": "33-agent self-evolving multi-agent platform",
+      "description": "33-agent self-evolving multi-agent data intelligence platform. 7-stage pipeline (Ingest → Engineer → Detect → Forecast → Infer → Cluster → Report) with trajectory-based learning inspired by the AReaL paper. Turborepo monorepo, Next.js 15, TypeScript, 18 passing tests.",
+      "category": "AI Platform",
+      "status": "active",
+      "featured": false,
+      "priority": 6,
+      "github": "gadda00/IntelliFlow",
+      "liveUrl": null,
+      "repo": "https://github.com/gadda00/IntelliFlow",
+      "technologies": ["TypeScript", "Multi-Agent", "Self-Evolving", "Turborepo", "Next.js 15"],
+      "metrics": {
+        "stars": 0,
+        "forks": 0,
+        "languages": { "TypeScript": 90, "Python": 5, "Other": 5 }
+      },
+      "visual": "agent-graph",
+      "accentColor": "#00d4ff",
+      "icon": "🧠",
+      "badge": "Multi-Agent · Self-Evolving",
+      "badgeClass": "busara",
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/gadda00/IntelliFlow", "type": "primary" }
+      ],
+      "highlights": [
+        "33 specialized agents in a 7-stage pipeline",
+        "Trajectory-based learning inspired by AReaL",
+        "Turborepo monorepo with Next.js 15",
+        "Foundation of the Busara AI platform"
+      ]
+    },
+    {
+      "id": "financial-forecasting-suite",
+      "name": "Financial Forecasting Suite",
+      "tagline": "Production-grade time series forecasting toolkit",
+      "description": "Production-grade time series forecasting toolkit for financial metrics. Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition, ensemble forecasting with automatic model selection. 87.3% mean accuracy (1-MAPE) across 12 financial metrics with 12-24 month forecast horizons.",
+      "category": "Data Science",
+      "status": "shipped",
+      "featured": false,
+      "priority": 7,
+      "github": "gadda00/financial-forecasting-suite",
+      "liveUrl": null,
+      "repo": "https://github.com/gadda00/financial-forecasting-suite",
+      "technologies": ["Python", "Holt-Winters", "ARIMA", "Ensemble"],
+      "metrics": {
+        "stars": 0,
+        "forks": 0,
+        "languages": { "Python": 95, "Other": 5 }
+      },
+      "visual": "chart-line",
+      "accentColor": "#10b981",
+      "icon": "📊",
+      "badge": "Quant Finance",
+      "badgeClass": "kilimo",
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/gadda00/financial-forecasting-suite", "type": "primary" }
+      ],
+      "highlights": [
+        "87.3% mean accuracy (1-MAPE) across 12 metrics",
+        "Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition",
+        "Automatic model selection + ensemble forecasting",
+        "12-24 month forecast horizons"
+      ]
+    },
+    {
+      "id": "customer-segmentation-engine",
+      "name": "Customer Segmentation Engine",
+      "tagline": "RFM + K-Means + GMM for actionable segmentation",
+      "description": "RFM analysis + K-Means + Gaussian Mixture Models for actionable customer segmentation. 6 optimal clusters (silhouette 0.42), 89% month-over-month stability, 23% increase in targeted campaign response rate. Built for financial services with 3D PCA/t-SNE visualizations.",
+      "category": "Data Science",
+      "status": "shipped",
+      "featured": false,
+      "priority": 8,
+      "github": "gadda00/customer-segmentation-engine",
+      "liveUrl": null,
+      "repo": "https://github.com/gadda00/customer-segmentation-engine",
+      "technologies": ["Python", "K-Means", "GMM", "RFM"],
+      "metrics": {
+        "stars": 0,
+        "forks": 0,
+        "languages": { "Python": 95, "Other": 5 }
+      },
+      "visual": "cluster-scatter",
+      "accentColor": "#a855f7",
+      "icon": "🎯",
+      "badge": "Data Science",
+      "badgeClass": "verxlite",
+      "links": [
+        { "label": "GitHub", "url": "https://github.com/gadda00/customer-segmentation-engine", "type": "primary" }
+      ],
+      "highlights": [
+        "6 optimal clusters (silhouette 0.42)",
+        "89% month-over-month stability",
+        "23% lift in campaign response rate",
+        "3D PCA/t-SNE visualizations"
+      ]
+    }
+  ],
+  "categories": [
+    { "id": "all", "label": "All Projects", "icon": "✨" },
+    { "id": "AI Platform", "label": "AI Platforms", "icon": "🧠" },
+    { "id": "Enterprise · Fintech", "label": "Enterprise & Fintech", "icon": "🛡️" },
+    { "id": "SaaS · Sales & Ops", "label": "SaaS & Automation", "icon": "⚡" },
+    { "id": "Agricultural AI", "label": "Agricultural AI", "icon": "🌱" },
+    { "id": "Open-Source · Developer Tools", "label": "Open-Source Tools", "icon": "🔄" },
+    { "id": "Data Science", "label": "Data Science", "icon": "📊" }
+  ],
+  "lastUpdated": "2026-07-14"
+}

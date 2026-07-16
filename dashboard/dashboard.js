@@ -178,15 +178,15 @@
     var visits = parseInt(localStorage.getItem('vn_visits') || '0', 10);
     return '<div class="page-head"><h1>Overview</h1><p>' + new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) + '</p></div>' +
       '<div class="stat-grid">' +
+      '<div class="stat"><div class="stat-label">Projects</div><div class="stat-val">' + (projectsData.length + getProjects().length) + '</div></div>' +
       '<div class="stat"><div class="stat-label">Articles</div><div class="stat-val">' + blogPosts.length + '</div></div>' +
       '<div class="stat"><div class="stat-label">Client Briefs</div><div class="stat-val">' + briefs.length + '</div></div>' +
-      '<div class="stat"><div class="stat-label">Job Apps</div><div class="stat-val">' + apps.length + '</div></div>' +
       '<div class="stat"><div class="stat-label">Resume DLs</div><div class="stat-val">' + resumeDls + '</div></div>' +
       '</div>' +
       '<div class="actions">' +
       '<a href="/services/wizard.html" class="action"><span class="icon">🚀</span>New Brief</a>' +
       '<a href="/jobs/" class="action"><span class="icon">🔍</span>Search Jobs</a>' +
-      '<a href="/blog/" class="action"><span class="icon">📝</span>View Blog</a>' +
+      '<a href="/projects/" class="action"><span class="icon">📦</span>View Projects</a>' +
       '<a href="/" class="action"><span class="icon">🌐</span>View Site</a>' +
       '</div>' +
       '<div class="card"><h3>Recent Activity</h3>' +
@@ -194,6 +194,179 @@
         return '<div class="activity"><div class="icon">📋</div><div class="txt">' + a.message + '</div><div class="time">' + timeAgo(a.timestamp) + '</div></div>';
       }).join('') : '<div class="empty"><div class="icon">📭</div>No activity yet.</div>') +
       '</div>';
+  };
+
+  // ─── Projects section ────────────────────────────────────────────
+  var projectsData = [];
+  fetch('/projects/projects.json').then(function (r) { return r.json(); }).then(function (d) { projectsData = d.projects || []; }).catch(function () {});
+
+  function getProjects() { try { return JSON.parse(localStorage.getItem('vn_projects') || '[]'); } catch (e) { return []; } }
+  function saveProjects(p) { localStorage.setItem('vn_projects', JSON.stringify(p)); }
+
+  sections.projects = function () {
+    var jsonProjects = projectsData;
+    var customProjects = getProjects();
+    var all = jsonProjects.concat(customProjects);
+
+    return '<div class="page-head"><h1>Projects</h1><p>Connect GitHub repos and manage your project showcase.</p></div>' +
+      '<div class="stat-grid">' +
+      '<div class="stat"><div class="stat-label">Total</div><div class="stat-val">' + all.length + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Featured</div><div class="stat-val">' + all.filter(function(p){return p.featured;}).length + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Open-Source</div><div class="stat-val">' + all.filter(function(p){return p.github;}).length + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Custom Added</div><div class="stat-val">' + customProjects.length + '</div></div>' +
+      '</div>' +
+      '<div class="actions">' +
+      '<button class="action" id="addProjectBtn" style="border:none;cursor:pointer;font-family:inherit"><span class="icon">➕</span>Add from GitHub</button>' +
+      '<a href="/projects/" class="action"><span class="icon">🌐</span>View Projects Page</a>' +
+      '<a href="/projects/projects.json" class="action"><span class="icon">📋</span>Edit projects.json</a>' +
+      '</div>' +
+      // Add project form (hidden by default)
+      '<div class="card" id="addProjectForm" style="display:none;margin-bottom:1rem">' +
+        '<h3 style="margin-bottom:1rem">Connect a GitHub Repository</h3>' +
+        '<label class="label">GitHub Repo (owner/repo)</label>' +
+        '<input class="input" id="newProjectRepo" placeholder="e.g. gadda00/my-new-project" />' +
+        '<label class="label">Display Name</label>' +
+        '<input class="input" id="newProjectName" placeholder="e.g. My Awesome Project" />' +
+        '<label class="label">Tagline</label>' +
+        '<input class="input" id="newProjectTagline" placeholder="One-line description" />' +
+        '<label class="label">Category</label>' +
+        '<select class="select" id="newProjectCategory">' +
+          '<option value="AI Platform">AI Platform</option>' +
+          '<option value="Enterprise · Fintech">Enterprise · Fintech</option>' +
+          '<option value="SaaS · Sales & Ops">SaaS · Sales & Ops</option>' +
+          '<option value="Agricultural AI">Agricultural AI</option>' +
+          '<option value="Open-Source · Developer Tools">Open-Source · Developer Tools</option>' +
+          '<option value="Data Science">Data Science</option>' +
+        '</select>' +
+        '<label class="label">Featured?</label>' +
+        '<select class="select" id="newProjectFeatured"><option value="false">No</option><option value="true">Yes</option></select>' +
+        '<button class="btn" id="saveProjectBtn" style="margin-top:0.5rem">Fetch & Save Project</button>' +
+        '<div id="addProjectStatus" style="margin-top:0.5rem;font-size:0.8rem;color:var(--txt2)"></div>' +
+      '</div>' +
+      // Project list
+      '<div class="card"><h3>Current Projects</h3>' +
+      '<table class="tbl"><thead><tr><th>Name</th><th>Category</th><th>Status</th><th>Repo</th><th>Featured</th><th>Actions</th></tr></thead><tbody>' +
+      all.map(function(p, i) {
+        var isCustom = i >= jsonProjects.length;
+        return '<tr>' +
+          '<td><strong>' + (p.icon || '') + ' ' + p.name + '</strong>' + (isCustom ? ' <span class="badge b-green">custom</span>' : '') + '</td>' +
+          '<td>' + (p.category || '—') + '</td>' +
+          '<td><span class="badge ' + (p.status === 'production' ? 'b-green' : p.status === 'active' ? 'b-blue' : 'b-gray') + '">' + (p.status || '—') + '</span></td>' +
+          '<td>' + (p.github ? '<a href="https://github.com/' + p.github + '" target="_blank" style="color:var(--acc)">' + p.github + '</a>' : '—') + '</td>' +
+          '<td>' + (p.featured ? '⭐' : '—') + '</td>' +
+          '<td>' + (isCustom ? '<button class="btn btn-sm btn-ghost" data-del-project="' + (i - jsonProjects.length) + '">Delete</button>' : '<span style="color:var(--txt3);font-size:0.75rem">json</span>') + '</td>' +
+        '</tr>';
+      }).join('') +
+      '</tbody></table></div>' +
+      '<div class="card" style="margin-top:1rem">' +
+        '<h3>How to add a project</h3>' +
+        '<p style="color:var(--txt2);font-size:0.85rem;line-height:1.6">' +
+        '<strong>Option 1 (Dashboard):</strong> Click "Add from GitHub" above, enter the repo (owner/repo), and click "Fetch & Save". The dashboard will pull live data from the GitHub API and save it to localStorage. Custom projects show up on the public projects page immediately.<br><br>' +
+        '<strong>Option 2 (Manual):</strong> Edit <a href="https://github.com/gadda00/victor-portfolio/edit/main/projects/projects.json" target="_blank" style="color:var(--acc)">projects/projects.json</a> directly on GitHub. Add a new entry to the <code>projects</code> array with all fields. Changes go live on the next deploy (GitHub Pages auto-rebuilds on push).' +
+        '</p>' +
+      '</div>';
+  };
+
+  listeners.projects = function () {
+    var addBtn = document.getElementById('addProjectBtn');
+    var form = document.getElementById('addProjectForm');
+    addBtn.addEventListener('click', function () {
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    });
+
+    var saveBtn = document.getElementById('saveProjectBtn');
+    saveBtn.addEventListener('click', function () {
+      var repo = document.getElementById('newProjectRepo').value.trim();
+      var name = document.getElementById('newProjectName').value.trim();
+      var tagline = document.getElementById('newProjectTagline').value.trim();
+      var category = document.getElementById('newProjectCategory').value;
+      var featured = document.getElementById('newProjectFeatured').value === 'true';
+
+      if (!repo || !name) {
+        document.getElementById('addProjectStatus').textContent = 'Repo and name are required.';
+        return;
+      }
+
+      document.getElementById('addProjectStatus').textContent = 'Fetching from GitHub...';
+
+      // Fetch repo data from GitHub API
+      fetch('https://api.github.com/repos/' + repo)
+        .then(function (r) {
+          if (!r.ok) throw new Error('Repo not found');
+          return r.json();
+        })
+        .then(function (data) {
+          // Fetch languages
+          return fetch('https://api.github.com/repos/' + repo + '/languages')
+            .then(function (r) { return r.json(); })
+            .then(function (langs) {
+              var langArr = Object.keys(langs).slice(0, 5);
+              var totalBytes = 0;
+              for (var l in langs) totalBytes += langs[l];
+              var langPct = {};
+              for (var l2 in langs) langPct[l2] = Math.round(langs[l2] / totalBytes * 100);
+
+              var newProject = {
+                id: name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+                name: name,
+                tagline: tagline || data.description || 'A new project',
+                description: data.description || tagline || 'A new project by Victor Ndunda.',
+                category: category,
+                status: data.archived ? 'shipped' : 'active',
+                featured: featured,
+                priority: 99,
+                github: repo,
+                liveUrl: data.homepage || null,
+                repo: data.html_url,
+                technologies: langArr,
+                metrics: {
+                  stars: data.stargazers_count,
+                  forks: data.forks_count,
+                  languages: langPct
+                },
+                visual: 'chart-line',
+                accentColor: '#00d4ff',
+                icon: '📦',
+                badge: category,
+                badgeClass: 'busara',
+                links: [
+                  { label: 'GitHub', url: data.html_url, type: 'primary' }
+                ],
+                highlights: [
+                  data.language ? 'Primary language: ' + data.language : 'Multi-language',
+                  'Stars: ' + data.stargazers_count,
+                  'Forks: ' + data.forks_count,
+                  data.license ? 'License: ' + data.license.spdx_id : 'MIT'
+                ]
+              };
+
+              var custom = getProjects();
+              custom.push(newProject);
+              saveProjects(custom);
+
+              document.getElementById('addProjectStatus').textContent = '✅ Project saved! It will appear on the public projects page.';
+              window.__toast('Project added successfully!', 'success');
+
+              // Refresh the view
+              setTimeout(function () { switchSection('projects'); }, 1500);
+            });
+        })
+        .catch(function (err) {
+          document.getElementById('addProjectStatus').textContent = '❌ Error: ' + err.message + '. You can still add manually via projects.json.';
+        });
+    });
+
+    // Delete custom project
+    document.querySelectorAll('[data-del-project]').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var idx = parseInt(btn.getAttribute('data-del-project'), 10);
+        var custom = getProjects();
+        custom.splice(idx, 1);
+        saveProjects(custom);
+        window.__toast('Project deleted.', 'warn');
+        switchSection('projects');
+      });
+    });
   };
 
   sections.content = function () {
