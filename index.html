@@ -116,18 +116,19 @@
 <meta property="og:image" content="https://victorndunda.com/og-image.png" />
 <meta property="og:site_name" content="Victor Ndunda" />
 <meta property="og:locale" content="en_US" />
-<meta name="theme-color" content="#0a0e1a" />
+<meta name="theme-color" content="#04060e" />
 <meta name="color-scheme" content="dark light" />
 <link rel="canonical" href="https://victorndunda.com/" />
 <link rel="alternate" type="application/rss+xml" title="Victor Ndunda — Blog" href="https://victorndunda.com/feed.xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=5.4.0" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css?v=6.0.0" />
+<link rel="stylesheet" href="home.css?v=6.0.0" />
 
 <!-- Performance: Preload critical resources -->
-<link rel="preload" href="/styles.css?v=5.4.0" as="style" />
-<link rel="preload" href="/app.js?v=5.4.0" as="script" crossorigin />
+<link rel="preload" href="/home.css?v=6.0.0" as="style" />
+<link rel="preload" href="/app.js?v=6.0.0" as="script" crossorigin />
 <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
 <link rel="dns-prefetch" href="https://busaraai.com" />
@@ -136,7 +137,6 @@
 <link rel="dns-prefetch" href="https://api.github.com" />
 <link rel="dns-prefetch" href="https://api.web3forms.com" />
 <link rel="dns-prefetch" href="https://app.cal.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
 <!-- View Transitions API (cross-page navigation, Chrome 115+) -->
 <meta name="view-transition" content="same-origin" />
@@ -148,33 +148,21 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
-<meta name="referrer" content="strict-origin-when-cross-origin" />
-<meta name="permissions-policy" content="camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=(), interest-cohort=(), clipboard-read=(), clipboard-write=()" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com https://www.googletagmanager.com https://app.cal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://accounts.google.com https://www.arbeitnow.com https://remoteok.com https://api.github.com https://api.web3forms.com https://app.cal.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com; frame-ancestors 'self'; upgrade-insecure-requests" />
-<meta http-equiv="X-Content-Type-Options" content="nosniff" />
-<meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
-<meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1" />
-<meta name="bingbot" content="index, follow, max-image-preview:large" />
-<script>try{var l=localStorage.getItem("vn_lang");if(l)document.documentElement.lang=l;}catch(e){}</script>
+
+<!-- Open Graph article tags -->
+<meta property="article:author" content="Victor Ndunda" />
+<meta property="article:section" content="Technology" />
+<meta property="article:tag" content="AI Engineering" />
 </head>
 <body>
-
-<!-- Skip to content link for keyboard users -->
 <a href="#main" class="skip-link">Skip to content</a>
 
-<!-- Noise texture overlay -->
-<div class="noise-overlay" aria-hidden="true"></div>
-
 <!-- Navigation -->
-<nav id="nav" aria-label="Main navigation">
+<nav id="nav" aria-label="Primary navigation">
   <div class="nav-inner">
-    <a href="/" class="logo" aria-label="Victor Ndunda home">
-      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" aria-hidden="true">
-        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="var(--accent)"/><stop offset="0.5" stop-color="var(--accent-2)"/><stop offset="1" stop-color="var(--accent-3)"/>
-        </linearGradient></defs>
+    <a href="#hero" class="logo" aria-label="Victor Ndunda — home">
+      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs>
         <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
         <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
         <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
@@ -239,6 +227,7 @@
   <canvas id="bgCanvas"></canvas>
   <div class="hero-content">
     <div class="hero-badge"><span class="pulse-dot"></span> <span data-i18n-key="hero.badge">Available for select Q3 2026 engagements · Nairobi 🇰🇪</span></div>
+    <div class="hero-kicker">Victor Ndunda builds intelligent systems that work in the real world.</div>
     <h1 class="hero-title">
       <span class="hero-line">AI Engineer</span>
       <span class="hero-line gradient-animated">Founder</span>
@@ -276,11 +265,12 @@
   <div class="scroll-hint">↓</div>
 </section>
 
+
 <!-- About -->
 <section id="about" class="section">
   <div class="container">
     <div class="section-head">
-      <span class="label">About</span>
+      <span class="label" data-n="01">About</span>
       <h2>Hi, I'm Victor — <span class="grad-text">nice to meet you.</span></h2>
     </div>
     <div class="about-grid">
@@ -291,22 +281,22 @@
         <p>I also take on select client work — AI audits, custom agent systems, and full-stack builds. If you have a problem that needs real engineering (not a wrapper around ChatGPT), <strong>I'd love to hear from you</strong>.</p>
       </div>
       <div class="about-cards">
-        <div class="about-card">
+        <div class="about-card spot-card">
           <div class="card-icon">🤝</div>
           <h4>End-to-End Builds</h4>
           <p>From scoping audit to production deployment. Full-stack: Next.js, FastAPI, Flutter, PostgreSQL, Docker, Kubernetes.</p>
         </div>
-        <div class="about-card">
+        <div class="about-card spot-card">
           <div class="card-icon">🧠</div>
           <h4>Multi-Agent & RAG</h4>
           <p>Multi-agent DAG orchestration, RAG with pgvector/Pinecone, hybrid search, reranking. LangChain, LangGraph, CrewAI.</p>
         </div>
-        <div class="about-card">
+        <div class="about-card spot-card">
           <div class="card-icon">📊</div>
           <h4>Real Math, Not Vibes</h4>
           <p>Holt-Winters forecasting, GARCH/VaR, K-Means++, OLS regression, Granger causality — implemented from scratch.</p>
         </div>
-        <div class="about-card">
+        <div class="about-card spot-card">
           <div class="card-icon">🌍</div>
           <h4>Built for Africa</h4>
           <p>Offline-first, low-bandwidth, Swahili-capable. Systems that work on $80 phones and over SMS/USSD.</p>
@@ -317,13 +307,13 @@
     <!-- Education timeline -->
     <div class="education-block" id="education">
       <div class="education-head">
-        <span class="label">Education</span>
+        <span class="label" data-n="02">Education</span>
         <h3>Academic <span class="grad-text">foundation.</span></h3>
       </div>
       <div class="education-timeline">
         <div class="edu-item">
           <div class="edu-dot"></div>
-          <div class="edu-card">
+          <div class="edu-card spot-card">
             <div class="edu-period">2014 — 2018</div>
             <h4 class="edu-degree">B.Sc. in Computer Science</h4>
             <div class="edu-school">University of Embu · Embu, Kenya</div>
@@ -335,7 +325,7 @@
         </div>
         <div class="edu-item">
           <div class="edu-dot edu-dot-muted"></div>
-          <div class="edu-card edu-card-soft">
+          <div class="edu-card spot-card">
             <div class="edu-period">Ongoing</div>
             <h4 class="edu-degree">Continuous Learning &amp; Certifications</h4>
             <div class="edu-school">Self-directed · Open source · AI certifications</div>
@@ -364,32 +354,32 @@
 <section id="services" class="section">
   <div class="container">
     <div class="section-head">
-      <span class="label">Services</span>
+      <span class="label" data-n="03">Services</span>
       <h2>What I can <span class="grad-text">build for you.</span></h2>
       <p class="section-sub">AI engineering for every stage — from a focused audit to a full multi-agent system. Built to ship, work in Swahili, and run on the devices your users actually have.</p>
     </div>
 
     <!-- Packages quick view -->
     <div class="svc-quick-grid">
-      <a href="/services/#packages-section" class="svc-quick-card svc-quick-audit">
+      <a href="/services/#packages-section" class="svc-quick-card spot-card">
         <div class="svc-quick-icon">🔍</div>
         <div class="svc-quick-name">AI Audit</div>
         <div class="svc-quick-desc">Find your highest-ROI AI opportunities in 1–2 weeks</div>
         <div class="svc-quick-price">From $4,500 · KES 350K</div>
       </a>
-      <a href="/services/#packages-section" class="svc-quick-card svc-quick-starter">
+      <a href="/services/#packages-section" class="svc-quick-card spot-card">
         <div class="svc-quick-icon">🚀</div>
         <div class="svc-quick-name">AI Starter</div>
         <div class="svc-quick-desc">First working AI tool for SMBs & micro-businesses</div>
         <div class="svc-quick-price">From $2,500 · KES 200K</div>
       </a>
-      <a href="/services/#packages-section" class="svc-quick-card svc-quick-growth">
+      <a href="/services/#packages-section" class="svc-quick-card spot-card">
         <div class="svc-quick-icon">📈</div>
         <div class="svc-quick-name">AI Growth</div>
         <div class="svc-quick-desc">Production AI integrated with your CRM/ERP stack</div>
         <div class="svc-quick-price">From $14,000 · KES 1.1M</div>
       </a>
-      <a href="/services/#packages-section" class="svc-quick-card svc-quick-enterprise">
+      <a href="/services/#packages-section" class="svc-quick-card spot-card">
         <div class="svc-quick-icon">🏢</div>
         <div class="svc-quick-name">AI Enterprise</div>
         <div class="svc-quick-desc">Custom multi-agent systems, fine-tuned models, SLAs</div>
@@ -398,11 +388,11 @@
     </div>
 
     <div class="services-cta-row">
-      <a href="/services/" class="btn btn-primary services-cta-btn">
+      <a href="/services/" class="btn btn-primary">
         Explore all services & pricing
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
       </a>
-      <a href="/services/wizard.html" class="btn btn-ghost services-cta-btn services-cta-btn-secondary">
+      <a href="/services/wizard.html" class="btn btn-ghost">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
         Try the Project Scope Wizard
       </a>
@@ -410,17 +400,16 @@
   </div>
 </section>
 
-
 <!-- Now / Currently Building -->
 <section id="now" class="now-section section">
   <div class="container">
     <div class="section-head">
-      <span class="label"><span class="pulse-dot"></span> Now</span>
+      <span class="label" data-n="04"><span class="pulse-dot"></span> Now</span>
       <h2>What I'm <span class="grad-text">building right now.</span></h2>
       <p class="section-sub">A live snapshot of active projects, updated as I ship. No vanity metrics — just real work in progress.</p>
     </div>
     <div class="now-grid">
-      <div class="now-card busara">
+      <div class="now-card spot-card busara">
         <div class="now-card-header">
           <div class="now-card-title">🚀 Busara AI — Pipeline v3</div>
           <div class="now-card-status">In Production</div>
@@ -434,7 +423,7 @@
           <span>ETA: Aug 2026</span>
         </div>
       </div>
-      <div class="now-card kilimo">
+      <div class="now-card spot-card kilimo">
         <div class="now-card-header">
           <div class="now-card-title">🌱 KilimoPRO — Offline-First v2</div>
           <div class="now-card-status">Active Development</div>
@@ -448,7 +437,7 @@
           <span>ETA: Sep 2026</span>
         </div>
       </div>
-      <div class="now-card research now-card-shipped">
+      <div class="now-card spot-card research now-card-shipped">
         <div class="now-card-header">
           <div class="now-card-title">🔄 AgentReplay — Deterministic Replay for AI Agents</div>
           <div class="now-card-status now-status-shipped">✓ Shipped · v0.1.0</div>
@@ -462,7 +451,7 @@
           <span>Live on GitHub</span>
         </div>
       </div>
-      <div class="now-card verxlite">
+      <div class="now-card spot-card verxlite">
         <div class="now-card-header">
           <div class="now-card-title">⚡ Verxlite — Universal AI Workflow Agent</div>
           <div class="now-card-status">Active Development</div>
@@ -476,7 +465,7 @@
           <span>ETA: Sep 2026</span>
         </div>
       </div>
-      <div class="now-card research">
+      <div class="now-card spot-card research">
         <div class="now-card-header">
           <div class="now-card-title">📊 Research — GARCH for Agri Markets</div>
           <div class="now-card-status">Writing</div>
@@ -490,7 +479,7 @@
           <span>ETA: Aug 2026</span>
         </div>
       </div>
-      <div class="now-card research">
+      <div class="now-card spot-card research">
         <div class="now-card-header">
           <div class="now-card-title">🎓 AI Engineer Certifications</div>
           <div class="now-card-status">In Progress</div>
@@ -512,37 +501,49 @@
 <section id="work" class="section">
   <div class="container">
     <div class="section-head">
-      <span class="label">Featured Work</span>
+      <span class="label" data-n="05">Featured Work</span>
       <h2>Platforms I've <span class="grad-text">built.</span></h2>
       <p class="section-sub">Five production systems I'm actively building and maintaining. Not demos — real users, real data, real consequences.</p>
     </div>
     <div class="work-featured">
-      <!-- Busara AI -->
-      <div class="work-card featured">
-        <div class="work-badge busara">🚀 Flagship · Data Intelligence</div>
-        <h3>Busara AI</h3>
-        <p>A multi-agent data intelligence PWA running a <strong>multi-agent system</strong> across a <strong>7-stage parallel DAG pipeline</strong> (v7.0). Ingest → Engineer → Detect → Forecast → Infer → Report. Real statistical algorithms, not wrapper code. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA).</p>
-        <div class="work-tags">
-          <span>TypeScript</span><span>Next.js 15</span><span>Multi-Agent System</span><span>7-Stage DAG</span><span>GLM-4.6</span><span>PostgreSQL</span><span>PWA</span><span>Flutterwave</span>
-        </div>
-        <div class="dag-viz">
-          <div class="dag-stages">
-            <div class="dag-stage"><span class="stage-name">Ingest</span><span class="stage-count">10</span></div>
-            <span class="dag-arrow">→</span>
-            <div class="dag-stage"><span class="stage-name">Engineer</span><span class="stage-count">10</span></div>
-            <span class="dag-arrow">→</span>
-            <div class="dag-stage"><span class="stage-name">Detect</span><span class="stage-count">10</span></div>
-            <span class="dag-arrow">→</span>
-            <div class="dag-stage"><span class="stage-name">Forecast</span><span class="stage-count">4</span></div>
-            <span class="dag-arrow">→</span>
-            <div class="dag-stage"><span class="stage-name">Infer</span><span class="stage-count">8</span></div>
-            <span class="dag-arrow">→</span>
-            <div class="dag-stage"><span class="stage-name">Report</span><span class="stage-count">8</span></div>
+      <!-- Busara AI — flagship bento hero -->
+      <div class="work-card featured work-card-flagship">
+        <div class="flagship-grid">
+          <div class="flagship-main">
+            <div class="work-badge busara">🚀 Flagship · Data Intelligence</div>
+            <h3>Busara AI</h3>
+            <p>A multi-agent data intelligence PWA running a <strong>multi-agent system</strong> across a <strong>7-stage parallel DAG pipeline</strong> (v7.0). Real statistical algorithms, not wrapper code. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA).</p>
+            <div class="work-tags">
+              <span>TypeScript</span><span>Next.js 15</span><span>Multi-Agent System</span><span>7-Stage DAG</span><span>GLM-4.6</span><span>PostgreSQL</span><span>PWA</span><span>Flutterwave</span>
+            </div>
+            <div class="work-links">
+              <a href="https://busaraai.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Demo ↗</a>
+              <a href="https://github.com/gadda00/IntelliFlow" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">GitHub</a>
+            </div>
           </div>
-        </div>
-        <div class="work-links">
-          <a href="https://busaraai.com" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Demo ↗</a>
-          <a href="https://github.com/gadda00/IntelliFlow" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">GitHub</a>
+          <div class="flagship-side">
+            <div class="dag-viz">
+              <div class="dag-title">7-Stage Pipeline · v7.0</div>
+              <div class="dag-stages">
+                <div class="dag-stage"><span class="stage-name">Ingest</span><span class="stage-count">10</span></div>
+                <span class="dag-arrow">→</span>
+                <div class="dag-stage"><span class="stage-name">Engineer</span><span class="stage-count">10</span></div>
+                <span class="dag-arrow">→</span>
+                <div class="dag-stage"><span class="stage-name">Detect</span><span class="stage-count">10</span></div>
+                <span class="dag-arrow">→</span>
+                <div class="dag-stage"><span class="stage-name">Forecast</span><span class="stage-count">4</span></div>
+                <span class="dag-arrow">→</span>
+                <div class="dag-stage"><span class="stage-name">Infer</span><span class="stage-count">8</span></div>
+                <span class="dag-arrow">→</span>
+                <div class="dag-stage"><span class="stage-name">Report</span><span class="stage-count">8</span></div>
+              </div>
+            </div>
+            <div class="work-metrics">
+              <div class="work-metric"><span class="wm-num">50</span><span class="wm-lbl">Agents</span></div>
+              <div class="work-metric"><span class="wm-num">7</span><span class="wm-lbl">Stages</span></div>
+              <div class="work-metric"><span class="wm-num">99.9%</span><span class="wm-lbl">SLA</span></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -593,6 +594,12 @@
         <div class="work-badge fraud">🛡️ Enterprise · Regulated Finance</div>
         <h3>Fraud Detection System</h3>
         <p>A real-time transaction fraud scoring engine in Go — <strong>7 statistical detectors</strong> (Z-Score, IQR, Velocity, Geo-Distance, Device Fingerprint, Merchant Risk, Behavioral Anomaly) fused by a weighted-vote ensemble, calibrated by logistic regression, and overlaid with a deterministic rules engine. Scores in <strong>~33 µs</strong> per transaction. Full case-management workflow, RBAC auth, Prometheus metrics, OTel tracing, and Slack alerts. 84% recall, 1.37% false-positive rate on 1,000 labelled transactions. Built for PCI-DSS / PSD2 / GDPR Article 22 compliance.</p>
+        <div class="work-metrics">
+          <div class="work-metric"><span class="wm-num">~33µs</span><span class="wm-lbl">Score latency</span></div>
+          <div class="work-metric"><span class="wm-num">84%</span><span class="wm-lbl">Recall</span></div>
+          <div class="work-metric"><span class="wm-num">1.37%</span><span class="wm-lbl">False positives</span></div>
+          <div class="work-metric"><span class="wm-num">7</span><span class="wm-lbl">Detectors</span></div>
+        </div>
         <div class="work-tags">
           <span>Go 1.22</span><span>Gin</span><span>7 Detectors</span><span>Weighted Ensemble</span><span>Logistic Calibration</span><span>Rules Engine</span><span>Case Management</span><span>RBAC + JWT</span><span>Prometheus</span><span>OpenTelemetry</span><span>Slack Alerts</span><span>Kubernetes</span>
         </div>
@@ -605,34 +612,34 @@
 
     <!-- More Projects -->
     <div class="work-grid">
-      <div class="work-card">
+      <div class="work-card spot-card">
         <h4>IntelliFlow (Busara AI)</h4>
         <p>33-agent self-evolving multi-agent data intelligence platform. 7-stage pipeline with trajectory-based learning inspired by the AReaL paper. Turborepo monorepo, Next.js 15.</p>
         <div class="work-tags"><span>TypeScript</span><span>Multi-Agent</span><span>Self-Evolving</span><span>Turborepo</span></div>
         <a href="https://github.com/gadda00/IntelliFlow" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
       </div>
-      <div class="work-card">
+      <div class="work-card spot-card">
         <h4>Financial Forecasting Suite</h4>
         <p>Production-grade time series forecasting toolkit. Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition, ensemble forecasting with auto model selection. 87.3% mean accuracy across 12 financial metrics.</p>
         <div class="work-tags"><span>Python</span><span>Holt-Winters</span><span>ARIMA</span><span>Ensemble</span></div>
         <a href="https://github.com/gadda00/financial-forecasting-suite" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
       </div>
-      <div class="work-card">
-        <h4>Fraud Detection System</h4>
-        <p>Go microservice for real-time transaction fraud scoring. Z-Score + IQR + Velocity detectors in a weighted-vote ensemble. Scores transactions in ~50–300µs. Explainable alerts for regulated finance.</p>
-        <div class="work-tags"><span>Go</span><span>Real-time</span><span>Ensemble</span><span>Explainable AI</span></div>
-        <a href="https://github.com/gadda00/fraud-detection-system" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
-      </div>
-      <div class="work-card">
+      <div class="work-card spot-card">
         <h4>Customer Segmentation Engine</h4>
         <p>RFM analysis + K-Means + Gaussian Mixture Models for actionable customer segmentation. 6 optimal clusters, 89% month-over-month stability, 23% lift in campaign response rate. Built for financial services.</p>
         <div class="work-tags"><span>Python</span><span>K-Means</span><span>GMM</span><span>RFM</span></div>
         <a href="https://github.com/gadda00/customer-segmentation-engine" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
       </div>
+      <div class="work-card spot-card">
+        <h4>Eco Africa Awards</h4>
+        <p>Celebrating climate leadership across Africa — an initiative of ACLA. Built with Next.js, Three.js, and AI. Live at ecoafricaawards.com.</p>
+        <div class="work-tags"><span>TypeScript</span><span>Next.js</span><span>Three.js</span><span>AI</span></div>
+        <a href="https://github.com/gadda00/eco-africa-awards" target="_blank" rel="noopener noreferrer" class="work-link">GitHub →</a>
+      </div>
     </div>
 
     <!-- CTA to full projects page -->
-    <div style="text-align:center;margin-top:3rem">
+    <div class="work-cta-row">
       <a href="/projects/" class="btn btn-primary" style="padding:1rem 2rem;font-size:1rem">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         Explore All Projects
@@ -655,7 +662,7 @@
 <section id="techstack" class="techstack-section section">
   <div class="container">
     <div class="section-head">
-      <span class="label">Tech Stack</span>
+      <span class="label" data-n="06">Tech Stack</span>
       <h2>Tools I <span class="grad-text">build with.</span></h2>
       <p class="section-sub">Click a category to filter. Every tool here is something I've shipped to production — from multi-agent DAGs to on-device ML.</p>
     </div>
@@ -678,6 +685,7 @@
       <div class="tech-item" data-cat="lang"><div class="tech-item-icon">🎯</div><div class="tech-item-name">Dart</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:82%"></div></div></div>
       <div class="tech-item" data-cat="lang"><div class="tech-item-icon">🗄️</div><div class="tech-item-name">SQL</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
       <div class="tech-item" data-cat="lang"><div class="tech-item-icon">💻</div><div class="tech-item-name">Bash</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:80%"></div></div></div>
+      <div class="tech-item" data-cat="lang"><div class="tech-item-icon">🐹</div><div class="tech-item-name">Go</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:78%"></div></div></div>
 
       <!-- LLMs & Foundation Models -->
       <div class="tech-item" data-cat="llm"><div class="tech-item-icon">🧠</div><div class="tech-item-name">GPT (OpenAI)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:93%"></div></div></div>
@@ -744,14 +752,14 @@
 <section class="section" id="github">
   <div class="container">
     <div class="section-head">
-      <span class="label">Open Source</span>
+      <span class="label" data-n="07">Open Source</span>
       <h2>Recent <span class="grad-text">GitHub activity.</span></h2>
       <p class="section-sub">Live from my GitHub — what I've been pushing lately. Updated in real-time via the GitHub API.</p>
     </div>
     <div class="gh-widget" id="githubActivity">
       <div class="gh-empty">Loading recent repositories…</div>
     </div>
-    <div style="text-align:center;margin-top:2rem">
+    <div class="gh-cta-row">
       <a href="https://github.com/gadda00" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg>
         View all repos on GitHub
@@ -761,17 +769,16 @@
   </div>
 </section>
 
-
 <!-- Open-source impact / Featured in -->
 <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-head">
   <div class="container">
     <div class="section-head">
-      <span class="label">Open-Source Impact</span>
+      <span class="label" data-n="08">Open-Source Impact</span>
       <h2>Work that <span class="grad-text">travels.</span></h2>
       <p class="section-sub">Public repositories, real commits, verifiable impact. No vanity metrics — just code shipped and research published.</p>
     </div>
     <div class="testimonials-grid">
-      <div class="testimonial-card">
+      <div class="testimonial-card spot-card">
         <p class="testimonial-quote">AgentReplay — deterministic replay for AI agents. <strong>99 tests</strong>, <strong>0.67% overhead</strong>, <strong>100% reproduction fidelity</strong>. MIT-licensed, whitepaper published.</p>
         <div class="testimonial-author">
           <div class="testimonial-avatar">⚙️</div>
@@ -781,7 +788,7 @@
           </div>
         </div>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card spot-card">
         <p class="testimonial-quote">KilimoPRO — offline-first AI for 8 IGAD countries (300M+ people). On-device crop disease detection for 15 crops, GARCH/VaR market forecasting, multi-LLM advisory council. $0/month to operate.</p>
         <div class="testimonial-author">
           <div class="testimonial-avatar">🌱</div>
@@ -791,7 +798,7 @@
           </div>
         </div>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card spot-card">
         <p class="testimonial-quote">Verxlite — universal AI workflow agent for sales & ops. FastAPI + Celery + Next.js, Google Workspace & HubSpot OAuth, encrypted tokens, Langfuse observability. <strong>83 tests passing</strong> after a transparent 281-defect code review.</p>
         <div class="testimonial-author">
           <div class="testimonial-avatar">⚡</div>
@@ -801,7 +808,7 @@
           </div>
         </div>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card spot-card">
         <p class="testimonial-quote">Fraud Detection System — real-time transaction scoring in Go. <strong>7 statistical detectors</strong>, weighted ensemble, logistic calibration, rules engine, case management, RBAC, Prometheus, OTel. <strong>84% recall</strong>, 1.37% FPR, ~33 µs per score. PCI-DSS / PSD2 / GDPR Article 22 ready.</p>
         <div class="testimonial-author">
           <div class="testimonial-avatar">🛡️</div>
@@ -811,7 +818,7 @@
           </div>
         </div>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card spot-card">
         <p class="testimonial-quote">Busara AI — multi-agent data intelligence platform. Multi-agent system, 7-stage DAG pipeline, PWA, 4 pricing tiers. Live at busaraai.com serving real users.</p>
         <div class="testimonial-author">
           <div class="testimonial-avatar">🚀</div>
@@ -821,7 +828,7 @@
           </div>
         </div>
       </div>
-      <div class="testimonial-card">
+      <div class="testimonial-card spot-card">
         <p class="testimonial-quote">10 long-form technical articles on multi-agent AI, agricultural intelligence, statistical engineering, and agent reliability research. <strong>22,000+ words</strong> of documented work.</p>
         <div class="testimonial-author">
           <div class="testimonial-avatar">📝</div>
@@ -839,36 +846,36 @@
 <section id="contact" class="section">
   <div class="container">
     <div class="section-head">
-      <span class="label">Contact</span>
+      <span class="label" data-n="09">Contact</span>
       <h2>Let's build <span class="grad-text">something.</span></h2>
       <p class="section-sub">Open to collaborations on AI products, agricultural technology, and ambitious African tech.</p>
     </div>
     <div class="contact-grid">
-      <a href="mailto:mututandunda@gmail.com" class="contact-card">
+      <a href="mailto:mututandunda@gmail.com" class="contact-card spot-card">
         <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg></div>
         <div><div class="contact-label">Email</div><div class="contact-value">mututandunda@gmail.com</div></div>
       </a>
-      <a href="tel:+254724346971" class="contact-card">
+      <a href="tel:+254724346971" class="contact-card spot-card">
         <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
         <div><div class="contact-label">Phone</div><div class="contact-value">+254 724 346 971</div></div>
       </a>
-      <a href="https://wa.me/254724346971" target="_blank" rel="noopener noreferrer" class="contact-card">
+      <a href="https://wa.me/254724346971" target="_blank" rel="noopener noreferrer" class="contact-card spot-card">
         <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/></svg></div>
         <div><div class="contact-label">WhatsApp</div><div class="contact-value">Chat with me</div></div>
       </a>
-      <a href="https://github.com/gadda00" target="_blank" rel="noopener noreferrer" class="contact-card">
+      <a href="https://github.com/gadda00" target="_blank" rel="noopener noreferrer" class="contact-card spot-card">
         <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.3.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 4.6 18 4.9 18 4.9c.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></svg></div>
         <div><div class="contact-label">GitHub</div><div class="contact-value">@gadda00</div></div>
       </a>
-      <a href="https://www.linkedin.com/in/victor-ndunda" target="_blank" rel="noopener noreferrer" class="contact-card">
+      <a href="https://www.linkedin.com/in/victor-ndunda" target="_blank" rel="noopener noreferrer" class="contact-card spot-card">
         <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3v9zm-1.5-10.3a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM19 19h-3v-4.7c0-1.1 0-2.5-1.5-2.5s-1.8 1.2-1.8 2.4V19h-3v-9h2.9v1.2h.04c.4-.75 1.4-1.5 2.8-1.5 3 0 3.6 2 3.6 4.5V19z"/></svg></div>
         <div><div class="contact-label">LinkedIn</div><div class="contact-value">Victor Ndunda</div></div>
       </a>
-      <a href="https://busaraai.com" target="_blank" rel="noopener noreferrer" class="contact-card">
+      <a href="https://busaraai.com" target="_blank" rel="noopener noreferrer" class="contact-card spot-card">
         <div class="contact-icon">🚀</div>
         <div><div class="contact-label">Busara AI</div><div class="contact-value">busaraai.com</div></div>
       </a>
-      <a href="https://github.com/gadda00/verxlite" target="_blank" rel="noopener noreferrer" class="contact-card">
+      <a href="https://github.com/gadda00/verxlite" target="_blank" rel="noopener noreferrer" class="contact-card spot-card">
         <div class="contact-icon">⚡</div>
         <div><div class="contact-label">Verxlite</div><div class="contact-value">github.com/gadda00/verxlite</div></div>
       </a>
@@ -902,7 +909,7 @@
 <!-- Newsletter signup -->
 <section class="section newsletter-section">
   <div class="container">
-    <div class="newsletter-band">
+    <div class="newsletter-band spot-card">
       <div class="newsletter-title">Get the occasional update</div>
       <p class="newsletter-sub">No spam, no weekly newsletters. Just when I ship something big — a new article, a product launch, or a research finding. Unsubscribe anytime.</p>
       <form class="newsletter-form" id="newsletterForm">
@@ -923,7 +930,7 @@
       <div class="footer-brand">
         <div class="logo">
           <svg width="28" height="28" viewBox="0 0 100 100" fill="none">
-            <defs><linearGradient id="footG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+            <defs><linearGradient id="footG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs>
             <circle cx="50" cy="50" r="14" fill="url(#footG)"/>
             <circle cx="20" cy="25" r="5" fill="url(#footG)"/><circle cx="80" cy="25" r="5" fill="url(#footG)"/>
             <circle cx="20" cy="75" r="5" fill="url(#footG)"/><circle cx="80" cy="75" r="5" fill="url(#footG)"/>
@@ -941,16 +948,15 @@
     </div>
     <div class="footer-bottom">
       <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
-      <p><a href="https://victorndunda.com" style="color:var(--text-dim)">victorndunda.com</a> · <a href="https://busaraai.com" style="color:var(--text-dim)">busaraai.com</a> · <a href="https://github.com/gadda00/verxlite" style="color:var(--text-dim)">verxlite</a></p>
+      <p><a href="https://victorndunda.com" style="color:var(--v6-text-dim)">victorndunda.com</a> · <a href="https://busaraai.com" style="color:var(--v6-text-dim)">busaraai.com</a> · <a href="https://github.com/gadda00/verxlite" style="color:var(--v6-text-dim)">verxlite</a></p>
     </div>
   </div>
 </footer>
 
-<script src="app.js?v=5.4.0" defer></script>
-<script src="/i18n.js?v=5.4.0" defer></script>
-<script src="/enhancements.js?v=5.4.0" defer></script>
-
-
+<script src="app.js?v=6.0.0" defer></script>
+<script src="/i18n.js?v=6.0.0" defer></script>
+<script src="/enhancements.js?v=6.0.0" defer></script>
+<script src="/effects.js?v=6.0.0" defer></script>
 
 <!-- Floating action buttons (resume + contact) -->
 <div class="fab-stack" aria-hidden="false">
@@ -968,25 +974,14 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      // updateViaCache: 'none' forces the browser to ALWAYS check for a new
-      // sw.js (bypassing the 24h HTTP cache). This is critical for content
-      // freshness — without it, returning visitors can be stuck with the
-      // old SW (and its stale cached shell) for up to 24 hours.
       navigator.serviceWorker.register('/sw.js', { scope: '/', updateViaCache: 'none' })
         .then(reg => {
-          console.log('[SW] registered with scope:', reg.scope);
-          // Listen for SW updates. When a new SW installs, tell it to
-          // skipWaiting so it activates immediately. Do NOT auto-reload —
-          // reloading can cause a flash where the browser's HTTP cache
-          // serves stale HTML. The new SW will be active on the NEXT
-          // navigation, which is non-jarring and correct.
           reg.addEventListener('updatefound', () => {
             const newWorker = reg.installing;
             if (newWorker) {
               newWorker.addEventListener('statechange', () => {
                 if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
                   newWorker.postMessage('SKIP_WAITING');
-                  console.log('[SW] new version installed; will activate on next navigation');
                 }
               });
             }
