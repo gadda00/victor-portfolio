@@ -4,6 +4,22 @@
 
 **Live**: [victorndunda.com](https://victorndunda.com)
 
+## Conversion Architecture (v7 — Sept 2026)
+
+The public site is organized as a client-acquisition system, not just a capability catalogue:
+
+- **Positioning**: "AI that works beyond the demo." — production AI systems engineer for founders and product teams.
+- **Primary CTA (everywhere, one label family)**: *Book a 30-Minute AI Systems Assessment* → `/book/` (free, via Cal.com).
+- **Three offer paths** on the homepage and services page: AI Opportunity Assessment, Production AI Sprint, AI Reliability Audit (maps to the AI Audit / Starter / Growth / Enterprise packages in `services/data.json`).
+- **Featured case studies**: Tapi Learn (ACLA client product), Verxlite, Fraud Detection — with constraint + validation framing. Full directory at `/projects/` ("Case Studies").
+- **Navigation**: Home · Services · Case Studies · Insights · About · Resume · Book an Assessment.
+- **Analytics-ready**: CTAs carry `data-track="..."` attributes; `app.js` queues click events to `window.__vnEvents` with zero network calls. Wire Plausible/Umami later via `window.__vnTrack = fn`.
+- **Notes for the owner**:
+  - The AI Reliability Audit price shown ("From $4,500 · 1–2 weeks") is a placeholder in the same effort class as AI Audit — confirm before relying on it.
+  - `/book/` embeds Cal.com inline; its CSP explicitly allowlists `frame-src https://app.cal.com`. If you switch schedulers, update the CSP too.
+  - `articles/index.html` is a noindex redirect stub to `/blog/` (retired duplicate route).
+  - When adding a blog article: update `blog/posts.json` **and** the `<noscript>` list in `blog/index.html`, then let `update-sitemap.yml` refresh `sitemap.xml`.
+
 ## What's Here
 
 A multi-page static site (no build step) deployed on GitHub Pages with a custom domain. Features:

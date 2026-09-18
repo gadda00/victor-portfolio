@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Blog — Victor Ndunda | AI Engineer & Researcher</title>
+<title>Insights — Victor Ndunda | Production AI Writing</title>
 <meta name="description" content="Research, technical deep-dives, and insights on multi-agent AI, agricultural intelligence, and building production systems by Victor Ndunda." />
 <meta name="author" content="Victor Ndunda" />
 <meta name="keywords" content="Victor Ndunda blog, AI research, multi-agent systems, agricultural AI, Kenya, KilimoPRO, Busara AI" />
@@ -69,7 +69,7 @@
 <style>
 .blog-hero { padding: 8rem 2rem 4rem; text-align: center; }
 .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 0 2rem 6rem; }
-.blog-card { padding: 2rem; border-radius: 16px; background: var(--bg-card); border: 1px solid var(--border); transition: all 0.3s; cursor: pointer; }
+.blog-card { display: block; padding: 2rem; border-radius: 16px; background: var(--bg-card); border: 1px solid var(--border); transition: all 0.3s; cursor: pointer; text-decoration: none; color: inherit; }
 .blog-card:hover { border-color: var(--accent); transform: translateY(-5px); }
 .blog-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.625rem; border-radius: 4px; margin-bottom: 1rem; }
 .blog-tag.ai { background: rgba(0,212,255,0.1); color: var(--accent); }
@@ -100,13 +100,12 @@
     </a>
     <div class="nav-links" id="navLinks">
       <a href="/" class="nav-link">Home</a>
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/projects/" class="nav-link">Case Studies</a>
+      <a href="/blog/" class="nav-link active" aria-current="page">Insights</a>
       <a href="/#about" class="nav-link">About</a>
-      <a href="/#work" class="nav-link">Work</a>
       <a href="/resume/" class="nav-link">Resume</a>
-      <a href="/blog/" class="nav-link">Research</a>
-      <a href="/#services" class="nav-link">Services</a>
-      <a href="/#contact" class="nav-link">Contact</a>
-      <a href="/book/" class="nav-link" style="background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;padding:0.5rem 1rem;border-radius:10px;font-weight:700">Book a Call</a>
+      <a href="/book/" class="nav-link" style="background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;padding:0.5rem 1rem;border-radius:10px;font-weight:700">Book an Assessment</a>
       </div>
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
@@ -129,6 +128,63 @@
 <div class="blog-grid" id="blogGrid">
   <div class="jobs-loading" style="text-align:center;padding:3rem;color:var(--text-muted)">Loading articles...</div>
 </div>
+
+<noscript>
+  <div style="max-width:1000px;margin:0 auto 4rem;padding:0 2rem">
+    <h2 style="font-size:1.1rem;margin-bottom:1rem">All articles</h2>
+    <ul style="list-style:none;padding:0;margin:0;display:grid;gap:0.75rem">
+      <li><a href="/blog/articles/agentreplay-deterministic-replay.html" style="color:var(--accent)">AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agents</a></li>
+      <li><a href="/blog/articles/building-50-agent-dag.html" style="color:var(--accent)">Building a 50-Agent DAG Pipeline</a></li>
+      <li><a href="/blog/articles/kilimopro-ai-for-farmers.html" style="color:var(--accent)">KilimoPRO: AI for Farmers</a></li>
+      <li><a href="/blog/articles/chinese-smart-agriculture.html" style="color:var(--accent)">What China's Smart Agriculture Strategy Teaches African Builders</a></li>
+      <li><a href="/blog/articles/real-math-not-vibes.html" style="color:var(--accent)">Real Math, Not Vibes: Statistical Engineering for AI Systems</a></li>
+      <li><a href="/blog/articles/multi-llm-council.html" style="color:var(--accent)">The Multi-LLM Council Pattern</a></li>
+      <li><a href="/blog/articles/quant-finance-for-agriculture.html" style="color:var(--accent)">Quantitative Finance Techniques for Agricultural Markets</a></li>
+      <li><a href="/blog/articles/22-data-sources.html" style="color:var(--accent)">22 Free Data Sources for Agricultural AI</a></li>
+      <li><a href="/blog/articles/on-device-disease-detection.html" style="color:var(--accent)">On-Device Crop Disease Detection</a></li>
+      <li><a href="/blog/articles/nasip-2026-2030-opportunity.html" style="color:var(--accent)">NASIP 2026-2030: The Opportunity</a></li>
+    </ul>
+    <p style="color:var(--text-muted);font-size:0.875rem;margin-top:1rem">The card view needs JavaScript — these links work without it.</p>
+  </div>
+</noscript>
+
+<noscript>
+  <div style="max-width:1000px;margin:0 auto 4rem;padding:0 2rem">
+    <h2 style="font-size:1.1rem;margin-bottom:1rem">All articles</h2>
+    <ul style="list-style:none;padding:0;margin:0;display:grid;gap:0.75rem">
+      <li><a href="/blog/articles/agentreplay-deterministic-replay.html" style="color:var(--accent)">AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agents</a></li>
+      <li><a href="/blog/articles/building-50-agent-dag.html" style="color:var(--accent)">Building a 50-Agent DAG Pipeline</a></li>
+      <li><a href="/blog/articles/kilimopro-ai-for-farmers.html" style="color:var(--accent)">KilimoPRO: AI for Farmers</a></li>
+      <li><a href="/blog/articles/chinese-smart-agriculture.html" style="color:var(--accent)">What China's Smart Agriculture Strategy Teaches African Builders</a></li>
+      <li><a href="/blog/articles/real-math-not-vibes.html" style="color:var(--accent)">Real Math, Not Vibes: Statistical Engineering for AI Systems</a></li>
+      <li><a href="/blog/articles/multi-llm-council.html" style="color:var(--accent)">The Multi-LLM Council Pattern</a></li>
+      <li><a href="/blog/articles/quant-finance-for-agriculture.html" style="color:var(--accent)">Quantitative Finance Techniques for Agricultural Markets</a></li>
+      <li><a href="/blog/articles/22-data-sources.html" style="color:var(--accent)">22 Free Data Sources for Agricultural AI</a></li>
+      <li><a href="/blog/articles/on-device-disease-detection.html" style="color:var(--accent)">On-Device Crop Disease Detection</a></li>
+      <li><a href="/blog/articles/nasip-2026-2030-opportunity.html" style="color:var(--accent)">NASIP 2026–2030: The Opportunity</a></li>
+    </ul>
+    <p style="color:var(--text-muted);font-size:0.875rem;margin-top:1rem">The card view needs JavaScript — these links work without it.</p>
+  </div>
+</noscript>
+
+<noscript>
+  <div style="max-width:1000px;margin:0 auto 4rem;padding:0 2rem">
+    <h2 style="font-size:1.1rem;margin-bottom:1rem">All articles</h2>
+    <ul style="list-style:none;padding:0;margin:0;display:grid;gap:0.75rem">
+      <li><a href="/blog/articles/agentreplay-deterministic-replay.html" style="color:var(--accent)">AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agents</a></li>
+      <li><a href="/blog/articles/building-50-agent-dag.html" style="color:var(--accent)">Building a 50-Agent DAG Pipeline</a></li>
+      <li><a href="/blog/articles/kilimopro-ai-for-farmers.html" style="color:var(--accent)">KilimoPRO: AI for Farmers</a></li>
+      <li><a href="/blog/articles/chinese-smart-agriculture.html" style="color:var(--accent)">What China's Smart Agriculture Strategy Teaches African Builders</a></li>
+      <li><a href="/blog/articles/real-math-not-vibes.html" style="color:var(--accent)">Real Math, Not Vibes: Statistical Engineering for AI Systems</a></li>
+      <li><a href="/blog/articles/multi-llm-council.html" style="color:var(--accent)">The Multi-LLM Council Pattern</a></li>
+      <li><a href="/blog/articles/quant-finance-for-agriculture.html" style="color:var(--accent)">Quantitative Finance Techniques for Agricultural Markets</a></li>
+      <li><a href="/blog/articles/22-data-sources.html" style="color:var(--accent)">22 Free Data Sources for Agricultural AI</a></li>
+      <li><a href="/blog/articles/on-device-disease-detection.html" style="color:var(--accent)">On-Device Crop Disease Detection</a></li>
+      <li><a href="/blog/articles/nasip-2026-2030-opportunity.html" style="color:var(--accent)">NASIP 2026–2030: The Opportunity</a></li>
+    </ul>
+    <p style="color:var(--text-muted);font-size:0.875rem;margin-top:1rem">The card view needs JavaScript — these links work without it.</p>
+  </div>
+</noscript>
 </main>
 
 <footer>
@@ -153,7 +209,7 @@
     grid.innerHTML = posts.map(p => {
       const url = p.url || (`/blog/articles/${p.slug}.html`);
       return `
-        <article class="blog-card" tabindex="0" role="article" onclick="window.location.href='${url}'" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.location.href='${url}'}">
+        <a class="blog-card" href="${url}">
           <span class="blog-tag ${p.tagClass}">${p.tag}</span>
           <h2>${p.title}</h2>
           <p>${p.excerpt}</p>
@@ -161,7 +217,7 @@
             <span class="blog-date"><time datetime="${p.date}">${p.date}</time> · ${p.readTime} read</span>
             <span class="blog-read">Read →</span>
           </div>
-        </article>
+        </a>
       `;
     }).join('');
   } catch (err) {

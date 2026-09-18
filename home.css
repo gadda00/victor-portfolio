@@ -1453,3 +1453,148 @@ html.light nav#nav.scrolled { background: rgba(246,248,254,.9); }
   .hero-stats { margin-bottom: 1rem; }
   .hero { padding-bottom: 6rem; }
 }
+
+/* ════════════════════════════════════════════════════════════════
+   v7.0.0 — Conversion layer: single-message hero, offer paths,
+   case studies, engagement model, insights. Added 2026-09.
+   ════════════════════════════════════════════════════════════════ */
+
+/* Single-message hero */
+.hero-title-single {
+  font-size: clamp(2.6rem, 7vw, 5.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  max-width: 14ch;
+  margin: 1rem auto 1.25rem;
+}
+.hero-sub {
+  font-size: clamp(1rem, 2.2vw, 1.2rem);
+  color: var(--v6-text-mid);
+  max-width: 62ch;
+  margin: 0 auto 2rem;
+  line-height: 1.65;
+}
+
+/* Offer paths */
+.offer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.offer-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 1.75rem;
+  background: var(--v6-surface);
+  border: 1px solid var(--v6-stroke);
+  border-radius: var(--v6-radius);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.3s var(--v6-ease), transform 0.3s var(--v6-ease);
+}
+.offer-card:hover { border-color: var(--v6-stroke-hi); transform: translateY(-4px); }
+.offer-icon { font-size: 1.75rem; line-height: 1; }
+.offer-name { font-family: var(--v6-font-display); font-size: 1.2rem; color: var(--v6-text-hi); margin: 0; }
+.offer-tagline { color: var(--v6-text-mid); font-weight: 600; margin: 0; line-height: 1.45; }
+.offer-fit { color: var(--v6-text-dim); font-size: 0.875rem; margin: 0; line-height: 1.5; }
+.offer-fit strong { color: var(--v6-text-mid); }
+.offer-list { list-style: none; margin: 0.25rem 0 0; padding: 0; display: grid; gap: 0.4rem; }
+.offer-list li { font-size: 0.875rem; color: var(--v6-text-dim); padding-left: 1.1rem; position: relative; }
+.offer-list li::before { content: "→"; position: absolute; left: 0; color: var(--v6-cyan); }
+.offer-price { margin-top: auto; padding-top: 0.75rem; border-top: 1px solid var(--v6-stroke); font-family: var(--v6-font-mono); font-size: 0.8125rem; color: var(--v6-text-mid); }
+.offer-cta { color: var(--v6-cyan); font-weight: 700; font-size: 0.9375rem; }
+.offer-card:hover .offer-cta { text-decoration: underline; }
+
+/* Case studies */
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+.case-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 1.75rem;
+  background: var(--v6-surface);
+  border: 1px solid var(--v6-stroke);
+  border-radius: var(--v6-radius);
+}
+.case-badge {
+  align-self: flex-start;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.75rem;
+  border-radius: 99px;
+  background: var(--v6-surface-2);
+  border: 1px solid var(--v6-stroke);
+}
+.case-badge-client { color: var(--v6-emerald); border-color: rgba(52, 211, 153, 0.35); }
+.case-badge-automation { color: var(--v6-amber); border-color: rgba(251, 191, 36, 0.35); }
+.case-badge-fintech { color: var(--v6-cyan); border-color: rgba(34, 211, 238, 0.35); }
+.case-name { font-family: var(--v6-font-display); font-size: 1.35rem; color: var(--v6-text-hi); margin: 0; }
+.case-org { color: var(--v6-text-dim); font-size: 1rem; font-weight: 500; }
+.case-outcome { color: var(--v6-text-mid); font-size: 1.02rem; line-height: 1.5; margin: 0; }
+.case-outcome strong { color: var(--v6-text-hi); }
+.case-body { color: var(--v6-text-dim); font-size: 0.9rem; line-height: 1.6; margin: 0; }
+.case-metrics { display: flex; gap: 1.25rem; flex-wrap: wrap; margin-top: 0.25rem; }
+.case-metric { display: flex; flex-direction: column; }
+.cm-num { font-family: var(--v6-font-mono); font-size: 1.15rem; font-weight: 600; color: var(--v6-text-hi); }
+.cm-lbl { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--v6-text-dim); }
+.case-links { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: auto; padding-top: 0.75rem; }
+
+/* Engagement model */
+.engage-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+.engage-step { padding: 1.75rem; position: relative; }
+.engage-num {
+  width: 2.2rem; height: 2.2rem; border-radius: 50%;
+  background: var(--v6-grad);
+  color: #04060e; font-family: var(--v6-font-mono); font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 0.9rem;
+}
+.engage-step h3 { font-family: var(--v6-font-display); color: var(--v6-text-hi); margin: 0 0 0.5rem; }
+.engage-step p { color: var(--v6-text-dim); font-size: 0.9375rem; line-height: 1.6; margin: 0; }
+
+/* Insights */
+.insight-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.insight-card {
+  display: flex; flex-direction: column; gap: 0.6rem;
+  padding: 1.5rem 1.75rem;
+  background: var(--v6-surface);
+  border: 1px solid var(--v6-stroke);
+  border-radius: var(--v6-radius);
+  text-decoration: none; color: inherit;
+  transition: border-color 0.3s var(--v6-ease);
+}
+.insight-card:hover { border-color: var(--v6-stroke-hi); }
+.insight-tag { align-self: flex-start; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--v6-violet); }
+.insight-card h3 { font-size: 1.05rem; line-height: 1.4; color: var(--v6-text-hi); margin: 0; }
+.insight-card p { color: var(--v6-text-dim); font-size: 0.875rem; line-height: 1.55; margin: 0; }
+.insight-cta { color: var(--v6-cyan); font-weight: 600; font-size: 0.875rem; margin-top: auto; }
+.insight-card:hover .insight-cta { text-decoration: underline; }
+
+/* About now-line */
+.about-now {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  background: var(--v6-surface);
+  border: 1px solid var(--v6-stroke);
+  border-radius: 12px;
+  font-size: 0.875rem; color: var(--v6-text-dim);
+  margin: 1.25rem 0 0;
+}
+.about-now a { color: var(--v6-cyan); }
+
+/* Booking FAB */
+.fab-book { background: linear-gradient(135deg, #22d3ee, #818cf8); color: #041018; }
+
+/* Mobile tweaks for new sections */
+@media (max-width: 700px) {
+  .offer-card, .case-card, .engage-step, .insight-card { padding: 1.25rem; }
+  .hero-title-single { max-width: 100%; }
+  .case-metrics { gap: 1rem; }
+}

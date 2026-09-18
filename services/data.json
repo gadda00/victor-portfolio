@@ -449,11 +449,11 @@
       "id": "busara-ai",
       "name": "Busara AI",
       "url": "https://busara.ai",
-      "tagline": "50-agent multi-agent data intelligence platform",
+      "tagline": "Multi-agent data intelligence platform — dozens of specialized agents across a 7-stage DAG pipeline",
       "stats": [
         {
-          "label": "Agents",
-          "value": "50"
+          "label": "DAG stages",
+          "value": "7"
         },
         {
           "label": "DAG stages",
@@ -468,10 +468,10 @@
           "value": "busara.ai"
         }
       ],
-      "description": "A multi-agent DAG pipeline with 50 specialized agents across 7 stages. Kahn's topological sort, circuit breakers, O(1) LRU caching, real statistical algorithms — Holt-Winters, OLS, K-Means++, GARCH.",
+      "description": "A multi-agent DAG pipeline with dozens of specialized agents across 7 stages. Kahn's topological sort, circuit breakers, O(1) LRU caching, real statistical algorithms — Holt-Winters, OLS, K-Means++, GARCH.",
       "whatIBuilt": [
         "7-stage parallel DAG orchestrator (TypeScript)",
-        "50 specialized agents (research, analysis, forecasting, reporting)",
+        "Dozens of specialized agents (research, analysis, forecasting, reporting)",
         "Real statistical algorithms (not LLM vibes — actual math)",
         "Circuit breakers + smart caching for production reliability"
       ],
@@ -494,7 +494,7 @@
       "id": "kilimopro",
       "name": "KilimoPRO",
       "url": "https://kilimo.pro",
-      "tagline": "AI-powered agricultural intelligence for 5M Kenyan farmers",
+      "tagline": "Offline-first agricultural intelligence for smallholders across 8 IGAD countries",
       "stats": [
         {
           "label": "Data sources",
