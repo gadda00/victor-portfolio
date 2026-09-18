@@ -80,9 +80,95 @@
 
   if (window.VNAuth && VNAuth.checkSession()) showDashboard();
 
+  // ─── Two-factor gate (TOTP — Google Authenticator) ──────────────
+  // Runs after the first factor (Google or password) passes but BEFORE
+  // the session is saved. First login on a browser shows enrollment; later
+  // logins ask for the 6-digit code. Requires https (crypto.subtle).
+  var pendingUser = null;
+
+  function runTotpGate(user, done) {
+    pendingUser = user;
+    if (!window.VNTotp || !window.crypto || !window.crypto.subtle) {
+      // TOTP unavailable (no https / script missing) — degrade with a notice.
+      toast('Two-factor unavailable in this context — single-factor sign-in.', 'warn');
+      VNAuth.finalizeLogin(user);
+      done();
+      return;
+    }
+    var enrolled = VNTotp.isEnrolled(user.email);
+    document.getElementById('authOverlay').style.display = 'flex';
+    document.querySelector('.auth-box:not(#totpBox)').style.display = 'none';
+    var box = document.getElementById('totpBox');
+    box.style.display = 'block';
+    document.getElementById('totpEnroll').style.display = enrolled ? 'none' : 'block';
+    document.getElementById('totpTitle').textContent = enrolled ? 'Two-factor verification' : 'Set up two-factor';
+    document.getElementById('totpSub').textContent = enrolled
+      ? 'Enter the 6-digit code from your authenticator app.'
+      : 'One-time setup — takes about a minute, then this step asks for a code on every sign-in.';
+    document.getElementById('totpError').style.display = 'none';
+    document.getElementById('totpInput').value = '';
+
+    if (!enrolled) {
+      VNTotp.getOtpauthUri(user.email).then(function (uri) {
+        VNTotp.renderQr(document.getElementById('totpQr'), uri);
+        // Manual key: secret is the part after ?secret= and before &
+        var m = uri.match(/secret=([A-Z2-7]+)/);
+        document.getElementById('totpManual').textContent = m ? m[1] : '(unavailable)';
+      });
+    }
+    setTimeout(function () { document.getElementById('totpInput').focus(); }, 100);
+
+    // submit handler is bound once below; onVerify closure uses pendingDone
+    pendingDone = done;
+  }
+  var pendingDone = null;
+
+  document.getElementById('totpForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+    if (!pendingUser) return;
+    var input = document.getElementById('totpInput');
+    var err = document.getElementById('totpError');
+    var btn = document.getElementById('totpSubmit');
+    var code = input.value.replace(/\D/g, '');
+    if (code.length !== 6) { err.textContent = 'Enter the 6-digit code from your app.'; err.style.display = 'block'; return; }
+    btn.disabled = true; btn.textContent = 'Verifying…';
+    var ok = await VNTotp.verify(pendingUser.email, code);
+    btn.disabled = false; btn.textContent = 'Verify';
+    if (!ok) {
+      err.textContent = 'That code didn\u2019t match. Check the app and try again — codes rotate every 30 seconds.';
+      err.style.display = 'block';
+      input.select();
+      return;
+    }
+    if (!VNTotp.isEnrolled(pendingUser.email)) VNTotp.markEnrolled(pendingUser.email);
+    document.getElementById('totpBox').style.display = 'none';
+    document.querySelector('.auth-box:not(#totpBox)').style.display = 'block';
+    var name = pendingUser.name || 'back';
+    VNAuth.finalizeLogin(pendingUser);
+    var done = pendingDone; pendingUser = null; pendingDone = null;
+    toast('Two-factor verified — welcome, ' + name + '!');
+    if (done) done();
+  });
+
+  document.getElementById('totpCancel').addEventListener('click', function () {
+    document.getElementById('totpBox').style.display = 'none';
+    document.querySelector('.auth-box:not(#totpBox)').style.display = 'block';
+    document.getElementById('totpInput').value = '';
+    pendingUser = null; pendingDone = null;
+  });
+
   if (window.VNAuth) {
     VNAuth.initGoogleAuth(
-      function (user) { toast('Welcome, ' + (user.name || 'back') + '!'); showDashboard(); },
+      function (user, totpState) {
+        if (!totpState || !totpState.totpAvailable) {
+          // No TOTP module — finalize directly (auth.js already logged the factor)
+          VNAuth.finalizeLogin(user);
+          toast('Welcome, ' + (user.name || 'back') + '!');
+          showDashboard();
+          return;
+        }
+        runTotpGate(user, showDashboard);
+      },
       function (err) {
         var e = document.getElementById('authError');
         e.textContent = err;
@@ -101,13 +187,16 @@
   }
   tryGoogle();
 
-  // Password login
+  // Password login → first factor only; session completes after the TOTP gate
   document.getElementById('passwordLoginForm').addEventListener('submit', async function (e) {
     e.preventDefault();
     var u = document.getElementById('usernameInput').value.trim();
     var p = document.getElementById('passwordInput').value;
     var result = await VNAuth.loginWithPassword(u, p);
-    if (result.success) { toast('Welcome back!'); showDashboard(); }
+    if (result.success) {
+      if (window.VNTotp && window.crypto && window.crypto.subtle) runTotpGate(result.user, showDashboard);
+      else { VNAuth.finalizeLogin(result.user); toast('Welcome back!'); showDashboard(); }
+    }
     else {
       var err = document.getElementById('authError');
       err.textContent = result.error;
@@ -185,7 +274,6 @@
       '</div>' +
       '<div class="actions">' +
       '<a href="/services/wizard.html" class="action"><span class="icon">🚀</span>New Brief</a>' +
-      '<a href="/jobs/" class="action"><span class="icon">🔍</span>Search Jobs</a>' +
       '<a href="/projects/" class="action"><span class="icon">📦</span>View Projects</a>' +
       '<a href="/" class="action"><span class="icon">🌐</span>View Site</a>' +
       '</div>' +
@@ -479,19 +567,18 @@
 
   sections.jobs = function () {
     var apps = getApps();
-    return '<div class="page-head"><h1>Job Applications</h1><p>Track your application pipeline.</p></div>' +
+    return '<div class="page-head"><h1>Job Applications</h1><p>Track your application pipeline — history from the standalone portal (now consolidated into this dashboard).</p></div>' +
       '<div class="stat-grid">' +
       '<div class="stat"><div class="stat-label">Saved</div><div class="stat-val">' + apps.filter(function (a) { return a.status === 'saved'; }).length + '</div></div>' +
       '<div class="stat"><div class="stat-label">Applied</div><div class="stat-val">' + apps.filter(function (a) { return a.status === 'applied'; }).length + '</div></div>' +
       '<div class="stat"><div class="stat-label">Interviews</div><div class="stat-val">' + apps.filter(function (a) { return a.status === 'interview'; }).length + '</div></div>' +
       '<div class="stat"><div class="stat-label">Offers</div><div class="stat-val">' + apps.filter(function (a) { return a.status === 'offer'; }).length + '</div></div>' +
       '</div>' +
-      '<div class="actions"><a href="/jobs/" class="action"><span class="icon">🔍</span>Search Jobs</a></div>' +
       (apps.length ? '<div class="card"><table class="tbl"><thead><tr><th>Title</th><th>Company</th><th>Status</th><th>Date</th></tr></thead><tbody>' +
       apps.map(function (a) {
         var sc = { saved: 'b-gray', applied: 'b-blue', interview: 'b-purple', offer: 'b-green', rejected: 'b-red' };
         return '<tr><td><strong>' + (a.title || '—') + '</strong></td><td>' + (a.company || '—') + '</td><td><span class="badge ' + (sc[a.status] || 'b-gray') + '">' + (a.status || 'saved') + '</span></td><td>' + (a.appliedAt ? new Date(a.appliedAt).toLocaleDateString() : '—') + '</td></tr>';
-      }).join('') + '</tbody></table></div>' : '<div class="empty"><div class="icon">🔍</div>No applications yet. <a href="/jobs/" style="color:var(--acc)">Search jobs →</a></div>');
+      }).join('') + '</tbody></table></div>' : '<div class="empty"><div class="icon">🔍</div>No applications tracked yet.</div>');
   };
 
   sections.social = function () {
@@ -565,6 +652,8 @@
       '<div class="check-item"><div class="check ok">✓</div>noindex on private pages</div>' +
       '<div class="check-item"><div class="check ok">✓</div>30-min idle timeout</div>' +
       '<div class="check-item"><div class="check ok">✓</div>PBKDF2 password hashing</div>' +
+      '<div class="check-item"><div class="check ok">✓</div>Google ID token signature verification (JWKS)</div>' +
+      '<div class="check-item"><div class="check ok">✓</div>TOTP two-factor (Google Authenticator)</div>' +
       '</div>' +
       '<div class="card"><h3>Login Log</h3>' +
       (logins.length ? '<table class="tbl"><thead><tr><th>Email</th><th>Status</th><th>Time</th></tr></thead><tbody>' +
@@ -581,10 +670,12 @@
 
   sections.settings = function () {
     var user = VNAuth.getUser();
+    var totpOn = !!(window.VNTotp && user && VNTotp.isEnrolled(user.email));
     return '<div class="page-head"><h1>Settings</h1><p>Account and configuration.</p></div>' +
       '<div class="card"><h3>Account</h3>' +
       '<div class="set-row"><span class="set-label">Name</span><span class="set-val">' + (user ? user.name : '—') + '</span></div>' +
       '<div class="set-row"><span class="set-label">Email</span><span class="set-val">' + (user ? user.email : '—') + '</span></div>' +
+      '<div class="set-row"><span class="set-label">Two-factor (TOTP)</span><span class="set-val">' + (totpOn ? '✅ Enabled (Google Authenticator)' : 'Not enrolled on this browser') + ' <button class="btn btn-ghost btn-sm" id="resetTotp" style="margin-left:0.5rem">Reset</button></span></div>' +
       '</div>' +
       '<div class="card"><h3>Quick Links</h3><div class="actions">' +
       '<a href="https://github.com/gadda00/victor-portfolio" target="_blank" class="action"><span class="icon">🐙</span>GitHub</a>' +
@@ -600,6 +691,10 @@
 
   listeners.settings = function () {
     document.getElementById('clearActivity').addEventListener('click', function () { VNAuth.clearLogs(); toast('Activity cleared.'); });
+    var resetBtn = document.getElementById('resetTotp');
+    if (resetBtn) resetBtn.addEventListener('click', function () {
+      if (window.VNTotp) { VNTotp.reset(); toast('Two-factor enrollment cleared — you will be asked to enroll again on next sign-in.'); }
+    });
     document.getElementById('exportData').addEventListener('click', function () {
       var data = {};
       for (var i = 0; i < localStorage.length; i++) {

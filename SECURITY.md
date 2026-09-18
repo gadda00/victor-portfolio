@@ -37,3 +37,23 @@ This site complies with:
 ## Contact
 
 For security inquiries, contact Victor Ndunda at **mututandunda@gmail.com**.
+
+---
+
+## v8 — Two-factor authentication (TOTP) & route consolidation
+
+### What changed
+
+- **Single gated area**: `/dashboard/` is now the only private page. `/admin/` and `/jobs/` are redirect stubs (their tools live inside the dashboard or were removed; git history preserves the full job portal).
+- **Google sign-in now verifies ID token signatures** against Google's published JWKS (`https://www.googleapis.com/oauth2/v3/certs`) with `iss`/`aud`/`exp`/`email_verified` checks, using Web Crypto. Previously the JWT payload was only base64-decoded — a forged token with an allowlisted email could pass. Verification fails closed: if the JWKS cannot be fetched, sign-in is refused.
+- **TOTP second factor (Google Authenticator compatible)**: after the first factor (Google or password), the dashboard requires a 6-digit code before a session is saved. First sign-in on a browser shows enrollment (QR + manual key); later sign-ins ask for the code. Reset from Settings.
+
+### How the TOTP secret works (and its limits)
+
+Per-account secrets are **derived, not stored**: `HKDF-SHA256(master_seed, salt=email, info="VN-TOTP-v1")` → 20 bytes → base32. The same email therefore produces the same secret on every browser, and enrollment works once. The master seed lives in `totp.js`.
+
+**Honest limitation**: this is a static site on GitHub Pages — verification runs client-side, so the master seed is necessarily present in the deployed JavaScript. This raises the bar against stolen Google passwords, shared browsers, and casual access to `/dashboard/`, but it is not equivalent to server-side verification. The proper upgrade path, if stronger guarantees are needed, is **Firebase Auth with TOTP MFA** (free tier, first-party, server-side verification) — the UI flow here was designed so that swap is localized to `auth.js` + `totp.js`.
+
+### Recovery
+
+If the authenticator is lost: from any browser with an active session, use **Settings → Reset two-factor**. If locked out everywhere, clear localStorage key `victor_totp_enrolled` on the dashboard page and re-enroll (the authenticator entry stays valid because the secret is derived, not random).

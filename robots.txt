@@ -7,12 +7,12 @@ Allow: /
 # Note: JS and CSS are intentionally crawlable — Google needs them to render
 # the JavaScript-loaded content on /blog/, /services/ and /projects/.
 
-# Disallow private/admin areas
-Disallow: /admin/
+# Disallow the private gated area (consolidated in v8: /admin/ and /jobs/
+# are redirect stubs; /dashboard/ is the only gated page)
 Disallow: /dashboard/
-Disallow: /jobs/
 Disallow: /guide/
 Disallow: /auth.js
+Disallow: /totp.js
 
 # Crawl delay (be respectful)
 Crawl-delay: 1

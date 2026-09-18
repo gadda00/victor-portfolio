@@ -10,6 +10,10 @@
 <title>Dashboard — Victor Ndunda</title>
 <meta name="robots" content="noindex, nofollow, noarchive" />
 <meta name="theme-color" content="#0a0e1a" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+<!-- CSP: GIS script + Google JWKS fetch for verified sign-in; fonts; profile images -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.googleapis.com https://accounts.google.com; frame-src https://accounts.google.com; object-src 'none'; base-uri 'self'" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -185,6 +189,36 @@ button{font-family:inherit;cursor:pointer}
     <p style="margin-top:1rem;font-size:0.7rem;color:var(--txt3);text-align:center">Authorized access only.</p>
     <a href="/" class="auth-back">← Back to site</a>
   </div>
+
+  <!-- Two-factor step (shown after the first factor passes) -->
+  <div class="auth-box" id="totpBox" style="display:none">
+    <h1 id="totpTitle">Two-factor verification</h1>
+    <p id="totpSub">Enter the 6-digit code from your authenticator app.</p>
+
+    <!-- Enrollment (first-time setup) -->
+    <div id="totpEnroll" style="display:none">
+      <p style="font-size:0.875rem;color:var(--txt2);line-height:1.6">Set up Google Authenticator (or any TOTP app):
+      <strong>1.</strong> Open the app → Add account → Scan a QR code.<br />
+      <strong>2.</strong> Scan this code, then enter the 6-digit code it shows.</p>
+      <div id="totpQr" style="display:flex;justify-content:center;margin:1rem 0" aria-label="QR code for authenticator setup"></div>
+      <details style="margin:0 0 1rem">
+        <summary style="font-size:0.8rem;color:var(--txt3);cursor:pointer">Can't scan? Enter this setup key manually</summary>
+        <code id="totpManual" style="display:block;margin-top:0.5rem;font-size:0.8rem;word-break:break-all;user-select:all;background:var(--bg);padding:0.6rem;border-radius:8px;border:1px solid var(--border)"></code>
+      </details>
+    </div>
+
+    <!-- Code entry (both enrollment confirmation and every later login) -->
+    <form id="totpForm" class="auth-form">
+      <input type="text" id="totpInput" inputmode="numeric" pattern="[0-9]*" maxlength="6" placeholder="6-digit code" autocomplete="one-time-code" required aria-label="Authenticator code" style="text-align:center;letter-spacing:0.3em;font-size:1.1rem" />
+      <button type="submit" id="totpSubmit">Verify</button>
+    </form>
+    <div id="totpError" style="color:#ef4444;font-size:0.8rem;margin-top:0.5rem;display:none"></div>
+    <details style="margin-top:1rem">
+      <summary style="font-size:0.78rem;color:var(--txt3);cursor:pointer">Lost your authenticator?</summary>
+      <p style="font-size:0.78rem;color:var(--txt3);line-height:1.5;margin:0.5rem 0 0">From any browser where you're already signed in: <strong>Settings → Reset two-factor</strong>. If locked out everywhere, clear this site's localStorage (<code>victor_totp_enrolled</code>) and enroll again — your authenticator keeps working if you kept the entry.</p>
+    </details>
+    <button type="button" id="totpCancel" style="margin-top:1rem;background:none;border:none;color:var(--txt3);font-size:0.8rem;cursor:pointer">← Back to sign-in</button>
+  </div>
 </div>
 
 <!-- APP -->
@@ -230,7 +264,9 @@ button{font-family:inherit;cursor:pointer}
 
 <!-- Google Identity -->
 <script src="https://accounts.google.com/gsi/client" async defer></script>
-<script src="/auth.js?v=5.4.0" defer></script>
-<script src="/dashboard/dashboard.js?v=5.4.0" defer></script>
+<script src="/qr.min.js?v=8.0.0" defer></script>
+<script src="/totp.js?v=8.0.0" defer></script>
+<script src="/auth.js?v=8.0.0" defer></script>
+<script src="/dashboard/dashboard.js?v=8.0.0" defer></script>
 </body>
 </html>
