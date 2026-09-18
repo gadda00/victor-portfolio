@@ -120,7 +120,7 @@
     }).catch(function () { return false; });
   }
 
-  /* ── QR rendering (uses vendored /qr.min.js — qrcode-generator, MIT) ── */
+  /* ── QR rendering (uses vendored /qr-lib.js — qrcode-generator, MIT) ── */
   function renderQr(container, uri) {
     try {
       var qr = window.qrcode(0, 'M');
