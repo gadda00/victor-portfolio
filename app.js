@@ -185,12 +185,12 @@
   // 2. TYPEWRITER EFFECT — Reduced-motion aware
   // ═══════════════════════════════════════════════════════════════════
   const taglines = [
-    'I build production AI systems — not demos.',
+    'I build AI systems that run in production.',
     'Founder of Busara AI · Creator of AgentReplay · Builder of KilimoPRO.',
-    'Multi-agent orchestration. Real statistical math. On-device ML.',
+    'Multi-agent orchestration. Statistical modeling. On-device ML.',
     'Shipping from Nairobi to the world. 🇰🇪',
     'Open-source: AgentReplay, KilimoPRO, IntelliFlow.',
-    'Real math, not vibes.',
+    'Evaluation and observability, built in.',
   ];
   const twEl = document.getElementById('typewriter');
 
@@ -446,21 +446,21 @@
     { icon: '📅', title: 'Book an Assessment', desc: 'Free 30-minute AI systems call', action: () => window.location.href = '/book/' },
     { icon: '🏠', title: 'Go to Home', desc: 'Back to the top', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
     { icon: '👨‍💻', title: 'About Victor', desc: 'Learn about my background', action: () => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }) },
-    { icon: '🚀', title: 'Case Studies', desc: 'Proof, not promises — five shipped systems', action: () => document.getElementById('case-studies')?.scrollIntoView({ behavior: 'smooth' }) },
+    { icon: '🚀', title: 'Case Studies', desc: 'Six shipped systems, measurable results', action: () => document.getElementById('case-studies')?.scrollIntoView({ behavior: 'smooth' }) },
     { icon: '📋', title: 'All Work (Bento Grid)', desc: 'Busara AI, KilimoPRO & more', action: () => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' }) },
     { icon: '🛠️', title: 'Tech Stack', desc: 'Languages, frameworks & tools', action: () => document.getElementById('techstack')?.scrollIntoView({ behavior: 'smooth' }) },
     { icon: '📝', title: 'Insights', desc: 'Research and technical articles', action: () => window.location.href = '/blog/' },
-    { icon: '💼', title: 'Job Portal', desc: 'Search AI engineering jobs', action: () => window.location.href = '/jobs/' },
     { icon: '🛠️', title: 'Services', desc: 'What I can build for you', action: () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }) },
     { icon: '📧', title: 'Contact Me', desc: 'Get in touch', action: () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) },
     { icon: '📄', title: 'View Resume', desc: 'Full resume page', action: () => window.location.href = '/resume/' },
     { icon: '⬇️', title: 'Download Resume PDF', desc: 'Victor-Ndunda-Resume.pdf', action: () => window.location.href = '/resume/Victor-Ndunda-Resume.pdf' },
     { icon: '🚀', title: 'Visit Busara AI', desc: 'busaraai.com — live platform', action: () => window.open('https://busaraai.com', '_blank') },
     { icon: '🌱', title: 'Visit KilimoPRO', desc: 'github.com/gadda00/kilimopro', action: () => window.open('https://github.com/gadda00/kilimopro', '_blank') },
+    { icon: '🏢', title: 'Visit Keja AI', desc: 'keja.app — real estate intelligence', action: () => window.open('https://keja.app', '_blank') },
     { icon: '🐙', title: 'GitHub Profile', desc: 'github.com/gadda00', action: () => window.open('https://github.com/gadda00', '_blank') },
     { icon: '💼', title: 'LinkedIn', desc: 'linkedin.com/in/victor-ndunda', action: () => window.open('https://www.linkedin.com/in/victor-ndunda', '_blank') },
     { icon: '📧', title: 'Email Me', desc: 'mututandunda@gmail.com', action: () => window.location.href = 'mailto:mututandunda@gmail.com' },
-    { icon: '📱', title: 'Call Me', desc: '+254 724 346 971', action: () => window.location.href = 'tel:+254724346971' },
+    { icon: '📱', title: 'WhatsApp Call', desc: '+254 724 346 971 — chat or call', action: () => window.open('https://wa.me/254724346971', '_blank') },
     { icon: '💬', title: 'WhatsApp', desc: 'Chat on WhatsApp', action: () => window.open('https://wa.me/254724346971', '_blank') },
     { icon: '🌓', title: 'Toggle Theme', desc: 'Switch dark/light mode', action: () => themeToggle?.click() },
   ];

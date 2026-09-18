@@ -52,6 +52,41 @@
 .book-agenda li::before { content: counter(agenda); position: absolute; left: 1.1rem; top: 1.15rem; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; font-weight: 700; font-size: 0.8125rem; display: flex; align-items: center; justify-content: center; }
 .book-agenda li strong { display: block; color: var(--text); margin-bottom: 0.25rem; }
 .book-options { max-width: 900px; margin: 0 auto; padding: 0 2rem 1rem; }
+/* ── Enquiry assistant ── */
+.book-assistant-section { max-width: 900px; margin: 0 auto; padding: 0 2rem 2.5rem; }
+.book-assistant { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; box-shadow: 0 10px 40px rgba(0,0,0,.12); }
+.assistant-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); margin-bottom: 1.25rem; }
+.assistant-id { display: flex; gap: 0.9rem; align-items: center; }
+.assistant-avatar { display: flex; align-items: center; justify-content: center; width: 46px; height: 46px; border-radius: 12px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; flex-shrink: 0; }
+.assistant-id h2 { font-size: 1.15rem; margin: 0 0 0.2rem; }
+.assistant-id p { margin: 0; color: var(--text-muted); font-size: 0.875rem; }
+.assistant-badge { padding: 0.35rem 0.85rem; border-radius: 99px; background: var(--glass); border: 1px solid var(--border); color: var(--accent); font-size: 0.75rem; font-weight: 600; white-space: nowrap; }
+.assistant-log { display: flex; flex-direction: column; gap: 0.75rem; max-height: 380px; overflow-y: auto; padding: 0.25rem 0.25rem 0.75rem; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { .assistant-log { scroll-behavior: auto; } }
+.msg { max-width: 85%; padding: 0.75rem 1rem; border-radius: 14px; font-size: 0.9375rem; line-height: 1.55; }
+.msg.user { align-self: flex-end; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; border-bottom-right-radius: 4px; }
+.msg.bot { align-self: flex-start; background: var(--bg-elev); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+.msg.bot strong { color: var(--text); }
+.msg.bot a { color: var(--accent); }
+.msg .msg-assumptions { margin: 0.5rem 0 0; padding-left: 1.1rem; color: var(--text-muted); font-size: 0.8125rem; }
+.msg .msg-assumptions li { margin-bottom: 0.2rem; }
+.msg-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 0.85rem; }
+.msg-actions a, .msg-actions button { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 10px; border: 1px solid var(--border); background: var(--glass); color: var(--text); font-size: 0.875rem; font-weight: 600; font-family: inherit; cursor: pointer; text-decoration: none; transition: border-color .2s, transform .2s; }
+.msg-actions a:hover, .msg-actions button:hover { border-color: var(--accent); }
+.msg-actions .primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border-color: transparent; color: #fff; }
+.assistant-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-bottom: 0.9rem; }
+.chip { padding: 0.5rem 0.95rem; border-radius: 99px; background: var(--glass); border: 1px solid var(--border); color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; font-family: inherit; cursor: pointer; transition: border-color .2s, color .2s; }
+.chip:hover, .chip:focus-visible { border-color: var(--accent); color: var(--text); }
+.assistant-input { display: flex; gap: 0.6rem; }
+.assistant-input input { flex: 1; padding: 0.75rem 1rem; border-radius: 10px; background: var(--bg-elev); border: 1px solid var(--border); color: var(--text); font-size: 0.9375rem; outline: none; font-family: inherit; }
+.assistant-input input:focus { border-color: var(--accent); }
+.assistant-note { margin: 0.85rem 0 0; font-size: 0.75rem; color: var(--text-dim, var(--text-muted)); line-height: 1.5; }
+.typing { display: inline-flex; gap: 4px; align-items: center; padding: 0.9rem 1rem; }
+.typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--text-muted); animation: typ 1.2s infinite; }
+.typing span:nth-child(2) { animation-delay: .2s; } .typing span:nth-child(3) { animation-delay: .4s; }
+@keyframes typ { 0%,60%,100% { opacity: .3; } 30% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .typing span { animation: none; opacity: .6; } }
+@media (max-width: 600px) { .book-assistant { padding: 1.25rem; } .msg { max-width: 95%; } .assistant-input { flex-direction: column; } }
 .book-tabs { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; }
 .book-tab { padding: 0.75rem 1.5rem; border-radius: 10px; background: var(--glass); border: 1px solid var(--border); color: var(--text-muted); font-weight: 600; font-size: 0.9375rem; cursor: pointer; transition: all 0.2s; font-family: inherit; }
 .book-tab:hover { border-color: var(--accent); color: var(--text); }
@@ -127,6 +162,35 @@
   <p>Free, focused, and useful whether or not we ever work together. Bring one workflow, bottleneck, or AI idea — leave with an honest read on what's worth building.</p>
 </section>
 
+<!-- Enquiry assistant: instant answers + estimates from published rates -->
+<section class="book-assistant-section" aria-labelledby="assistant-title">
+  <div class="book-assistant" id="bookAssistant">
+    <div class="assistant-head">
+      <div class="assistant-id">
+        <span class="assistant-avatar" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9 2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9 2.83-2.83"/></svg>
+        </span>
+        <div>
+          <h2 id="assistant-title">Questions before you book?</h2>
+          <p>Instant answers on services, pricing, and timelines — estimates come from my published rates.</p>
+        </div>
+      </div>
+      <span class="assistant-badge">Instant · No waiting</span>
+    </div>
+    <div class="assistant-log" id="assistantLog" role="log" aria-live="polite" aria-label="Assistant conversation"></div>
+    <div class="assistant-chips" id="assistantChips" role="group" aria-label="Suggested questions"></div>
+    <form class="assistant-input" id="assistantForm" autocomplete="off">
+      <label for="assistantField" class="visually-hidden">Type your question</label>
+      <input type="text" id="assistantField" placeholder="Ask about pricing, timelines, how I work…" maxlength="300" />
+      <button type="submit" class="btn btn-primary btn-sm" data-track="assistant-send">Ask</button>
+    </form>
+    <p class="assistant-note">Answers are pulled from the services and pricing pages on this site. For anything it can't answer, use WhatsApp or the free call below.</p>
+    <noscript>
+      <p style="color:var(--text-muted);padding:1rem 0 0">The instant assistant needs JavaScript. You can still <a href="https://wa.me/254724346971" target="_blank" rel="noopener noreferrer">ask on WhatsApp</a>, send a message below, or book the free call.</p>
+    </noscript>
+  </div>
+</section>
+
 <!-- Who it's for / agenda / preparation -->
 <div class="book-faq">
   <div class="book-faq-grid">
@@ -167,7 +231,7 @@
 
 <div class="book-options">
   <div class="book-tabs" role="tablist" aria-label="Ways to get in touch">
-    <button class="book-tab" id="tab-schedule" role="tab" aria-selected="true" aria-controls="panel-schedule" data-tab="schedule">📅 Schedule a Call</button>
+    <button class="book-tab" id="tab-schedule" role="tab" aria-selected="true" aria-controls="panel-schedule" data-tab="schedule">📅 Book a Call</button>
     <button class="book-tab" id="tab-form" role="tab" aria-selected="false" aria-controls="panel-form" data-tab="form" tabindex="-1">💬 Send a Message</button>
     <button class="book-tab" id="tab-direct" role="tab" aria-selected="false" aria-controls="panel-direct" data-tab="direct" tabindex="-1">⚡ Direct Contact</button>
   </div>
@@ -263,7 +327,7 @@
     <div class="book-contact-methods">
       <a href="https://wa.me/254724346971?text=Hi%20Victor%2C%20I'd%20like%20to%20discuss%20an%20AI%20project" target="_blank" rel="noopener noreferrer" class="book-contact-card">
         <div class="icon">💬</div>
-        <div class="label">WhatsApp</div>
+        <div class="label">WhatsApp · Chat</div>
         <div class="value">+254 724 346 971</div>
         <div style="font-size:0.75rem;color:var(--accent);margin-top:0.5rem">Fastest response →</div>
       </a>
@@ -273,11 +337,11 @@
         <div class="value">mututandunda@gmail.com</div>
         <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem">Reply within 24h</div>
       </a>
-      <a href="tel:+254724346971" class="book-contact-card">
-        <div class="icon">📱</div>
-        <div class="label">Phone / Voice</div>
+      <a href="https://wa.me/254724346971" target="_blank" rel="noopener noreferrer" class="book-contact-card">
+        <div class="icon">📞</div>
+        <div class="label">WhatsApp Call</div>
         <div class="value">+254 724 346 971</div>
-        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem">Mon–Fri, 9am–6pm EAT</div>
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem">Opens chat — tap the call icon for voice or video</div>
       </a>
       <a href="https://www.linkedin.com/in/victor-ndunda" target="_blank" rel="noopener noreferrer" class="book-contact-card">
         <div class="icon">💼</div>
@@ -500,5 +564,6 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav')?.classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
 </script>
+<script src="/book/assistant.js?v=7.1.0" defer></script>
 </body>
 </html>

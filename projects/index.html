@@ -269,6 +269,7 @@
 .card-status-dot.production { background: #10b981; box-shadow: 0 0 8px #10b981; }
 .card-status-dot.active { background: #00d4ff; box-shadow: 0 0 8px #00d4ff; }
 .card-status-dot.shipped { background: #a855f7; box-shadow: 0 0 8px #a855f7; }
+.card-status-dot.trial { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
 
 .card-title {
   font-size: 1.5rem;
@@ -509,6 +510,20 @@
   padding: 1rem;
   height: 100%;
 }
+.visual-building {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 5px;
+  padding: 1rem;
+  height: 100%;
+}
+.visual-building .bld-floor {
+  width: 22px;
+  border-radius: 4px 4px 0 0;
+  background: linear-gradient(180deg, var(--card-accent, var(--accent)), transparent);
+  opacity: 0.85;
+}
 .visual-chart .bar {
   width: 12px;
   border-radius: 4px 4px 0 0;
@@ -727,6 +742,7 @@
     <p style="color:var(--text-muted);font-size:0.875rem;margin:0 0 1rem">The interactive grid needs JavaScript — these links work without it.</p>
     <ul style="list-style:none;padding:0;margin:0;display:grid;gap:0.6rem;color:var(--text-muted);font-size:0.925rem">
       <li>🤝 <strong>Tapi Learn (ACLA)</strong> — client engagement · 11K+ learners, 38 countries · <a href="https://acla.io/tapi-learn" style="color:var(--accent)">acla.io/tapi-learn</a></li>
+      <li>🏢 <strong>Keja AI</strong> — real-estate intelligence &amp; trust infrastructure (public trial) · <a href="https://keja.app" style="color:var(--accent)">keja.app</a></li>
       <li>🚀 <strong>Busara AI</strong> — multi-agent data intelligence platform · <a href="https://busaraai.com" style="color:var(--accent)">busaraai.com</a></li>
       <li>🌱 <strong>KilimoPRO</strong> — offline-first agri AI for 8 IGAD countries · <a href="https://github.com/gadda00/kilimopro" style="color:var(--accent)">GitHub</a></li>
       <li>🛡️ <strong>Fraud Detection System</strong> — 84% recall · ~33µs/score · <a href="https://github.com/gadda00/fraud-detection-system" style="color:var(--accent)">GitHub</a></li>
@@ -940,6 +956,14 @@
           '<div class="visual-wf-step">🤖</div><div class="visual-wf-line"></div>' +
           '<div class="visual-wf-step">📝</div><div class="visual-wf-line"></div>' +
           '<div class="visual-wf-step">✅</div>' +
+        '</div>';
+      case 'building':
+        return '<div class="visual-building">' +
+          '<div class="bld-floor" style="height:22%"></div>' +
+          '<div class="bld-floor" style="height:44%"></div>' +
+          '<div class="bld-floor" style="height:66%"></div>' +
+          '<div class="bld-floor" style="height:88%"></div>' +
+          '<div class="bld-floor" style="height:100%"></div>' +
         '</div>';
       case 'replay-loop':
         return '<div class="visual-replay">' +

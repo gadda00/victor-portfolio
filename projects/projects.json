@@ -34,6 +34,43 @@
       ]
     },
     {
+      "id": "keja-ai",
+      "name": "Keja AI",
+      "tagline": "Real-estate intelligence & trust infrastructure for African property",
+      "description": "Client platform for CHACADOM INVESTMENTS: one ecosystem covering the full transaction lifecycle — Discover, Verify, Analyse, Finance, Invest, Transact, Manage. Verified titles & documents, investment scoring on every listing, market data, tokenized assets, and the 'Ask Keja AI' assistant, with dedicated workspaces for buyers, sellers, landlords, tenants, investors, developers, banks, and institutions. Live in public trial at keja.app.",
+      "category": "Client Work",
+      "status": "trial",
+      "featured": true,
+      "priority": 2,
+      "github": null,
+      "liveUrl": "https://keja.app",
+      "repo": null,
+      "technologies": [
+        "Next.js",
+        "AI Assistant",
+        "Investment Scoring",
+        "Title Verification",
+        "Market Data",
+        "Tokenization"
+      ],
+      "metrics": {
+        "lifecycle": "7 stages — Discover to Manage",
+        "stakeholders": "8 stakeholder workspaces"
+      },
+      "visual": "building",
+      "accentColor": "#38bdf8",
+      "icon": "🏢",
+      "badge": "Client Platform · Public Trial",
+      "badgeClass": "client",
+      "links": [
+        {
+          "label": "Live Platform",
+          "url": "https://keja.app",
+          "type": "primary"
+        }
+      ]
+    },
+    {
       "id": "busara-ai",
       "name": "Busara AI",
       "tagline": "Multi-agent data intelligence platform",

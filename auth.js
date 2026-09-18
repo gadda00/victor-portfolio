@@ -1,7 +1,8 @@
 /* ═══════════════════════════════════════════════════════════════════
    Shared Auth Module — Victor Ndunda Portfolio
-   Google OAuth 2.0 + PBKDF2 password fallback
-   Used by: /dashboard/, /jobs/, (formerly /admin/)
+   Google OAuth 2.0 (ID token signature verified against Google JWKS)
+   + PBKDF2 password fallback + optional TOTP 2FA (see totp.js)
+   Used by: /dashboard/ (sole gated area since v8)
    ═══════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -170,6 +171,7 @@
   // ─── Google OAuth ──────────────────────────────────────────────────
   let onAuthSuccess = null;
   let onAuthError = null;
+  let googleInitialized = false; // guards renderButton-before-initialize race
 
   function initGoogleAuth(successCb, errorCb) {
     onAuthSuccess = successCb;
@@ -187,11 +189,19 @@
       cancel_on_tap_outside: false,
       use_fedcm_for_prompt: true,
     });
+    googleInitialized = true;
   }
 
-  function renderGoogleButton(elementId) {
+  function renderGoogleButton(elementId, _tries) {
+    _tries = _tries || 0;
     if (typeof google === 'undefined' || !google.accounts) {
       setTimeout(() => renderGoogleButton(elementId), 200);
+      return;
+    }
+    // GIS requires initialize() to have completed first — otherwise it logs
+    // "Failed to render button before calling initialize()" and renders nothing.
+    if (!googleInitialized && _tries < 50) {
+      setTimeout(() => renderGoogleButton(elementId, _tries + 1), 100);
       return;
     }
     const el = document.getElementById(elementId);
@@ -208,9 +218,89 @@
     google.accounts.id.prompt();
   }
 
+  // ─── Google ID token verification (fail closed) ────────────────────
+  // v8: the credential is no longer trusted after base64-decoding alone —
+  // a forged JWT could previously pass with an allowlisted email. The
+  // RS256 signature is now verified against Google's published JWKS and
+  // iss/aud/exp are checked. If the JWKS cannot be fetched, login FAILS.
+  let jwksCache = null, jwksCacheAt = 0;
+  const JWKS_URL = 'https://www.googleapis.com/oauth2/v3/certs';
+  const JWKS_TTL = 60 * 60 * 1000;
+
+  function b64uToBytes(s) {
+    s = s.replace(/-/g, '+').replace(/_/g, '/');
+    while (s.length % 4) s += '=';
+    const bin = atob(s);
+    const out = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) out[i] = bin.charCodeAt(i);
+    return out;
+  }
+
+  function getJwks() {
+    if (jwksCache && Date.now() - jwksCacheAt < JWKS_TTL) return Promise.resolve(jwksCache);
+    return fetch(JWKS_URL).then(r => {
+      if (!r.ok) throw new Error('JWKS HTTP ' + r.status);
+      return r.json();
+    }).then(j => {
+      jwksCache = j; jwksCacheAt = Date.now();
+      return j;
+    });
+  }
+
+  async function verifyGoogleCredential(credential) {
+    const parts = String(credential).split('.');
+    if (parts.length !== 3) throw new Error('Malformed credential');
+    const header = JSON.parse(new TextDecoder().decode(b64uToBytes(parts[0])));
+    const payload = JSON.parse(new TextDecoder().decode(b64uToBytes(parts[1])));
+    const sig = b64uToBytes(parts[2]);
+    const signed = new TextEncoder().encode(parts[0] + '.' + parts[1]);
+
+    if (header.alg !== 'RS256') throw new Error('Unexpected algorithm');
+    if (payload.iss !== 'https://accounts.google.com' && payload.iss !== 'accounts.google.com') throw new Error('Bad issuer');
+    if (payload.aud !== AUTH_CONFIG.GOOGLE_CLIENT_ID) throw new Error('Bad audience');
+    if (!payload.exp || payload.exp * 1000 < Date.now()) throw new Error('Credential expired');
+    if (payload.email_verified === false) throw new Error('Email not verified');
+
+    const jwks = await getJwks();
+    const jwk = (jwks.keys || []).find(k => k.kid === header.kid && k.use === 'sig' && k.alg === 'RS256');
+    if (!jwk) throw new Error('Unknown signing key');
+
+    const key = await crypto.subtle.importKey(
+      'jwk', jwk, { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['verify']);
+    const ok = await crypto.subtle.verify('RSASSA-PKCS1-v1_5', key, sig, signed);
+    if (!ok) throw new Error('Invalid signature');
+    return payload;
+  }
+
+  // ─── Post-authentication TOTP gate ─────────────────────────────────
+  // Called after the first factor succeeds. If TOTP is enrolled, the
+  // session is NOT saved yet — the UI layer must collect a valid code and
+  // call finalizeLogin(user). If TOTP is not yet enrolled, the UI should
+  // run enrollment first. Without totp.js present, auth degrades to the
+  // single-factor flow (e.g. local development without the script).
+  function gateTotp(user) {
+    if (onAuthSuccess) onAuthSuccess(user, {
+      totpAvailable: !!window.VNTotp,
+      totpEnrolled: !!(window.VNTotp && window.VNTotp.isEnrolled(user.email)),
+    });
+  }
+
+  function finalizeLogin(user) {
+    saveSession(user);
+    logActivity('auth', `Signed in as ${user.email} (2FA completed)`);
+    return true;
+  }
+
   async function handleCredentialResponse(response) {
+    let payload;
     try {
-      const payload = JSON.parse(atob(response.credential.split('.')[1]));
+      payload = await verifyGoogleCredential(response.credential);
+    } catch (err) {
+      logLoginAttempt('unverified-credential', false);
+      if (onAuthError) onAuthError('Sign-in could not be verified: ' + err.message);
+      return;
+    }
+    try {
       const email = payload.email;
       if (!AUTH_CONFIG.ALLOWED_EMAILS.includes(email)) {
         logLoginAttempt(email, false);
@@ -219,14 +309,9 @@
         return;
       }
       logLoginAttempt(email, true);
-      const user = {
-        email,
-        name: payload.name,
-        picture: payload.picture,
-      };
-      saveSession(user);
-      logActivity('auth', `Signed in as ${email}`);
-      if (onAuthSuccess) onAuthSuccess(user);
+      const user = { email, name: payload.name, picture: payload.picture };
+      logActivity('auth', `First factor passed: ${email} (Google, signature verified)`);
+      gateTotp(user);
     } catch (err) {
       if (onAuthError) onAuthError('Authentication failed: ' + err.message);
     }
@@ -267,9 +352,11 @@
         name: 'Victor Ndunda',
         picture: null,
       };
-      saveSession(user);
       logLoginAttempt(user.email, true);
-      logActivity('auth', `Signed in with password (${user.email})`);
+      logActivity('auth', `First factor passed: ${user.email} (password)`);
+      result.user = user;
+      // v8: session is NOT saved here — the caller must complete the TOTP
+      // gate (if active) and call VNAuth.finalizeLogin(user).
     } else {
       logLoginAttempt(username, false);
     }
@@ -285,6 +372,7 @@
     initGoogleAuth,
     renderGoogleButton,
     loginWithPassword,
+    finalizeLogin,
     logActivity,
     getActivityLog,
     getLoginLog,

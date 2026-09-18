@@ -359,7 +359,7 @@ html.light .cmd-palette .cmd-box { background: rgba(255,255,255,.96); }
   margin: 0 auto;
   padding: 0 2rem;
   width: 100%;
-  text-align: left;
+  text-align: center;
 }
 
 .hero-badge {
@@ -472,7 +472,7 @@ html.light .hero-badge { background: rgba(4,120,87,.08); border-color: rgba(4,12
 }
 @keyframes v6-blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
 
-.hero-cta { display: flex; flex-wrap: wrap; gap: .9rem; margin-bottom: 3.4rem; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .9rem; margin-bottom: 3.4rem; justify-content: center; }
 
 .hero-stats {
   display: grid;
