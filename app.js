@@ -443,12 +443,13 @@
   }
 
   const cmdCommands = [
+    { icon: '📅', title: 'Book an Assessment', desc: 'Free 30-minute AI systems call', action: () => window.location.href = '/book/' },
     { icon: '🏠', title: 'Go to Home', desc: 'Back to the top', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
     { icon: '👨‍💻', title: 'About Victor', desc: 'Learn about my background', action: () => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }) },
-    { icon: '🚀', title: 'View My Work', desc: 'Busara AI, KilimoPRO & more', action: () => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' }) },
-    { icon: '📡', title: 'Now / Currently Building', desc: 'What I am working on right now', action: () => document.getElementById('now')?.scrollIntoView({ behavior: 'smooth' }) },
+    { icon: '🚀', title: 'Case Studies', desc: 'Proof, not promises — five shipped systems', action: () => document.getElementById('case-studies')?.scrollIntoView({ behavior: 'smooth' }) },
+    { icon: '📋', title: 'All Work (Bento Grid)', desc: 'Busara AI, KilimoPRO & more', action: () => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' }) },
     { icon: '🛠️', title: 'Tech Stack', desc: 'Languages, frameworks & tools', action: () => document.getElementById('techstack')?.scrollIntoView({ behavior: 'smooth' }) },
-    { icon: '📝', title: 'Read My Blog', desc: 'Research and technical articles', action: () => window.location.href = '/blog/' },
+    { icon: '📝', title: 'Insights', desc: 'Research and technical articles', action: () => window.location.href = '/blog/' },
     { icon: '💼', title: 'Job Portal', desc: 'Search AI engineering jobs', action: () => window.location.href = '/jobs/' },
     { icon: '🛠️', title: 'Services', desc: 'What I can build for you', action: () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }) },
     { icon: '📧', title: 'Contact Me', desc: 'Get in touch', action: () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) },
@@ -546,6 +547,18 @@
   });
 
   if (cmdInput) cmdInput.addEventListener('input', e => renderCmdResults(e.target.value));
+
+  // Support ?q= deep links — makes the WebSite SearchAction structured data honest
+  (function () {
+    const q = new URLSearchParams(window.location.search).get('q');
+    if (q && q.trim() && typeof openCmd === 'function') {
+      openCmd();
+      if (cmdInput) {
+        cmdInput.value = q.trim();
+        renderCmdResults(q.trim());
+      }
+    }
+  })();
 
   // ═══════════════════════════════════════════════════════════════════
   // 10. SCROLL REVEAL — Staggered, with IntersectionObserver
@@ -841,4 +854,32 @@
       });
     });
   }
+})();
+
+// ═══════════════════════════════════════════════════════════════════
+// 14. CONVERSION EVENT HOOKS (privacy-friendly, zero network)
+// CTAs carry data-track="..." attributes. Events are queued in-memory
+// (window.__vnEvents) and mirrored to console.debug. To wire a provider
+// later (Plausible, Umami, GA4), set window.__vnTrack = fn(event) before
+// this script runs, or read from window.__vnEvents. No data leaves the
+// visitor's browser until a provider is explicitly connected.
+// ═══════════════════════════════════════════════════════════════════
+(function () {
+  'use strict';
+  window.__vnEvents = window.__vnEvents || [];
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('[data-track]') : null;
+    if (!el) return;
+    var ev = {
+      event: 'cta_click',
+      id: el.getAttribute('data-track'),
+      page: window.location.pathname,
+      ts: new Date().toISOString()
+    };
+    window.__vnEvents.push(ev);
+    if (typeof window.__vnTrack === 'function') {
+      try { window.__vnTrack(ev); } catch (err) { /* provider errors must never break the page */ }
+    }
+    if (window.console && console.debug) console.debug('[vn-event]', ev.id, ev.page);
+  }, { passive: true });
 })();

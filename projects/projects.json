@@ -1,6 +1,39 @@
 {
   "projects": [
     {
+      "id": "tapi-learn",
+      "name": "Tapi Learn (ACLA)",
+      "tagline": "Multilingual AI learning product — 11K+ learners, 38 countries",
+      "description": "Client engagement for ACLA: a free, Africa-built, multilingual mobile learning platform for climate leadership. Built the 24/7 AI Career Coach (CV reviews, interview prep, career advice), the multilingual NLP pipeline (English · Français · Kiswahili), personalized learning recommendations, and the opportunities board. Live at acla.io/tapi-learn.",
+      "category": "Client Work",
+      "status": "active",
+      "featured": true,
+      "priority": 0,
+      "github": null,
+      "liveUrl": "https://acla.io/tapi-learn",
+      "repo": null,
+      "technologies": [
+        "Multilingual NLP",
+        "EN·FR·SW",
+        "AI Career Coach",
+        "Recommendations",
+        "Mobile"
+      ],
+      "metrics": {},
+      "visual": "spark-line",
+      "accentColor": "#34d399",
+      "icon": "🤝",
+      "badge": "Client Engagement",
+      "badgeClass": "client",
+      "links": [
+        {
+          "label": "Live Product",
+          "url": "https://acla.io/tapi-learn",
+          "type": "primary"
+        }
+      ]
+    },
+    {
       "id": "busara-ai",
       "name": "Busara AI",
       "tagline": "Multi-agent data intelligence platform",
@@ -8,15 +41,28 @@
       "category": "AI Platform",
       "status": "production",
       "featured": true,
-      "priority": 1,
+      "priority": 2,
       "github": null,
       "liveUrl": "https://busaraai.com",
       "repo": null,
-      "technologies": ["TypeScript", "Next.js 15", "Multi-Agent System", "7-Stage DAG", "GLM-4.6", "PostgreSQL", "PWA", "Flutterwave"],
+      "technologies": [
+        "TypeScript",
+        "Next.js 15",
+        "Multi-Agent System",
+        "7-Stage DAG",
+        "GLM-4.6",
+        "PostgreSQL",
+        "PWA",
+        "Flutterwave"
+      ],
       "metrics": {
         "stars": null,
         "forks": null,
-        "languages": { "TypeScript": 85, "CSS": 10, "Other": 5 }
+        "languages": {
+          "TypeScript": 85,
+          "CSS": 10,
+          "Other": 5
+        }
       },
       "visual": "dag-pipeline",
       "accentColor": "#00d4ff",
@@ -24,8 +70,16 @@
       "badge": "Flagship · Data Intelligence",
       "badgeClass": "busara",
       "links": [
-        { "label": "Live Demo", "url": "https://busaraai.com", "type": "primary" },
-        { "label": "GitHub", "url": "https://github.com/gadda00/IntelliFlow", "type": "secondary" }
+        {
+          "label": "Live Demo",
+          "url": "https://busaraai.com",
+          "type": "primary"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/gadda00/IntelliFlow",
+          "type": "secondary"
+        }
       ],
       "highlights": [
         "50 AI agents across 7 parallel DAG stages",
@@ -38,19 +92,34 @@
       "id": "kilimopro",
       "name": "KilimoPRO",
       "tagline": "AI agricultural intelligence for 8 IGAD countries",
-      "description": "AI-powered agricultural intelligence for 8 IGAD countries (300M+ people). On-device crop disease detection (TFLite) for 15 crops, market forecasting with GARCH/VaR, multi-LLM advisory council in Swahili + English, 9 free keyless API endpoints, SMS webhook for feature phones. $0/month to operate — all 4 data sources free.",
+      "description": "AI-powered agricultural intelligence for smallholder farmers across 8 IGAD countries — a 300M+ person market. On-device crop disease detection (TFLite) for 15 crops, market forecasting with GARCH/VaR, multi-LLM advisory council in Swahili + English, 9 free keyless API endpoints, SMS webhook for feature phones. $0/month to operate on free data sources.",
       "category": "Agricultural AI",
       "status": "active",
       "featured": true,
-      "priority": 2,
+      "priority": 3,
       "github": "gadda00/kilimopro",
       "liveUrl": null,
       "repo": "https://github.com/gadda00/kilimopro",
-      "technologies": ["Next.js 14", "Drizzle ORM", "TFLite", "Open-Meteo", "FAOSTAT", "ICPAC", "Multi-LLM Council", "SMS", "Offline-First"],
+      "technologies": [
+        "Next.js 14",
+        "Drizzle ORM",
+        "TFLite",
+        "Open-Meteo",
+        "FAOSTAT",
+        "ICPAC",
+        "Multi-LLM Council",
+        "SMS",
+        "Offline-First"
+      ],
       "metrics": {
         "stars": 1,
         "forks": 0,
-        "languages": { "TypeScript": 70, "Python": 20, "Dart": 5, "Other": 5 }
+        "languages": {
+          "TypeScript": 70,
+          "Python": 20,
+          "Dart": 5,
+          "Other": 5
+        }
       },
       "visual": "crop-scan",
       "accentColor": "#10b981",
@@ -58,8 +127,16 @@
       "badge": "Agricultural Intelligence",
       "badgeClass": "kilimo",
       "links": [
-        { "label": "GitHub", "url": "https://github.com/gadda00/kilimopro", "type": "primary" },
-        { "label": "Case Study", "url": "/blog/articles/kilimopro-ai-for-farmers.html", "type": "secondary" }
+        {
+          "label": "GitHub",
+          "url": "https://github.com/gadda00/kilimopro",
+          "type": "primary"
+        },
+        {
+          "label": "Case Study",
+          "url": "/blog/articles/kilimopro-ai-for-farmers.html",
+          "type": "secondary"
+        }
       ],
       "highlights": [
         "Serves 300M+ people across 8 IGAD countries",
@@ -77,15 +154,32 @@
       "category": "Enterprise · Fintech",
       "status": "active",
       "featured": true,
-      "priority": 3,
+      "priority": 4,
       "github": "gadda00/fraud-detection-system",
       "liveUrl": null,
       "repo": "https://github.com/gadda00/fraud-detection-system",
-      "technologies": ["Go 1.22", "Gin", "7 Detectors", "Weighted Ensemble", "Logistic Calibration", "Rules Engine", "Case Management", "RBAC + JWT", "Prometheus", "OpenTelemetry", "Slack Alerts", "Kubernetes"],
+      "technologies": [
+        "Go 1.22",
+        "Gin",
+        "7 Detectors",
+        "Weighted Ensemble",
+        "Logistic Calibration",
+        "Rules Engine",
+        "Case Management",
+        "RBAC + JWT",
+        "Prometheus",
+        "OpenTelemetry",
+        "Slack Alerts",
+        "Kubernetes"
+      ],
       "metrics": {
         "stars": 0,
         "forks": 0,
-        "languages": { "Go": 92, "Dockerfile": 4, "Other": 4 }
+        "languages": {
+          "Go": 92,
+          "Dockerfile": 4,
+          "Other": 4
+        }
       },
       "visual": "architecture-wireframe",
       "accentColor": "#ef4444",
@@ -93,8 +187,16 @@
       "badge": "Enterprise · Regulated Finance",
       "badgeClass": "fraud",
       "links": [
-        { "label": "GitHub", "url": "https://github.com/gadda00/fraud-detection-system", "type": "primary" },
-        { "label": "Architecture", "url": "https://github.com/gadda00/fraud-detection-system/blob/main/README.md", "type": "secondary" }
+        {
+          "label": "GitHub",
+          "url": "https://github.com/gadda00/fraud-detection-system",
+          "type": "primary"
+        },
+        {
+          "label": "Architecture",
+          "url": "https://github.com/gadda00/fraud-detection-system/blob/main/README.md",
+          "type": "secondary"
+        }
       ],
       "highlights": [
         "7 statistical detectors with weighted-vote ensemble",
@@ -113,15 +215,31 @@
       "category": "SaaS · Sales & Ops",
       "status": "active",
       "featured": true,
-      "priority": 4,
+      "priority": 5,
       "github": "gadda00/verxlite",
       "liveUrl": null,
       "repo": "https://github.com/gadda00/verxlite",
-      "technologies": ["Python", "FastAPI", "Celery", "Next.js 14", "SQLAlchemy 2", "Alembic", "Google OAuth", "HubSpot OAuth", "Langfuse", "Fernet"],
+      "technologies": [
+        "Python",
+        "FastAPI",
+        "Celery",
+        "Next.js 14",
+        "SQLAlchemy 2",
+        "Alembic",
+        "Google OAuth",
+        "HubSpot OAuth",
+        "Langfuse",
+        "Fernet"
+      ],
       "metrics": {
         "stars": 0,
         "forks": 0,
-        "languages": { "Python": 60, "TypeScript": 30, "CSS": 7, "Other": 3 }
+        "languages": {
+          "Python": 60,
+          "TypeScript": 30,
+          "CSS": 7,
+          "Other": 3
+        }
       },
       "visual": "workflow-pipeline",
       "accentColor": "#a855f7",
@@ -129,8 +247,16 @@
       "badge": "Sales & Ops Automation",
       "badgeClass": "verxlite",
       "links": [
-        { "label": "GitHub", "url": "https://github.com/gadda00/verxlite", "type": "primary" },
-        { "label": "Code Review", "url": "https://github.com/gadda00/verxlite/blob/main/COMPREHENSIVE_CODE_REVIEW.md", "type": "secondary" }
+        {
+          "label": "GitHub",
+          "url": "https://github.com/gadda00/verxlite",
+          "type": "primary"
+        },
+        {
+          "label": "Code Review",
+          "url": "https://github.com/gadda00/verxlite/blob/main/COMPREHENSIVE_CODE_REVIEW.md",
+          "type": "secondary"
+        }
       ],
       "highlights": [
         "Multi-tenant SaaS with real auth (JWT + Clerk)",
@@ -149,15 +275,26 @@
       "category": "Open-Source · Developer Tools",
       "status": "shipped",
       "featured": true,
-      "priority": 5,
+      "priority": 6,
       "github": "gadda00/agentreplay",
       "liveUrl": null,
       "repo": "https://github.com/gadda00/agentreplay",
-      "technologies": ["Python", "LangGraph", "OpenAI SDK", "Anthropic SDK", "Deterministic Replay", "Counterfactual", "CI Regression"],
+      "technologies": [
+        "Python",
+        "LangGraph",
+        "OpenAI SDK",
+        "Anthropic SDK",
+        "Deterministic Replay",
+        "Counterfactual",
+        "CI Regression"
+      ],
       "metrics": {
         "stars": 0,
         "forks": 0,
-        "languages": { "Python": 95, "Other": 5 }
+        "languages": {
+          "Python": 95,
+          "Other": 5
+        }
       },
       "visual": "replay-loop",
       "accentColor": "#fbbf24",
@@ -165,8 +302,16 @@
       "badge": "Open-Source · Agent Reliability",
       "badgeClass": "research",
       "links": [
-        { "label": "GitHub", "url": "https://github.com/gadda00/agentreplay", "type": "primary" },
-        { "label": "Whitepaper", "url": "/blog/articles/agentreplay-deterministic-replay.html", "type": "secondary" }
+        {
+          "label": "GitHub",
+          "url": "https://github.com/gadda00/agentreplay",
+          "type": "primary"
+        },
+        {
+          "label": "Whitepaper",
+          "url": "/blog/articles/agentreplay-deterministic-replay.html",
+          "type": "secondary"
+        }
       ],
       "highlights": [
         "0.67% overhead, 100% reproduction fidelity",
@@ -184,15 +329,25 @@
       "category": "AI Platform",
       "status": "active",
       "featured": false,
-      "priority": 6,
+      "priority": 7,
       "github": "gadda00/IntelliFlow",
       "liveUrl": null,
       "repo": "https://github.com/gadda00/IntelliFlow",
-      "technologies": ["TypeScript", "Multi-Agent", "Self-Evolving", "Turborepo", "Next.js 15"],
+      "technologies": [
+        "TypeScript",
+        "Multi-Agent",
+        "Self-Evolving",
+        "Turborepo",
+        "Next.js 15"
+      ],
       "metrics": {
         "stars": 0,
         "forks": 0,
-        "languages": { "TypeScript": 90, "Python": 5, "Other": 5 }
+        "languages": {
+          "TypeScript": 90,
+          "Python": 5,
+          "Other": 5
+        }
       },
       "visual": "agent-graph",
       "accentColor": "#00d4ff",
@@ -200,7 +355,11 @@
       "badge": "Multi-Agent · Self-Evolving",
       "badgeClass": "busara",
       "links": [
-        { "label": "GitHub", "url": "https://github.com/gadda00/IntelliFlow", "type": "primary" }
+        {
+          "label": "GitHub",
+          "url": "https://github.com/gadda00/IntelliFlow",
+          "type": "primary"
+        }
       ],
       "highlights": [
         "33 specialized agents in a 7-stage pipeline",
@@ -217,15 +376,23 @@
       "category": "Data Science",
       "status": "shipped",
       "featured": false,
-      "priority": 7,
+      "priority": 8,
       "github": "gadda00/financial-forecasting-suite",
       "liveUrl": null,
       "repo": "https://github.com/gadda00/financial-forecasting-suite",
-      "technologies": ["Python", "Holt-Winters", "ARIMA", "Ensemble"],
+      "technologies": [
+        "Python",
+        "Holt-Winters",
+        "ARIMA",
+        "Ensemble"
+      ],
       "metrics": {
         "stars": 0,
         "forks": 0,
-        "languages": { "Python": 95, "Other": 5 }
+        "languages": {
+          "Python": 95,
+          "Other": 5
+        }
       },
       "visual": "chart-line",
       "accentColor": "#10b981",
@@ -233,7 +400,11 @@
       "badge": "Quant Finance",
       "badgeClass": "kilimo",
       "links": [
-        { "label": "GitHub", "url": "https://github.com/gadda00/financial-forecasting-suite", "type": "primary" }
+        {
+          "label": "GitHub",
+          "url": "https://github.com/gadda00/financial-forecasting-suite",
+          "type": "primary"
+        }
       ],
       "highlights": [
         "87.3% mean accuracy (1-MAPE) across 12 metrics",
@@ -250,15 +421,23 @@
       "category": "Data Science",
       "status": "shipped",
       "featured": false,
-      "priority": 8,
+      "priority": 9,
       "github": "gadda00/customer-segmentation-engine",
       "liveUrl": null,
       "repo": "https://github.com/gadda00/customer-segmentation-engine",
-      "technologies": ["Python", "K-Means", "GMM", "RFM"],
+      "technologies": [
+        "Python",
+        "K-Means",
+        "GMM",
+        "RFM"
+      ],
       "metrics": {
         "stars": 0,
         "forks": 0,
-        "languages": { "Python": 95, "Other": 5 }
+        "languages": {
+          "Python": 95,
+          "Other": 5
+        }
       },
       "visual": "cluster-scatter",
       "accentColor": "#a855f7",
@@ -266,7 +445,11 @@
       "badge": "Data Science",
       "badgeClass": "verxlite",
       "links": [
-        { "label": "GitHub", "url": "https://github.com/gadda00/customer-segmentation-engine", "type": "primary" }
+        {
+          "label": "GitHub",
+          "url": "https://github.com/gadda00/customer-segmentation-engine",
+          "type": "primary"
+        }
       ],
       "highlights": [
         "6 optimal clusters (silhouette 0.42)",
@@ -277,13 +460,46 @@
     }
   ],
   "categories": [
-    { "id": "all", "label": "All Projects", "icon": "✨" },
-    { "id": "AI Platform", "label": "AI Platforms", "icon": "🧠" },
-    { "id": "Enterprise · Fintech", "label": "Enterprise & Fintech", "icon": "🛡️" },
-    { "id": "SaaS · Sales & Ops", "label": "SaaS & Automation", "icon": "⚡" },
-    { "id": "Agricultural AI", "label": "Agricultural AI", "icon": "🌱" },
-    { "id": "Open-Source · Developer Tools", "label": "Open-Source Tools", "icon": "🔄" },
-    { "id": "Data Science", "label": "Data Science", "icon": "📊" }
+    {
+      "id": "all",
+      "label": "All Projects",
+      "icon": "✨"
+    },
+    {
+      "id": "Client Work",
+      "label": "Client Work",
+      "icon": "🤝"
+    },
+    {
+      "id": "AI Platform",
+      "label": "AI Platforms",
+      "icon": "🧠"
+    },
+    {
+      "id": "Enterprise · Fintech",
+      "label": "Enterprise & Fintech",
+      "icon": "🛡️"
+    },
+    {
+      "id": "SaaS · Sales & Ops",
+      "label": "SaaS & Automation",
+      "icon": "⚡"
+    },
+    {
+      "id": "Agricultural AI",
+      "label": "Agricultural AI",
+      "icon": "🌱"
+    },
+    {
+      "id": "Open-Source · Developer Tools",
+      "label": "Open-Source Tools",
+      "icon": "🔄"
+    },
+    {
+      "id": "Data Science",
+      "label": "Data Science",
+      "icon": "📊"
+    }
   ],
-  "lastUpdated": "2026-07-14"
+  "lastUpdated": "2026-09-18"
 }

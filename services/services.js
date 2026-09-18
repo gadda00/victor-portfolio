@@ -58,7 +58,7 @@
       const monthlyStr = monthly ? (typeof monthly === 'number' ? fmtMoney(monthly, currency) : monthly) : null;
 
       return `
-        <div class="svc-package" style="--pkg-color:${p.color}">
+        <div class="svc-package" id="pkg-${p.id}" style="--pkg-color:${p.color}">
           <div class="icon">${p.icon}</div>
           <div class="name">${esc(p.name)}</div>
           <div class="tagline">${esc(p.tagline)}</div>
@@ -81,7 +81,7 @@
             ${p.deliverables.map(d => `<li>${esc(d)}</li>`).join('')}
           </ul>
           <div class="outcome"><strong>Outcome:</strong> ${esc(p.outcome)}</div>
-          <a href="/#contact" class="pkg-cta" data-pkg-cta="${p.id}">Get started →</a>
+          <a href="/book/" class="pkg-cta" data-pkg-cta="${p.id}">Get started →</a>
         </div>
       `;
     }).join('');

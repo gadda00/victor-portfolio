@@ -4,13 +4,13 @@
 <meta charset="UTF-8" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Projects — Victor Ndunda | AI Engineer, Founder & Builder</title>
-<meta name="description" content="Explore Victor Ndunda's production AI systems — Busara AI, KilimoPRO, Fraud Detection System, Verxlite, AgentReplay, and more. Real systems serving real users, not demos." />
+<title>Case Studies — Production AI Systems by Victor Ndunda</title>
+<meta name="description" content="Five shipped systems with constraints and validation: fraud scoring at 84% recall, offline-first agri AI, a client product with 11K+ learners. See the evidence." />
 <meta name="author" content="Victor Ndunda" />
 <meta name="keywords" content="Victor Ndunda projects, AI projects, Busara AI, KilimoPRO, Fraud Detection System, Verxlite, AgentReplay, multi-agent systems, Go, Python, TypeScript, Nairobi, Kenya" />
 <link rel="canonical" href="https://victorndunda.com/projects/" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Projects — Victor Ndunda" />
+<meta property="og:title" content="Case Studies — Production AI Systems by Victor Ndunda" />
 <meta property="og:description" content="Production AI systems — Busara AI, KilimoPRO, Fraud Detection System, Verxlite, AgentReplay, and more." />
 <meta property="og:url" content="https://victorndunda.com/projects/" />
 <meta property="og:image" content="https://victorndunda.com/og-image.png" />
@@ -341,6 +341,15 @@
   border-color: var(--card-accent, var(--accent));
   color: var(--card-accent, var(--accent));
 }
+.card-links a.discuss {
+  background: transparent;
+  border: 1px dashed var(--card-accent, var(--accent));
+  color: var(--card-accent, var(--accent));
+}
+.card-links a.discuss:hover {
+  background: var(--card-accent, var(--accent));
+  color: var(--bg);
+}
 
 /* ─── Live GitHub stats ──────────────────────────────────────────── */
 .card-gh-stats {
@@ -647,13 +656,12 @@
     </a>
     <div class="nav-links" id="navLinks">
       <a href="/" class="nav-link">Home</a>
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/projects/" class="nav-link active" aria-current="page">Case Studies</a>
+      <a href="/blog/" class="nav-link">Insights</a>
       <a href="/#about" class="nav-link">About</a>
-      <a href="/projects/" class="nav-link active" aria-current="page">Projects</a>
       <a href="/resume/" class="nav-link">Resume</a>
-      <a href="/blog/" class="nav-link">Research</a>
-      <a href="/#services" class="nav-link">Services</a>
-      <a href="/#contact" class="nav-link">Contact</a>
-      <a href="/book/" class="nav-link nav-link-cta">Book a Call</a>
+      <a href="/book/" class="nav-link nav-link-cta">Book an Assessment</a>
     </div>
     <div class="nav-actions">
       <div class="lang-toggle" role="group" aria-label="Language selector">
@@ -678,9 +686,13 @@
 <!-- Hero -->
 <section class="projects-hero">
   <div class="container">
-    <span class="label"><span class="pulse-dot"></span> Projects</span>
-    <h1>Things I've <span class="grad-text">built.</span></h1>
-    <p>Production AI systems serving real users — not demos. Multi-agent platforms, fraud detection engines, agricultural intelligence, workflow automation, and open-source developer tools. All built in Nairobi, shipped to the world.</p>
+    <span class="label"><span class="pulse-dot"></span> Case Studies</span>
+    <h1>Case studies <span class="grad-text">&amp; systems.</span></h1>
+    <p>Five production systems plus one shipped client product — each with the constraint that shaped it and the validation that stands behind it. Built in Nairobi, shipped to the world.</p>
+    <div style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center">
+      <a href="/book/" class="btn btn-primary" style="padding:0.8rem 1.5rem;font-weight:700">Discuss a similar system →</a>
+      <a href="/services/" class="btn btn-ghost" style="padding:0.8rem 1.5rem">See how we'd work together</a>
+    </div>
   </div>
 </section>
 
@@ -708,6 +720,25 @@
     <p>Loading projects...</p>
   </div>
 </div>
+
+<noscript>
+  <div style="max-width:1000px;margin:1rem auto 4rem;padding:1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;text-align:left">
+    <h2 style="font-size:1.1rem;margin:0 0 0.25rem">All systems</h2>
+    <p style="color:var(--text-muted);font-size:0.875rem;margin:0 0 1rem">The interactive grid needs JavaScript — these links work without it.</p>
+    <ul style="list-style:none;padding:0;margin:0;display:grid;gap:0.6rem;color:var(--text-muted);font-size:0.925rem">
+      <li>🤝 <strong>Tapi Learn (ACLA)</strong> — client engagement · 11K+ learners, 38 countries · <a href="https://acla.io/tapi-learn" style="color:var(--accent)">acla.io/tapi-learn</a></li>
+      <li>🚀 <strong>Busara AI</strong> — multi-agent data intelligence platform · <a href="https://busaraai.com" style="color:var(--accent)">busaraai.com</a></li>
+      <li>🌱 <strong>KilimoPRO</strong> — offline-first agri AI for 8 IGAD countries · <a href="https://github.com/gadda00/kilimopro" style="color:var(--accent)">GitHub</a></li>
+      <li>🛡️ <strong>Fraud Detection System</strong> — 84% recall · ~33µs/score · <a href="https://github.com/gadda00/fraud-detection-system" style="color:var(--accent)">GitHub</a></li>
+      <li>⚡ <strong>Verxlite</strong> — sales &amp; ops AI workflow agent · <a href="https://github.com/gadda00/verxlite" style="color:var(--accent)">GitHub</a></li>
+      <li>🔄 <strong>AgentReplay</strong> — deterministic replay for AI agents · <a href="https://github.com/gadda00/agentreplay" style="color:var(--accent)">GitHub</a></li>
+      <li>🧠 <strong>IntelliFlow</strong> — self-evolving multi-agent platform · <a href="https://github.com/gadda00/IntelliFlow" style="color:var(--accent)">GitHub</a></li>
+      <li>📊 <strong>Financial Forecasting Suite</strong> — Holt-Winters, ARIMA, ensembles · <a href="https://github.com/gadda00/financial-forecasting-suite" style="color:var(--accent)">GitHub</a></li>
+      <li>📊 <strong>Customer Segmentation Engine</strong> — RFM + K-Means + GMM · <a href="https://github.com/gadda00/customer-segmentation-engine" style="color:var(--accent)">GitHub</a></li>
+    </ul>
+    <p style="margin:1.25rem 0 0;font-size:0.9rem">Want a system like one of these? <a href="/book/" style="color:var(--accent)">Book a free 30-minute assessment</a>.</p>
+  </div>
+</noscript>
 
 </main>
 
@@ -872,7 +903,7 @@
         highlightsHTML +
         '<div class="card-tags">' + (p.technologies || []).map(function(t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
         '<div class="card-footer">' +
-          '<div class="card-links">' + linksHTML + '</div>' +
+          '<div class="card-links">' + linksHTML + '<a href="/book/" class="discuss">Discuss a similar system →</a></div>' +
           ghStats +
         '</div>' +
       '</div>' +

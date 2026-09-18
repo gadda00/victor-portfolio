@@ -4,21 +4,21 @@
 <meta charset="UTF-8" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Book a Call — Victor Ndunda | AI Engineer</title>
-<meta name="description" content="Book a free 30-minute discovery call with Victor Ndunda. Discuss your AI project, get a roadmap, and find the right next step." />
+<title>Book a Free 30-Minute AI Systems Assessment — Victor Ndunda</title>
+<meta name="description" content="Bring one workflow or a struggling AI system. Leave with a build/no-build view and the smallest useful first step. Free, no pitch, via Cal.com." />
 <meta name="robots" content="index, follow" />
 <meta name="theme-color" content="#0a0e1a" />
 <meta name="color-scheme" content="dark light" />
 <link rel="canonical" href="https://victorndunda.com/book/" />
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Book a Call — Victor Ndunda | AI Engineer" />
-<meta property="og:description" content="Book a free 30-minute discovery call with Victor Ndunda. Discuss your AI project, get a roadmap, and find the right next step." />
+<meta property="og:title" content="Book a Free 30-Minute AI Systems Assessment — Victor Ndunda" />
+<meta property="og:description" content="Bring one workflow or a struggling AI system. Leave with a build/no-build view and the smallest useful first step." />
 <meta property="og:url" content="https://victorndunda.com/book/" />
 <meta property="og:image" content="https://victorndunda.com/og-image.png" />
 <meta property="og:site_name" content="Victor Ndunda" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Book a Call — Victor Ndunda" />
-<meta name="twitter:description" content="Book a free 30-minute discovery call. Discuss your AI project, get a roadmap." />
+<meta name="twitter:title" content="Book a 30-Minute AI Systems Assessment" />
+<meta name="twitter:description" content="Free, focused, useful whether or not we work together. Via Cal.com." />
 <meta name="twitter:image" content="https://victorndunda.com/og-image.png" />
 <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
 <link rel="manifest" href="/manifest.webmanifest" />
@@ -26,25 +26,38 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <meta name="view-transition" content="same-origin" />
-<link rel="stylesheet" href="/styles.css?v=5.4.0" />
+<link rel="stylesheet" href="/styles.css?v=7.0.0" />
 
 <!-- Security Headers -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://app.cal.com https://assets.calendly.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.web3forms.com https://app.cal.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
+<!-- CSP: frame-src explicitly allowlists the Cal.com inline embed (default-src 'self' would otherwise block it) -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://app.cal.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.web3forms.com https://app.cal.com https://api.cal.com; frame-src https://app.cal.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
 
 <style>
-.book-hero { padding: 8rem 2rem 3rem; text-align: center; }
+.book-hero { padding: 8rem 2rem 2.5rem; text-align: center; }
 .book-hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
 .book-hero p { color: var(--text-muted); font-size: 1.0625rem; max-width: 600px; margin: 0 auto 2rem; }
-.book-options { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; }
+.book-faq { max-width: 900px; margin: 0 auto; padding: 0 2rem 1rem; }
+.book-faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+.book-faq-card { padding: 1.25rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; text-align: left; }
+.book-faq-card h2 { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 0.75rem; }
+.book-faq-card ul { list-style: none; display: grid; gap: 0.5rem; }
+.book-faq-card li { font-size: 0.9375rem; color: var(--text-muted); line-height: 1.5; }
+.book-faq-card li strong { color: var(--text); }
+.book-agenda { max-width: 900px; margin: 0 auto 2rem; padding: 0 2rem; }
+.book-agenda ol { list-style: none; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; counter-reset: agenda; }
+.book-agenda li { position: relative; padding: 1.25rem 1.25rem 1.25rem 3.25rem; background: var(--bg-elev); border: 1px solid var(--border); border-radius: 12px; font-size: 0.9375rem; color: var(--text-muted); line-height: 1.5; counter-increment: agenda; }
+.book-agenda li::before { content: counter(agenda); position: absolute; left: 1.1rem; top: 1.15rem; width: 1.6rem; height: 1.6rem; border-radius: 50%; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; font-weight: 700; font-size: 0.8125rem; display: flex; align-items: center; justify-content: center; }
+.book-agenda li strong { display: block; color: var(--text); margin-bottom: 0.25rem; }
+.book-options { max-width: 900px; margin: 0 auto; padding: 0 2rem 1rem; }
 .book-tabs { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; }
 .book-tab { padding: 0.75rem 1.5rem; border-radius: 10px; background: var(--glass); border: 1px solid var(--border); color: var(--text-muted); font-weight: 600; font-size: 0.9375rem; cursor: pointer; transition: all 0.2s; font-family: inherit; }
 .book-tab:hover { border-color: var(--accent); color: var(--text); }
-.book-tab.active { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; border-color: transparent; }
-.book-panel { display: none; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; }
-.book-panel.active { display: block; }
+.book-tab[aria-selected="true"] { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; border-color: transparent; }
+.book-panel { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 2.5rem; }
+.book-panel[hidden] { display: none; }
 .book-form { display: flex; flex-direction: column; gap: 1rem; max-width: 500px; margin: 0 auto; }
 .book-form input, .book-form textarea, .book-form select {
   padding: 0.875rem 1rem; border-radius: 10px;
@@ -53,13 +66,11 @@
   transition: border-color 0.2s;
 }
 .book-form input:focus, .book-form textarea:focus, .book-form select:focus { border-color: var(--accent); }
+.book-form input[aria-invalid="true"], .book-form textarea[aria-invalid="true"] { border-color: #f87171; }
 .book-form label { font-size: 0.875rem; font-weight: 600; color: var(--text); }
-.book-what { margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border); }
-.book-what h3 { font-size: 1.125rem; margin-bottom: 1rem; }
-.book-what ul { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
-.book-what li { padding: 0.75rem; background: var(--bg-elev); border-radius: 8px; font-size: 0.875rem; color: var(--text-muted); }
-.book-what li strong { color: var(--text); }
-@media (max-width: 600px) { .book-what ul { grid-template-columns: 1fr; } }
+.field-error { margin: 0.25rem 0 0; font-size: 0.8125rem; color: #f87171; min-height: 1em; }
+.book-privacy { max-width: 900px; margin: 0 auto 3rem; padding: 0 2rem; text-align: center; }
+.book-privacy p { color: var(--text-dim); font-size: 0.875rem; max-width: 640px; margin: 0 auto; line-height: 1.6; }
 .book-success { text-align: center; padding: 2rem; }
 .book-success-icon { font-size: 3rem; margin-bottom: 1rem; }
 .book-contact-methods { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 2rem; }
@@ -68,6 +79,10 @@
 .book-contact-card .icon { font-size: 1.5rem; margin-bottom: 0.5rem; }
 .book-contact-card .label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
 .book-contact-card .value { font-weight: 600; color: var(--text); }
+.book-trustloop { max-width: 900px; margin: 0 auto 4rem; padding: 1.5rem 2rem 0; text-align: center; }
+.book-trustloop p { color: var(--text-muted); font-size: 0.9375rem; }
+.book-trustloop a { color: var(--accent); }
+@media (max-width: 600px) { .book-panel { padding: 1.5rem; } }
 </style>
 </head>
 <body>
@@ -87,19 +102,18 @@
     </a>
     <div class="nav-links" id="navLinks">
       <a href="/" class="nav-link">Home</a>
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/projects/" class="nav-link">Case Studies</a>
+      <a href="/blog/" class="nav-link">Insights</a>
       <a href="/#about" class="nav-link">About</a>
-      <a href="/#work" class="nav-link">Work</a>
       <a href="/resume/" class="nav-link">Resume</a>
-      <a href="/blog/" class="nav-link">Blog</a>
-      <a href="/#services" class="nav-link">Services</a>
-      <a href="/#contact" class="nav-link">Contact</a>
-      <a href="/book/" class="nav-link" style="background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;padding:0.5rem 1rem;border-radius:10px;font-weight:700">Book a Call</a>
-      </div>
+      <a href="/book/" class="nav-link" style="background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;padding:0.5rem 1rem;border-radius:10px;font-weight:700" aria-current="page">Book an Assessment</a>
+    </div>
     <div class="nav-actions">
       <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
       </button>
-      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu"><span>☰</span></button>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><span>☰</span></button>
     </div>
   </div>
 </nav>
@@ -109,56 +123,104 @@
   <div class="hero-badge" style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.5rem 1rem;border-radius:99px;background:var(--glass);border:1px solid var(--border);font-size:0.875rem;color:var(--accent);margin-bottom:1.5rem">
     <span class="pulse-dot"></span> Free · No pressure · 30 minutes
   </div>
-  <h1>Let's talk about your <span class="grad-text">AI project.</span></h1>
-  <p>Not sure where AI fits? Book a free discovery call. We'll discuss your goals, audit where AI can help, and recommend the right next step — even if that's "do nothing yet."</p>
+  <h1>Book a 30-Minute <span class="grad-text">AI Systems Assessment.</span></h1>
+  <p>Free, focused, and useful whether or not we ever work together. Bring one workflow, bottleneck, or AI idea — leave with an honest read on what's worth building.</p>
 </section>
 
+<!-- Who it's for / agenda / preparation -->
+<div class="book-faq">
+  <div class="book-faq-grid">
+    <div class="book-faq-card">
+      <h2>Who it's for</h2>
+      <ul>
+        <li><strong>Founders and product/ops leaders</strong> with a valuable workflow that's slow, manual, or error-prone.</li>
+        <li><strong>Teams with an AI feature</strong> that has quality, latency, cost, or trust problems.</li>
+        <li><strong>Not for:</strong> same-day fixed quotes or coursework/tutoring requests — email works better for those.</li>
+      </ul>
+    </div>
+    <div class="book-faq-card">
+      <h2>What to bring (optional)</h2>
+      <ul>
+        <li>The <strong>workflow you care about</strong> and roughly how many users, transactions, or documents it touches.</li>
+        <li><strong>Tools it lives in</strong> today (CRM, ERP, email, WhatsApp, spreadsheets).</li>
+        <li>Any <strong>AI you already tried</strong> — including the ones that disappointed you.</li>
+      </ul>
+    </div>
+    <div class="book-faq-card">
+      <h2>What you leave with</h2>
+      <ul>
+        <li>A <strong>build / no-build view</strong> on the workflow you brought.</li>
+        <li>The <strong>smallest useful first step</strong> — which may be "not yet."</li>
+        <li>A <strong>written summary within 48 hours</strong> if you want one. No pitch, no drip campaign.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="book-agenda" aria-label="What happens during the 30 minutes">
+  <ol>
+    <li><strong>0–10 min · Your context</strong> The workflow, the users, the constraint — what makes this hard or expensive today.</li>
+    <li><strong>10–20 min · Where AI fits</strong> Where it helps, where it doesn't, and what data you'd actually need.</li>
+    <li><strong>20–30 min · Next step</strong> Build/no-build view, the smallest useful first step, and an honest cost class.</li>
+  </ol>
+</div>
+
 <div class="book-options">
-  <div class="book-tabs">
-    <button class="book-tab active" data-tab="schedule">📅 Schedule a Call</button>
-    <button class="book-tab" data-tab="form">💬 Send a Message</button>
-    <button class="book-tab" data-tab="direct">⚡ Direct Contact</button>
+  <div class="book-tabs" role="tablist" aria-label="Ways to get in touch">
+    <button class="book-tab" id="tab-schedule" role="tab" aria-selected="true" aria-controls="panel-schedule" data-tab="schedule">📅 Schedule a Call</button>
+    <button class="book-tab" id="tab-form" role="tab" aria-selected="false" aria-controls="panel-form" data-tab="form" tabindex="-1">💬 Send a Message</button>
+    <button class="book-tab" id="tab-direct" role="tab" aria-selected="false" aria-controls="panel-direct" data-tab="direct" tabindex="-1">⚡ Direct Contact</button>
   </div>
 
-  <!-- Schedule via Cal.com / Calendly -->
-  <div class="book-panel active" id="panel-schedule">
+  <!-- Schedule via Cal.com -->
+  <div class="book-panel" id="panel-schedule" role="tabpanel" aria-labelledby="tab-schedule">
     <h2 style="text-align:center;margin-bottom:1rem">Pick a time that works for you</h2>
-    <p style="text-align:center;color:var(--text-muted);margin-bottom:2rem">Self-serve booking — no back-and-forth emails. You'll get a calendar invite instantly.</p>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:2rem">Self-serve booking — no back-and-forth emails. You'll get a calendar invite instantly. Times shown in your local timezone.</p>
     <div id="cal-embed" style="min-height:600px">
       <div style="text-align:center;padding:3rem;color:var(--text-muted)">
-        <p style="margin-bottom:1rem">📅 Calendar loading…</p>
-        <p style="font-size:0.875rem">If it doesn't load, <a href="https://cal.com/victor-ndunda/30min" target="_blank" r rel="noopener noreferrer"el="noopener noreferrer" style="color:var(--accent)">book directly on Cal.com →</a></p>
+        <p style="margin-bottom:1rem" aria-live="polite">📅 Calendar loading…</p>
+        <p style="font-size:0.875rem">If it doesn't load, <a href="https://cal.com/victor-ndunda/30min" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">book directly on Cal.com →</a></p>
       </div>
     </div>
     <div style="text-align:center;margin-top:1.5rem">
-      <a href="https://cal.com/victor-ndunda/30min" target="_blank" r rel="noopener noreferrer"el="noopener noreferrer" class="btn btn-primary">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <a href="https://cal.com/victor-ndunda/30min" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Open Calendar
       </a>
     </div>
+    <noscript>
+      <p style="text-align:center;margin-top:1.5rem;color:var(--text-muted)">
+        JavaScript is off, so the inline calendar can't load.
+        <a href="https://cal.com/victor-ndunda/30min" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">Book directly on Cal.com →</a>
+        (opens in a new tab)
+      </p>
+    </noscript>
   </div>
 
   <!-- Quick message form (Web3Forms backend) -->
-  <div class="book-panel" id="panel-form">
+  <div class="book-panel" id="panel-form" role="tabpanel" aria-labelledby="tab-form" hidden>
     <h2 style="text-align:center;margin-bottom:1rem">Send me a quick message</h2>
     <p style="text-align:center;color:var(--text-muted);margin-bottom:2rem">Tell me about your project and I'll reply within 24 hours.</p>
-    <form class="book-form" id="quickForm">
+    <form class="book-form" id="quickForm" novalidate>
       <input type="hidden" name="access_key" value="f695c261-e59a-4b77-a6cf-55f4b4883427" />
       <input type="hidden" name="subject" value="New inquiry from victorndunda.com/book" />
       <input type="hidden" name="from_name" value="Victor Ndunda Portfolio" />
-      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" />
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
 
       <div>
         <label for="qf-name">Name *</label>
-        <input type="text" id="qf-name" name="name" placeholder="Your name" required />
+        <input type="text" id="qf-name" name="name" placeholder="Your name" required aria-describedby="err-name" />
+        <p class="field-error" id="err-name" role="alert"></p>
       </div>
       <div>
         <label for="qf-email">Email *</label>
-        <input type="email" id="qf-email" name="email" placeholder="you@example.com" required />
+        <input type="email" id="qf-email" name="email" placeholder="you@example.com" required aria-describedby="err-email" />
+        <p class="field-error" id="err-email" role="alert"></p>
       </div>
       <div>
         <label for="qf-company">Company / Organization</label>
-        <input type="text" id="qf-company" name="company" placeholder="Acme Ltd." />
+        <input type="text" id="qf-company" name="company" placeholder="Acme Ltd." aria-describedby="err-company" />
+        <p class="field-error" id="err-company" role="alert"></p>
       </div>
       <div>
         <label for="qf-budget">Budget Range</label>
@@ -173,13 +235,21 @@
       </div>
       <div>
         <label for="qf-message">What do you want to build? *</label>
-        <textarea id="qf-message" name="message" rows="5" placeholder="I want to build a chatbot for my customers that…" required></textarea>
+        <textarea id="qf-message" name="message" rows="5" placeholder="I want to build a chatbot for my customers that…" required aria-describedby="err-message"></textarea>
+        <p class="field-error" id="err-message" role="alert"></p>
       </div>
       <button type="submit" class="btn btn-primary btn-block" id="qf-submit">
         Send Message →
       </button>
     </form>
-    <div id="qf-success" class="book-success" style="display:none">
+    <noscript>
+      <p style="text-align:center;margin-top:1.5rem;color:var(--text-muted)">
+        This form needs JavaScript. Without it, please
+        <a href="mailto:mututandunda@gmail.com?subject=Project%20Inquiry" style="color:var(--accent)">email me directly</a>
+        or <a href="https://wa.me/254724346971" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">message on WhatsApp</a>.
+      </p>
+    </noscript>
+    <div id="qf-success" class="book-success" style="display:none" role="status" aria-live="polite">
       <div class="book-success-icon">✓</div>
       <h3>Message sent!</h3>
       <p>I'll get back to you within 24 hours. For urgent matters, use the direct contact options.</p>
@@ -187,11 +257,11 @@
   </div>
 
   <!-- Direct contact methods -->
-  <div class="book-panel" id="panel-direct">
+  <div class="book-panel" id="panel-direct" role="tabpanel" aria-labelledby="tab-direct" hidden>
     <h2 style="text-align:center;margin-bottom:1rem">Reach me directly</h2>
     <p style="text-align:center;color:var(--text-muted);margin-bottom:2rem">Prefer a specific channel? Pick what works for you.</p>
     <div class="book-contact-methods">
-      <a href="https://wa.me/254724346971?text=Hi%20Victor%2C%20I'd%20like%20to%20discuss%20an%20AI%20project" target="_blank" r rel="noopener noreferrer"el="noopener noreferrer" class="book-contact-card">
+      <a href="https://wa.me/254724346971?text=Hi%20Victor%2C%20I'd%20like%20to%20discuss%20an%20AI%20project" target="_blank" rel="noopener noreferrer" class="book-contact-card">
         <div class="icon">💬</div>
         <div class="label">WhatsApp</div>
         <div class="value">+254 724 346 971</div>
@@ -209,7 +279,7 @@
         <div class="value">+254 724 346 971</div>
         <div style="font-size:0.75rem;color:var(--text-muted);margin-top:0.5rem">Mon–Fri, 9am–6pm EAT</div>
       </a>
-      <a href="https://www.linkedin.com/in/victor-ndunda" target="_blank" r rel="noopener noreferrer"el="noopener noreferrer" class="book-contact-card">
+      <a href="https://www.linkedin.com/in/victor-ndunda" target="_blank" rel="noopener noreferrer" class="book-contact-card">
         <div class="icon">💼</div>
         <div class="label">LinkedIn</div>
         <div class="value">Victor Ndunda</div>
@@ -217,19 +287,22 @@
       </a>
     </div>
   </div>
+</div>
 
-  <!-- What to expect -->
-  <div class="book-what">
-    <h3>What you get from a discovery call</h3>
-    <ul>
-      <li><strong>📋 AI Audit:</strong> Quick assessment of where AI fits in your business</li>
-      <li><strong>🎯 Roadmap:</strong> Prioritized next steps with ROI estimates</li>
-      <li><strong>💰 Budget Reality:</strong> Honest cost ranges — no upselling</li>
-      <li><strong>🚀 Pilot Ideas:</strong> 1-2 concrete pilots you could ship in weeks</li>
-      <li><strong>🤝 No Pressure:</strong> "Do nothing yet" is a valid outcome</li>
-      <li><strong>📝 Follow-up:</strong> Written summary + resources within 48h</li>
-    </ul>
-  </div>
+<!-- Privacy note -->
+<div class="book-privacy">
+  <p>
+    <strong>What happens with your information:</strong> bookings are processed by Cal.com and messages are delivered by Web3Forms to my email.
+    This site sets no tracking cookies and runs no third-party analytics. See the <a href="/privacy-policy.html" style="color:var(--accent)">privacy policy</a> for details.
+  </p>
+</div>
+
+<div class="book-trustloop">
+  <p>
+    Not sure you're ready? <a href="/projects/">Read the case studies</a> ·
+    <a href="/services/">See how we'd work together</a> ·
+    <a href="/blog/">Browse the writing</a>
+  </p>
 </div>
 </main>
 
@@ -252,44 +325,73 @@ document.getElementById('themeToggle')?.addEventListener('click', () => {
 });
 
 // Mobile menu
-document.getElementById('mobileToggle')?.addEventListener('click', () => {
-  document.getElementById('navLinks').classList.toggle('open');
+const mobileToggle = document.getElementById('mobileToggle');
+mobileToggle?.addEventListener('click', () => {
+  const open = document.getElementById('navLinks').classList.toggle('open');
+  mobileToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
 
-// Tab switching
-document.querySelectorAll('.book-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.book-tab').forEach(t => t.classList.remove('active'));
-    document.querySelectorAll('.book-panel').forEach(p => p.classList.remove('active'));
-    tab.classList.add('active');
-    document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+// Tabs — proper ARIA semantics + arrow-key navigation
+const tabs = Array.from(document.querySelectorAll('.book-tab'));
+function selectTab(tab) {
+  tabs.forEach(t => {
+    const selected = t === tab;
+    t.setAttribute('aria-selected', selected ? 'true' : 'false');
+    t.tabIndex = selected ? 0 : -1;
+    const panel = document.getElementById('panel-' + t.dataset.tab);
+    if (panel) panel.hidden = !selected;
+  });
+  tab.focus();
+}
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => selectTab(tab));
+  tab.addEventListener('keydown', (e) => {
+    const idx = tabs.indexOf(tab);
+    if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const next = e.key === 'ArrowRight' ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
+      selectTab(tabs[next]);
+    }
+    if (e.key === 'Home') { e.preventDefault(); selectTab(tabs[0]); }
+    if (e.key === 'End') { e.preventDefault(); selectTab(tabs[tabs.length - 1]); }
   });
 });
 
-// Cal.com embed (lazy load when schedule tab is active)
+// Cal.com inline embed — official bootstrap pattern (verified working):
+// 1) A window.Cal stub-queue must exist BEFORE embed.js loads; without it
+//    embed.js throws "Cal is not defined" and silently aborts.
+// 2) The CSP in <head> explicitly allowlists frame-src https://app.cal.com
+//    so the calendar iframe is not blocked (default-src 'self' would block it).
+(function () {
+  window.Cal = window.Cal || function () {
+    var cal = window.Cal;
+    cal.q = cal.q || [];
+    cal.q.push(arguments);
+  };
+  window.Cal.ns = {};
+  window.Cal.q = window.Cal.q || [];
+})();
+
 function loadCalEmbed() {
   var container = document.getElementById('cal-embed');
   if (!container || container.dataset.loaded) return;
   container.dataset.loaded = '1';
+  // Queue the inline call — it executes as soon as embed.js is ready.
+  Cal('inline', {
+    elementOrSelector: '#cal-embed',
+    calLink: 'victor-ndunda/30min',
+    layout: 'month_view'
+  });
   var s = document.createElement('script');
   s.async = true;
   s.src = 'https://app.cal.com/embed/embed.js';
-  s.onload = function() {
-    if (typeof Cal !== 'undefined') {
-      Cal('inline', {
-        elementOrSelector: '#cal-embed',
-        calLink: 'victor-ndunda/30min',
-        layout: 'month_view'
-      });
-    }
+  s.onerror = function () {
+    // Keep the static fallback link visible; it's already in the DOM.
   };
   document.head.appendChild(s);
 }
-
 document.querySelector('.book-tab[data-tab="schedule"]')?.addEventListener('click', loadCalEmbed);
-if (document.querySelector('.book-tab[data-tab="schedule"]')?.classList.contains('active')) {
-  setTimeout(loadCalEmbed, 500);
-}
+setTimeout(loadCalEmbed, 500);
 
 // Input sanitization — strip HTML tags, limit length, validate email
 function sanitizeInput(str, maxLength = 2000) {
@@ -306,14 +408,32 @@ document.getElementById('quickForm')?.addEventListener('submit', async (e) => {
   const form = e.target;
   const submitBtn = document.getElementById('qf-submit');
 
-  // Validate inputs before submission
+  function setError(fieldId, errId, message) {
+    const field = document.getElementById(fieldId);
+    const err = document.getElementById(errId);
+    if (field && err) {
+      err.textContent = message || '';
+      if (message) field.setAttribute('aria-invalid', 'true');
+      else field.removeAttribute('aria-invalid');
+    }
+  }
+  setError('qf-name', 'err-name', '');
+  setError('qf-email', 'err-email', '');
+  setError('qf-message', 'err-message', '');
+
   const name = sanitizeInput(form.querySelector('[name="name"]').value, 100);
   const email = sanitizeInput(form.querySelector('[name="email"]').value, 254);
   const message = sanitizeInput(form.querySelector('[name="message"]').value, 2000);
 
-  if (!name || name.length < 2) { alert('Please enter your name (min 2 characters).'); return; }
-  if (!isValidEmail(email)) { alert('Please enter a valid email address.'); return; }
-  if (!message || message.length < 10) { alert('Please enter a message (min 10 characters).'); return; }
+  let valid = true;
+  if (!name || name.length < 2) { setError('qf-name', 'err-name', 'Please enter your name (min 2 characters).'); valid = false; }
+  if (!isValidEmail(email)) { setError('qf-email', 'err-email', 'Please enter a valid email address.'); valid = false; }
+  if (!message || message.length < 10) { setError('qf-message', 'err-message', 'Please enter a message (min 10 characters).'); valid = false; }
+  if (!valid) {
+    const firstInvalid = form.querySelector('[aria-invalid="true"]');
+    if (firstInvalid) firstInvalid.focus();
+    return;
+  }
 
   // Honeypot check — if botcheck field is checked, it's a bot
   if (form.querySelector('[name="botcheck"]').checked) { return; }
@@ -333,27 +453,7 @@ document.getElementById('quickForm')?.addEventListener('submit', async (e) => {
     });
     const result = await response.json();
     if (result.success) {
-      // Save inquiry as a brief in localStorage so it appears in Victor's dashboard
-      try {
-        const briefs = JSON.parse(localStorage.getItem('vn_client_briefs') || '[]');
-        briefs.unshift({
-          id: 'inquiry-' + Date.now(),
-          createdAt: new Date().toISOString(),
-          source: 'booking-page',
-          status: 'inquiry',
-          details: {
-            name: name,
-            email: email,
-            company: sanitizeInput(form.querySelector('[name="company"]')?.value || '', 100),
-            budget: form.querySelector('[name="budget"]')?.value || '',
-          },
-          message: message,
-        });
-        if (briefs.length > 20) briefs.length = 20;
-        localStorage.setItem('vn_client_briefs', JSON.stringify(briefs));
-      } catch {}
-
-      // Show success with next steps
+      // Show success with next steps (announced via role="status" aria-live="polite")
       form.style.display = 'none';
       const successEl = document.getElementById('qf-success');
       successEl.innerHTML = `
@@ -361,20 +461,21 @@ document.getElementById('quickForm')?.addEventListener('submit', async (e) => {
         <h3>Message sent!</h3>
         <p style="margin-bottom:1.5rem">I'll get back to you within 24 hours. In the meantime, here's what you can do next:</p>
         <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;margin-bottom:1rem">
-          <a href="/services/wizard.html" class="btn btn-primary btn-sm">Start Project Wizard →</a>
-          <a href="/services/" class="btn btn-ghost btn-sm">View Packages</a>
-          <a href="/blog/" class="btn btn-ghost btn-sm">Read the Blog</a>
+          <a href="/services/" class="btn btn-primary btn-sm">See How We'd Work Together →</a>
+          <a href="/projects/" class="btn btn-ghost btn-sm">Read Case Studies</a>
+          <a href="/blog/" class="btn btn-ghost btn-sm">Browse Insights</a>
         </div>
         <p style="font-size:0.8125rem;color:var(--text-dim)">Prefer to talk now? WhatsApp: <a href="https://wa.me/254724346971" style="color:var(--accent)">+254 724 346 971</a></p>
       `;
       successEl.style.display = 'block';
+      successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
-      alert('Could not send message. Please email me directly at mututandunda@gmail.com');
+      setError('qf-message', 'err-message', 'Could not send message. Please email me directly at mututandunda@gmail.com');
       submitBtn.disabled = false;
       submitBtn.textContent = 'Send Message →';
     }
   } catch (err) {
-    window.location.href = 'mailto:mututandunda@gmail.com?subject=Project Inquiry&body=' + encodeURIComponent(form.querySelector('[name=message]').value);
+    setError('qf-message', 'err-message', 'Network error — please email mututandunda@gmail.com directly.');
     submitBtn.disabled = false;
     submitBtn.textContent = 'Send Message →';
   }

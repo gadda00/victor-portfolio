@@ -3,18 +3,16 @@
 
 User-agent: *
 Allow: /
-Allow: /blog/
-Allow: /resume/
-Allow: /services/
-Allow: /feed.xml
+
+# Note: JS and CSS are intentionally crawlable — Google needs them to render
+# the JavaScript-loaded content on /blog/, /services/ and /projects/.
 
 # Disallow private/admin areas
 Disallow: /admin/
 Disallow: /dashboard/
 Disallow: /jobs/
+Disallow: /guide/
 Disallow: /auth.js
-Disallow: /*.js$
-Disallow: /*.css$
 
 # Crawl delay (be respectful)
 Crawl-delay: 1
