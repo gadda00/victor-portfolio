@@ -177,7 +177,7 @@
     <h2 style="text-align:center;margin-bottom:1rem">Pick a time that works for you</h2>
     <p style="text-align:center;color:var(--text-muted);margin-bottom:2rem">Self-serve booking — no back-and-forth emails. You'll get a calendar invite instantly. Times shown in your local timezone.</p>
     <div id="cal-embed" style="min-height:600px">
-      <div style="text-align:center;padding:3rem;color:var(--text-muted)">
+      <div id="cal-loading" style="text-align:center;padding:3rem;color:var(--text-muted)">
         <p style="margin-bottom:1rem" aria-live="polite">📅 Calendar loading…</p>
         <p style="font-size:0.875rem">If it doesn't load, <a href="https://cal.com/victor-ndunda/30min" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">book directly on Cal.com →</a></p>
       </div>
@@ -376,6 +376,20 @@ function loadCalEmbed() {
   var container = document.getElementById('cal-embed');
   if (!container || container.dataset.loaded) return;
   container.dataset.loaded = '1';
+  // Hide the "Calendar loading…" placeholder once the Cal.com iframe mounts,
+  // so visitors (and screen readers, via its aria-live) don't see a stale
+  // loading message above the rendered calendar. The direct-booking fallback
+  // button below the embed stays available in all cases.
+  var placeholder = document.getElementById('cal-loading');
+  if (placeholder && 'MutationObserver' in window) {
+    var mo = new MutationObserver(function () {
+      if (container.querySelector('iframe')) {
+        placeholder.style.display = 'none';
+        mo.disconnect();
+      }
+    });
+    mo.observe(container, { childList: true, subtree: true });
+  }
   // Queue the inline call — it executes as soon as embed.js is ready.
   Cal('inline', {
     elementOrSelector: '#cal-embed',
