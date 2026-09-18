@@ -78,7 +78,9 @@
     switchSection('overview');
   }
 
-  if (window.VNAuth && VNAuth.checkSession()) showDashboard();
+  // Session restore is deferred to the end of this IIFE so every section
+  // renderer and the sideLinks NodeList are initialized before showDashboard()
+  // runs — restoring mid-session previously crashed at switchSection().
 
   // ─── Two-factor gate (TOTP — Google Authenticator) ──────────────
   // Runs after the first factor (Google or password) passes but BEFORE
@@ -282,6 +284,124 @@
         return '<div class="activity"><div class="icon">📋</div><div class="txt">' + a.message + '</div><div class="time">' + timeAgo(a.timestamp) + '</div></div>';
       }).join('') : '<div class="empty"><div class="icon">📭</div>No activity yet.</div>') +
       '</div>';
+  };
+
+  // ─── Notifications (assistant → email pipeline) ─────────────────
+  // The booking-page assistant emails you (via the site's existing
+  // Web3Forms channel) when a visitor completes an estimate or picks a
+  // hand-off. This panel documents the routing and lets you verify the
+  // pipeline end-to-end — including a live check of the access key that
+  // visitors' form submissions actually use.
+
+  function getLiveW3FKey() {
+    // Extract the key from the deployed /book/ page so the check reflects
+    // exactly what visitors experience (window.VN_W3F_KEY line).
+    return fetch('/book/').then(function (r) { return r.text(); }).then(function (html) {
+      var m = html.match(/VN_W3F_KEY\s*=\s*['"]([0-9a-f-]{36})['"]/i)
+        || html.match(/name="access_key"\s+value="([0-9a-f-]{36})"/i);
+      return m ? m[1] : null;
+    });
+  }
+
+  function sendTestNotification() {
+    var btn = document.getElementById('notifTestBtn');
+    var out = document.getElementById('notifTestOut');
+    if (!btn) return;
+    btn.disabled = true; btn.textContent = 'Checking…';
+    out.innerHTML = '<span style="color:var(--txt3);font-size:0.8rem">Reading the live access key from /book/ and sending a test through api.web3forms.com…</span>';
+    getLiveW3FKey().then(function (key) {
+      if (!key) {
+        btn.disabled = false; btn.textContent = 'Send test notification';
+        out.innerHTML = '<div class="check-item"><div class="check warn">!</div><div><strong>No access key found on /book/.</strong> The key line <code>window.VN_W3F_KEY</code> is missing or malformed in book/index.html.</div></div>';
+        return;
+      }
+      var masked = key.slice(0, 8) + '…' + key.slice(-4);
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: key,
+          subject: '🔔 TEST — notification pipeline check (victorndunda.com dashboard)',
+          from_name: 'Dashboard Test',
+          name: 'Dashboard Test',
+          message: [
+            'This is a TEST notification sent from the dashboard Notifications panel.',
+            'Key checked: ' + masked,
+            'Time: ' + new Date().toLocaleString(),
+            '',
+            'If this email arrived, the assistant → email pipeline is working.',
+            'Real notifications look like this:',
+            '  🔔 Estimate completed — booking assistant',
+            '  Service: RAG Knowledge Systems',
+            '  Volume: 500–5,000 / month',
+            '  Integrations: 3–5 systems',
+            '  Languages: English + Swahili/French',
+            '  Ballpark: $5,600–$7,600 · KES 4,450,000–6,000,000',
+            '',
+            '—',
+            'Privacy-safe pings: estimate configuration and channel only. No chat text, no personal data, no cookies.'
+          ].join('\n')
+        })
+      }).then(function (r) { return r.json(); })
+        .then(function (j) {
+          btn.disabled = false; btn.textContent = 'Send test notification';
+          if (j && j.success) {
+            out.innerHTML = '<div class="check-item"><div class="check ok">✓</div><div><strong>Pipeline live (key ' + masked + ').</strong> Check the inbox linked to your Web3Forms account (spam folder the first time) — estimate and hand-off notifications will be delivered there too.</div></div>';
+            toast('Test notification sent!');
+          } else if (j && j.message && /invalid/i.test(j.message)) {
+            out.innerHTML = '<div class="check-item"><div class="check warn">!</div><div><strong>Access key is INVALID (' + masked + ') — the contact form is failing for visitors too.</strong><br>' +
+              'Rotate it (free, ~1 minute): <ol style="margin:0.5rem 0 0 1.2rem;line-height:1.7">' +
+              '<li>Open <a href="https://web3forms.com" target="_blank" style="color:var(--acc)">web3forms.com</a> and sign in with the email that should receive notifications</li>' +
+              '<li>Create a new Access Key</li>' +
+              '<li>Edit <code>book/index.html</code> in this repo — replace the key on the <code>window.VN_W3F_KEY</code> line (search for it)</li>' +
+              '<li>Commit to <code>main</code> (auto-deploys), then come back and press this button again</li>' +
+              '</ol>Until then, the WhatsApp and Cal.com hand-offs keep working — only email delivery is down.</div></div>';
+            toast('Web3Forms key is invalid — see instructions', 'warn');
+          } else {
+            out.innerHTML = '<div class="check-item"><div class="check warn">!</div><div><strong>Web3Forms rejected the request.</strong> ' + (j && j.message ? esc(j.message) : 'Unknown error') + '</div></div>';
+          }
+        })
+        .catch(function (err) {
+          btn.disabled = false; btn.textContent = 'Send test notification';
+          out.innerHTML = '<div class="check-item"><div class="check warn">!</div><div><strong>Network error.</strong> ' + String(err) + '</div></div>';
+        });
+    }).catch(function (err) {
+      btn.disabled = false; btn.textContent = 'Send test notification';
+      out.innerHTML = '<div class="check-item"><div class="check warn">!</div><div><strong>Could not read /book/.</strong> ' + String(err) + '</div></div>';
+    });
+  }
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  sections.notifications = function () {
+    return '<div class="page-head"><h1>Notifications</h1><p>Assistant activity is emailed to you via Web3Forms — verify the pipeline here.</p></div>' +
+      '<div class="card"><h3>What triggers an email</h3>' +
+      '<table class="tbl"><thead><tr><th>Visitor action (/book/)</th><th>Email you receive</th><th>Contains</th></tr></thead><tbody>' +
+      '<tr><td><strong>Estimate completed</strong></td><td>🔔 Estimate completed — booking assistant</td><td>Service, volume, integrations, languages, price range, timestamp</td></tr>' +
+      '<tr><td><strong>Picks "Continue on WhatsApp"</strong></td><td>🔔 Handoff: WhatsApp</td><td>Channel + estimate context (if any) + timestamp</td></tr>' +
+      '<tr><td><strong>Picks "Book the free assessment"</strong></td><td>🔔 Handoff: calendar</td><td>Channel + estimate context (if any) + timestamp</td></tr>' +
+      '<tr><td><strong>Sends a brief / unanswered question</strong></td><td>🔔 Handoff: brief form</td><td>Channel + estimate context (if any) + timestamp</td></tr>' +
+      '<tr><td><strong>Message form submitted</strong></td><td>New inquiry from victorndunda.com/book</td><td>Full contact form (name, email, message)</td></tr>' +
+      '</tbody></table>' +
+      '<p style="color:var(--txt2);font-size:0.8rem;margin-top:0.75rem;line-height:1.6">Privacy design: pings carry the estimate configuration and channel only — no chat text, no personal data, no cookies. Rate-limited to one ping per event type per visitor session (4 minutes). Disclosed on the booking page and in the privacy policy.</p>' +
+      '</div>' +
+      '<div class="card"><h3>Pipeline verification</h3>' +
+      '<p style="color:var(--txt2);font-size:0.85rem;line-height:1.6;margin-bottom:0.75rem">Sends a labelled TEST email through the same Web3Forms endpoint the assistant uses. If it lands in your inbox, real notifications work too.</p>' +
+      '<button class="btn" id="notifTestBtn">Send test notification</button>' +
+      '<div id="notifTestOut" style="margin-top:0.75rem"></div>' +
+      '</div>' +
+      '<div class="card"><h3>Where notifications live</h3>' +
+      '<div class="actions">' +
+      '<a href="https://web3forms.com/dashboard" target="_blank" class="action"><span class="icon">📥</span>Web3Forms Inbox</a>' +
+      '<a href="/book/" target="_blank" class="action"><span class="icon">🤖</span>Try the assistant</a>' +
+      '<a href="/privacy-policy.html" target="_blank" class="action"><span class="icon">🔒</span>Privacy disclosure</a>' +
+      '</div>' +
+      '<p style="color:var(--txt3);font-size:0.78rem;margin-top:0.75rem;line-height:1.6">This is a static site on GitHub Pages, so email is the delivery channel — there is no server to store cross-visitor history. Web3Forms also keeps a submission log in their dashboard as a backup record.</p>' +
+      '</div>';
+  };
+
+  listeners.notifications = function () {
+    var b = document.getElementById('notifTestBtn');
+    if (b) b.addEventListener('click', sendTestNotification);
   };
 
   // ─── Projects section ────────────────────────────────────────────
@@ -549,20 +669,40 @@
     var visits = parseInt(localStorage.getItem('vn_visits') || '0', 10);
     var resumeDls = parseInt(localStorage.getItem('vn_resume_downloads') || '0', 10);
     var apps = getApps().length;
-    return '<div class="page-head"><h1>Analytics</h1><p>Privacy-friendly — data from localStorage only.</p></div>' +
+    return '<div class="page-head"><h1>Analytics</h1><p>Privacy-friendly — events are buffered in the visitor\'s browser; nothing is sent until you connect a provider.</p></div>' +
       '<div class="stat-grid">' +
-      '<div class="stat"><div class="stat-label">Sessions</div><div class="stat-val">' + visits + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Sessions (this browser)</div><div class="stat-val">' + visits + '</div></div>' +
       '<div class="stat"><div class="stat-label">Resume DLs</div><div class="stat-val">' + resumeDls + '</div></div>' +
       '<div class="stat"><div class="stat-label">Job Apps</div><div class="stat-val">' + apps + '</div></div>' +
       '<div class="stat"><div class="stat-label">Articles</div><div class="stat-val">' + blogPosts.length + '</div></div>' +
       '</div>' +
-      '<div class="card"><h3>Article Performance</h3><table class="tbl"><thead><tr><th>Title</th><th>Read Time</th><th>Words</th></tr></thead><tbody>' +
-      blogPosts.map(function (p) { return '<tr><td>' + p.title + '</td><td>' + p.readTime + '</td><td>' + p.wordCount + '</td></tr>'; }).join('') +
-      '</tbody></table></div>' +
-      '<div class="card"><h3>Connect Real Analytics</h3><div class="actions">' +
+      '<div class="card"><h3>Assistant & CTA event taxonomy</h3>' +
+      '<p style="color:var(--txt2);font-size:0.8rem;line-height:1.6;margin-bottom:0.5rem">Every assistant interaction and CTA click emits a structured event to <code>window.__vnEvents</code> (same shape as the site-wide hooks in app.js). No message text is ever recorded — only the event name and its configuration props.</p>' +
+      '<table class="tbl"><thead><tr><th>Event</th><th>Fires when</th><th>Props</th></tr></thead><tbody>' +
+      '<tr><td><code>assistant_boot</code></td><td>Assistant initializes</td><td>—</td></tr>' +
+      '<tr><td><code>assistant_msg</code></td><td>Any visitor message</td><td>— (no text)</td></tr>' +
+      '<tr><td><code>assistant_intent</code></td><td>A scripted intent matches</td><td><code>i</code>: pricing / timeline / process / …</td></tr>' +
+      '<tr><td><code>assistant_domain</code></td><td>Industry query mapped (e.g. hospital, sacco, hotel)</td><td><code>d</code>: domain id</td></tr>' +
+      '<tr><td><code>assistant_faq</code></td><td>Services FAQ match</td><td><code>score</code></td></tr>' +
+      '<tr><td><code>assistant_service</code></td><td>Catalogue service matched</td><td><code>s</code>: service id</td></tr>' +
+      '<tr><td><code>assistant_estimate_start</code></td><td>Estimate flow begins</td><td><code>preset</code> (if domain-prefilled)</td></tr>' +
+      '<tr><td><code>assistant_estimate_complete</code></td><td>Estimate produced</td><td>service, volume, integrations, languages, usd range</td></tr>' +
+      '<tr><td><code>assistant_notify_sent</code> / <code>…_failed</code></td><td>Owner email ping result</td><td><code>kind</code></td></tr>' +
+      '<tr><td><code>assistant_fallback</code></td><td>No match — question handed to Victor</td><td>— (no text)</td></tr>' +
+      '<tr><td><code>cta_click</code></td><td>Any <code>data-track</code> element clicked (site-wide)</td><td><code>id</code>, page</td></tr>' +
+      '</tbody></table>' +
+      '<div class="check-item" style="margin-top:0.75rem"><div class="check ok">✓</div><div><strong>Zero network by default</strong> — events stay in the visitor\'s browser (in-memory only), consistent with the no-tracking promise.</div></div>' +
+      '</div>' +
+      '<div class="card"><h3>Connect a provider</h3>' +
+      '<p style="color:var(--txt2);font-size:0.8rem;line-height:1.6;margin-bottom:0.5rem">Set <code>window.__vnTrack = fn(ev)</code> before page scripts run (e.g. in <code>&lt;head&gt;</code>) and every event above flows to your provider. Plausible/GA4/Umami snippets can be wired this way when you\'re ready.</p>' +
+      '<div class="actions">' +
       '<a href="https://plausible.io" target="_blank" class="action"><span class="icon">📊</span>Plausible</a>' +
       '<a href="https://umami.is" target="_blank" class="action"><span class="icon">📈</span>Umami</a>' +
-      '</div></div>';
+      '<a href="https://gtag.dev" target="_blank" class="action"><span class="icon">🛠️</span>GA4 gtag</a>' +
+      '</div></div>' +
+      '<div class="card"><h3>Article Performance</h3><table class="tbl"><thead><tr><th>Title</th><th>Read Time</th><th>Words</th></tr></thead><tbody>' +
+      blogPosts.map(function (p) { return '<tr><td>' + p.title + '</td><td>' + p.readTime + '</td><td>' + p.wordCount + '</td></tr>'; }).join('') +
+      '</tbody></table></div>';
   };
 
   sections.jobs = function () {
@@ -710,6 +850,9 @@
     });
     document.getElementById('signOut2').addEventListener('click', function () { VNAuth.logout(); });
   };
+
+  // Session restore (deferred — see note above; runs only after all renderers exist)
+  if (window.VNAuth && VNAuth.checkSession()) showDashboard();
 
   // Log access
   if (window.VNAuth) VNAuth.logActivity('dashboard', 'Accessed dashboard');

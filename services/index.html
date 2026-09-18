@@ -149,11 +149,11 @@
 
 <!-- Stats bar -->
 <div class="svc-stats">
-  <div class="svc-stat"><div class="num">11K+</div><div class="lbl">Learners served</div></div>
-  <div class="svc-stat"><div class="num">38</div><div class="lbl">Countries</div></div>
-  <div class="svc-stat"><div class="num">5</div><div class="lbl">Production platforms</div></div>
+  <div class="svc-stat"><div class="num">6</div><div class="lbl">Production AI systems shipped</div></div>
+  <div class="svc-stat"><div class="num">12</div><div class="lbl">Catalogue services</div></div>
+  <div class="svc-stat"><div class="num">4</div><div class="lbl">Engagement packages</div></div>
   <div class="svc-stat"><div class="num">22+</div><div class="lbl">Data sources integrated</div></div>
-  <div class="svc-stat"><div class="num">91%</div><div class="lbl">CV accuracy</div></div>
+  <div class="svc-stat"><div class="num">91%</div><div class="lbl">CV accuracy (shipped system)</div></div>
   <div class="svc-stat"><div class="num">EN·FR·SW</div><div class="lbl">Languages</div></div>
 </div>
 
@@ -245,7 +245,7 @@
   <div class="svc-section-head">
     <span class="label">Case Studies</span>
     <h2>Real products, <span class="grad-text">real traction.</span></h2>
-    <p>Three live AI products I designed, built, and shipped — serving 11K+ users across 38 countries.</p>
+    <p>Live AI products I designed, built, and shipped — including a client learning platform used by 11K+ people across 38 countries.</p>
   </div>
   <div class="svc-cases" id="cases"></div>
 </section>
@@ -331,10 +331,8 @@ themeToggle.addEventListener('click', () => {
   const isDark = html.classList.contains('dark');
   html.className = isDark ? 'light' : 'dark';
   localStorage.setItem('theme', isDark ? 'light' : 'dark');
-  themeToggle.querySelector('span').textContent = isDark ? '☀️' : '🌙';
   themeToggle.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
 });
-themeToggle.querySelector('span').textContent = html.classList.contains('dark') ? '🌙' : '☀️';
 
 // Mobile menu
 const mobileToggle = document.getElementById('mobileToggle');
