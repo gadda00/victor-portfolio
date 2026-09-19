@@ -32,29 +32,12 @@
     e.preventDefault(); // Prevent Chrome's default mini-infobar
   });
 
-  // ── 3. Scroll progress indicator ──────────────────────────────────
+  // ── 3. Scroll progress + back-to-top (single rAF listener) ────────
   var progressEl = document.createElement('div');
   progressEl.className = 'scroll-progress';
   progressEl.setAttribute('aria-hidden', 'true');
   document.body.appendChild(progressEl);
 
-  var ticking = false;
-  function updateProgress() {
-    var scrollTop = window.scrollY || document.documentElement.scrollTop;
-    var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-    progressEl.style.width = pct + '%';
-    ticking = false;
-  }
-  window.addEventListener('scroll', function () {
-    if (!ticking) {
-      requestAnimationFrame(updateProgress);
-      ticking = true;
-    }
-  }, { passive: true });
-  updateProgress();
-
-  // ── 4. Back-to-top button ─────────────────────────────────────────
   var backTop = document.createElement('a');
   backTop.className = 'back-to-top';
   backTop.href = '#main';
@@ -62,22 +45,31 @@
   backTop.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="18 15 12 9 6 15"/></svg>';
   document.body.appendChild(backTop);
 
+  // One scroll listener drives BOTH the progress bar and the back-to-top
+  // toggle. (Previously two listeners shared the same `ticking` flag, so
+  // the second listener never ran and the button never appeared.)
   var backTopVisible = false;
-  function toggleBackTop() {
+  var ticking = false;
+  function onScrollFrame() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    progressEl.style.width = pct + '%';
     var shouldShow = window.scrollY > 600;
     if (shouldShow !== backTopVisible) {
       backTopVisible = shouldShow;
       backTop.classList.toggle('visible', backTopVisible);
     }
+    ticking = false;
   }
   window.addEventListener('scroll', function () {
     if (!ticking) {
-      requestAnimationFrame(function () { updateProgress(); toggleBackTop(); });
+      requestAnimationFrame(onScrollFrame);
       ticking = true;
     }
   }, { passive: true });
   // Initial check (in case page loads scrolled, e.g. via #anchor or refresh)
-  toggleBackTop();
+  onScrollFrame();
 
   // ── 5. Active section tracking via IntersectionObserver ──────────
   // Highlights the nav link for the section currently in view
@@ -120,9 +112,9 @@
   // appear immediately, no transform/opacity animation).
   if ('IntersectionObserver' in window && !REDUCED_MOTION) {
     var revealTargets = document.querySelectorAll(
-      '.section-head, .work-card, .now-card, .testimonial-card, ' +
+      '.section-head, .work-card, ' +
       '.about-card, .svc-quick-card, .contact-card, .tech-item, ' +
-      '.booking-cta-band, .newsletter-band, .edu-card'
+      '.booking-cta-band, .newsletter-band'
     );
     revealTargets.forEach(function (el, i) {
       el.classList.add('reveal');

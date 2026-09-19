@@ -13,10 +13,10 @@ jobs:
   digest:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Setup Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
 
@@ -68,10 +68,10 @@ jobs:
               company = j.get('company_name') or j.get('company') or 'Unknown'
               location = j.get('location') or 'Remote'
               tags = j.get('tags') or []
-              desc = (j.get('description') or '').replace('<[^>]*>', '', 1)
+              desc = re.sub(r'<[^>]*>', '', j.get('description') or '')
               text = (title + ' ' + company + ' ' + location + ' ' + ' '.join(tags) + ' ' + desc).lower()
               url = j.get('url') or j.get('apply_url') or '#'
-              created = j.get('created_at') or datetime.datetime.fromtimestamp(j.get('date', 0)).isoformat()
+              created = j.get('created_at') or datetime.datetime.fromtimestamp(j.get('date') or 0).isoformat()
               return {
                   'title': title, 'company': company, 'location': location,
                   'tags': tags, 'url': url, 'created': created, 'source': source,
@@ -137,7 +137,7 @@ jobs:
           digest_lines.append(f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M UTC')}")
           digest_lines.append(f"Total relevant jobs found: {len(deduped)}")
           digest_lines.append("")
-          digest_lines.append("View full portal: https://victorndunda.com/jobs/")
+          digest_lines.append("View the jobs portal (dashboard): https://victorndunda.com/dashboard/")
           digest_lines.append("")
           digest_lines.append("="*60)
           digest_lines.append("")

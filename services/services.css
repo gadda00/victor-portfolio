@@ -8,7 +8,7 @@
 .svc-hero p { color: var(--text-muted); font-size: 1.125rem; max-width: 680px; margin: 0 auto 2rem; line-height: 1.6; }
 .svc-hero-cta { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 
-.svc-stats { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; }
+.svc-stats { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
 .svc-stat { text-align: center; padding: 1.5rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; }
 .svc-stat .num { font-size: 1.875rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .svc-stat .lbl { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -166,4 +166,7 @@
   .svc-hero { padding: 6rem 1.5rem 2rem; }
   .svc-packages, .svc-services, .svc-cases, .svc-training, .svc-guides, .svc-models { padding: 0 1rem; }
   .svc-case-stats { grid-template-columns: repeat(2, 1fr); }
+  /* 6 stats: 3x2 desktop -> 2x3 on mobile (even rows both ways) */
+  .svc-stats { grid-template-columns: repeat(2, 1fr); padding: 0 1.25rem 3rem; }
+  .svc-stat { padding: 1.25rem 0.75rem; }
 }

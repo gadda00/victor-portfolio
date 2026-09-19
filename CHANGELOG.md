@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed — v9.1 Site Reliability & Centering Pass
+
+**Auto-Post to Social Media workflow (the recurring "failed workflow"):**
+- Root cause: the multiline article list was interpolated directly into `for FILE in ${{ steps.detect.outputs.files }}` — whenever a push touched 2+ articles, bash hit a syntax error and the job failed before posting anything.
+- Fixed with an env-var + `while IFS= read -r` loop (any file count now safe), and the 300-line inline Python moved to `scripts/social_post.py` with all inputs passed as environment variables (titles with quotes/unicode can no longer break the script).
+- Diff detection now spans the full push range (`github.event.before → sha`) instead of just the last commit.
+- Announcements now fire only for genuinely new articles or changed titles/descriptions — maintenance-only edits (like this release's own a11y fixes across all articles) no longer re-announce old posts.
+- `permissions: contents: read` added; actions bumped (checkout v5, setup-python v6) to clear the Node 20 deprecation warnings.
+
+**Hero stats bar centering (homepage):**
+- `home.css` rendered `.hero-stats` as a 4-column grid while the v7 homepage has 3 stats — the empty 4th cell pushed everything left, and the bar itself had no auto margins. Now 3 columns + `margin-inline: auto`: the bar is pixel-centered (verified bar center = viewport center).
+- Mobile: 3 stats in 2 columns → the third now spans the full second row for a symmetric layout.
+
+**Services stats bar:** `auto-fit` grid wrapped 6 stats as 4+2 (ragged, left-heavy second row). Now a clean 3×2 grid on desktop and 2×3 on mobile, centered.
+
+**Theme-toggle crash on 18 pages (blog listing, all 10 articles, 8 service guides):**
+- `themeToggle.querySelector('span').textContent = ...` threw a null TypeError (the v7 nav replaced the emoji span with SVG icons) — and because it sat mid-script, it silently killed the mobile menu and nav-scroll handlers below it on every one of those pages. Dead statements removed; toggle icons are CSS-driven (`html.light`).
+
+**Duplicate UI machinery consolidated (three JS generations were fighting):**
+- Two scroll progress bars (enhancements.js + liquid.js) → one (enhancements.js).
+- Two back-to-top buttons → one; the liquid one overlapped and covered the Book FAB at bottom-right (z-index 9000 vs 900). Dead `.lg-top`/`.lg-progress` CSS removed from liquid.css.
+- enhancements.js back-to-top never actually appeared: two scroll listeners shared one `ticking` flag, so its toggle never ran. Merged into a single rAF listener — button now appears above the FAB as designed.
+- Homepage hero numbers were animated twice (app.js + liquid.js writing the same textContent from two rAF loops) → liquid.js is now the single count-up provider.
+- enhancements.js reveal list no longer targets sections deleted in v7 (`.now-card`, `.testimonial-card`, `.edu-card`).
+- book/, /services/invoice.html, and 404 now load enhancements.js so the progress bar + back-to-top work there too (liquid.js no longer injects its own).
+
+**Daily Job Digest workflow:** stale link to the removed public /jobs/ portal → /dashboard/ (where the jobs board lives since v8); description HTML stripped with a real regex (`re.sub`) instead of a no-op literal replace; `date: null` guard; action versions bumped.
+
 ### Added — v9.0 "Liquid Glass" Premium + First-Party Pipeline
 
 **Liquid Glass design system (`liquid.css` + `liquid.js`, site-wide):**

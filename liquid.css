@@ -12,14 +12,15 @@
    3. Liquid aurora background (.liquid-bg)
    4. Specular shimmer (.lg-shimmer)
    5. Liquid chips + buttons
-   6. Scroll progress bar (.lg-progress)
-   7. Spotlight cards (cursor-follow glow)
-   8. Tilt cards (.lg-tilt)
-   9. Count-up stats + reveal
-  10. Toasts (.vn-toast)
-  11. Back-to-top (.lg-top)
-  12. Skeleton shimmer (.lg-skel)
-  13. Reduced-motion kill-switch
+   6. Spotlight cards (cursor-follow glow)
+   7. Tilt cards (.lg-tilt)
+   8. Count-up stats + reveal
+   9. Toasts (.vn-toast)
+  10. Skeleton shimmer (.lg-skel)
+  11. Reduced-motion kill-switch
+
+  (Scroll progress + back-to-top are provided site-wide by
+   styles.css + enhancements.js — removed here to avoid duplicates.)
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ─── 1. Liquid-glass tokens ─────────────────────────────────────── */
@@ -198,22 +199,7 @@ html.light .liquid-bg { opacity: 0.35; }
 /* Press feedback — the "drop into liquid" dip */
 .lg-chip:active, .btn.lg-shimmer:active { transform: translateY(1px) scale(0.98); }
 
-/* ─── 6. Scroll progress bar ─────────────────────────────────────── */
-.lg-progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  width: 0;
-  z-index: 10001;
-  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
-  border-radius: 0 99px 99px 0;
-  box-shadow: 0 0 12px var(--glow);
-  pointer-events: none;
-  transition: width 0.08s linear;
-}
-
-/* ─── 7. Spotlight cards (cursor-follow glow) ────────────────────── */
+/* ─── 6. Spotlight cards (cursor-follow glow) ────────────────────── */
 .lg-spot {
   position: relative;
   overflow: hidden;
@@ -231,11 +217,11 @@ html.light .liquid-bg { opacity: 0.35; }
 }
 .lg-spot:hover::after { opacity: 1; }
 
-/* ─── 8. Tilt cards ──────────────────────────────────────────────── */
+/* ─── 7. Tilt cards ──────────────────────────────────────────────── */
 .lg-tilt { transform-style: preserve-3d; will-change: transform; transition: transform 0.18s var(--ease, ease); }
 .lg-tilt .lg-tilt-inner { transform: translateZ(24px); }
 
-/* ─── 9. Count-up stats + reveal ─────────────────────────────────── */
+/* ─── 8. Count-up stats + reveal ─────────────────────────────────── */
 .lg-count { font-variant-numeric: tabular-nums; }
 .lg-reveal {
   opacity: 0;
@@ -249,7 +235,7 @@ html.light .liquid-bg { opacity: 0.35; }
 .lg-reveal:nth-child(5) { transition-delay: 0.28s; }
 .lg-reveal:nth-child(6) { transition-delay: 0.35s; }
 
-/* ─── 10. Toasts ─────────────────────────────────────────────────── */
+/* ─── 9. Toasts ─────────────────────────────────────────────────── */
 .vn-toast-wrap {
   position: fixed;
   bottom: 1.25rem;
@@ -291,34 +277,7 @@ html.light .liquid-bg { opacity: 0.35; }
   to { opacity: 0; transform: translateY(8px) scale(0.97); }
 }
 
-/* ─── 11. Back-to-top ────────────────────────────────────────────── */
-.lg-top {
-  position: fixed;
-  right: 1.25rem;
-  bottom: 1.25rem;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1px solid var(--lg-edge);
-  background: var(--lg-tint);
-  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
-  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
-  box-shadow: var(--lg-inner), var(--lg-shadow);
-  color: var(--text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(12px);
-  transition: opacity 0.3s, transform 0.3s var(--ease, ease), border-color 0.2s;
-  z-index: 9000;
-  pointer-events: none;
-}
-.lg-top.show { opacity: 1; transform: none; pointer-events: auto; }
-.lg-top:hover { border-color: var(--accent); }
-
-/* ─── 12. Skeleton shimmer ───────────────────────────────────────── */
+/* ─── 10. Skeleton shimmer ───────────────────────────────────────── */
 .lg-skel {
   border-radius: 8px;
   background: linear-gradient(100deg,
@@ -333,11 +292,10 @@ html.light .liquid-bg { opacity: 0.35; }
   to   { background-position: -120% 0; }
 }
 
-/* ─── 13. Reduced-motion kill-switch ─────────────────────────────── */
+/* ─── 11. Reduced-motion kill-switch ─────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .liquid-bg .blob { animation: none; }
   .lg-shimmer::after { display: none; }
-  .lg-progress { transition: none; }
   .lg-reveal { opacity: 1; transform: none; transition: none; }
   .lg-tilt { transition: none; }
   .vn-toast { animation: none; }

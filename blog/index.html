@@ -234,10 +234,10 @@ themeToggle.addEventListener('click', () => {
   const isDark = html.classList.contains('dark');
   html.className = isDark ? 'light' : 'dark';
   localStorage.setItem('theme', isDark ? 'light' : 'dark');
-  themeToggle.querySelector('span').textContent = isDark ? '☀️' : '🌙';
+  
   themeToggle.setAttribute('aria-label', isDark ? 'Switch to light theme' : 'Switch to dark theme');
 });
-themeToggle.querySelector('span').textContent = html.classList.contains('dark') ? '🌙' : '☀️';
+
 
 // Mobile menu
 const mobileToggle = document.getElementById('mobileToggle');
@@ -252,6 +252,6 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
 });
 </script>
-<script src="/enhancements.js?v=5.4.0" defer></script>
+<script src="/enhancements.js?v=9.1.0" defer></script>
 </body>
 </html>
