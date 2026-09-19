@@ -54,7 +54,7 @@ jobs:
           while IFS= read -r f; do
             [ -z "$f" ] && continue
             hit=$(announce "$f")
-            [ -n "$hit" ] && FILES="$FILES$hit"$'\n'"
+            [ -n "$hit" ] && FILES="$FILES$hit"$'\n'
           done < <(git diff --name-only $RANGE -- 'blog/articles/' 2>/dev/null | grep '\.html$' || true)
 
           # Multiline output via heredoc delimiter (GitHub Actions standard)
