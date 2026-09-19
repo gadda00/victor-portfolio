@@ -260,6 +260,10 @@
           '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>' +
           'Generate Contract' +
         '</a>' +
+        '<a href="/services/proposal.html?brief=' + (state._briefId || '') + '" class="btn btn-ghost" id="resultProposal">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>' +
+          'Draft Proposal' +
+        '</a>' +
         '<a href="/services/payment.html?brief=' + (state._briefId || '') + '" class="btn btn-ghost" id="resultPay">' +
           '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>' +
           'See Payment Plan' +
@@ -280,6 +284,7 @@
     state._briefId = brief.id;
     // Update the action links with the brief ID
     var c = $('#resultContract'); if (c) c.href = '/services/contract.html?brief=' + brief.id;
+    var pr = $('#resultProposal'); if (pr) pr.href = '/services/proposal.html?brief=' + brief.id;
     var p = $('#resultPay'); if (p) p.href = '/services/payment.html?brief=' + brief.id;
   }
 
