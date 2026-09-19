@@ -3,7 +3,7 @@
    Shared across all 8 "How to Use AI" guide articles
    ============================================================= */
 
-.guide-body { max-width: 780px; margin: 0 auto; padding: 8rem 2rem 4rem; font-size: 1.0625rem; line-height: 1.8; color: var(--text); }
+.guide-body { max-width: 780px; margin: 0 auto; padding: 7rem 2rem 3.5rem; font-size: 1.0625rem; line-height: 1.8; color: var(--text); }
 
 .guide-meta { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
 .guide-meta .cat-badge { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.625rem; border-radius: 4px; background: rgba(0,212,255,0.1); color: var(--accent); }

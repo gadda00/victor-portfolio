@@ -3,26 +3,37 @@
    ============================================================= */
 
 /* ─── Hero ─────────────────────────────────────────────────── */
-.svc-hero { padding: 8rem 2rem 3rem; text-align: center; position: relative; overflow: hidden; }
-.svc-hero h1 { font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.15; margin-bottom: 1rem; }
+.svc-hero { padding: 7rem 2rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
+.svc-hero h1 { font-size: clamp(2.25rem, 5vw, 3.75rem); line-height: 1.15; margin-bottom: 1rem; text-wrap: balance; }
 .svc-hero p { color: var(--text-muted); font-size: 1.125rem; max-width: 680px; margin: 0 auto 2rem; line-height: 1.6; }
 .svc-hero-cta { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 
-.svc-stats { max-width: 900px; margin: 0 auto; padding: 0 2rem 4rem; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-.svc-stat { text-align: center; padding: 1.5rem 1rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; }
-.svc-stat .num { font-size: 1.875rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-.svc-stat .lbl { font-size: 0.75rem; color: var(--text-muted); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.05em; }
+/* Quick anchor nav — every key section one tap from the first screen */
+.svc-quicknav { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; margin-top: 1.75rem; }
+.svc-quicknav a {
+  padding: 0.45rem 1rem;
+  border-radius: 99px;
+  background: var(--glass);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s var(--ease, ease), border-color 0.2s var(--ease, ease), transform 0.2s var(--ease, ease), background-color 0.2s var(--ease, ease);
+}
+.svc-quicknav a:hover { color: var(--text); border-color: var(--accent); transform: translateY(-1px); background: var(--bg-card); }
+.svc-quicknav a:active { transform: translateY(0) scale(0.97); }
 
 /* ─── Section common ───────────────────────────────────────── */
-.svc-section { padding: 4rem 0; }
-.svc-section-head { text-align: center; margin-bottom: 3rem; padding: 0 2rem; }
+.svc-section { padding: 3.5rem 0; }
+.svc-section-head { text-align: center; margin-bottom: 2.5rem; padding: 0 2rem; }
 .svc-section-head .label { display: inline-block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent); margin-bottom: 1rem; padding: 0.3rem 0.8rem; border-radius: 99px; background: var(--glass); border: 1px solid var(--border); }
 .svc-section-head h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); margin-bottom: 0.75rem; }
 .svc-section-head p { color: var(--text-muted); font-size: 1.0625rem; max-width: 640px; margin: 0 auto; }
 
 /* ─── Packages ─────────────────────────────────────────────── */
 .svc-packages { max-width: 1280px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
-.svc-package { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 2rem 1.75rem; position: relative; transition: all 0.3s; display: flex; flex-direction: column; }
+.svc-package { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 2rem 1.75rem; position: relative; transition: transform 0.3s var(--ease, ease), border-color 0.3s var(--ease, ease), box-shadow 0.3s var(--ease, ease); display: flex; flex-direction: column; }
 .svc-package:hover { transform: translateY(-5px); border-color: var(--pkg-color, var(--accent)); box-shadow: 0 20px 50px rgba(0,0,0,0.2); }
 .svc-package::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--pkg-color, var(--accent)); border-radius: 18px 18px 0 0; }
 .svc-package .icon { font-size: 2.5rem; margin-bottom: 1rem; }
@@ -43,12 +54,13 @@
 .svc-package .outcome { font-size: 0.75rem; padding: 0.625rem 0.875rem; background: var(--glass); border-radius: 8px; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
 .svc-package .outcome strong { color: var(--pkg-color, var(--accent)); }
 .svc-package .timeline { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 1rem; }
-.svc-package .pkg-cta { display: block; text-align: center; padding: 0.75rem 1rem; border-radius: 10px; font-weight: 600; font-size: 0.875rem; text-decoration: none; background: linear-gradient(135deg, var(--pkg-color, var(--accent)), var(--accent-2)); color: #fff; transition: all 0.2s; }
+.svc-package .pkg-cta { display: block; text-align: center; padding: 0.75rem 1rem; border-radius: 10px; font-weight: 600; font-size: 0.875rem; text-decoration: none; background: linear-gradient(135deg, var(--pkg-color, var(--accent)), var(--accent-2)); color: #fff; transition: transform 0.2s var(--ease, ease), box-shadow 0.2s var(--ease, ease); }
 .svc-package .pkg-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--glow); color: #fff; }
+.svc-package .pkg-cta:active { transform: translateY(0) scale(0.98); }
 
 /* ─── Services grid ────────────────────────────────────────── */
 .svc-services { max-width: 1280px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
-.svc-service { padding: 1.75rem; border-radius: 14px; background: var(--bg-card); border: 1px solid var(--border); transition: all 0.3s; cursor: pointer; text-decoration: none; color: inherit; display: block; }
+.svc-service { padding: 1.75rem; border-radius: 14px; background: var(--bg-card); border: 1px solid var(--border); transition: transform 0.3s var(--ease, ease), border-color 0.3s var(--ease, ease), box-shadow 0.3s var(--ease, ease); cursor: pointer; text-decoration: none; color: inherit; display: block; }
 .svc-service:hover { border-color: var(--accent); transform: translateY(-3px); }
 .svc-service .icon { font-size: 2rem; margin-bottom: 0.75rem; }
 .svc-service h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 0.5rem; }
@@ -138,7 +150,7 @@
 .svc-calc-opt.active { background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(168,85,247,0.15)); border-color: var(--accent); color: var(--accent); }
 .svc-calc-result { margin-top: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(168,85,247,0.05)); border: 1px solid rgba(0,212,255,0.2); border-radius: 12px; text-align: center; }
 .svc-calc-result .est-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 0.5rem; }
-.svc-calc-result .est-value { font-size: 2rem; font-weight: 800; font-family: 'JetBrains Mono', monospace; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.25rem; }
+.svc-calc-result .est-value { font-size: 2rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.25rem; }
 .svc-calc-result .est-detail { font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1rem; }
 .svc-calc-result .est-cta { display: inline-block; padding: 0.625rem 1.5rem; border-radius: 9px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; font-weight: 600; font-size: 0.875rem; text-decoration: none; transition: all 0.2s; }
 .svc-calc-result .est-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--glow); color: #fff; }
@@ -149,15 +161,16 @@
 .svc-cta-banner h2 { font-size: clamp(1.5rem, 3vw, 2rem); margin-bottom: 0.75rem; }
 .svc-cta-banner p { color: var(--text-muted); font-size: 1rem; max-width: 540px; margin: 0 auto 1.5rem; line-height: 1.6; }
 .svc-cta-banner .btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
-.svc-cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.5rem; border-radius: 11px; font-weight: 600; font-size: 0.9375rem; text-decoration: none; transition: all 0.2s; }
+.svc-cta-btn { display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.875rem 1.5rem; border-radius: 11px; font-weight: 600; font-size: 0.9375rem; text-decoration: none; transition: transform 0.2s var(--ease, ease), border-color 0.2s var(--ease, ease), box-shadow 0.2s var(--ease, ease), color 0.2s var(--ease, ease); }
 .svc-cta-btn.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; border: none; }
 .svc-cta-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px var(--glow); color: #fff; }
+.svc-cta-btn.primary:active { transform: translateY(0) scale(0.98); }
 .svc-cta-btn.ghost { background: var(--bg-card); color: var(--text); border: 1px solid var(--border); }
 .svc-cta-btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
 
 /* ─── Currency toggle ──────────────────────────────────────── */
 .svc-currency-toggle { display: inline-flex; gap: 0.25rem; padding: 0.25rem; background: var(--glass); border: 1px solid var(--border); border-radius: 10px; margin: 0 auto 2rem; }
-.svc-currency-toggle button { padding: 0.4rem 0.875rem; border-radius: 7px; background: transparent; border: none; color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.svc-currency-toggle button { padding: 0.4rem 0.875rem; border-radius: 7px; background: transparent; border: none; color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: background-color 0.2s var(--ease, ease), color 0.2s var(--ease, ease); }
 .svc-currency-toggle button.active { background: var(--bg-elev, var(--bg-card)); color: var(--accent); }
 .svc-currency-wrap { text-align: center; }
 
@@ -166,7 +179,6 @@
   .svc-hero { padding: 6rem 1.5rem 2rem; }
   .svc-packages, .svc-services, .svc-cases, .svc-training, .svc-guides, .svc-models { padding: 0 1rem; }
   .svc-case-stats { grid-template-columns: repeat(2, 1fr); }
-  /* 6 stats: 3x2 desktop -> 2x3 on mobile (even rows both ways) */
-  .svc-stats { grid-template-columns: repeat(2, 1fr); padding: 0 1.25rem 3rem; }
-  .svc-stat { padding: 1.25rem 0.75rem; }
+  .svc-quicknav { gap: 0.4rem; }
+  .svc-quicknav a { padding: 0.4rem 0.85rem; font-size: 0.78rem; }
 }

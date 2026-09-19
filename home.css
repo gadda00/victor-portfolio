@@ -107,9 +107,9 @@ h1, h2, h3, h4 { font-family: var(--v6-font-display); color: var(--v6-text-hi); 
 .container { max-width: 1180px; padding: 0 2rem; }
 
 /* ─── Section rhythm & numbered eyebrows ────────────────────────── */
-.section { padding: 6.5rem 0; position: relative; }
+.section { padding: 5.5rem 0; position: relative; }
 
-.section-head { margin-bottom: 3.6rem; }
+.section-head { margin-bottom: 3rem; }
 
 .section-head .label,
 .eyebrow {
@@ -147,6 +147,7 @@ html.light .eyebrow {
   font-weight: 600;
   line-height: 1.08;
   margin-bottom: 1.1rem;
+  text-wrap: balance;
 }
 
 .section-head .section-sub,
@@ -348,7 +349,7 @@ html.light .cmd-palette .cmd-box { background: rgba(255,255,255,.96); }
   min-height: 100svh;
   display: flex;
   align-items: center;
-  padding: 9rem 0 5rem;
+  padding: 7.5rem 0 4rem;
   overflow: hidden;
 }
 
@@ -472,7 +473,7 @@ html.light .hero-badge { background: rgba(4,120,87,.08); border-color: rgba(4,12
 }
 @keyframes v6-blink { 0%,100% { opacity: 1; } 50% { opacity: .25; } }
 
-.hero-cta { display: flex; flex-wrap: wrap; gap: .9rem; margin-bottom: 3.4rem; justify-content: center; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: .9rem; margin-bottom: 2.2rem; justify-content: center; }
 
 .hero-stats {
   display: grid;
@@ -489,7 +490,7 @@ html.light .hero-badge { background: rgba(4,120,87,.08); border-color: rgba(4,12
 
 .hero-stat {
   background: var(--v6-bg-0);
-  padding: 1.4rem 1.5rem;
+  padding: 1.1rem 1.25rem;
   transition: background .35s;
 }
 .hero-stat:hover { background: var(--v6-surface); }
@@ -1331,10 +1332,14 @@ html.light footer { background: rgba(230,234,248,.4); }
   position: fixed;
   top: 0; left: 0;
   height: 2.5px;
-  width: 0%;
+  width: 100%;
   z-index: 1200;
   background: var(--v6-grad);
   box-shadow: 0 0 10px rgba(34,211,238,.6);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  will-change: transform;
+  pointer-events: none;
 }
 
 /* ─── Reveal animations ─────────────────────────────────────────── */
@@ -1359,8 +1364,8 @@ html.light footer { background: rgba(230,234,248,.4); }
 
 @media (max-width: 760px) {
   .container, .hero-content { padding: 0 1.25rem; }
-  .section { padding: 5rem 0; }
-  .hero { padding-top: 7rem; }
+  .section { padding: 4.25rem 0; }
+  .hero { padding-top: 6.5rem; }
   .hero-stats { grid-template-columns: repeat(2, 1fr); }
   /* 3 stats in 2 columns: last item spans the full second row for symmetry */
   .hero-stats .hero-stat:last-child:nth-child(odd) { grid-column: 1 / -1; }
@@ -1464,17 +1469,18 @@ html.light nav#nav.scrolled { background: rgba(246,248,254,.9); }
 
 /* Single-message hero */
 .hero-title-single {
-  font-size: clamp(2.6rem, 7vw, 5.2rem);
+  font-size: clamp(2.4rem, 5.5vw, 4.25rem);
   line-height: 1.05;
   letter-spacing: -0.02em;
-  max-width: 14ch;
+  max-width: 16ch;
   margin: 1rem auto 1.25rem;
+  text-wrap: balance;
 }
 .hero-sub {
   font-size: clamp(1rem, 2.2vw, 1.2rem);
   color: var(--v6-text-mid);
-  max-width: 62ch;
-  margin: 0 auto 2rem;
+  max-width: 70ch;
+  margin: 0 auto 1.6rem;
   line-height: 1.65;
 }
 

@@ -32,11 +32,11 @@
 <meta name="mobile-web-app-capable" content="yes" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <meta name="view-transition" content="same-origin" />
-<link rel="stylesheet" href="/styles.css?v=5.4.0" />
-<link rel="stylesheet" href="/liquid.css?v=9.1.0" />
-<link rel="stylesheet" href="/services/services.css" />
+<link rel="stylesheet" href="/styles.css?v=10.0.0" />
+<link rel="stylesheet" href="/liquid.css?v=10.0.0" />
+<link rel="stylesheet" href="/services/services.css?v=10.0.0" />
 
 <!-- Security Headers -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -101,11 +101,20 @@
         Estimate your project
       </a>
     </div>
+    <!-- Quick anchors: every key section reachable in one tap from the first screen -->
+    <nav class="svc-quicknav" aria-label="Jump to section">
+      <a href="#packages-section">Packages</a>
+      <a href="#calculator">Estimate</a>
+      <a href="#catalog">Catalog</a>
+      <a href="#case-studies">Case Studies</a>
+      <a href="#training">Training</a>
+      <a href="#faqs">FAQ</a>
+    </nav>
   </div>
 </section>
 
 <!-- Three ways to start -->
-<section class="svc-section" id="paths" style="padding-top:3rem">
+<section class="svc-section cv-auto" id="paths" style="padding-top:2.5rem">
   <div class="container">
     <div class="svc-section-head">
       <span class="label">Three Ways to Start</span>
@@ -148,16 +157,6 @@
   </div>
 </noscript>
 
-<!-- Stats bar -->
-<div class="svc-stats">
-  <div class="svc-stat"><div class="num lg-count" data-count="6">6</div><div class="lbl">Production AI systems shipped</div></div>
-  <div class="svc-stat"><div class="num lg-count" data-count="12">12</div><div class="lbl">Catalogue services</div></div>
-  <div class="svc-stat"><div class="num lg-count" data-count="4">4</div><div class="lbl">Engagement packages</div></div>
-  <div class="svc-stat"><div class="num lg-count" data-count="22" data-suffix="+">22+</div><div class="lbl">Data sources integrated</div></div>
-  <div class="svc-stat"><div class="num lg-count" data-count="91" data-suffix="%">91%</div><div class="lbl">CV accuracy (shipped system)</div></div>
-  <div class="svc-stat"><div class="num">EN·FR·SW</div><div class="lbl">Languages</div></div>
-</div>
-
 <!-- Currency toggle -->
 <div class="svc-currency-wrap">
   <div class="svc-currency-toggle" role="group" aria-label="Currency selector">
@@ -167,7 +166,7 @@
 </div>
 
 <!-- Packages -->
-<section class="svc-section" id="packages-section">
+<section class="svc-section cv-auto" id="packages-section">
   <div class="svc-section-head">
     <span class="label">Packages</span>
     <h2>Four ways to <span class="grad-text">work together.</span></h2>
@@ -177,7 +176,7 @@
 </section>
 
 <!-- Quote calculator -->
-<section class="svc-section" id="calculator" style="background:var(--bg-elev, var(--bg));">
+<section class="svc-section cv-auto" id="calculator" style="background:var(--bg-elev, var(--bg));">
   <div class="svc-section-head">
     <span class="label">Estimate</span>
     <h2>Interactive <span class="grad-text">quote calculator.</span></h2>
@@ -232,7 +231,7 @@
 </section>
 
 <!-- Services catalog -->
-<section class="svc-section">
+<section class="svc-section cv-auto" id="catalog">
   <div class="svc-section-head">
     <span class="label">Catalog</span>
     <h2>What I can <span class="grad-text">build for you.</span></h2>
@@ -242,7 +241,7 @@
 </section>
 
 <!-- Case studies -->
-<section class="svc-section" style="background:var(--bg-elev, var(--bg));">
+<section class="svc-section cv-auto" id="case-studies" style="background:var(--bg-elev, var(--bg));">
   <div class="svc-section-head">
     <span class="label">Case Studies</span>
     <h2>Real products, <span class="grad-text">real traction.</span></h2>
@@ -252,7 +251,7 @@
 </section>
 
 <!-- Training -->
-<section class="svc-section">
+<section class="svc-section cv-auto">
   <div class="svc-section-head">
     <span class="label">Training</span>
     <h2>Workshops & <span class="grad-text">team upskilling.</span></h2>
@@ -262,7 +261,7 @@
 </section>
 
 <!-- How to use AI guides -->
-<section class="svc-section" style="background:var(--bg-elev, var(--bg));">
+<section class="svc-section cv-auto" style="background:var(--bg-elev, var(--bg));">
   <div class="svc-section-head">
     <span class="label">Learn</span>
     <h2>How to <span class="grad-text">actually use AI.</span></h2>
@@ -272,7 +271,7 @@
 </section>
 
 <!-- Pricing models -->
-<section class="svc-section">
+<section class="svc-section cv-auto">
   <div class="svc-section-head">
     <span class="label">Pricing</span>
     <h2>Five ways to <span class="grad-text">pay for AI.</span></h2>
@@ -282,7 +281,7 @@
 </section>
 
 <!-- FAQ -->
-<section class="svc-section" style="background:var(--bg-elev, var(--bg));">
+<section class="svc-section cv-auto" style="background:var(--bg-elev, var(--bg));">
   <div class="svc-section-head">
     <span class="label">FAQ</span>
     <h2>Common <span class="grad-text">questions.</span></h2>
@@ -323,7 +322,7 @@
 
 <script src="/services/services.js" defer></script>
 <script src="/liquid.js?v=9.1.0" defer></script>
-<script src="/enhancements.js?v=9.1.0" defer></script>
+<script src="/enhancements.js?v=10.0.0" defer></script>
 <script>
 // Theme toggle
 const themeToggle = document.getElementById('themeToggle');
@@ -347,7 +346,7 @@ mobileToggle.addEventListener('click', () => {
 // Nav scroll
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
-});
+}, { passive: true });
 </script>
 </body>
 </html>
