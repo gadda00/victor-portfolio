@@ -31,10 +31,75 @@
       initCalculator();
       initCurrencyToggle();
       initFAQ();
+      injectStructuredData();
     } catch (err) {
       console.error('[services] init failed:', err);
       $('#packages').innerHTML = '<div class="svc-calc-disclaimer">Failed to load services data. Please refresh.</div>';
     }
+  }
+
+  // ─── Structured data (JSON-LD from the same data.json — one source
+  //     of truth: editing prices in the JSON updates the schema too) ──
+  function injectStructuredData() {
+    try {
+      const base = 'https://victorndunda.com';
+      const pkgOffers = (DATA.packages || []).map(p => {
+        const o = {
+          '@type': 'Offer',
+          'name': p.name,
+          'description': (p.tagline || '') + (p.timeline ? ' · ' + p.timeline : ''),
+          'url': base + '/services/#packages-section'
+        };
+        if (typeof p.price.usdOneTime === 'number') {
+          o.priceSpecification = { '@type': 'PriceSpecification', 'price': p.price.usdOneTime, 'priceCurrency': 'USD' };
+        } else {
+          o.priceSpecification = { '@type': 'PriceSpecification', 'minPrice': 50000, 'priceCurrency': 'USD' };
+        }
+        return o;
+      });
+      const svcOffers = (DATA.services || []).map(s => ({
+        '@type': 'Offer',
+        'name': s.name,
+        'description': (s.description || '').slice(0, 160),
+        'url': base + '/services/#catalog',
+        'priceSpecification': { '@type': 'PriceSpecification', 'price': s.fromPrice.usd, 'priceCurrency': 'USD' }
+      }));
+      const business = {
+        '@context': 'https://schema.org',
+        '@type': 'ProfessionalService',
+        'name': 'Victor Ndunda — AI Engineering Services',
+        'description': 'Production AI systems for African and global businesses: chatbots, RAG knowledge systems, document AI, computer vision, predictive analytics, and multi-agent platforms. Remote-first from Nairobi.',
+        'url': base + '/services/',
+        'image': base + '/og-image.png',
+        'priceRange': '$3,000 - $200,000+',
+        'areaServed': ['Kenya', 'East Africa', 'Worldwide (remote)'],
+        'availableLanguage': ['en', 'sw', 'fr'],
+        'provider': {
+          '@type': 'Person',
+          'name': 'Victor Ndunda',
+          'url': base + '/',
+          'jobTitle': 'AI Engineer & Founder',
+          'address': { '@type': 'PostalAddress', 'addressLocality': 'Nairobi', 'addressCountry': 'KE' },
+          'sameAs': ['https://github.com/gadda00', 'https://www.linkedin.com/in/victor-ndunda']
+        },
+        'makesOffer': pkgOffers.concat(svcOffers)
+      };
+      const faq = {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        'mainEntity': (DATA.faqs || []).map(f => ({
+          '@type': 'Question',
+          'name': f.q,
+          'acceptedAnswer': { '@type': 'Answer', 'text': f.a }
+        }))
+      };
+      [business, faq].forEach(obj => {
+        const s = document.createElement('script');
+        s.type = 'application/ld+json';
+        s.textContent = JSON.stringify(obj);
+        document.head.appendChild(s);
+      });
+    } catch (e) { /* structured data must never break the page */ }
   }
 
   // ─── Render all sections ───────────────────────────────────

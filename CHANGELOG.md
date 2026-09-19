@@ -7,7 +7,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed — v10.0 Smoothness, Above-the-Fold & Premium Polish
+### Changed — v11.0 Pricing ×2, Proposal Generator, Premium Resume, Structured Data
+
+**All service pricing doubled (owner directive):**
+- `services/data.json` v1.2.0: 4 packages (AI Audit $9,000/KES 700K; Starter $5,000/KES 400K + $700/mo; Growth $28,000/KES 2.2M + $6,000/mo; Enterprise typical $50K–$200K+ + $10K–$40K/mo), 12 catalogue services ($3,000 SMB chatbots → $24,000 fine-tuning), 4 training tiers ($600/person → $36,000/team), paid RAG workshop ($400).
+- Every mirrored surface updated: assistant.js fallback rates + hardcoded copy, wizard.js PACKAGES/SERVICE_PRICES, contract.js enterprise ranges + $200/hr revisions, services.js calculator, homepage/services offer cards, book + wizard budget bands, dashboard sample notification, 6 guides quoting own prices, README/marketing docs price lists (tool costs & revenue targets untouched).
+- KES local-market convention (~80/USD rounded, editable per-invoice at FX 80) preserved; estimate multipliers (volume 1.0/1.35/1.9 · integrations 1.0/1.3/1.6 · languages 1.0/1.15 · cap 3.2 · range ×1.35) unchanged — same math the assistant publishes.
+
+**Proposal generator — stage 4 of the 7-stage engagement pipeline (new):**
+- `services/proposal.{html,js,css}`: branded proposal builder with live print-mirrored document — the project, what I heard, recommended approach, deliverables, timeline, investment (USD + KES at editable FX, payment schedule 50/50 or 30/40/30 or retainer), why-this-will-work proof points, next steps, signature blocks, 14-day validity.
+- Imports the assistant estimate (`vn_last_estimate`) and wizard briefs (`?brief=ID`) so the client sees one consistent number from first chat to signature. PRP-YYYY-### numbering; draft → sent → accepted statuses in `vn_proposals`.
+- Wizard result modal gains "Draft Proposal"; the invoicing pipeline visual links stage 4 → proposal and stage 5 → invoice.
+
+**Premium resume PDF (replaces the basic one):**
+- 5-page dark-brand document (Inter + Space Grotesk, cyan/purple accents, impact-stat strip, entry cards with tech chips) — same verified facts as the web resume. Downloadable at `/resume/Victor-Ndunda-Resume.pdf` (cache-busted v11).
+
+**Structured data for search & AI audits (new):**
+- services.js now injects `ProfessionalService` (with 16 Offer price specifications from data.json) and `FAQPage` JSON-LD on `/services/` — generated from the same data.json so schema stays in sync with prices automatically.
+
+**Also:**
+- `resume/` page: "Last updated September 2026"; PDF links cache-busted.
+- Asset versions bumped to v11.0.0 across all pages; `sw.js` → `vnd-v11.0.0`.
+
+### Changed — v10.0 Smoothness, Above-the-Fold & Premium Polish, Above-the-Fold & Premium Polish
 
 **Above-the-fold hierarchy (the "key things hidden way below" fix):**
 - `/book/` restructured: the booking tabs + first-party scheduler now sit directly under the hero (tabs at ~415px from top; previously buried below the assistant, three FAQ cards, and the agenda at ~1900px). The enquiry assistant follows the scheduler; FAQ cards and agenda close the page.
