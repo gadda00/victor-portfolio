@@ -7,7 +7,7 @@
 
 ## 1. Positioning (the one sentence)
 
-**Victor Ndunda builds production AI systems for African businesses — from a $2,500 SMB chatbot to a 50-agent enterprise platform. Real math, not wrappers. Built to ship, work in Swahili, and run on low-end phones.**
+**Victor Ndunda builds production AI systems for African businesses — from a $5,000 SMB chatbot to a 50-agent enterprise platform. Real math, not wrappers. Built to ship, work in Swahili, and run on low-end phones.**
 
 Everything else in this document ladders up to that sentence. If a channel, post, or lead doesn't reinforce it, drop it.
 
@@ -15,11 +15,11 @@ Everything else in this document ladders up to that sentence. If a channel, post
 
 | Persona | Size | Pain | What they buy first |
 |---|---|---|---|
-| **Solo founder / micro-SMB** | 1–5 ppl | "I waste 10 hrs/week on FAQs and data entry" | AI Starter ($2,500) |
-| **Small business owner** | 10–50 ppl | "I have data but no insights; competitors are using AI" | AI Growth ($14,000) or AI Audit ($4,500) |
-| **Mid-market ops director** | 50–500 ppl | "We need AI integrated with our CRM/ERP, not another demo" | AI Growth ($14,000+) |
-| **Enterprise / NGO / gov** | 500+ ppl | "We need a secure, multi-agent system with SLAs" | AI Enterprise ($25K+) |
-| **Conference / training buyer** | any | "Our team needs to learn AI fast" | Training ($300–$18K) |
+| **Solo founder / micro-SMB** | 1–5 ppl | "I waste 10 hrs/week on FAQs and data entry" | AI Starter ($5,000) |
+| **Small business owner** | 10–50 ppl | "I have data but no insights; competitors are using AI" | AI Growth ($28,000) or AI Audit ($9,000) |
+| **Mid-market ops director** | 50–500 ppl | "We need AI integrated with our CRM/ERP, not another demo" | AI Growth ($28,000+) |
+| **Enterprise / NGO / gov** | 500+ ppl | "We need a secure, multi-agent system with SLAs" | AI Enterprise ($50K+) |
+| **Conference / training buyer** | any | "Our team needs to learn AI fast" | Training ($600–$36K) |
 
 ### Who this is NOT for
 
@@ -54,7 +54,7 @@ Everything else in this document ladders up to that sentence. If a channel, post
 | Week | Blog article | Guide | YouTube short | Newsletter |
 |---|---|---|---|---|
 | 1 | "Why I built a 50-agent DAG instead of one big LLM" | — | 60s: "What is a DAG pipeline?" | Issue #1: launch |
-| 2 | "The real cost of building an AI chatbot in Kenya (2026)" | "AI tools for SMBs" update | 60s: "$2,500 chatbot demo" | — |
+| 2 | "The real cost of building an AI chatbot in Kenya (2026)" | "AI tools for SMBs" update | 60s: "$5,000 chatbot demo" | — |
 | 3 | "M-Pesa + AI: building payment-aware assistants" | — | 60s: "M-Pesa STK push + chatbot" | Issue #2 |
 | 4 | "How KilimoPRO handles 22 data sources offline" | "AI for farmers" update | 60s: "Offline crop disease scan" | — |
 | 5 | "Statistical forecasting in TypeScript (with code)" | — | 60s: "Holt-Winters in 60s" | Issue #3 |
@@ -374,7 +374,7 @@ gtag('event', 'payment_plan_selected', { plan: planId, package: est.packageId })
 | Calendly | $0 | Free tier sufficient |
 | **Total** | **$176/mo** | — |
 
-**ROI breakeven:** 1 client at $2,500 covers 14 months of this stack. The second client is pure profit.
+**ROI breakeven:** 1 client at $5,000 covers 28 months of this stack. The second client is pure profit.
 
 ---
 
@@ -413,12 +413,12 @@ gtag('event', 'payment_plan_selected', { plan: planId, package: est.packageId })
 
 | Risk | Likelihood | Impact | Mitigation |
 |---|---|---|---|
-| Can't close at $14K (price too high) | Medium | High | Offer AI Starter as downgrade; pilot discount; equity-for-services |
+| Can't close at $28K (price too high) | Medium | High | Offer AI Starter as downgrade; pilot discount; equity-for-services |
 | Outbound volume too low (time) | High | Medium | Batch 2 hrs/week; hire VA for list-building ($300/mo) |
 | Content cadence slips | High | Medium | Batch-write 4 articles upfront; use voice-to-text drafts |
 | KilimoPRO distracts from services | Medium | Medium | Timebox KilimoPRO to 1 day/week; services are primary revenue |
 | Burnout | Medium | High | Hard stop at 50 hrs/week; 1 full day off/week; subcontract overflow |
-| Client payment default | Low | High | Always 50% upfront; milestone-based for >$10K; M-Pesa is instant |
+| Client payment default | Low | High | Always 50% upfront; milestone-based for >$20K; M-Pesa is instant |
 | GitHub Pages downtime | Low | Low | Site is static + cached; 99.9% uptime historical |
 
 ---

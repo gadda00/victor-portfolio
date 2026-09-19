@@ -377,7 +377,7 @@
       el.innerHTML = `
         <div class="est-label">Estimated Range</div>
         <div class="est-value">Custom</div>
-        <div class="est-detail">Enterprise engagements typically start at ${currency === 'kes' ? 'KES 3.2M' : '$25K'} build + ${currency === 'kes' ? 'KES 650K/mo' : '$5K/mo'}</div>
+        <div class="est-detail">Enterprise engagements typically start at ${currency === 'kes' ? 'KES 6.4M' : '$50K'} build + ${currency === 'kes' ? 'KES 1.3M/mo' : '$10K/mo'}</div>
         <a href="/#contact" class="est-cta">Book a discovery call →</a>
       `;
     } else {

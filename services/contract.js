@@ -66,7 +66,7 @@
     var typesHtml = (state.types || []).map(function (t) { return '<li>' + t.replace(/-/g, ' ') + '</li>'; }).join('');
 
     var priceText = est.packageId === 'enterprise'
-      ? 'Custom — to be scoped after discovery call (typical range: USD $25,000–$100,000+ build, USD $5,000–$20,000/month support)'
+      ? 'Custom — to be scoped after discovery call (typical range: USD $50,000–$200,000+ build, USD $10,000–$40,000/month support)'
       : 'USD $' + (est.totalUsd || 0).toLocaleString() + ' (KES ' + (est.totalKes || 0).toLocaleString() + ') one-time' +
         (est.monthlyUsd ? ' plus USD $' + est.monthlyUsd + '/month (KES ' + (est.monthlyKes || 0).toLocaleString() + '/month) for ongoing support' : '');
 
@@ -114,7 +114,7 @@
     '</ul>' +
 
     '<h2>6. Revisions and Acceptance</h2>' +
-    '<p>The package includes the number of revision rounds specified in the package deliverables. Additional revisions are billed at USD $100/hour. Acceptance is deemed to have occurred 7 days after delivery if no written feedback is received.</p>' +
+    '<p>The package includes the number of revision rounds specified in the package deliverables. Additional revisions are billed at USD $200/hour. Acceptance is deemed to have occurred 7 days after delivery if no written feedback is received.</p>' +
 
     '<h2>7. Intellectual Property</h2>' +
     '<p>On full payment, all custom code, models, and documentation created specifically for the Client become the Client\'s property. The Service Provider retains the right to reuse generic components, libraries, and patterns developed during the project. The Service Provider may list the project in their portfolio unless explicitly agreed otherwise in writing.</p>' +
@@ -239,7 +239,7 @@
 
     addHeading('4. Fees and Payment');
     var priceText = est.packageId === 'enterprise'
-      ? 'Custom — to be scoped after discovery call (typical: USD $25,000-$100,000+ build)'
+      ? 'Custom — to be scoped after discovery call (typical: USD $50,000-$200,000+ build)'
       : 'USD $' + (est.totalUsd || 0).toLocaleString() + ' (KES ' + (est.totalKes || 0).toLocaleString() + ') one-time' + (est.monthlyUsd ? ' plus USD $' + est.monthlyUsd + '/month support' : '');
     addText('Total project fee: ' + priceText);
     addText('Payment schedule options: 50/50 (50% deposit, 50% on delivery), Milestone-based (30/40/30), or Monthly retainer.');
@@ -249,7 +249,7 @@
     ['Provide timely access to data, systems, and stakeholders.', 'Designate a single point of contact.', 'Respond to review requests within 3 business days.', 'Provide content in agreed formats.', 'Ensure data compliance with Kenya DPA 2019 and GDPR.'].forEach(function (r) { addText('• ' + r); });
 
     addHeading('6. Revisions and Acceptance');
-    addText('Package includes the specified revision rounds. Additional revisions billed at USD $100/hour. Acceptance deemed after 7 days without written feedback.');
+    addText('Package includes the specified revision rounds. Additional revisions billed at USD $200/hour. Acceptance deemed after 7 days without written feedback.');
 
     addHeading('7. Intellectual Property');
     addText('On full payment, custom code and models become the Client\'s property. Service Provider retains rights to generic components and may list the project in their portfolio unless agreed otherwise.');

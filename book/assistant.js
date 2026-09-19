@@ -43,24 +43,24 @@
   /* ── Published data (fallback if /services/data.json fetch fails) ── */
   var FALLBACK = {
     packages: [
-      { id: 'audit', name: 'AI Audit', price: { usdOneTime: 4500, kesOneTime: 350000 }, timeline: '1–2 weeks' },
-      { id: 'starter', name: 'AI Starter', price: { usdOneTime: 2500, kesOneTime: 200000, usdMonthly: 350, kesMonthly: 28000 }, timeline: '2–3 weeks' },
-      { id: 'growth', name: 'AI Growth', price: { usdOneTime: 14000, kesOneTime: 1100000, usdMonthly: 3000, kesMonthly: 240000 }, timeline: '6–10 weeks' },
+      { id: 'audit', name: 'AI Audit', price: { usdOneTime: 9000, kesOneTime: 700000 }, timeline: '1–2 weeks' },
+      { id: 'starter', name: 'AI Starter', price: { usdOneTime: 5000, kesOneTime: 400000, usdMonthly: 700, kesMonthly: 56000 }, timeline: '2–3 weeks' },
+      { id: 'growth', name: 'AI Growth', price: { usdOneTime: 28000, kesOneTime: 2200000, usdMonthly: 6000, kesMonthly: 480000 }, timeline: '6–10 weeks' },
       { id: 'enterprise', name: 'AI Enterprise', price: { usdOneTime: 'Custom', kesOneTime: 'Custom' }, timeline: '12–24 weeks' }
     ],
     services: [
-      { id: 'chatbots', name: 'AI Chatbots & Virtual Assistants', fromPrice: { usd: 1500, kes: 120000 } },
-      { id: 'rag', name: 'RAG Knowledge Systems', fromPrice: { usd: 4000, kes: 320000 } },
-      { id: 'document-ai', name: 'Document AI & OCR', fromPrice: { usd: 3000, kes: 240000 } },
-      { id: 'computer-vision', name: 'Computer Vision', fromPrice: { usd: 8000, kes: 650000 } },
-      { id: 'predictive', name: 'Predictive Analytics & Forecasting', fromPrice: { usd: 5000, kes: 400000 } },
-      { id: 'automation', name: 'AI Automation & Workflows', fromPrice: { usd: 2500, kes: 200000 } },
-      { id: 'fine-tuning', name: 'LLM Fine-Tuning & Customization', fromPrice: { usd: 12000, kes: 950000 } },
-      { id: 'voice-ai', name: 'Voice AI & Speech', fromPrice: { usd: 6000, kes: 480000 } },
-      { id: 'multilingual', name: 'Multilingual AI (Swahili & Local)', fromPrice: { usd: 3500, kes: 280000 } },
-      { id: 'agriculture', name: 'AI for Agriculture', fromPrice: { usd: 8000, kes: 650000 } },
-      { id: 'strategy', name: 'AI Strategy & Training', fromPrice: { usd: 2000, kes: 160000 } },
-      { id: 'smb', name: 'AI for Small Business', fromPrice: { usd: 1500, kes: 120000 } }
+      { id: 'chatbots', name: 'AI Chatbots & Virtual Assistants', fromPrice: { usd: 3000, kes: 240000 } },
+      { id: 'rag', name: 'RAG Knowledge Systems', fromPrice: { usd: 8000, kes: 640000 } },
+      { id: 'document-ai', name: 'Document AI & OCR', fromPrice: { usd: 6000, kes: 480000 } },
+      { id: 'computer-vision', name: 'Computer Vision', fromPrice: { usd: 16000, kes: 1300000 } },
+      { id: 'predictive', name: 'Predictive Analytics & Forecasting', fromPrice: { usd: 10000, kes: 800000 } },
+      { id: 'automation', name: 'AI Automation & Workflows', fromPrice: { usd: 5000, kes: 400000 } },
+      { id: 'fine-tuning', name: 'LLM Fine-Tuning & Customization', fromPrice: { usd: 24000, kes: 1900000 } },
+      { id: 'voice-ai', name: 'Voice AI & Speech', fromPrice: { usd: 12000, kes: 960000 } },
+      { id: 'multilingual', name: 'Multilingual AI (Swahili & Local)', fromPrice: { usd: 7000, kes: 560000 } },
+      { id: 'agriculture', name: 'AI for Agriculture', fromPrice: { usd: 16000, kes: 1300000 } },
+      { id: 'strategy', name: 'AI Strategy & Training', fromPrice: { usd: 4000, kes: 320000 } },
+      { id: 'smb', name: 'AI for Small Business', fromPrice: { usd: 3000, kes: 240000 } }
     ]
   };
 
@@ -240,7 +240,7 @@
     var lines = (DATA.packages || []).map(function (p) { return '<li>' + pkgLine(p) + '</li>'; }).join('');
     botReply(
       'Four published packages (USD / KES):<ul class="msg-assumptions">' + lines + '</ul>' +
-      'For custom systems, my per-service rates start at <strong>$1,500 (chatbots)</strong> up to <strong>$12,000 (LLM fine-tuning)</strong> — want a ballpark for your case?',
+      'For custom systems, my per-service rates start at <strong>$3,000 (chatbots)</strong> up to <strong>$24,000 (LLM fine-tuning)</strong> — want a ballpark for your case?',
       { actions: [
         { label: 'Get my estimate →', primary: true, onClick: function () { startEstimate(); }, track: 'assistant-estimate-pkg' },
         { label: 'See all services', href: '/services/', newTab: false }
@@ -429,7 +429,7 @@
       combos: [
         { id: 'chatbots', why: 'WhatsApp bookings, class schedules and no-show reminders' },
         { id: 'predictive', why: 'member-churn flags while there is still time to act' },
-        { id: 'smb', why: 'the dedicated Small Business service — from $1,500' }
+        { id: 'smb', why: 'the dedicated Small Business service — from $3,000' }
       ]
     },
     {
@@ -596,9 +596,9 @@
       'Integrations: ' + estimate.integrations,
       'Languages: ' + estimate.languages,
       'The exact quote comes out of the free assessment — scoped in writing before any build.',
-      'Optional support retainer from $350/mo (published package rates).'
+      'Optional support retainer from $700/mo (published package rates).'
     ];
-    if (capped) assumptions.push('Scope exceeds standard multipliers — Enterprise-class territory (custom quote, $25K–$100K+ typical).');
+    if (capped) assumptions.push('Scope exceeds standard multipliers — Enterprise-class territory (custom quote, $50K–$200K+ typical).');
 
     botReply(
       '<strong>Ballpark: $' + usdLow.toLocaleString('en-US') + '–$' + usdHigh.toLocaleString('en-US') + ' · KES ' + kesLow.toLocaleString('en-US') + '–' + kesHigh.toLocaleString('en-US') + '</strong> for ' + esc(estimate.service.name) + '.',
@@ -690,7 +690,7 @@
   function supportAnswer() {
     track('assistant_support');
     botReply(
-      'Every build hands over with <strong>documentation, monitoring, and an observability baseline</strong> — quality is measured, not assumed. After that: <strong>support retainers from $350/mo</strong> (the published Starter rate; Growth runs $3,000/mo) cover fixes, tuning and small improvements. Bigger changes become a scoped sprint. The free assessment output includes what ongoing support your specific system would need.',
+      'Every build hands over with <strong>documentation, monitoring, and an observability baseline</strong> — quality is measured, not assumed. After that: <strong>support retainers from $700/mo</strong> (the published Starter rate; Growth runs $6,000/mo) cover fixes, tuning and small improvements. Bigger changes become a scoped sprint. The free assessment output includes what ongoing support your specific system would need.',
       { actions: [{ label: 'See packages & retainers', href: '/services/#packages-section', track: 'assistant-support-pkg' }] },
       DEFAULT_CHIPS
     );
@@ -792,7 +792,7 @@
     }
     if (has(t, ['swahili', 'multilingual', 'language', 'french', 'kiswahili'])) {
       track('assistant_intent', { i: 'multilingual' });
-      botReply('Yes — multilingual AI is a published service (from <strong>$3,500 / KES 280K</strong>). Shipped products run in <strong>English · Français · Kiswahili</strong>, and I build for low-bandwidth and offline contexts.');
+      botReply('Yes — multilingual AI is a published service (from <strong>$7,000 / KES 560K</strong>). Shipped products run in <strong>English · Français · Kiswahili</strong>, and I build for low-bandwidth and offline contexts.');
       return;
     }
     if (has(t, ['where', 'located', 'based', 'remote', 'nairobi', 'kenya'])) {
@@ -829,12 +829,12 @@
     }
     if (has(t, ['small business', 'startup', 'smb', 'sme', 'chama'])) {
       track('assistant_intent', { i: 'smb' });
-      botReply('Yes — there\'s a dedicated <strong>AI for Small Business</strong> service from <strong>$1,500 / KES 120K</strong>, and the <strong>AI Starter</strong> package ($2,500 + $350/mo) is built for first AI projects.');
+      botReply('Yes — there\'s a dedicated <strong>AI for Small Business</strong> service from <strong>$3,000 / KES 240K</strong>, and the <strong>AI Starter</strong> package ($5,000 + $700/mo) is built for first AI projects.');
       return;
     }
     if (has(t, ['training', 'workshop', 'team', 'upskill', 'coach'])) {
       track('assistant_intent', { i: 'training' });
-      botReply('Yes — <strong>AI Strategy & Training</strong> from $2,000, plus workshops from half-day to 5-day intensive cohorts. Details on the services page.',
+      botReply('Yes — <strong>AI Strategy & Training</strong> from $4,000, plus workshops from half-day to 5-day intensive cohorts. Details on the services page.',
         { actions: [{ label: 'See training options', href: '/services/', track: 'assistant-cta-training' }] });
       return;
     }

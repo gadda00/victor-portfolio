@@ -27,25 +27,25 @@
   var PACKAGES = {
     audit: {
       id: 'audit', name: 'AI Audit', icon: '🔍', color: '#64748b',
-      priceUsd: 4500, priceKes: 350000, monthlyUsd: 0, monthlyKes: 0,
+      priceUsd: 9000, priceKes: 700000, monthlyUsd: 0, monthlyKes: 0,
       timeline: '1–2 weeks',
       features: ['Current-state assessment','Opportunity map (5–10 ranked use cases)','Quick-win pilot plan','Make-vs-buy recommendation','Risk + compliance review','Executive readout + 12-month roadmap']
     },
     starter: {
       id: 'starter', name: 'AI Starter', icon: '🚀', color: '#10b981',
-      priceUsd: 2500, priceKes: 200000, monthlyUsd: 350, monthlyKes: 28000,
+      priceUsd: 5000, priceKes: 400000, monthlyUsd: 700, monthlyKes: 56000,
       timeline: '2–3 weeks',
       features: ['WhatsApp or web FAQ chatbot','1 automation workflow','Knowledge base (50 docs)','Basic analytics dashboard','Multilingual (EN + SW)','2 revisions + 30 days support']
     },
     growth: {
       id: 'growth', name: 'AI Growth', icon: '📈', color: '#00d4ff',
-      priceUsd: 14000, priceKes: 1100000, monthlyUsd: 3000, monthlyKes: 240000,
+      priceUsd: 28000, priceKes: 2200000, monthlyUsd: 6000, monthlyKes: 480000,
       timeline: '4–8 weeks',
       features: ['Production AI integrated with CRM/ERP','Multi-agent orchestration','RAG with citations','Analytics + dashboard','Team training (1 session)','3 revisions + 90 days support']
     },
     enterprise: {
       id: 'enterprise', name: 'AI Enterprise', icon: '🏢', color: '#a855f7',
-      priceUsd: 50000, priceKes: 3900000, monthlyUsd: 10000, monthlyKes: 800000,
+      priceUsd: 100000, priceKes: 7800000, monthlyUsd: 20000, monthlyKes: 1600000,
       timeline: '8–16 weeks',
       features: ['Custom multi-agent system (50+ agents)','Fine-tuned models','SLAs + 24/7 monitoring','Security + compliance review','Dedicated engineer','Unlimited revisions + 12 months support']
     }
@@ -53,14 +53,14 @@
 
   // ── Service price add-ons (per-service fromPrice) ─────────────────
   var SERVICE_PRICES = {
-    chatbots: { usd: 1500, kes: 120000 },
-    rag: { usd: 4000, kes: 320000 },
-    predictive: { usd: 6000, kes: 480000 },
-    'computer-vision': { usd: 8000, kes: 640000 },
-    automation: { usd: 3500, kes: 280000 },
-    multilingual: { usd: 2000, kes: 160000 },
-    agriculture: { usd: 7000, kes: 560000 },
-    'multi-agent': { usd: 25000, kes: 2000000 }
+    chatbots: { usd: 3000, kes: 240000 },
+    rag: { usd: 8000, kes: 640000 },
+    predictive: { usd: 12000, kes: 960000 },
+    'computer-vision': { usd: 16000, kes: 1280000 },
+    automation: { usd: 7000, kes: 560000 },
+    multilingual: { usd: 4000, kes: 320000 },
+    agriculture: { usd: 14000, kes: 1120000 },
+    'multi-agent': { usd: 50000, kes: 4000000 }
   };
 
   var TIMELINE_MULT = { asap: 1.5, month: 1.0, quarter: 0.92, flexible: 0.85 };
@@ -221,10 +221,10 @@
         '<div class="wiz-recom-label">Recommended package</div>' +
         '<div class="wiz-recom-name">' + pkg.icon + ' ' + pkg.name + '</div>' +
         '<div class="wiz-recom-why">' + (pkg.id === 'enterprise'
-          ? 'Custom quote — typical build $25K–$100K+, $5K–$20K/mo. Final price scoped after a discovery call.'
+          ? 'Custom quote — typical build $50K–$200K+, $10K–$40K/mo. Final price scoped after a discovery call.'
           : 'One-time build + optional monthly support. The estimate below is indicative — final quote confirmed in your discovery call.') + '</div>' +
         '<div class="wiz-recom-price">' + (pkg.id === 'enterprise'
-          ? 'Custom · $25K–$100K+'
+          ? 'Custom · $50K–$200K+'
           : '$' + est.totalUsd.toLocaleString() + ' · KES ' + est.totalKes.toLocaleString() + (est.monthlyUsd ? ' + $' + est.monthlyUsd + '/mo' : '')) + '</div>' +
       '</div>' +
 
