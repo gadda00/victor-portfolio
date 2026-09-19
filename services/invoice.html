@@ -13,9 +13,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/styles.css?v=10.0.0" />
-<link rel="stylesheet" href="/liquid.css?v=10.0.0" />
-<link rel="stylesheet" href="/services/invoice.css?v=9.0.0" />
+<link rel="stylesheet" href="/styles.css?v=11.0.0" />
+<link rel="stylesheet" href="/liquid.css?v=11.0.0" />
+<link rel="stylesheet" href="/services/invoice.css?v=11.0.0" />
 <meta name="theme-color" content="#0a0e1a" />
 <meta name="color-scheme" content="dark light" />
 <meta name="view-transition" content="same-origin" />
@@ -65,7 +65,7 @@
       <span class="inv-stage"><span class="n">1</span> Enquiry</span>
       <span class="inv-stage"><span class="n">2</span> Estimate</span>
       <span class="inv-stage"><span class="n">3</span> Call booked</span>
-      <span class="inv-stage"><span class="n">4</span> Proposal</span>
+      <a class="inv-stage" href="/services/proposal.html"><span class="n">4</span> Proposal</a>
       <span class="inv-stage on"><span class="n">5</span> Invoice</span>
       <span class="inv-stage"><span class="n">6</span> Payment</span>
       <span class="inv-stage"><span class="n">7</span> Delivery</span>
@@ -184,8 +184,8 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav')?.classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
 </script>
-<script src="/liquid.js?v=9.1.0" defer></script>
-<script src="/enhancements.js?v=10.0.0" defer></script>
-<script src="/services/invoice.js?v=9.0.0" defer></script>
+<script src="/liquid.js?v=11.0.0" defer></script>
+<script src="/enhancements.js?v=11.0.0" defer></script>
+<script src="/services/invoice.js?v=11.0.0" defer></script>
 </body>
 </html>

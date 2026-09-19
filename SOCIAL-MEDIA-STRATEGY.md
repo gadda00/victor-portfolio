@@ -42,11 +42,11 @@ WHAT I'VE BUILT:
 
 WHAT I OFFER:
 
-I provide AI engineering services for every size of business — from $1,500 SMB chatbots to $100K+ enterprise multi-agent systems. Four packages:
+I provide AI engineering services for every size of business — from $3,000 SMB chatbots to $200K+ enterprise multi-agent systems. Four packages:
 
-🔍 AI Audit ($4,500) — Find your highest-ROI AI opportunities in 1-2 weeks
-🚀 AI Starter ($2,500) — Ship your first working AI tool (SMB/micro-business)
-📈 AI Growth ($14,000) — Production AI integrated with your CRM/ERP
+🔍 AI Audit ($9,000) — Find your highest-ROI AI opportunities in 1-2 weeks
+🚀 AI Starter ($5,000) — Ship your first working AI tool (SMB/micro-business)
+📈 AI Growth ($28,000) — Production AI integrated with your CRM/ERP
 🏢 AI Enterprise (Custom) — Multi-agent systems, fine-tuned models, dedicated SLAs
 
 Plus training (half-day to 5-day workshops) and 8 free "How to Use AI" guides at victorndunda.com/services/guides/

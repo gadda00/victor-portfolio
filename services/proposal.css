@@ -1,0 +1,61 @@
+/* ═══════════════════════════════════════════════════════════════════
+   proposal.css — Victor Ndunda v11 proposal generator
+   Loads on top of invoice.css (builder/pipeline/doc-shell shared).
+   Adds the proposal document sections + print rules.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── Proposal document (preview + print share these) ── */
+.pr-doc h2.pr-sec {
+  font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.12em;
+  color: var(--accent); margin: 1.6rem 0 0.5rem; font-weight: 700;
+}
+.pr-doc h2.pr-sec:first-of-type { margin-top: 0; }
+.pr-doc p { font-size: 0.9375rem; line-height: 1.7; margin: 0 0 0.6rem; white-space: pre-line; }
+.pr-doc ul.pr-list { margin: 0.25rem 0 0.6rem; padding-left: 1.15rem; }
+.pr-doc ul.pr-list li { font-size: 0.9375rem; line-height: 1.65; margin-bottom: 0.3rem; }
+.pr-doc .pr-kv { display: flex; flex-wrap: wrap; gap: 0.4rem 1.25rem; margin: 0.35rem 0 0.6rem; }
+.pr-doc .pr-kv span { font-size: 0.875rem; color: var(--text-muted); }
+.pr-doc .pr-kv b { color: var(--text); font-variant-numeric: tabular-nums; }
+
+.pr-invest {
+  padding: 1.1rem 1.35rem; border-radius: 12px;
+  background: var(--glass); border: 1px solid var(--lg-edge-soft);
+  margin: 0.75rem 0 0.5rem;
+}
+.pr-invest .big { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 0.5rem; }
+.pr-invest .big .amt { font-size: 1.5rem; font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.pr-invest .big .cur { color: var(--text-muted); font-size: 0.875rem; }
+.pr-invest .mth { margin-top: 0.45rem; font-size: 0.875rem; color: var(--text-muted); }
+.pr-invest .mth b { color: var(--text); }
+.pr-sched { width: 100%; border-collapse: collapse; margin-top: 0.75rem; font-size: 0.875rem; }
+.pr-sched th { text-align: left; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); padding: 0.4rem 0.5rem; border-bottom: 1px solid var(--border); }
+.pr-sched td { padding: 0.5rem; border-bottom: 1px solid var(--border); }
+.pr-sched td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-weight: 600; }
+.pr-fine { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.65; margin-top: 0.6rem; }
+
+.pr-sign { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.25rem; }
+@media (max-width: 520px) { .pr-sign { grid-template-columns: 1fr; } }
+.pr-sign .blk .ln { border-bottom: 1px solid var(--text-muted); height: 2.25rem; }
+.pr-sign .blk .who { font-size: 0.8125rem; color: var(--text-muted); margin-top: 0.4rem; }
+.pr-validity { display: inline-block; padding: 0.3rem 0.85rem; border-radius: 8px; background: rgba(0,212,255,.08); border: 1px dashed var(--accent); color: var(--accent); font-size: 0.75rem; font-weight: 700; letter-spacing: .06em; }
+
+.pr-status-stamp { display: inline-block; padding: 0.3rem 0.85rem; border-radius: 8px; font-size: 0.75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; border: 2px solid currentColor; transform: rotate(-4deg); margin-left: 0.75rem; }
+.pr-status-stamp.sent { color: var(--accent); }
+.pr-status-stamp.accepted { color: var(--accent-3); }
+.pr-status-stamp.draft { color: #94a3b8; }
+.pr-status-stamp.declined { color: #f87171; }
+
+/* ── Print: only the document (mirrors invoice.css print block) ── */
+@media print {
+  body { background: #fff !important; }
+  .pr-doc h2.pr-sec { color: #0a6a8a; }
+  .pr-doc p, .pr-doc ul.pr-list li { color: #111; }
+  .pr-doc .pr-kv b { color: #000; }
+  .pr-invest { background: none; border: 1px solid #ddd; }
+  .pr-invest .mth { color: #333; }
+  .pr-invest .mth b { color: #000; }
+  .pr-sched th { color: #444; }
+  .pr-fine { color: #333; }
+  .pr-sign .blk .who { color: #444; }
+  .pr-validity { background: none; border: 1px solid #0a6a8a; color: #0a6a8a; }
+}

@@ -1,7 +1,7 @@
 {
   "meta": {
-    "version": "1.1.0",
-    "lastUpdated": "2026-07-04",
+    "version": "1.2.0",
+    "lastUpdated": "2026-09-19",
     "currency": {
       "usdToKes": 130,
       "note": "KES prices rounded for local market"
@@ -25,8 +25,8 @@
       ],
       "timeline": "1–2 weeks",
       "price": {
-        "usdOneTime": 4500,
-        "kesOneTime": 350000,
+        "usdOneTime": 9000,
+        "kesOneTime": 700000,
         "note": "50% credited toward any subsequent build package"
       },
       "outcome": "A board-ready AI strategy with one pilot ready to ship",
@@ -49,10 +49,10 @@
       ],
       "timeline": "2–3 weeks",
       "price": {
-        "usdOneTime": 2500,
-        "kesOneTime": 200000,
-        "usdMonthly": 350,
-        "kesMonthly": 28000,
+        "usdOneTime": 5000,
+        "kesOneTime": 400000,
+        "usdMonthly": 700,
+        "kesMonthly": 56000,
         "note": "Monthly covers hosting, monitoring, prompt tweaks. Cancel anytime."
       },
       "outcome": "Cut customer response time by ~80%, reclaim 10+ hours/week",
@@ -76,10 +76,10 @@
       ],
       "timeline": "6–10 weeks",
       "price": {
-        "usdOneTime": 14000,
-        "kesOneTime": 1100000,
-        "usdMonthly": 3000,
-        "kesMonthly": 240000,
+        "usdOneTime": 28000,
+        "kesOneTime": 2200000,
+        "usdMonthly": 6000,
+        "kesMonthly": 480000,
         "note": "Retainer covers monitoring, monthly feature releases, analytics, support"
       },
       "outcome": "Cut support response time 46–97%, reduce inventory costs ~30%",
@@ -108,7 +108,7 @@
         "kesOneTime": "Custom",
         "usdMonthly": "Custom",
         "kesMonthly": "Custom",
-        "note": "Typical engagements: $25K–$100K+ build + $5K–$20K/mo. Equity-for-services available for startups."
+        "note": "Typical engagements: $50K–$200K+ build + $10K–$40K/mo. Equity-for-services available for startups."
       },
       "outcome": "Enterprise-wide AI aligned to board priorities — measurable P&L impact",
       "color": "#a855f7"
@@ -128,8 +128,8 @@
         "HR helpdesk"
       ],
       "fromPrice": {
-        "usd": 1500,
-        "kes": 120000
+        "usd": 3000,
+        "kes": 240000
       }
     },
     {
@@ -145,8 +145,8 @@
         "Customer support copilot"
       ],
       "fromPrice": {
-        "usd": 4000,
-        "kes": 320000
+        "usd": 8000,
+        "kes": 640000
       }
     },
     {
@@ -162,8 +162,8 @@
         "Form automation"
       ],
       "fromPrice": {
-        "usd": 3000,
-        "kes": 240000
+        "usd": 6000,
+        "kes": 480000
       }
     },
     {
@@ -179,8 +179,8 @@
         "Facility security"
       ],
       "fromPrice": {
-        "usd": 8000,
-        "kes": 650000
+        "usd": 16000,
+        "kes": 1300000
       }
     },
     {
@@ -196,8 +196,8 @@
         "Anomaly detection"
       ],
       "fromPrice": {
-        "usd": 5000,
-        "kes": 400000
+        "usd": 10000,
+        "kes": 800000
       }
     },
     {
@@ -213,8 +213,8 @@
         "Slack/Teams bots"
       ],
       "fromPrice": {
-        "usd": 2500,
-        "kes": 200000
+        "usd": 5000,
+        "kes": 400000
       }
     },
     {
@@ -230,8 +230,8 @@
         "Code reviewer"
       ],
       "fromPrice": {
-        "usd": 12000,
-        "kes": 950000
+        "usd": 24000,
+        "kes": 1900000
       }
     },
     {
@@ -247,8 +247,8 @@
         "Podcast indexing"
       ],
       "fromPrice": {
-        "usd": 6000,
-        "kes": 480000
+        "usd": 12000,
+        "kes": 960000
       }
     },
     {
@@ -264,8 +264,8 @@
         "Translation pipeline"
       ],
       "fromPrice": {
-        "usd": 3500,
-        "kes": 280000
+        "usd": 7000,
+        "kes": 560000
       }
     },
     {
@@ -281,8 +281,8 @@
         "Market price forecasting"
       ],
       "fromPrice": {
-        "usd": 8000,
-        "kes": 650000
+        "usd": 16000,
+        "kes": 1300000
       }
     },
     {
@@ -298,8 +298,8 @@
         "AI ethics review"
       ],
       "fromPrice": {
-        "usd": 2000,
-        "kes": 160000
+        "usd": 4000,
+        "kes": 320000
       }
     },
     {
@@ -315,8 +315,8 @@
         "Customer insights"
       ],
       "fromPrice": {
-        "usd": 1500,
-        "kes": 120000
+        "usd": 3000,
+        "kes": 240000
       }
     }
   ],
@@ -333,10 +333,10 @@
         "Q&A"
       ],
       "price": {
-        "usdPerPerson": 300,
-        "kesPerPerson": 12000,
-        "usdCorporate": 2500,
-        "kesCorporate": 100000
+        "usdPerPerson": 600,
+        "kesPerPerson": 24000,
+        "usdCorporate": 5000,
+        "kesCorporate": 200000
       },
       "format": "Online or in-person (Nairobi)"
     },
@@ -353,10 +353,10 @@
         "AI ethics & governance"
       ],
       "price": {
-        "usdCorporate": 4500,
-        "kesCorporate": 180000,
-        "usdPerExtraPerson": 75,
-        "kesPerExtraPerson": 3000
+        "usdCorporate": 9000,
+        "kesCorporate": 360000,
+        "usdPerExtraPerson": 150,
+        "kesPerExtraPerson": 6000
       },
       "format": "On-site (Nairobi) or online"
     },
@@ -373,8 +373,8 @@
         "Capstone: ship a real internal tool"
       ],
       "price": {
-        "usdPerTeam": 10000,
-        "kesPerTeam": 400000,
+        "usdPerTeam": 20000,
+        "kesPerTeam": 800000,
         "maxAttendees": 8
       },
       "format": "On-site (Nairobi preferred)"
@@ -392,8 +392,8 @@
         "Capstone: deploy to production"
       ],
       "price": {
-        "usdPerTeam": 18000,
-        "kesPerTeam": 720000,
+        "usdPerTeam": 36000,
+        "kesPerTeam": 1440000,
         "maxAttendees": 6
       },
       "format": "On-site (Nairobi)"
@@ -616,8 +616,8 @@
       "summary": "No-code → low-code → production RAG. Embeddings, vector DBs, chunking strategies, evals. Ship a working knowledge bot by EOD.",
       "free": false,
       "price": {
-        "usd": 200,
-        "kes": 8000
+        "usd": 400,
+        "kes": 16000
       },
       "url": "/services/guides/rag-in-one-day.html"
     }
@@ -672,7 +672,7 @@
   "faqs": [
     {
       "q": "Do you work with small businesses or only enterprises?",
-      "a": "Both. The AI Starter package ($1,500–$3,000) is built specifically for SMBs, micro-businesses, and solo founders. I also serve enterprises with custom multi-agent systems. Pricing scales with scope — not company size."
+      "a": "Both. The AI Starter package ($3,000–$6,000) is built specifically for SMBs, micro-businesses, and solo founders. I also serve enterprises with custom multi-agent systems. Pricing scales with scope — not company size."
     },
     {
       "q": "Can you build AI that works in Swahili?",
@@ -680,7 +680,7 @@
     },
     {
       "q": "What if I don't know what AI can do for my business?",
-      "a": "Start with the AI Audit ($4,500 / KES 350K, 1–2 weeks). You'll get a prioritized roadmap with ROI models and one pilot ready to build. 50% of the audit fee is credited toward any subsequent build."
+      "a": "Start with the AI Audit ($9,000 / KES 700K, 1–2 weeks). You'll get a prioritized roadmap with ROI models and one pilot ready to build. 50% of the audit fee is credited toward any subsequent build."
     },
     {
       "q": "Do you offer payment plans?",
@@ -700,7 +700,7 @@
     },
     {
       "q": "Can you train my team to use AI?",
-      "a": "Yes. I offer half-day ($300/person) to 5-day ($18K/team) workshops. Non-technical to technical audiences. Topics include prompt engineering, RAG, multi-agent systems, MLOps, and AI ethics."
+      "a": "Yes. I offer half-day ($600/person) to 5-day ($36K/team) workshops. Non-technical to technical audiences. Topics include prompt engineering, RAG, multi-agent systems, MLOps, and AI ethics."
     }
   ]
 }

@@ -336,7 +336,7 @@
             '  Volume: 500–5,000 / month',
             '  Integrations: 3–5 systems',
             '  Languages: English + Swahili/French',
-            '  Ballpark: $5,600–$7,600 · KES 4,450,000–6,000,000',
+            '  Ballpark: $16,200–$21,900 · KES 1,290,000–1,740,000',
             '',
             '—',
             'Privacy-safe pings: estimate configuration and channel only. No chat text, no personal data, no cookies.'

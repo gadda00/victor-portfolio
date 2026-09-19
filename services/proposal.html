@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Proposal Generator — Victor Ndunda</title>
+<meta name="description" content="Generate a branded client proposal from the same estimate and brief your client already saw — understanding, approach, deliverables, timeline, investment, and acceptance in one first-party document." />
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://victorndunda.com/services/proposal.html" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/styles.css?v=11.0.0">
+<link rel="stylesheet" href="/liquid.css?v=11.0.0">
+<link rel="stylesheet" href="/services/invoice.css?v=11.0.0">
+<link rel="stylesheet" href="/services/proposal.css?v=11.0.0">
+<meta name="theme-color" content="#0a0a0f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- Navigation (shared) -->
+<nav id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="logo" aria-label="Victor Ndunda home">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
+        <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
+        <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
+        <line x1="50" y1="50" x2="20" y2="25" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="80" y2="25" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="20" y2="75" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="80" y2="75" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+      </svg>
+      <span>Victor Ndunda</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/services/wizard.html" class="nav-link">Wizard</a>
+      <a href="/book/" class="nav-link">Book</a>
+      <a href="/resume/" class="nav-link">Resume</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark/light theme">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks"><span>☰</span></button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+<div class="inv-wrap">
+  <section class="inv-hero">
+    <div class="liquid-bg" aria-hidden="true"><div class="blob"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+    <h1>Proposals, <span class="grad-text">first-party.</span></h1>
+    <p>Turn the estimate and brief your client already saw into a branded proposal — understanding, approach, deliverables, timeline, investment, and acceptance. The missing stage between the call and the invoice.</p>
+    <div class="inv-pipeline" aria-label="Engagement pipeline">
+      <span class="inv-stage"><span class="n">1</span> Enquiry</span>
+      <span class="inv-stage"><span class="n">2</span> Estimate</span>
+      <span class="inv-stage"><span class="n">3</span> Call booked</span>
+      <a class="inv-stage on" href="/services/proposal.html" aria-current="page"><span class="n">4</span> Proposal</a>
+      <a class="inv-stage" href="/services/invoice.html"><span class="n">5</span> Invoice</a>
+      <span class="inv-stage"><span class="n">6</span> Payment</span>
+      <span class="inv-stage"><span class="n">7</span> Delivery</span>
+    </div>
+  </section>
+
+  <div class="inv-grid">
+    <!-- ── Builder ── -->
+    <div class="inv-builder">
+      <div class="lg-panel inv-card">
+        <h2>Client &amp; project</h2>
+        <div class="inv-row">
+          <div class="inv-field"><label for="cl-name">Name *</label><input id="cl-name" type="text" autocomplete="name" placeholder="Jane Wanjiku" /></div>
+          <div class="inv-field"><label for="cl-company">Company</label><input id="cl-company" type="text" autocomplete="organization" placeholder="Acme Ltd." /></div>
+        </div>
+        <div class="inv-row" style="margin-top:0.75rem">
+          <div class="inv-field"><label for="cl-email">Email</label><input id="cl-email" type="email" autocomplete="email" placeholder="jane@acme.co.ke" /></div>
+          <div class="inv-field"><label for="pr-package">Package</label>
+            <select id="pr-package">
+              <option value="audit">AI Audit — $9,000 · 1–2 weeks</option>
+              <option value="starter">AI Starter — $5,000 + $700/mo · 2–3 weeks</option>
+              <option value="growth" selected>AI Growth — $28,000 + $6,000/mo · 6–10 weeks</option>
+              <option value="enterprise">AI Enterprise — custom · 12–24 weeks</option>
+              <option value="custom">Custom / scoped engagement</option>
+            </select>
+          </div>
+        </div>
+        <div class="inv-field" style="margin-top:0.75rem">
+          <label for="pr-title">Project title *</label>
+          <input id="pr-title" type="text" placeholder="WhatsApp FAQ assistant + lead capture automation" />
+        </div>
+        <p class="inv-import" id="prEstimateHint" hidden style="margin-top:0.9rem">
+          <span id="prEstimateHintText"></span>
+          <button type="button" class="lg-chip" id="prEstimate">💰 Import estimate</button>
+        </p>
+        <p class="inv-import" id="prBriefHint" hidden style="margin-top:0.6rem">
+          <span id="prBriefHintText"></span>
+          <button type="button" class="lg-chip" id="prBrief">📋 Import wizard brief</button>
+        </p>
+      </div>
+
+      <div class="lg-panel inv-card">
+        <h2>Understanding &amp; approach</h2>
+        <div class="inv-field">
+          <label for="pr-understanding">Their problem, in their words</label>
+          <textarea id="pr-understanding" rows="4" placeholder="Acme's support team answers the same 20 questions daily; response time averages 6 hours and leads go cold…"></textarea>
+        </div>
+        <div class="inv-field" style="margin-top:0.75rem">
+          <label for="pr-approach">Recommended approach &amp; phases</label>
+          <textarea id="pr-approach" rows="5" placeholder="Phase 1 — discovery &amp; data audit…"></textarea>
+        </div>
+        <div class="inv-field" style="margin-top:0.75rem">
+          <label for="pr-deliverables">Deliverables (one per line)</label>
+          <textarea id="pr-deliverables" rows="6" placeholder="WhatsApp FAQ assistant handling 70–80% of routine questions&#10;1 automation workflow — lead capture → CRM&#10;Analytics dashboard…"></textarea>
+        </div>
+        <div class="inv-row" style="margin-top:0.75rem">
+          <div class="inv-field"><label for="pr-timeline">Timeline</label><input id="pr-timeline" type="text" placeholder="6–10 weeks from kickoff" /></div>
+          <div class="inv-field"><label for="pr-why">Why me (proof, one per line)</label><textarea id="pr-why" rows="4"></textarea></div>
+        </div>
+      </div>
+
+      <div class="lg-panel inv-card">
+        <h2>Investment</h2>
+        <div class="inv-row">
+          <div class="inv-field"><label for="pr-total">Total (USD) *</label><input id="pr-total" type="number" min="0" step="50" placeholder="28000" /></div>
+          <div class="inv-field"><label for="pr-monthly">Monthly (USD, optional)</label><input id="pr-monthly" type="number" min="0" step="50" placeholder="6000" /></div>
+        </div>
+        <div class="inv-row" style="margin-top:0.75rem">
+          <div class="inv-field"><label for="pr-plan">Payment schedule</label>
+            <select id="pr-plan">
+              <option value="fifty">50% deposit · 50% on delivery</option>
+              <option value="milestone">Milestones — 30% · 40% · 30%</option>
+              <option value="monthly">Build + monthly retainer</option>
+            </select>
+          </div>
+          <div class="inv-field"><label for="pr-fx">FX (KES per USD)</label><input id="pr-fx" type="number" min="1" step="0.5" value="80" /></div>
+        </div>
+        <div class="inv-row" style="margin-top:0.75rem">
+          <div class="inv-field"><label for="pr-valid">Valid for (days)</label><input id="pr-valid" type="number" min="1" max="90" value="14" /></div>
+          <div class="inv-field"><label for="pr-date">Issue date</label><input id="pr-date" type="date" /></div>
+        </div>
+        <div class="inv-field" style="margin-top:0.75rem">
+          <label for="pr-notes">Notes (optional)</label>
+          <textarea id="pr-notes" rows="2" placeholder="Anything client-specific — e.g. audit credit, phased start…"></textarea>
+        </div>
+      </div>
+
+      <div class="lg-panel inv-card">
+        <h2>Save &amp; share</h2>
+        <div class="inv-actions">
+          <button type="button" class="btn btn-primary lg-shimmer" id="prSave">💾 Save proposal</button>
+          <button type="button" class="btn btn-ghost" id="prNew">🆕 New draft</button>
+        </div>
+        <div class="inv-actions" style="margin-top:0.5rem">
+          <button type="button" class="lg-chip" id="prShareWa">💬 Share on WhatsApp</button>
+          <button type="button" class="lg-chip" id="prShareMail">📧 Share by email</button>
+          <button type="button" class="lg-chip" id="prPrint">🖨️ Print / Save PDF</button>
+          <a class="lg-chip" href="/services/contract.html" id="prContract">📄 Contract next →</a>
+        </div>
+      </div>
+
+      <div class="lg-panel inv-card">
+        <h2>Saved proposals</h2>
+        <div class="inv-saved-list" id="prSaved"></div>
+        <p style="font-size:0.75rem;color:var(--text-dim);margin-top:0.9rem;line-height:1.6">
+          Proposals live in this browser's storage, like invoices — export backups from the invoicing tool.
+          Statuses: draft → sent → accepted. Accepted proposals carry their numbers into the contract stage.
+        </p>
+      </div>
+    </div>
+
+    <!-- ── Live preview ── -->
+    <div class="inv-doc-shell">
+      <div class="inv-doc pr-doc" id="prDoc" aria-live="polite"></div>
+      <p style="text-align:center;font-size:0.75rem;color:var(--text-dim);margin-top:0.9rem">
+        The preview mirrors the printable document — use Print / Save PDF for the client copy.
+      </p>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer style="padding:2rem;text-align:center;border-top:1px solid var(--border)">
+  <p style="color:var(--text-dim);font-size:0.875rem">
+    © 2026 Victor Ndunda · <a href="/" style="color:var(--accent)">victorndunda.com</a>
+  </p>
+</footer>
+
+<script>
+const html = document.documentElement;
+html.classList.remove('dark', 'light');
+html.classList.add(localStorage.getItem('theme') || 'dark');
+document.getElementById('themeToggle')?.addEventListener('click', () => {
+  const isDark = html.classList.contains('dark');
+  html.classList.remove('dark', 'light');
+  html.classList.add(isDark ? 'light' : 'dark');
+  localStorage.setItem('theme', isDark ? 'light' : 'dark');
+});
+const mobileToggle = document.getElementById('mobileToggle');
+mobileToggle?.addEventListener('click', () => {
+  const open = document.getElementById('navLinks').classList.toggle('open');
+  mobileToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+});
+window.addEventListener('scroll', () => {
+  document.getElementById('nav')?.classList.toggle('scrolled', window.scrollY > 50);
+}, { passive: true });
+</script>
+<script src="/liquid.js?v=11.0.0" defer></script>
+<script src="/services/proposal.js?v=11.0.0" defer></script>
+</body>
+</html>
