@@ -1,0 +1,347 @@
+/* ═══════════════════════════════════════════════════════════════════
+   liquid.css — Victor Ndunda v9 "Liquid Glass" premium layer
+   ─────────────────────────────────────────────────────────────────
+   A progressive-enhancement design system layered ON TOP of
+   styles.css / home.css. Nothing here is required for the page to
+   function; every effect degrades gracefully and every animation
+   respects prefers-reduced-motion.
+
+   Contents
+   1. Liquid-glass tokens
+   2. Liquid glass surfaces (.lg-panel, .lg-card)
+   3. Liquid aurora background (.liquid-bg)
+   4. Specular shimmer (.lg-shimmer)
+   5. Liquid chips + buttons
+   6. Scroll progress bar (.lg-progress)
+   7. Spotlight cards (cursor-follow glow)
+   8. Tilt cards (.lg-tilt)
+   9. Count-up stats + reveal
+  10. Toasts (.vn-toast)
+  11. Back-to-top (.lg-top)
+  12. Skeleton shimmer (.lg-skel)
+  13. Reduced-motion kill-switch
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. Liquid-glass tokens ─────────────────────────────────────── */
+:root {
+  --lg-blur: 18px;
+  --lg-sat: 160%;
+  --lg-tint: rgba(255, 255, 255, 0.045);
+  --lg-edge: rgba(255, 255, 255, 0.14);
+  --lg-edge-soft: rgba(255, 255, 255, 0.07);
+  --lg-spec: rgba(255, 255, 255, 0.22);   /* specular top edge */
+  --lg-inner: inset 0 1px 0 0 var(--lg-spec);
+  --lg-shadow: 0 8px 32px rgba(0, 0, 0, 0.28), 0 2px 8px rgba(0, 0, 0, 0.22);
+  --lg-radius: 20px;
+}
+html.light {
+  --lg-tint: rgba(255, 255, 255, 0.62);
+  --lg-edge: rgba(15, 23, 42, 0.10);
+  --lg-edge-soft: rgba(15, 23, 42, 0.06);
+  --lg-spec: rgba(255, 255, 255, 0.9);
+  --lg-inner: inset 0 1px 0 0 var(--lg-spec);
+  --lg-shadow: 0 8px 32px rgba(15, 23, 42, 0.10), 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+/* ─── 2. Liquid glass surfaces ───────────────────────────────────── */
+.lg-panel {
+  position: relative;
+  background: var(--lg-tint);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  border: 1px solid var(--lg-edge);
+  border-radius: var(--lg-radius);
+  box-shadow: var(--lg-inner), var(--lg-shadow);
+  transition: border-color 0.3s var(--ease, ease), box-shadow 0.3s var(--ease, ease);
+}
+.lg-panel:hover { border-color: var(--lg-edge); }
+/* Top specular streak — light "caught" on the glass edge */
+.lg-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(160deg,
+    var(--lg-spec) 0%,
+    transparent 22%,
+    transparent 78%,
+    var(--lg-edge-soft) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+}
+.lg-card {
+  position: relative;
+  background: var(--lg-tint);
+  -webkit-backdrop-filter: blur(12px) saturate(150%);
+  backdrop-filter: blur(12px) saturate(150%);
+  border: 1px solid var(--lg-edge-soft);
+  border-radius: 14px;
+  transition: transform 0.25s var(--ease, ease), border-color 0.25s, box-shadow 0.25s;
+}
+.lg-card:hover {
+  border-color: var(--lg-edge);
+  transform: translateY(-3px);
+  box-shadow: var(--lg-shadow);
+}
+
+/* ─── 3. Liquid aurora background ────────────────────────────────── */
+/* Soft, slowly-morphing gradient blobs behind hero sections.
+   Applied as an absolutely-positioned overlay; page supplies
+   <div class="liquid-bg" aria-hidden="true"></div>. */
+.liquid-bg {
+  position: absolute;
+  inset: -20%;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  filter: blur(60px) saturate(130%);
+  opacity: 0.55;
+}
+html.light .liquid-bg { opacity: 0.35; }
+.liquid-bg .blob {
+  position: absolute;
+  width: 42%;
+  aspect-ratio: 1;
+  border-radius: 42% 58% 61% 39% / 45% 43% 57% 55%;
+  background: radial-gradient(circle at 35% 35%, var(--accent), transparent 70%);
+  mix-blend-mode: screen;
+  animation: lg-blob-a 26s ease-in-out infinite alternate;
+}
+.liquid-bg .blob.b2 {
+  right: 4%;
+  top: 18%;
+  background: radial-gradient(circle at 60% 40%, var(--accent-2), transparent 70%);
+  animation: lg-blob-b 32s ease-in-out infinite alternate;
+}
+.liquid-bg .blob.b3 {
+  left: 28%;
+  bottom: -10%;
+  background: radial-gradient(circle at 50% 50%, var(--accent-3), transparent 70%);
+  animation: lg-blob-c 38s ease-in-out infinite alternate;
+}
+@keyframes lg-blob-a {
+  0%   { transform: translate(-8%, -4%) rotate(0deg)   scale(1); }
+  50%  { transform: translate(6%, 8%)  rotate(28deg)  scale(1.08); }
+  100% { transform: translate(-4%, 10%) rotate(-14deg) scale(0.96); }
+}
+@keyframes lg-blob-b {
+  0%   { transform: translate(10%, 6%)  rotate(0deg)   scale(0.94); }
+  50%  { transform: translate(-6%, -8%) rotate(-22deg) scale(1.1); }
+  100% { transform: translate(4%, -12%) rotate(18deg)  scale(1); }
+}
+@keyframes lg-blob-c {
+  0%   { transform: translate(0%, 6%)   scale(1); }
+  50%  { transform: translate(8%, -6%)  scale(1.12); }
+  100% { transform: translate(-8%, 2%)  scale(0.98); }
+}
+
+/* ─── 4. Specular shimmer sweep ──────────────────────────────────── */
+/* A diagonal light-sweep crosses the element on hover — the
+   "liquid catching light" moment. */
+.lg-shimmer { position: relative; overflow: hidden; }
+.lg-shimmer::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -80%;
+  width: 45%;
+  height: 220%;
+  background: linear-gradient(105deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.18) 45%,
+    rgba(255, 255, 255, 0.32) 50%,
+    rgba(255, 255, 255, 0.18) 55%,
+    transparent 100%);
+  transform: rotate(0.001deg) translateX(0);
+  transition: none;
+  pointer-events: none;
+}
+.lg-shimmer:hover::after,
+.lg-shimmer:focus-visible::after {
+  animation: lg-sweep 0.9s var(--ease, ease);
+}
+@keyframes lg-sweep {
+  0%   { left: -80%; }
+  100% { left: 140%; }
+}
+
+/* ─── 5. Liquid chips + buttons ──────────────────────────────────── */
+.lg-chip {
+  padding: 0.5rem 1rem;
+  border-radius: 99px;
+  background: var(--lg-tint);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--lg-edge-soft);
+  color: var(--text-muted);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s, transform 0.2s var(--ease, ease), box-shadow 0.2s;
+}
+.lg-chip:hover, .lg-chip:focus-visible {
+  color: var(--text);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px var(--glow);
+}
+.lg-chip[aria-pressed="true"], .lg-chip.is-on {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-color: transparent;
+  color: #fff;
+}
+/* Press feedback — the "drop into liquid" dip */
+.lg-chip:active, .btn.lg-shimmer:active { transform: translateY(1px) scale(0.98); }
+
+/* ─── 6. Scroll progress bar ─────────────────────────────────────── */
+.lg-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0;
+  z-index: 10001;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2), var(--accent-3));
+  border-radius: 0 99px 99px 0;
+  box-shadow: 0 0 12px var(--glow);
+  pointer-events: none;
+  transition: width 0.08s linear;
+}
+
+/* ─── 7. Spotlight cards (cursor-follow glow) ────────────────────── */
+.lg-spot {
+  position: relative;
+  overflow: hidden;
+}
+.lg-spot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%),
+    var(--glow), transparent 65%);
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+.lg-spot:hover::after { opacity: 1; }
+
+/* ─── 8. Tilt cards ──────────────────────────────────────────────── */
+.lg-tilt { transform-style: preserve-3d; will-change: transform; transition: transform 0.18s var(--ease, ease); }
+.lg-tilt .lg-tilt-inner { transform: translateZ(24px); }
+
+/* ─── 9. Count-up stats + reveal ─────────────────────────────────── */
+.lg-count { font-variant-numeric: tabular-nums; }
+.lg-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s var(--ease, ease), transform 0.6s var(--ease, ease);
+}
+.lg-reveal.lg-in { opacity: 1; transform: none; }
+.lg-reveal:nth-child(2) { transition-delay: 0.07s; }
+.lg-reveal:nth-child(3) { transition-delay: 0.14s; }
+.lg-reveal:nth-child(4) { transition-delay: 0.21s; }
+.lg-reveal:nth-child(5) { transition-delay: 0.28s; }
+.lg-reveal:nth-child(6) { transition-delay: 0.35s; }
+
+/* ─── 10. Toasts ─────────────────────────────────────────────────── */
+.vn-toast-wrap {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10002;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  pointer-events: none;
+  width: min(92vw, 480px);
+}
+.vn-toast {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.1rem;
+  border-radius: 12px;
+  background: var(--lg-tint);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  border: 1px solid var(--lg-edge);
+  box-shadow: var(--lg-inner), var(--lg-shadow);
+  color: var(--text);
+  font-size: 0.875rem;
+  font-weight: 500;
+  max-width: 100%;
+  pointer-events: auto;
+  animation: vn-toast-in 0.35s var(--ease, ease);
+}
+.vn-toast.out { animation: vn-toast-out 0.3s var(--ease, ease) forwards; }
+.vn-toast .t-icon { font-size: 1rem; line-height: 1; }
+@keyframes vn-toast-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.96); }
+  to   { opacity: 1; transform: none; }
+}
+@keyframes vn-toast-out {
+  to { opacity: 0; transform: translateY(8px) scale(0.97); }
+}
+
+/* ─── 11. Back-to-top ────────────────────────────────────────────── */
+.lg-top {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--lg-edge);
+  background: var(--lg-tint);
+  -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat));
+  box-shadow: var(--lg-inner), var(--lg-shadow);
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.3s, transform 0.3s var(--ease, ease), border-color 0.2s;
+  z-index: 9000;
+  pointer-events: none;
+}
+.lg-top.show { opacity: 1; transform: none; pointer-events: auto; }
+.lg-top:hover { border-color: var(--accent); }
+
+/* ─── 12. Skeleton shimmer ───────────────────────────────────────── */
+.lg-skel {
+  border-radius: 8px;
+  background: linear-gradient(100deg,
+    var(--glass) 30%,
+    var(--lg-edge-soft) 50%,
+    var(--glass) 70%);
+  background-size: 220% 100%;
+  animation: lg-skel 1.4s ease-in-out infinite;
+}
+@keyframes lg-skel {
+  from { background-position: 120% 0; }
+  to   { background-position: -120% 0; }
+}
+
+/* ─── 13. Reduced-motion kill-switch ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .liquid-bg .blob { animation: none; }
+  .lg-shimmer::after { display: none; }
+  .lg-progress { transition: none; }
+  .lg-reveal { opacity: 1; transform: none; transition: none; }
+  .lg-tilt { transition: none; }
+  .vn-toast { animation: none; }
+  .vn-toast.out { animation: none; opacity: 0; }
+  .lg-skel { animation: none; }
+  .lg-card, .lg-chip { transition: none; }
+}

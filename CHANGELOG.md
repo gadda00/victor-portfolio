@@ -7,6 +7,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — v9.0 "Liquid Glass" Premium + First-Party Pipeline
+
+**Liquid Glass design system (`liquid.css` + `liquid.js`, site-wide):**
+- Liquid-glass surfaces (layered backdrop blur/saturate + specular top edge) on the booking panel and invoice cards.
+- Liquid aurora background — three slowly-morphing gradient blobs behind the /book/ hero and invoice hero (blurred, screen-blended, reduced-motion safe).
+- Specular shimmer sweep on primary buttons ("liquid catching light" on hover).
+- Liquid chips with press-dip feedback; global glass toast system (`window.vnToast`); copy-to-clipboard helper (`window.vnCopy`) + delegated `data-copy` buttons.
+- Scroll progress bar, back-to-top button, count-up stats (home + services), scroll reveals, spotlight cursor-glow, 3D tilt — all progressive enhancement with a reduced-motion kill-switch.
+
+**First-party scheduler (replaces the Cal.com embed on /book/):**
+- Own coded booking box: month grid → time slots (EAT working hours, 30-min, 12h lead, 45-day horizon) → details → confirm.
+- Visitor timezone auto-detected and shown beside EAT; slot chips show both times.
+- Submit → Web3Forms email to owner + `.ics` calendar-hold download (with 15-min alarm) + WhatsApp handoff carrying the booking context.
+- Keyboard arrow navigation on the day grid; assistant-estimate context pre-fills the topic field.
+- CSP tightened: all Cal.com script/frame/connect entries removed (embed, `window.Cal` stub, MutationObserver, and `dns-prefetch` all gone).
+
+**Invoicing system (`/services/invoice.html` + invoice.js + invoice.css):**
+- Full engagement-pipeline tool: draft → send → track payment, completing enquiry → estimate → call → proposal → invoice → payment → delivery.
+- Line items, USD/KES dual currency with editable FX, optional 16% VAT, discounts, due dates, auto numbering (VN-YYYY-###).
+- Statuses draft/sent/paid/overdue-by-date; partial payments with method + reference (M-Pesa code) + date; balance auto-calc.
+- Live invoice document preview that mirrors the printable output; print stylesheet isolates the invoice for Print/Save-as-PDF.
+- Share via WhatsApp deep link or email (mailto) with the full line-item breakdown; M-Pesa Paybill 4071186 with account = invoice number.
+- Imports the assistant's last estimate (`vn_last_estimate`) or the wizard's last brief (`vn_client_briefs`) as a starting line item.
+- JSON export/import backups; storage in localStorage `vn_invoices` (owner-device model, documented in-page).
+
+**Dashboard Invoicing section:** revenue at a glance (paid/pending/overdue), invoice table with statuses and balances, pipeline explainer, payment-method reference — reads the same store the invoice tool writes.
+
+**Assistant:** estimate completions now persist to `vn_last_estimate` (service, multipliers context, USD/KES range, domain) powering the scheduler pre-fill and invoice import; active domain flows through the estimate object.
+
+### Fixed
+- `pickSlot` bug in the new scheduler (used the deprecated global `event`) — bound via `ev.currentTarget`.
+- Stale Cal.com references removed from privacy policy, terms of service, guide, README, booking meta descriptions.
+- Guide's /jobs/ entry updated to reflect the v8 redirect reality.
+
+### Changed
+- sw.js → vnd-v9.0.0; liquid.css/liquid.js added to the pre-cached shell.
+- Booking page loads liquid.js + scheduler.js after the inline bootstrap; assistant bumped to v9.1.0.
+- "/" focuses the assistant input on /book/ (power-user shortcut, skips when typing in a field).
+
 ### Added — v3.0 Major Enhancement Release
 
 **New Sections:**

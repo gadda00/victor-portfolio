@@ -119,14 +119,13 @@
               <li><strong>/services/data.json</strong> — all packages, services, training, FAQs (data source)</li>
             </ul>
           </li>
-          <li><strong>/jobs/</strong> — Jobs portal (5 sources, AI matching, resume + cover letter generation, tracking)
-            <ul><li>/jobs/lib/*.js — 9 modules (profile, scoring, storage, templates, resume, coverletter, gmail, tracking, app)</li></ul>
-          </li>
-          <li><strong>/dashboard/</strong> — Dashboard (auth required, 9 sections — replaces old /admin/)</li>
+          <li><strong>/jobs/</strong> — Redirects to /dashboard/ (standalone portal preserved in git history; job tracking lives in the dashboard's Jobs section)
+          <li><strong>/dashboard/</strong> — Dashboard (auth required, 13 sections incl. Invoicing — replaces old /admin/ and /jobs/)</li>
           <li><strong>/blog/</strong> — Blog index (9 articles)</li>
-          <li><strong>/book/</strong> — Booking page (Cal.com + Web3Forms + direct contact)</li>
+          <li><strong>/book/</strong> — Booking page (first-party scheduler + enquiry assistant + Web3Forms + direct contact)</li>
+          <li><strong>/services/invoice.html</strong> — Invoicing tool (draft / send / track, noindex)</li>
           <li><strong>/guide/</strong> — This page</li>
-          <li>Root files: <code>/feed.xml</code> (RSS), <code>/sw.js</code> (service worker), <code>/manifest.webmanifest</code> (PWA), <code>/i18n.js</code> (Swahili), <code>/enhancements.js</code> (scroll progress, back-to-top, PWA install)</li>
+          <li>Root files: <code>/feed.xml</code> (RSS), <code>/sw.js</code> (service worker), <code>/manifest.webmanifest</code> (PWA), <code>/i18n.js</code> (Swahili), <code>/liquid.js</code> + <code>/liquid.css</code> (v9 Liquid Glass effects: scroll progress, toasts, count-up, back-to-top), <code>/enhancements.js</code> (PWA install)</li>
         </ul>
       </div>
     </section>

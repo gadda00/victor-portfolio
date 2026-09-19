@@ -16,7 +16,10 @@
    · Privacy-safe owner notifications: estimate completions and
      assistant hand-offs email Victor via the site's existing Web3Forms
      channel (estimate configuration only — no chat text, no PII).
-   Handoffs: Cal.com (schedule tab), Web3Forms (message form), WhatsApp.
+   Handoffs: first-party scheduler (schedule tab), Web3Forms (message
+   form), WhatsApp. Estimate completions persist to localStorage
+   (vn_last_estimate) so the scheduler pre-fills and the invoice tool
+   can import the same numbers.
    ═══════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
@@ -62,7 +65,8 @@
   };
 
   var DATA = null; // populated by load()
-  var estimate = null; // active estimate flow state
+  var estimate = null;
+  var lastDomain = null; // active estimate flow state
 
   /* ── DOM ─────────────────────────────────────────────────────────── */
   var log, chipsBox, form, field;
@@ -455,6 +459,7 @@
 
   function domainAnswer(d, rawText) {
     track('assistant_domain', { d: d.id });
+    lastDomain = d.label;
     var combos = d.combos.map(function (c) {
       var s = svcById(c.id);
       var price = s && s.fromPrice ? ' (from ' + money(s.fromPrice.usd, 'usd') + ' / ' + money(s.fromPrice.kes, 'kes') + ')' : '';
@@ -485,7 +490,7 @@
 
   /* ── Estimate flow (tuned multipliers) ───────────────────────────── */
   function startEstimate(presetId) {
-    estimate = { step: 'service', volume: null, integrations: null, languages: null, service: null };
+    estimate = { step: 'service', volume: null, integrations: null, languages: null, service: null, domain: lastDomain };
     track('assistant_estimate_start', presetId ? { preset: presetId } : null);
     if (presetId && svcById(presetId)) { pickService(presetId); return; }
     var cats = (DATA.services || []).slice(0, 8).map(function (s) {
@@ -560,6 +565,20 @@
       languages: estimate.languages,
       usd: usdLow + '-' + usdHigh
     });
+    /* Persist for cross-tool handoffs (scheduler prefill + invoice import) */
+    try {
+      localStorage.setItem('vn_last_estimate', JSON.stringify({
+        service: estimate.service.name,
+        volume: estimate.volume,
+        integrations: estimate.integrations,
+        languages: estimate.languages,
+        usdLow: usdLow, usdHigh: usdHigh,
+        kesLow: kesLow, kesHigh: kesHigh,
+        range: estimate.result.range,
+        domain: estimate.domain || null,
+        t: Date.now()
+      }));
+    } catch (e) { /* storage unavailable — handoffs still work */ }
     notifyOwner('Estimate completed', [
       'A visitor completed the estimate flow on /book/:',
       'Service: ' + estimate.service.name,

@@ -609,6 +609,69 @@
       }).join('') + '</tbody></table></div>' : '<div class="empty"><div class="icon">💼</div>No briefs yet.</div>');
   };
 
+  // ─── Invoicing (v9: full engagement pipeline, first-party) ──────
+  // Reads the same 'vn_invoices' store the invoice tool writes.
+  // Full editing happens at /services/invoice.html — this panel gives
+  // revenue at a glance, statuses, and pipeline health.
+
+  function getInvoices() {
+    try { return JSON.parse(localStorage.getItem('vn_invoices') || '[]'); } catch { return []; }
+  }
+  function invTotalsOf(inv) {
+    var VAT = 0.16;
+    var subtotal = (inv.items || []).reduce(function (s, it) { return s + (Number(it.qty) || 0) * (Number(it.rateUsd) || 0); }, 0);
+    var discount = subtotal * ((Number(inv.discountPct) || 0) / 100);
+    var vat = inv.vatOn ? (subtotal - discount) * VAT : 0;
+    var totalUsd = subtotal - discount + vat;
+    var paid = (inv.payments || []).reduce(function (s, p) { return s + (Number(p.usd) || 0); }, 0);
+    return { totalUsd: totalUsd, paidUsd: paid, balanceUsd: totalUsd - paid };
+  }
+  function invStatus(inv) {
+    if (inv.status === 'paid') return 'paid';
+    if (inv.status === 'sent' && inv.due && inv.due < new Date().toISOString().slice(0, 10)) return 'overdue';
+    return inv.status || 'draft';
+  }
+  function usd(n) { return '$' + (Number(n) || 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+
+  sections.invoicing = function () {
+    var invoices = getInvoices();
+    var rev = { paid: 0, pending: 0, overdue: 0 };
+    invoices.forEach(function (inv) {
+      var t = invTotalsOf(inv);
+      var st = invStatus(inv);
+      if (st === 'paid') rev.paid += t.totalUsd;
+      else if (st === 'overdue') rev.overdue += t.balanceUsd;
+      else rev.pending += t.balanceUsd || t.totalUsd;
+    });
+    return '<div class="page-head"><h1>Invoicing</h1><p>First-party invoices — draft, send, track payment.</p></div>' +
+      '<div class="stat-grid">' +
+      '<div class="stat"><div class="stat-label">Paid</div><div class="stat-val">' + usd(rev.paid) + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Pending</div><div class="stat-val">' + usd(rev.pending) + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Overdue</div><div class="stat-val" style="color:' + (rev.overdue > 0 ? '#f87171' : 'inherit') + '">' + usd(rev.overdue) + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Invoices</div><div class="stat-val">' + invoices.length + '</div></div>' +
+      '</div>' +
+      '<div class="actions">' +
+      '<a href="/services/invoice.html" class="action"><span class="icon">🧾</span>New / Manage Invoices</a>' +
+      '<a href="/services/wizard.html" class="action"><span class="icon">🚀</span>Scope Wizard</a>' +
+      '<a href="/book/" class="action"><span class="icon">📅</span>Booking Page</a>' +
+      '</div>' +
+      '<div class="card"><h3>Pipeline</h3>' +
+      '<p style="color:var(--txt2);font-size:0.9rem;line-height:1.7">Enquiry (assistant) → Estimate → Call booked (scheduler) → Proposal → <strong>Invoice</strong> → Payment → Delivery. ' +
+      'The assistant estimate and wizard brief both import into the invoice tool as line items — one continuous, first-party chain.</p></div>' +
+      (invoices.length ? '<div class="card"><table class="tbl"><thead><tr><th>Number</th><th>Client</th><th>Total</th><th>Balance</th><th>Status</th><th>Due</th></tr></thead><tbody>' +
+      invoices.slice().reverse().map(function (inv) {
+        var t = invTotalsOf(inv);
+        var st = invStatus(inv);
+        var bc = { draft: 'badge-gray', sent: 'badge-blue', paid: 'badge-green', overdue: 'badge-red' }[st] || 'badge-gray';
+        return '<tr><td><strong>' + inv.number + '</strong></td><td>' + (inv.client.name || inv.client.company || '—') + '</td><td>' + usd(t.totalUsd) + '</td><td>' + (t.paidUsd > 0 ? usd(t.balanceUsd) : '—') + '</td><td><span class="badge ' + bc + '">' + st + '</span></td><td>' + (inv.due || '—') + '</td></tr>';
+      }).join('') + '</tbody></table></div>' : '<div class="empty"><div class="icon">🧾</div>No invoices yet — open the invoice tool to draft your first.</div>') +
+      '<div class="card"><h3>Payment methods on invoices</h3>' +
+      '<div class="set-row"><span class="set-label">M-Pesa Paybill</span><span class="set-val">4071186 — Account = invoice number</span></div>' +
+      '<div class="set-row"><span class="set-label">Card / international</span><span class="set-val">Secure link on request (email)</span></div>' +
+      '<div class="set-row"><span class="set-label">Storage</span><span class="set-val">This browser (localStorage) — export JSON backups from the invoice tool</span></div>' +
+      '</div>';
+  };
+
   sections.findclients = function () {
     return '<div class="page-head"><h1>Find Clients</h1><p>Lead generation sources and outreach tracker.</p></div>' +
       '<div class="actions">' +

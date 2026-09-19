@@ -9,14 +9,16 @@
 The public site is organized as a client-acquisition system, not just a capability catalogue:
 
 - **Positioning**: "AI that works beyond the demo." — production AI systems engineer for founders and product teams.
-- **Primary CTA (everywhere, one label family)**: *Book a 30-Minute AI Systems Assessment* → `/book/` (free, via Cal.com).
+- **Primary CTA (everywhere, one label family)**: *Book a 30-Minute AI Systems Assessment* → `/book/` (free, first-party scheduler).
 - **Three offer paths** on the homepage and services page: AI Opportunity Assessment, Production AI Sprint, AI Reliability Audit (maps to the AI Audit / Starter / Growth / Enterprise packages in `services/data.json`).
 - **Featured case studies**: Tapi Learn (ACLA client product), Verxlite, Fraud Detection — with constraint + validation framing. Full directory at `/projects/` ("Case Studies").
 - **Navigation**: Home · Services · Case Studies · Insights · About · Resume · Book an Assessment.
 - **Analytics-ready**: CTAs carry `data-track="..."` attributes; `app.js` queues click events to `window.__vnEvents` with zero network calls. Wire Plausible/Umami later via `window.__vnTrack = fn`.
+- **First-party engagement pipeline (v9)**: enquiry assistant → estimate (persists `vn_last_estimate`) → own scheduler (`.ics` hold + Web3Forms email + WhatsApp handoff) → invoicing tool at `/services/invoice.html` (USD/KES, VAT, partial payments, print-to-PDF, M-Pesa Paybill 4071186) → dashboard Invoicing section (revenue overview). No third-party scheduler or billing service in the loop.
+- **Liquid Glass layer (v9)**: `liquid.css` + `liquid.js` — glass surfaces, aurora blobs, shimmer sweeps, toasts (`vnToast`), clipboard (`vnCopy`), scroll progress, back-to-top, count-up stats. Progressive enhancement, reduced-motion safe.
 - **Notes for the owner**:
   - The AI Reliability Audit price shown ("From $4,500 · 1–2 weeks") is a placeholder in the same effort class as AI Audit — confirm before relying on it.
-  - `/book/` embeds Cal.com inline; its CSP explicitly allowlists `frame-src https://app.cal.com`. If you switch schedulers, update the CSP too.
+  - `/book/` uses the first-party scheduler (v9) — no third-party embed. Booking requests email via Web3Forms (rotate `window.VN_W3F_KEY` in `book/index.html` when needed).
   - `articles/index.html` is a noindex redirect stub to `/blog/` (retired duplicate route).
   - When adding a blog article: update `blog/posts.json` **and** the `<noscript>` list in `blog/index.html`, then let `update-sitemap.yml` refresh `sitemap.xml`.
 
