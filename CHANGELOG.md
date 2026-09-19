@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed — v10.0 Smoothness, Above-the-Fold & Premium Polish
+
+**Above-the-fold hierarchy (the "key things hidden way below" fix):**
+- `/book/` restructured: the booking tabs + first-party scheduler now sit directly under the hero (tabs at ~415px from top; previously buried below the assistant, three FAQ cards, and the agenda at ~1900px). The enquiry assistant follows the scheduler; FAQ cards and agenda close the page.
+- Services page: the stats bar (`6 systems / 12 catalogue / 4 packages / 22+ sources / 91% CV / EN·FR·SW`) removed per owner request; a glass quick-anchor nav (`Packages · Estimate · Catalog · Case Studies · Training · FAQ`) added to the hero so every key section is one tap from the first screen. Anchored sections now clear the fixed nav (`scroll-margin-top`) instead of hiding their titles under it.
+- Homepage hero compacted (title clamp 5.2rem→4.25rem, 16ch line budget, tightened margins) so the CTA row and the centered stats bar fit within the first screen on 1366×768 laptops (verified: stats bottom 748px < 768px).
+- Section rhythm tightened site-wide (6.5rem→5.5rem desktop, 5rem→4.25rem mobile; services 4rem→3.5rem; hero top padding 8–9rem→7–7.5rem on home/services/blog/projects/legal/guides).
+
+**Rendering performance ("feels smoother"):**
+- `content-visibility: auto` (+ `contain-intrinsic-size`) on all below-the-fold sections of the homepage (11 sections), services page (9), book page, and projects — the browser skips layout/paint work for off-screen blocks on these long pages.
+- Scroll progress bar rewritten from `width` animation (layout on every frame) to `transform: scaleX()` (compositor-only). The duplicate conflicting rule in home.css was unified with the new approach.
+- 19 `transition: all` declarations replaced with explicit property lists (nav, buttons, cards, chips) — no more accidental layout-property transitions.
+- Nav backdrop cost trimmed: `blur(20px) saturate(180%)` → `blur(14px) saturate(150%)`.
+- Mobile glass is cheaper: `--lg-blur` 18px→12px and lighter card/aurora blur under 768px.
+- jsPDF on `/services/contract.html` now loads `defer` (was render-blocking; it's only used on button click).
+- Services page inline scroll listener made `{ passive: true }`.
+
+**Typography & premium polish:**
+- Font payload trimmed on all 34 pages: Inter drops unused 300/900 (7→5 weights), Space Grotesk drops unused 400 (4→3), JetBrains Mono gains 700 while keeping the same file count (4) — eliminating faux-bold synthesis on the 10+ rules that requested mono 700/800 (remaining 800s normalized to 700).
+- `text-wrap: balance` on all headings (h1–h4 + section heads) for optically even line breaks; hero/section titles balance their last line.
+- Button press physics site-wide: `.btn:active`, `.svc-cta-btn:active`, `.pkg-cta:active` press down (`translateY(1px) scale(.985)`); theme toggle spins 180° on hover and pops on press.
+- Nav links got an animated gradient underline (scaleX from left) for hover/active states.
+- Scrollbar: 6px thin with gradient thumb + Firefox `scrollbar-width: thin` + `scrollbar-color`.
+- Services quick-nav chips: glass pills with lift-on-hover and press feedback.
+
 ### Fixed — v9.1 Site Reliability & Centering Pass
 
 **Auto-Post to Social Media workflow (the recurring "failed workflow"):**

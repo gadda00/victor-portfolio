@@ -48,13 +48,15 @@
   // One scroll listener drives BOTH the progress bar and the back-to-top
   // toggle. (Previously two listeners shared the same `ticking` flag, so
   // the second listener never ran and the button never appeared.)
+  // v10: the bar is animated with transform: scaleX() instead of width —
+  // compositor-only, zero layout work per frame.
   var backTopVisible = false;
   var ticking = false;
   function onScrollFrame() {
     var scrollTop = window.scrollY || document.documentElement.scrollTop;
     var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-    var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
-    progressEl.style.width = pct + '%';
+    var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) : 0;
+    progressEl.style.transform = 'scaleX(' + pct + ')';
     var shouldShow = window.scrollY > 600;
     if (shouldShow !== backTopVisible) {
       backTopVisible = shouldShow;

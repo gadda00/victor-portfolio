@@ -34,9 +34,9 @@
 <meta name="mobile-web-app-capable" content="yes" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <meta name="view-transition" content="same-origin" />
-<link rel="stylesheet" href="/styles.css?v=5.4.0" />
+<link rel="stylesheet" href="/styles.css?v=10.0.0" />
 
 <!-- Security Headers -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -67,9 +67,10 @@
 }
 </script>
 <style>
-.blog-hero { padding: 8rem 2rem 4rem; text-align: center; }
-.blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 0 2rem 6rem; }
-.blog-card { display: block; padding: 2rem; border-radius: 16px; background: var(--bg-card); border: 1px solid var(--border); transition: all 0.3s; cursor: pointer; text-decoration: none; color: inherit; }
+.blog-hero { padding: 7rem 2rem 2.5rem; text-align: center; }
+.blog-hero h1 { text-wrap: balance; }
+.blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 2rem; max-width: 1200px; margin: 0 auto; padding: 0 2rem 4rem; }
+.blog-card { display: block; padding: 2rem; border-radius: 16px; background: var(--bg-card); border: 1px solid var(--border); transition: transform 0.3s var(--ease, ease), border-color 0.3s var(--ease, ease), box-shadow 0.3s var(--ease, ease); cursor: pointer; text-decoration: none; color: inherit; }
 .blog-card:hover { border-color: var(--accent); transform: translateY(-5px); }
 .blog-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.625rem; border-radius: 4px; margin-bottom: 1rem; }
 .blog-tag.ai { background: rgba(0,212,255,0.1); color: var(--accent); }
@@ -252,6 +253,6 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
 });
 </script>
-<script src="/enhancements.js?v=9.1.0" defer></script>
+<script src="/enhancements.js?v=10.0.0" defer></script>
 </body>
 </html>

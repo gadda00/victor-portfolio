@@ -292,6 +292,18 @@ html.light .liquid-bg { opacity: 0.35; }
   to   { background-position: -120% 0; }
 }
 
+/* ─── 10b. Mobile perf: cheaper glass on small screens ───────────── */
+/* Backdrop blur cost scales with surface area + device GPU; on phones
+   a lighter blur is visually near-identical and keeps scroll smooth. */
+@media (max-width: 768px) {
+  :root { --lg-blur: 12px; }
+  .lg-card {
+    -webkit-backdrop-filter: blur(8px) saturate(140%);
+    backdrop-filter: blur(8px) saturate(140%);
+  }
+  .liquid-bg { filter: blur(40px) saturate(120%); }
+}
+
 /* ─── 11. Reduced-motion kill-switch ─────────────────────────────── */
 @media (prefers-reduced-motion: reduce) {
   .liquid-bg .blob { animation: none; }

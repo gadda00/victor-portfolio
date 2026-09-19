@@ -24,10 +24,10 @@
 <link rel="manifest" href="/manifest.webmanifest" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <meta name="view-transition" content="same-origin" />
-<link rel="stylesheet" href="/styles.css?v=7.0.0" />
-<link rel="stylesheet" href="/liquid.css?v=9.1.0" />
+<link rel="stylesheet" href="/styles.css?v=10.0.0" />
+<link rel="stylesheet" href="/liquid.css?v=10.0.0" />
 
 <!-- Security Headers -->
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -37,7 +37,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.web3forms.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
 
 <style>
-.book-hero { padding: 8rem 2rem 2.5rem; text-align: center; position: relative; }
+.book-hero { padding: 7rem 2rem 2rem; text-align: center; position: relative; }
 .book-hero .liquid-bg { top: -30%; bottom: auto; height: 160%; }
 .book-hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
 .book-hero p { color: var(--text-muted); font-size: 1.0625rem; max-width: 600px; margin: 0 auto 2rem; }
@@ -55,7 +55,7 @@
 .book-agenda li strong { display: block; color: var(--text); margin-bottom: 0.25rem; }
 .book-options { max-width: 900px; margin: 0 auto; padding: 0 2rem 1rem; }
 /* ── Enquiry assistant ── */
-.book-assistant-section { max-width: 900px; margin: 0 auto; padding: 0 2rem 2.5rem; }
+.book-assistant-section { max-width: 900px; margin: 3rem auto 0; padding: 0 2rem 2.5rem; }
 .book-assistant { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.75rem; box-shadow: 0 10px 40px rgba(0,0,0,.12); }
 .book-assistant { position: relative; background: var(--lg-tint); -webkit-backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat)); backdrop-filter: blur(var(--lg-blur)) saturate(var(--lg-sat)); border: 1px solid var(--lg-edge); box-shadow: var(--lg-inner), var(--lg-shadow); }
 .assistant-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); margin-bottom: 1.25rem; }
@@ -193,73 +193,6 @@
   <h1>Book a 30-Minute <span class="grad-text">AI Systems Assessment.</span></h1>
   <p>Free, focused, and useful whether or not we ever work together. Bring one workflow, bottleneck, or AI idea — leave with an honest read on what's worth building.</p>
 </section>
-
-<!-- Enquiry assistant: instant answers + estimates from published rates -->
-<section class="book-assistant-section" aria-labelledby="assistant-title">
-  <div class="book-assistant" id="bookAssistant">
-    <div class="assistant-head">
-      <div class="assistant-id">
-        <span class="assistant-avatar" aria-hidden="true">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9 2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9 2.83-2.83"/></svg>
-        </span>
-        <div>
-          <h2 id="assistant-title">Questions before you book?</h2>
-          <p>Instant answers on services, pricing, and timelines — estimates come from my published rates.</p>
-        </div>
-      </div>
-      <span class="assistant-badge">Instant · No waiting</span>
-    </div>
-    <div class="assistant-log" id="assistantLog" role="log" aria-live="polite" aria-label="Assistant conversation"></div>
-    <div class="assistant-chips" id="assistantChips" role="group" aria-label="Suggested questions"></div>
-    <form class="assistant-input" id="assistantForm" autocomplete="off">
-      <label for="assistantField" class="visually-hidden">Type your question</label>
-      <input type="text" id="assistantField" placeholder="Ask about pricing, timelines, how I work…" maxlength="300" />
-      <button type="submit" class="btn btn-primary btn-sm" data-track="assistant-send">Ask</button>
-    </form>
-    <p class="assistant-note">Answers are pulled from the services and pricing pages on this site. For anything it can't answer, use WhatsApp or the free call below.</p>
-    <noscript>
-      <p style="color:var(--text-muted);padding:1rem 0 0">The instant assistant needs JavaScript. You can still <a href="https://wa.me/254724346971" target="_blank" rel="noopener noreferrer">ask on WhatsApp</a>, send a message below, or book the free call.</p>
-    </noscript>
-  </div>
-</section>
-
-<!-- Who it's for / agenda / preparation -->
-<div class="book-faq">
-  <div class="book-faq-grid">
-    <div class="book-faq-card">
-      <h2>Who it's for</h2>
-      <ul>
-        <li><strong>Founders and product/ops leaders</strong> with a valuable workflow that's slow, manual, or error-prone.</li>
-        <li><strong>Teams with an AI feature</strong> that has quality, latency, cost, or trust problems.</li>
-        <li><strong>Not for:</strong> same-day fixed quotes or coursework/tutoring requests — email works better for those.</li>
-      </ul>
-    </div>
-    <div class="book-faq-card">
-      <h2>What to bring (optional)</h2>
-      <ul>
-        <li>The <strong>workflow you care about</strong> and roughly how many users, transactions, or documents it touches.</li>
-        <li><strong>Tools it lives in</strong> today (CRM, ERP, email, WhatsApp, spreadsheets).</li>
-        <li>Any <strong>AI you already tried</strong> — including the ones that disappointed you.</li>
-      </ul>
-    </div>
-    <div class="book-faq-card">
-      <h2>What you leave with</h2>
-      <ul>
-        <li>A <strong>build / no-build view</strong> on the workflow you brought.</li>
-        <li>The <strong>smallest useful first step</strong> — which may be "not yet."</li>
-        <li>A <strong>written summary within 48 hours</strong> if you want one. No pitch, no drip campaign.</li>
-      </ul>
-    </div>
-  </div>
-</div>
-
-<div class="book-agenda" aria-label="What happens during the 30 minutes">
-  <ol>
-    <li><strong>0–10 min · Your context</strong> The workflow, the users, the constraint — what makes this hard or expensive today.</li>
-    <li><strong>10–20 min · Where AI fits</strong> Where it helps, where it doesn't, and what data you'd actually need.</li>
-    <li><strong>20–30 min · Next step</strong> Build/no-build view, the smallest useful first step, and an honest cost class.</li>
-  </ol>
-</div>
 
 <div class="book-options">
   <div class="book-tabs" role="tablist" aria-label="Ways to get in touch">
@@ -446,11 +379,78 @@
   </div>
 </div>
 
+<!-- Enquiry assistant: instant answers + estimates from published rates -->
+<section class="book-assistant-section cv-auto" aria-labelledby="assistant-title">
+  <div class="book-assistant" id="bookAssistant">
+    <div class="assistant-head">
+      <div class="assistant-id">
+        <span class="assistant-avatar" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 1v4m0 14v4M4.22 4.22l2.83 2.83m9.9 9.9 2.83 2.83M1 12h4m14 0h4M4.22 19.78l2.83-2.83m9.9-9.9 2.83-2.83"/></svg>
+        </span>
+        <div>
+          <h2 id="assistant-title">Questions before you book?</h2>
+          <p>Instant answers on services, pricing, and timelines — estimates come from my published rates.</p>
+        </div>
+      </div>
+      <span class="assistant-badge">Instant · No waiting</span>
+    </div>
+    <div class="assistant-log" id="assistantLog" role="log" aria-live="polite" aria-label="Assistant conversation"></div>
+    <div class="assistant-chips" id="assistantChips" role="group" aria-label="Suggested questions"></div>
+    <form class="assistant-input" id="assistantForm" autocomplete="off">
+      <label for="assistantField" class="visually-hidden">Type your question</label>
+      <input type="text" id="assistantField" placeholder="Ask about pricing, timelines, how I work…" maxlength="300" />
+      <button type="submit" class="btn btn-primary btn-sm" data-track="assistant-send">Ask</button>
+    </form>
+    <p class="assistant-note">Answers are pulled from the services and pricing pages on this site. For anything it can't answer, use WhatsApp or the free call below.</p>
+    <noscript>
+      <p style="color:var(--text-muted);padding:1rem 0 0">The instant assistant needs JavaScript. You can still <a href="https://wa.me/254724346971" target="_blank" rel="noopener noreferrer">ask on WhatsApp</a>, send a message below, or book the free call.</p>
+    </noscript>
+  </div>
+</section>
+
+<!-- Who it's for / agenda / preparation -->
+<div class="book-faq cv-auto">
+  <div class="book-faq-grid">
+    <div class="book-faq-card">
+      <h2>Who it's for</h2>
+      <ul>
+        <li><strong>Founders and product/ops leaders</strong> with a valuable workflow that's slow, manual, or error-prone.</li>
+        <li><strong>Teams with an AI feature</strong> that has quality, latency, cost, or trust problems.</li>
+        <li><strong>Not for:</strong> same-day fixed quotes or coursework/tutoring requests — email works better for those.</li>
+      </ul>
+    </div>
+    <div class="book-faq-card">
+      <h2>What to bring (optional)</h2>
+      <ul>
+        <li>The <strong>workflow you care about</strong> and roughly how many users, transactions, or documents it touches.</li>
+        <li><strong>Tools it lives in</strong> today (CRM, ERP, email, WhatsApp, spreadsheets).</li>
+        <li>Any <strong>AI you already tried</strong> — including the ones that disappointed you.</li>
+      </ul>
+    </div>
+    <div class="book-faq-card">
+      <h2>What you leave with</h2>
+      <ul>
+        <li>A <strong>build / no-build view</strong> on the workflow you brought.</li>
+        <li>The <strong>smallest useful first step</strong> — which may be "not yet."</li>
+        <li>A <strong>written summary within 48 hours</strong> if you want one. No pitch, no drip campaign.</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="book-agenda cv-auto" aria-label="What happens during the 30 minutes">
+  <ol>
+    <li><strong>0–10 min · Your context</strong> The workflow, the users, the constraint — what makes this hard or expensive today.</li>
+    <li><strong>10–20 min · Where AI fits</strong> Where it helps, where it doesn't, and what data you'd actually need.</li>
+    <li><strong>20–30 min · Next step</strong> Build/no-build view, the smallest useful first step, and an honest cost class.</li>
+  </ol>
+</div>
+
 <!-- Privacy note -->
 <div class="book-privacy">
   <p>
     <strong>What happens with your information:</strong> booking requests and messages are delivered by Web3Forms straight to my email — no third-party calendar service involved.
-    When the assistant below produces an estimate or you choose a contact option, a minimal notification (the estimate configuration only — no chat text, no personal data) is emailed so enquiries aren't missed.
+    When the booking assistant produces an estimate or you choose a contact option, a minimal notification (the estimate configuration only — no chat text, no personal data) is emailed so enquiries aren't missed.
     This site sets no tracking cookies and runs no third-party analytics. See the <a href="/privacy-policy.html" style="color:var(--accent)">privacy policy</a> for details.
   </p>
 </div>
@@ -629,7 +629,7 @@ window.addEventListener('keydown', (e) => {
 window.VN_W3F_KEY = 'f695c261-e59a-4b77-a6cf-55f4b4883427';
 </script>
 <script src="/liquid.js?v=9.1.0" defer></script>
-<script src="/enhancements.js?v=9.1.0" defer></script>
+<script src="/enhancements.js?v=10.0.0" defer></script>
 <script src="/book/scheduler.js?v=9.0.0" defer></script>
 <script src="/book/assistant.js?v=9.1.0" defer></script>
 </body>
