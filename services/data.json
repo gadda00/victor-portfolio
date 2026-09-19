@@ -1,10 +1,10 @@
 {
   "meta": {
-    "version": "1.2.0",
+    "version": "1.3.0",
     "lastUpdated": "2026-09-19",
     "currency": {
       "usdToKes": 130,
-      "note": "KES prices rounded for local market"
+      "note": "KES prices use a local-market convention (~80/USD, discounted from the ~130 spot rate) for Kenyan clients"
     }
   },
   "packages": [
@@ -25,8 +25,8 @@
       ],
       "timeline": "1–2 weeks",
       "price": {
-        "usdOneTime": 9000,
-        "kesOneTime": 700000,
+        "usdOneTime": 2000,
+        "kesOneTime": 160000,
         "note": "50% credited toward any subsequent build package"
       },
       "outcome": "A board-ready AI strategy with one pilot ready to ship",
@@ -49,10 +49,10 @@
       ],
       "timeline": "2–3 weeks",
       "price": {
-        "usdOneTime": 5000,
-        "kesOneTime": 400000,
-        "usdMonthly": 700,
-        "kesMonthly": 56000,
+        "usdOneTime": 10000,
+        "kesOneTime": 800000,
+        "usdMonthly": 1400,
+        "kesMonthly": 112000,
         "note": "Monthly covers hosting, monitoring, prompt tweaks. Cancel anytime."
       },
       "outcome": "Cut customer response time by ~80%, reclaim 10+ hours/week",
@@ -104,11 +104,11 @@
       ],
       "timeline": "12–24 weeks",
       "price": {
-        "usdOneTime": "Custom",
-        "kesOneTime": "Custom",
+        "usdOneTime": 20000,
+        "kesOneTime": 1600000,
         "usdMonthly": "Custom",
         "kesMonthly": "Custom",
-        "note": "Typical engagements: $50K–$200K+ build + $10K–$40K/mo. Equity-for-services available for startups."
+        "note": "From $20,000, scaling with scope — typical enterprise programs run $20K–$200K+ build + $10K–$40K/mo support. Equity-for-services available for startups."
       },
       "outcome": "Enterprise-wide AI aligned to board priorities — measurable P&L impact",
       "color": "#a855f7"
@@ -456,8 +456,8 @@
           "value": "7"
         },
         {
-          "label": "DAG stages",
-          "value": "7"
+          "label": "Specialized agents",
+          "value": "50+"
         },
         {
           "label": "Algorithms",
@@ -672,7 +672,7 @@
   "faqs": [
     {
       "q": "Do you work with small businesses or only enterprises?",
-      "a": "Both. The AI Starter package ($3,000–$6,000) is built specifically for SMBs, micro-businesses, and solo founders. I also serve enterprises with custom multi-agent systems. Pricing scales with scope — not company size."
+      "a": "Both. The AI Starter package ($10,000 + $1,400/mo) is built specifically for SMBs, micro-businesses, and solo founders — or start with the $2,000 AI Audit if you're still mapping opportunities. I also serve enterprises with custom multi-agent systems from $20,000. Pricing scales with scope — not company size."
     },
     {
       "q": "Can you build AI that works in Swahili?",
@@ -680,7 +680,7 @@
     },
     {
       "q": "What if I don't know what AI can do for my business?",
-      "a": "Start with the AI Audit ($9,000 / KES 700K, 1–2 weeks). You'll get a prioritized roadmap with ROI models and one pilot ready to build. 50% of the audit fee is credited toward any subsequent build."
+      "a": "Start with the AI Audit ($2,000 / KES 160K, 1–2 weeks). You'll get a prioritized roadmap with ROI models and one pilot ready to build. 50% of the audit fee is credited toward any subsequent build."
     },
     {
       "q": "Do you offer payment plans?",

@@ -24,7 +24,7 @@
   // ─── Init ──────────────────────────────────────────────────
   async function init() {
     try {
-      const resp = await fetch('/services/data.json');
+      const resp = await fetch('/services/data.json?v=1.3');
       if (!resp.ok) throw new Error('Failed to load services data');
       DATA = await resp.json();
       renderAll();
@@ -53,7 +53,7 @@
         if (typeof p.price.usdOneTime === 'number') {
           o.priceSpecification = { '@type': 'PriceSpecification', 'price': p.price.usdOneTime, 'priceCurrency': 'USD' };
         } else {
-          o.priceSpecification = { '@type': 'PriceSpecification', 'minPrice': 50000, 'priceCurrency': 'USD' };
+          o.priceSpecification = { '@type': 'PriceSpecification', 'minPrice': 20000, 'priceCurrency': 'USD' };
         }
         return o;
       });
@@ -71,7 +71,7 @@
         'description': 'Production AI systems for African and global businesses: chatbots, RAG knowledge systems, document AI, computer vision, predictive analytics, and multi-agent platforms. Remote-first from Nairobi.',
         'url': base + '/services/',
         'image': base + '/og-image.png',
-        'priceRange': '$3,000 - $200,000+',
+        'priceRange': '$2,000 - $200,000+',
         'areaServed': ['Kenya', 'East Africa', 'Worldwide (remote)'],
         'availableLanguage': ['en', 'sw', 'fr'],
         'provider': {
@@ -442,7 +442,7 @@
       el.innerHTML = `
         <div class="est-label">Estimated Range</div>
         <div class="est-value">Custom</div>
-        <div class="est-detail">Enterprise engagements typically start at ${currency === 'kes' ? 'KES 6.4M' : '$50K'} build + ${currency === 'kes' ? 'KES 1.3M/mo' : '$10K/mo'}</div>
+        <div class="est-detail">Enterprise engagements start at ${currency === 'kes' ? 'KES 1.6M' : '$20,000'} build + ${currency === 'kes' ? 'KES 800K/mo' : '$10K/mo'} support — custom-scoped after discovery</div>
         <a href="/#contact" class="est-cta">Book a discovery call →</a>
       `;
     } else {

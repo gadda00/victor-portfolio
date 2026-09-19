@@ -27,13 +27,13 @@
   var PACKAGES = {
     audit: {
       id: 'audit', name: 'AI Audit', icon: '🔍', color: '#64748b',
-      priceUsd: 9000, priceKes: 700000, monthlyUsd: 0, monthlyKes: 0,
+      priceUsd: 2000, priceKes: 160000, monthlyUsd: 0, monthlyKes: 0,
       timeline: '1–2 weeks',
       features: ['Current-state assessment','Opportunity map (5–10 ranked use cases)','Quick-win pilot plan','Make-vs-buy recommendation','Risk + compliance review','Executive readout + 12-month roadmap']
     },
     starter: {
       id: 'starter', name: 'AI Starter', icon: '🚀', color: '#10b981',
-      priceUsd: 5000, priceKes: 400000, monthlyUsd: 700, monthlyKes: 56000,
+      priceUsd: 10000, priceKes: 800000, monthlyUsd: 1400, monthlyKes: 112000,
       timeline: '2–3 weeks',
       features: ['WhatsApp or web FAQ chatbot','1 automation workflow','Knowledge base (50 docs)','Basic analytics dashboard','Multilingual (EN + SW)','2 revisions + 30 days support']
     },
@@ -45,7 +45,7 @@
     },
     enterprise: {
       id: 'enterprise', name: 'AI Enterprise', icon: '🏢', color: '#a855f7',
-      priceUsd: 100000, priceKes: 7800000, monthlyUsd: 20000, monthlyKes: 1600000,
+      priceUsd: 20000, priceKes: 1600000, monthlyUsd: 10000, monthlyKes: 800000,
       timeline: '8–16 weeks',
       features: ['Custom multi-agent system (50+ agents)','Fine-tuned models','SLAs + 24/7 monitoring','Security + compliance review','Dedicated engineer','Unlimited revisions + 12 months support']
     }
@@ -55,11 +55,11 @@
   var SERVICE_PRICES = {
     chatbots: { usd: 3000, kes: 240000 },
     rag: { usd: 8000, kes: 640000 },
-    predictive: { usd: 12000, kes: 960000 },
-    'computer-vision': { usd: 16000, kes: 1280000 },
-    automation: { usd: 7000, kes: 560000 },
-    multilingual: { usd: 4000, kes: 320000 },
-    agriculture: { usd: 14000, kes: 1120000 },
+    predictive: { usd: 10000, kes: 800000 },
+    'computer-vision': { usd: 16000, kes: 1300000 },
+    automation: { usd: 5000, kes: 400000 },
+    multilingual: { usd: 7000, kes: 560000 },
+    agriculture: { usd: 16000, kes: 1300000 },
     'multi-agent': { usd: 50000, kes: 4000000 }
   };
 
@@ -98,10 +98,10 @@
     if (state.types.size >= 4) { scores.enterprise += 20; scores.growth += 10; reasons.enterprise.push('You need ' + state.types.size + ' AI capabilities — that\'s an enterprise-grade scope.'); }
 
     // Budget scoring
-    if (state.budget === 'under-3k') { scores.audit += 25; scores.starter += 30; reasons.starter.push('Your budget matches the Starter package.'); }
-    if (state.budget === '3k-10k') { scores.starter += 25; scores.growth += 15; }
-    if (state.budget === '10k-30k') { scores.growth += 35; reasons.growth.push('Your budget range aligns with the Growth package.'); }
-    if (state.budget === '30k-plus') { scores.enterprise += 40; reasons.enterprise.push('Your budget supports the Enterprise package.'); }
+    if (state.budget === 'under-3k') { scores.audit += 40; scores.starter += 10; reasons.audit.push('The $2,000 AI Audit fits a tight budget — and half of it is credited toward a later build.'); }
+    if (state.budget === '3k-10k') { scores.starter += 35; scores.growth += 10; reasons.starter.push('The Starter package ($10,000) tops this range — a real first AI tool.'); }
+    if (state.budget === '10k-30k') { scores.growth += 30; scores.enterprise += 15; reasons.growth.push('Your budget range aligns with the Growth package.'); reasons.enterprise.push('Enterprise engagements start at $20,000 — within this range.'); }
+    if (state.budget === '30k-plus') { scores.enterprise += 40; scores.growth += 5; reasons.enterprise.push('Your budget supports the Enterprise package.'); }
     if (state.budget === 'equity') { scores.audit += 15; scores.starter += 20; reasons.starter.push('Equity-for-services is available for the Starter and Audit tiers.'); }
     if (state.budget === 'unsure') { scores.audit += 10; }
 
@@ -140,19 +140,16 @@
     var baseUsd = pkg.priceUsd;
     var baseKes = pkg.priceKes;
 
-    // Add service add-ons (capped to avoid exceeding enterprise)
+    // Add service add-ons (capped at 60% of base)
     var addonUsd = 0, addonKes = 0;
-    if (pkg.id !== 'enterprise') {
-      state.types.forEach(function (t) {
-        if (SERVICE_PRICES[t]) {
-          addonUsd += SERVICE_PRICES[t].usd;
-          addonKes += SERVICE_PRICES[t].kes;
-        }
-      });
-      // Cap add-ons at 60% of base for non-enterprise
-      addonUsd = Math.min(addonUsd, baseUsd * 0.6);
-      addonKes = Math.min(addonKes, baseKes * 0.6);
-    }
+    state.types.forEach(function (t) {
+      if (SERVICE_PRICES[t]) {
+        addonUsd += SERVICE_PRICES[t].usd;
+        addonKes += SERVICE_PRICES[t].kes;
+      }
+    });
+    addonUsd = Math.min(addonUsd, baseUsd * 0.6);
+    addonKes = Math.min(addonKes, baseKes * 0.6);
 
     var totalUsd = Math.round((baseUsd + addonUsd) * mult);
     var totalKes = Math.round((baseKes + addonKes) * mult / 1000) * 1000;
@@ -220,12 +217,8 @@
       '<div class="wiz-recommendation" style="border-left-color:' + pkg.color + '">' +
         '<div class="wiz-recom-label">Recommended package</div>' +
         '<div class="wiz-recom-name">' + pkg.icon + ' ' + pkg.name + '</div>' +
-        '<div class="wiz-recom-why">' + (pkg.id === 'enterprise'
-          ? 'Custom quote — typical build $50K–$200K+, $10K–$40K/mo. Final price scoped after a discovery call.'
-          : 'One-time build + optional monthly support. The estimate below is indicative — final quote confirmed in your discovery call.') + '</div>' +
-        '<div class="wiz-recom-price">' + (pkg.id === 'enterprise'
-          ? 'Custom · $50K–$200K+'
-          : '$' + est.totalUsd.toLocaleString() + ' · KES ' + est.totalKes.toLocaleString() + (est.monthlyUsd ? ' + $' + est.monthlyUsd + '/mo' : '')) + '</div>' +
+        '<div class="wiz-recom-why">One-time build + optional monthly support. The estimate below is indicative — final quote confirmed in your discovery call.</div>' +
+        '<div class="wiz-recom-price">$' + est.totalUsd.toLocaleString() + ' · KES ' + est.totalKes.toLocaleString() + (est.monthlyUsd ? ' + $' + est.monthlyUsd.toLocaleString() + '/mo' : '') + '</div>' +
       '</div>' +
 
       '<div class="wiz-estimate-grid">' +

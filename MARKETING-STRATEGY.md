@@ -16,7 +16,7 @@ Everything else in this document ladders up to that sentence. If a channel, post
 | Persona | Size | Pain | What they buy first |
 |---|---|---|---|
 | **Solo founder / micro-SMB** | 1–5 ppl | "I waste 10 hrs/week on FAQs and data entry" | AI Starter ($5,000) |
-| **Small business owner** | 10–50 ppl | "I have data but no insights; competitors are using AI" | AI Growth ($28,000) or AI Audit ($9,000) |
+| **Small business owner** | 10–50 ppl | "I have data but no insights; competitors are using AI" | AI Growth ($28,000) or AI Audit ($2,000) |
 | **Mid-market ops director** | 50–500 ppl | "We need AI integrated with our CRM/ERP, not another demo" | AI Growth ($28,000+) |
 | **Enterprise / NGO / gov** | 500+ ppl | "We need a secure, multi-agent system with SLAs" | AI Enterprise ($50K+) |
 | **Conference / training buyer** | any | "Our team needs to learn AI fast" | Training ($600–$36K) |

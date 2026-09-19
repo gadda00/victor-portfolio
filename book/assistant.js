@@ -43,10 +43,10 @@
   /* ── Published data (fallback if /services/data.json fetch fails) ── */
   var FALLBACK = {
     packages: [
-      { id: 'audit', name: 'AI Audit', price: { usdOneTime: 9000, kesOneTime: 700000 }, timeline: '1–2 weeks' },
-      { id: 'starter', name: 'AI Starter', price: { usdOneTime: 5000, kesOneTime: 400000, usdMonthly: 700, kesMonthly: 56000 }, timeline: '2–3 weeks' },
+      { id: 'audit', name: 'AI Audit', price: { usdOneTime: 2000, kesOneTime: 160000 }, timeline: '1–2 weeks' },
+      { id: 'starter', name: 'AI Starter', price: { usdOneTime: 10000, kesOneTime: 800000, usdMonthly: 1400, kesMonthly: 112000 }, timeline: '2–3 weeks' },
       { id: 'growth', name: 'AI Growth', price: { usdOneTime: 28000, kesOneTime: 2200000, usdMonthly: 6000, kesMonthly: 480000 }, timeline: '6–10 weeks' },
-      { id: 'enterprise', name: 'AI Enterprise', price: { usdOneTime: 'Custom', kesOneTime: 'Custom' }, timeline: '12–24 weeks' }
+      { id: 'enterprise', name: 'AI Enterprise', price: { usdOneTime: 20000, kesOneTime: 1600000 }, timeline: '12–24 weeks' }
     ],
     services: [
       { id: 'chatbots', name: 'AI Chatbots & Virtual Assistants', fromPrice: { usd: 3000, kes: 240000 } },
@@ -232,7 +232,7 @@
   function pkgLine(p) {
     var pr = p.price || {};
     var one = pr.usdOneTime !== undefined ? money(pr.usdOneTime, 'usd') + (typeof pr.usdOneTime === 'number' ? ' / ' + money(pr.kesOneTime, 'kes') : '') : '';
-    var mo = pr.usdMonthly ? ' + ' + money(pr.usdMonthly, 'usd') + '/mo' : '';
+    var mo = typeof pr.usdMonthly === 'number' ? ' + ' + money(pr.usdMonthly, 'usd') + '/mo' : '';
     var tl = p.timeline ? ' · ' + p.timeline : '';
     return '<strong>' + esc(p.name) + '</strong> — ' + one + mo + tl;
   }
@@ -596,9 +596,9 @@
       'Integrations: ' + estimate.integrations,
       'Languages: ' + estimate.languages,
       'The exact quote comes out of the free assessment — scoped in writing before any build.',
-      'Optional support retainer from $700/mo (published package rates).'
+      'Optional support retainer from $1,400/mo (published package rates).'
     ];
-    if (capped) assumptions.push('Scope exceeds standard multipliers — Enterprise-class territory (custom quote, $50K–$200K+ typical).');
+    if (capped) assumptions.push('Scope exceeds standard multipliers — Enterprise-class territory (custom quote, from $20,000 scaling to $200K+).');
 
     botReply(
       '<strong>Ballpark: $' + usdLow.toLocaleString('en-US') + '–$' + usdHigh.toLocaleString('en-US') + ' · KES ' + kesLow.toLocaleString('en-US') + '–' + kesHigh.toLocaleString('en-US') + '</strong> for ' + esc(estimate.service.name) + '.',
@@ -690,7 +690,7 @@
   function supportAnswer() {
     track('assistant_support');
     botReply(
-      'Every build hands over with <strong>documentation, monitoring, and an observability baseline</strong> — quality is measured, not assumed. After that: <strong>support retainers from $700/mo</strong> (the published Starter rate; Growth runs $6,000/mo) cover fixes, tuning and small improvements. Bigger changes become a scoped sprint. The free assessment output includes what ongoing support your specific system would need.',
+      'Every build hands over with <strong>documentation, monitoring, and an observability baseline</strong> — quality is measured, not assumed. After that: <strong>support retainers from $1,400/mo</strong> (the published Starter rate; Growth runs $6,000/mo) cover fixes, tuning and small improvements. Bigger changes become a scoped sprint. The free assessment output includes what ongoing support your specific system would need.',
       { actions: [{ label: 'See packages & retainers', href: '/services/#packages-section', track: 'assistant-support-pkg' }] },
       DEFAULT_CHIPS
     );
@@ -829,7 +829,7 @@
     }
     if (has(t, ['small business', 'startup', 'smb', 'sme', 'chama'])) {
       track('assistant_intent', { i: 'smb' });
-      botReply('Yes — there\'s a dedicated <strong>AI for Small Business</strong> service from <strong>$3,000 / KES 240K</strong>, and the <strong>AI Starter</strong> package ($5,000 + $700/mo) is built for first AI projects.');
+      botReply('Yes — there\'s a dedicated <strong>AI for Small Business</strong> service from <strong>$3,000 / KES 240K</strong>, and the <strong>AI Starter</strong> package ($10,000 + $1,400/mo) is built for first AI projects.');
       return;
     }
     if (has(t, ['training', 'workshop', 'team', 'upskill', 'coach'])) {
@@ -1002,7 +1002,7 @@
 
   /* ── Boot ────────────────────────────────────────────────────────── */
   function load(cb) {
-    fetch('/services/data.json').then(function (r) { return r.json(); }).then(function (d) {
+    fetch('/services/data.json?v=1.3').then(function (r) { return r.json(); }).then(function (d) {
       DATA = d && (d.packages || d.services) ? d : FALLBACK;
       cb();
     }).catch(function () { DATA = FALLBACK; cb(); });

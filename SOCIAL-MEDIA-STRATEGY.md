@@ -44,7 +44,7 @@ WHAT I OFFER:
 
 I provide AI engineering services for every size of business — from $3,000 SMB chatbots to $200K+ enterprise multi-agent systems. Four packages:
 
-🔍 AI Audit ($9,000) — Find your highest-ROI AI opportunities in 1-2 weeks
+🔍 AI Audit ($2,000) — Find your highest-ROI AI opportunities in 1-2 weeks
 🚀 AI Starter ($5,000) — Ship your first working AI tool (SMB/micro-business)
 📈 AI Growth ($28,000) — Production AI integrated with your CRM/ERP
 🏢 AI Enterprise (Custom) — Multi-agent systems, fine-tuned models, dedicated SLAs

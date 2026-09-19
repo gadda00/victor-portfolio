@@ -1,4 +1,4 @@
-/* Victor Ndunda — Proposal Generator (v11)
+/* Victor Ndunda — Proposal Generator (v11.1)
    - Completes stage 4 of the engagement pipeline (Enquiry › Estimate › Call
      › PROPOSAL › Invoice › Payment › Delivery).
    - Imports the assistant estimate (vn_last_estimate) and the scope-wizard
@@ -15,10 +15,10 @@
   var WA_NUMBER = '254724346971';
   var REVISION_RATE = 200; // USD/hr (matches the contract generator)
 
-  /* ── Package defaults (mirror services/data.json v1.2 — doubled rates) ── */
+  /* ── Package defaults (mirror services/data.json v1.3) ── */
   var PACKAGES = {
     audit: {
-      name: 'AI Audit', total: 9000, monthly: 0, timeline: '1–2 weeks',
+      name: 'AI Audit', total: 2000, monthly: 0, timeline: '1–2 weeks',
       approach: 'A focused discovery engagement: current-state assessment of people, data and systems; an opportunity map of 5–10 ranked use cases with an ROI model per use case; one quick-win pilot plan ready to build; a make-vs-buy recommendation; and a risk + compliance review (Kenya DPA 2019, GDPR). Ends with an executive readout and a 12-month roadmap.',
       deliverables: [
         'Current-state assessment (people, data, systems)',
@@ -30,7 +30,7 @@
       ]
     },
     starter: {
-      name: 'AI Starter', total: 5000, monthly: 700, timeline: '2–3 weeks',
+      name: 'AI Starter', total: 10000, monthly: 1400, timeline: '2–3 weeks',
       approach: 'A focused first build: a WhatsApp or website FAQ chatbot trained on your documents, one automation workflow (lead capture, auto-reply or appointment booking), a knowledge base of up to 50 documents, a basic analytics dashboard, and English + Swahili support. Two revision rounds and 30 days of post-launch support are included.',
       deliverables: [
         'WhatsApp or website FAQ chatbot (70–80% of routine questions)',
@@ -55,7 +55,7 @@
       ]
     },
     enterprise: {
-      name: 'AI Enterprise', total: 0, monthly: 0, timeline: '12–24 weeks',
+      name: 'AI Enterprise', total: 20000, monthly: 0, timeline: '12–24 weeks',
       approach: 'A custom multi-agent system (50+ agents on the Busara AI DAG framework), LLM fine-tuning on your domain, computer-vision pipelines where needed, on-prem or private-cloud deployment for data sovereignty, and a security + compliance review (SOC2, ISO 27001, GDPR, Kenya DPA). Dedicated engineer, named contact channel, 99.5% uptime SLA with 1-hour critical response, and quarterly executive business reviews.',
       deliverables: [
         'Custom multi-agent DAG orchestration (Busara AI framework — 50+ agents)',
@@ -212,7 +212,7 @@
         '<div class="big">' +
           (total > 0
             ? '<span class="amt">' + money(total, 'USD') + '</span><span class="cur">≈ ' + money(kesTotal, 'KES') + ' one-time</span>'
-            : '<span class="amt">Custom — scoped after discovery</span><span class="cur">typical ' + (state.packageId === 'enterprise' ? '$50K–$200K+ build + $10K–$40K/mo' : 'scoped in writing') + '</span>') +
+            : '<span class="amt">Custom — scoped after discovery</span><span class="cur">' + (state.packageId === 'enterprise' ? 'from $20,000 — typical $20K–$200K+ build + $10K–$40K/mo support' : 'scoped in writing') + '</span>') +
         '</div>' +
         (monthly > 0 ? '<div class="mth">Optional support retainer: <b>' + money(monthly, 'USD') + '/mo</b> (≈ ' + money(kesMonthly, 'KES') + '/mo) — monitoring, enhancements, analytics, support. Cancel with 30 days notice.</div>' : '') +
         (total > 0 ? '<table class="pr-sched"><thead><tr><th>Payment schedule</th><th style="text-align:right">Amount</th></tr></thead><tbody>' + schedRows + '</tbody></table>' : '') +

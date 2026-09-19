@@ -66,7 +66,7 @@
     var typesHtml = (state.types || []).map(function (t) { return '<li>' + t.replace(/-/g, ' ') + '</li>'; }).join('');
 
     var priceText = est.packageId === 'enterprise'
-      ? 'Custom — to be scoped after discovery call (typical range: USD $50,000–$200,000+ build, USD $10,000–$40,000/month support)'
+      ? 'From USD $' + (est.totalUsd || 20000).toLocaleString() + ' (KES ' + (est.totalKes || 1600000).toLocaleString() + ') one-time — final scope confirmed after the discovery call. Enterprise programs typically scale to $200K+ build + $10K–$40K/month support.'
       : 'USD $' + (est.totalUsd || 0).toLocaleString() + ' (KES ' + (est.totalKes || 0).toLocaleString() + ') one-time' +
         (est.monthlyUsd ? ' plus USD $' + est.monthlyUsd + '/month (KES ' + (est.monthlyKes || 0).toLocaleString() + '/month) for ongoing support' : '');
 
@@ -239,7 +239,7 @@
 
     addHeading('4. Fees and Payment');
     var priceText = est.packageId === 'enterprise'
-      ? 'Custom — to be scoped after discovery call (typical: USD $50,000-$200,000+ build)'
+      ? 'From USD $' + (est.totalUsd || 20000).toLocaleString() + ' one-time — final scope confirmed after discovery call (typically scales to $200,000+ build)'
       : 'USD $' + (est.totalUsd || 0).toLocaleString() + ' (KES ' + (est.totalKes || 0).toLocaleString() + ') one-time' + (est.monthlyUsd ? ' plus USD $' + est.monthlyUsd + '/month support' : '');
     addText('Total project fee: ' + priceText);
     addText('Payment schedule options: 50/50 (50% deposit, 50% on delivery), Milestone-based (30/40/30), or Monthly retainer.');

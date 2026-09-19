@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed — v11.1 Owner-Directed Pricing (Audit $2,000 · Starter $10,000 · Enterprise from $20,000)
+
+**AI Audit repositioned as a consulting gateway:**
+- $9,000 → **$2,000 / KES 160K** (owner rationale: the audit is consulting — advising, not building). The 50%-credit toward subsequent builds is unchanged, making it the cheapest published entry point and the new site-wide price floor (JSON-LD `priceRange` now `$2,000 - $200,000+`).
+- The AI Reliability Audit (homepage + services offer cards) aligned to the same $2,000 consulting class — was a $9,000 placeholder pending owner confirmation.
+
+**AI Starter priced as a build, not consulting:**
+- $5,000 → **$10,000 / KES 800K** one-time; monthly support $700 → **$1,400 / KES 112K**.
+
+**AI Enterprise anchored to a real number:**
+- "Custom" → **from $20,000 / KES 1.6M**, still scaling with scope ($20K–$200K+ build + $10K–$40K/mo). The wizard, contract generator, and proposal generator now carry the $20,000 base instead of custom-only text; the services-page JSON-LD Offer for Enterprise switches from `minPrice $50,000` to `price $20,000`.
+
+**Consistency pass across every mirrored surface:**
+- `services/data.json` v1.3.0: package prices + FAQ corrections (the Starter range was stale at "$3,000–$6,000"); Busara case-study duplicate "DAG stages: 7" stat fixed → "Specialized agents: 50+"; currency note now documents the ~80/USD local-market convention.
+- Budget bands realigned to the new ladder — wizard: Under $3,000 / $3,000–$10,000 / $10,000–$30,000 / $30,000+; booking form values updated to match.
+- Wizard recommendation scoring retuned for the new prices; wizard `SERVICE_PRICES` synced to the published catalogue rates (predictive, automation, multilingual, agriculture had drifted); enterprise estimates now include capped add-ons like every other package instead of showing "Custom".
+- assistant.js fallback data + hardcoded copy, services.js calculator + structured data, contract.js enterprise fee clauses, proposal.js package defaults, homepage + services offer cards, 4 guides quoting own prices, README + marketing docs — all synced.
+- `data.json` fetches cache-busted (`?v=1.3`) in services.js + assistant.js so returning visitors see fresh prices immediately; `sw.js` → `vnd-v11.1.0`; changed JS assets re-versioned to `?v=11.1.0`.
+
 ### Changed — v11.0 Pricing ×2, Proposal Generator, Premium Resume, Structured Data
 
 **All service pricing doubled (owner directive):**
