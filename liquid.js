@@ -6,41 +6,22 @@
    degrades silently. Exposes window.vnToast / window.vnCopy so any
    page (scheduler, invoice, dashboard) can use the toast system.
 
-   1. Scroll progress bar
-   2. Spotlight glow (cursor-follow) for .lg-spot
-   3. 3D tilt for .lg-tilt
-   4. Count-up stats (.lg-count[data-count])
-   5. Scroll reveals (.lg-reveal)
-   6. Toasts (window.vnToast)
-   7. Back-to-top button (auto-injected)
-   8. Clipboard helper (window.vnCopy)
+   1. Spotlight glow (cursor-follow) for .lg-spot
+   2. 3D tilt for .lg-tilt
+   3. Count-up stats (.lg-count[data-count])
+   4. Scroll reveals (.lg-reveal)
+   5. Toasts (window.vnToast)
+   6. Clipboard helper (window.vnCopy)
+
+   NOTE: the scroll progress bar and back-to-top button are provided by
+   enhancements.js (site-wide) — liquid.js no longer injects duplicates.
    ═══════════════════════════════════════════════════════════════════ */
 (function () {
   'use strict';
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-  /* ── 1. Scroll progress bar ── */
-  function initProgress() {
-    var bar = document.createElement('div');
-    bar.className = 'lg-progress';
-    bar.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(bar);
-    var raf = null;
-    function update() {
-      var doc = document.documentElement;
-      var max = doc.scrollHeight - window.innerHeight;
-      var pct = max > 0 ? Math.min(1, window.scrollY / max) : 0;
-      bar.style.width = (pct * 100).toFixed(2) + '%';
-      raf = null;
-    }
-    window.addEventListener('scroll', function () {
-      if (!raf) raf = requestAnimationFrame(update);
-    }, { passive: true });
-    update();
-  }
-
-  /* ── 2. Spotlight glow ── */
+  /* ── 1. Spotlight glow ── */
   function initSpotlight() {
     if (!finePointer || reduceMotion) return;
     document.addEventListener('pointerover', function (e) {
@@ -56,7 +37,7 @@
     }
   }
 
-  /* ── 3. 3D tilt ── */
+  /* ── 2. 3D tilt ── */
   function initTilt() {
     if (!finePointer || reduceMotion) return;
     document.querySelectorAll('.lg-tilt').forEach(function (el) {
@@ -77,7 +58,7 @@
     });
   }
 
-  /* ── 4. Count-up stats ── */
+  /* ── 3. Count-up stats ── */
   function initCountUp() {
     var els = document.querySelectorAll('.lg-count[data-count]');
     if (!els.length) return;
@@ -107,7 +88,7 @@
     els.forEach(function (el) { io.observe(el); });
   }
 
-  /* ── 5. Scroll reveals ── */
+  /* ── 4. Scroll reveals ── */
   function initReveal() {
     var els = document.querySelectorAll('.lg-reveal');
     if (!els.length) return;
@@ -123,7 +104,7 @@
     els.forEach(function (el) { io.observe(el); });
   }
 
-  /* ── 6. Toasts ── */
+  /* ── 5. Toasts ── */
   var toastWrap = null;
   function initToasts() {
     toastWrap = document.createElement('div');
@@ -148,28 +129,7 @@
     }, 3200);
   };
 
-  /* ── 7. Back-to-top ── */
-  function initTop() {
-    var btn = document.createElement('button');
-    btn.className = 'lg-top';
-    btn.type = 'button';
-    btn.setAttribute('aria-label', 'Back to top');
-    btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>';
-    document.body.appendChild(btn);
-    btn.addEventListener('click', function () {
-      window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
-    });
-    var raf = null;
-    window.addEventListener('scroll', function () {
-      if (raf) return;
-      raf = requestAnimationFrame(function () {
-        btn.classList.toggle('show', window.scrollY > 600);
-        raf = null;
-      });
-    }, { passive: true });
-  }
-
-  /* ── 8. Clipboard helper ── */
+  /* ── 6. Clipboard helper ── */
   /**
    * window.vnCopy(text, label) — copy to clipboard with a toast.
    * Falls back to a hidden textarea on older browsers.
@@ -201,13 +161,11 @@
 
   /* ── Boot ── */
   function boot() {
-    initProgress();
     initSpotlight();
     initTilt();
     initCountUp();
     initReveal();
     initToasts();
-    initTop();
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);

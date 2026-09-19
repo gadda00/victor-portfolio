@@ -476,13 +476,14 @@ html.light .hero-badge { background: rgba(4,120,87,.08); border-color: rgba(4,12
 
 .hero-stats {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 1px;
   background: var(--v6-stroke);
   border: 1px solid var(--v6-stroke);
   border-radius: var(--v6-radius);
   overflow: hidden;
   max-width: 780px;
+  margin-inline: auto;
   backdrop-filter: blur(8px);
 }
 
@@ -1361,6 +1362,8 @@ html.light footer { background: rgba(230,234,248,.4); }
   .section { padding: 5rem 0; }
   .hero { padding-top: 7rem; }
   .hero-stats { grid-template-columns: repeat(2, 1fr); }
+  /* 3 stats in 2 columns: last item spans the full second row for symmetry */
+  .hero-stats .hero-stat:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .now-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .svc-quick-grid { grid-template-columns: 1fr; }

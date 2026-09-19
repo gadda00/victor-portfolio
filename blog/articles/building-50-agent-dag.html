@@ -244,8 +244,8 @@
 const themeToggle = document.getElementById('themeToggle');
 const html = document.documentElement;
 html.className = localStorage.getItem('theme') || 'dark';
-themeToggle.addEventListener('click', () => { const isDark = html.classList.contains('dark'); html.className = isDark ? 'light' : 'dark'; localStorage.setItem('theme', isDark ? 'light' : 'dark'); themeToggle.querySelector('span').textContent = isDark ? '☀️' : '🌙'; });
-themeToggle.querySelector('span').textContent = html.classList.contains('dark') ? '🌙' : '☀️';
+themeToggle.addEventListener('click', () => { const isDark = html.classList.contains('dark'); html.className = isDark ? 'light' : 'dark'; localStorage.setItem('theme', isDark ? 'light' : 'dark');  });
+
 document.getElementById('mobileToggle').addEventListener('click', () => document.getElementById('navLinks').classList.toggle('open'));
 window.addEventListener('scroll', () => document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50));
 </script>

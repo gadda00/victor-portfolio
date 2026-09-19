@@ -6,43 +6,81 @@ on:
     paths: ['blog/articles/**']
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   post:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         with:
-          fetch-depth: 2
+          fetch-depth: 0
 
       - name: Detect new/modified articles
         id: detect
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
         run: |
-          FILES=$(git diff --name-only HEAD~1 HEAD -- 'blog/articles/' 2>/dev/null | grep '\.html$' || true)
-          # Use EOF delimiter for multiline output (GitHub Actions standard)
+          # Compare the full push range (falls back to HEAD~1 for singular commits)
+          if [ -n "$BEFORE" ] && git cat-file -e "$BEFORE" 2>/dev/null; then
+            RANGE="$BEFORE $AFTER"
+          else
+            RANGE="HEAD~1 HEAD"
+          fi
+
+          # Announce articles that are NEW, or whose <title>/<meta description>
+          # changed. Pure code/maintenance tweaks (a11y fixes, script patches)
+          # must NOT re-announce old articles.
+          announce() {
+            local f="$1"
+            # New file? -> announce
+            if ! git cat-file -e "$BEFORE:$f" 2>/dev/null && [ -n "$BEFORE" ]; then
+              echo "$f"; return
+            fi
+            # Title or description changed? -> announce
+            local old_t new_t old_d new_d
+            old_t=$(git show "$BEFORE:$f" 2>/dev/null | grep -oP '<title>\K[^<]+' | head -1)
+            new_t=$(git show "$AFTER:$f" 2>/dev/null  | grep -oP '<title>\K[^<]+' | head -1)
+            old_d=$(git show "$BEFORE:$f" 2>/dev/null | grep -oP '<meta name="description" content="\K[^"]+' | head -1)
+            new_d=$(git show "$AFTER:$f" 2>/dev/null  | grep -oP '<meta name="description" content="\K[^"]+' | head -1)
+            if [ "$old_t" != "$new_t" ] || [ "$old_d" != "$new_d" ]; then
+              echo "$f"
+            fi
+          }
+
+          FILES=""
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            hit=$(announce "$f")
+            [ -n "$hit" ] && FILES="$FILES$hit"$'\n'"
+          done < <(git diff --name-only $RANGE -- 'blog/articles/' 2>/dev/null | grep '\.html$' || true)
+
+          # Multiline output via heredoc delimiter (GitHub Actions standard)
           EOF=$(dd if=/dev/urandom bs=15 count=1 status=none | base64)
-          echo "files<<$EOF" >> $GITHUB_OUTPUT
-          echo "$FILES" >> $GITHUB_OUTPUT
-          echo "$EOF" >> $GITHUB_OUTPUT
+          {
+            echo "files<<$EOF"
+            echo "$FILES"
+            echo "$EOF"
+          } >> "$GITHUB_OUTPUT"
           if [ -n "$FILES" ]; then
-            echo "New articles detected:"
+            echo "Articles to announce:"
             echo "$FILES"
           else
-            echo "No new articles detected."
+            echo "No new or re-titled articles detected (maintenance-only changes are skipped)."
           fi
 
       - name: Setup Python
         if: steps.detect.outputs.files != ''
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v6
         with:
           python-version: '3.12'
-
-      - name: Install dependencies
-        if: steps.detect.outputs.files != ''
-        run: pip install requests
 
       - name: Post to all social media
         if: steps.detect.outputs.files != ''
         env:
+          DETECTED_FILES: ${{ steps.detect.outputs.files }}
           LINKEDIN_ACCESS_TOKEN: ${{ secrets.LINKEDIN_ACCESS_TOKEN }}
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
@@ -57,232 +95,20 @@ jobs:
           TIKTOK_CLIENT_SECRET: ${{ secrets.TIKTOK_CLIENT_SECRET }}
           TIKTOK_ACCESS_TOKEN: ${{ secrets.TIKTOK_ACCESS_TOKEN }}
         run: |
-          for FILE in ${{ steps.detect.outputs.files }}; do
+          # Robust loop: files arrive via env (never inlined into the script),
+          # so any number of articles — including multiline lists — is safe.
+          while IFS= read -r FILE; do
+            [ -z "$FILE" ] && continue
             FILENAME=$(basename "$FILE")
             TITLE=$(grep -oP '<title>\K[^<]+' "$FILE" | sed 's/ — Victor Ndunda//' || echo "New Article")
             DESC=$(grep -oP '<meta name="description" content="\K[^"]+' "$FILE" || echo "")
             URL="https://victorndunda.com/blog/articles/$FILENAME"
-            MESSAGE="📝 New article: $TITLE
-          
-          $URL
-          
-          #AI #MachineLearning #Tech #Kenya #Agriculture"
-            
+
             echo "=== Posting: $TITLE ==="
-            
-            python3 -c "
-          import json, os, sys, urllib.request, urllib.parse, urllib.error, base64, hmac, hashlib, time, secrets
-          from urllib.parse import quote
-          
-          title = '''$TITLE'''
-          desc = '''$DESC'''
-          url = '$URL'
-          message = '''$MESSAGE'''
-          
-          results = {}
-          
-          # ─── LinkedIn ─────────────────────────────────────
-          li_token = os.environ.get('LINKEDIN_ACCESS_TOKEN', '')
-          if li_token:
-              print('💼 Posting to LinkedIn...')
-              try:
-                  req = urllib.request.Request('https://api.linkedin.com/v2/userinfo',
-                      headers={'Authorization': f'Bearer {li_token}'})
-                  resp = urllib.request.urlopen(req)
-                  person_id = json.loads(resp.read()).get('sub', '')
+            ARTICLE_TITLE="$TITLE" ARTICLE_DESC="$DESC" ARTICLE_URL="$URL" \
+              python3 scripts/social_post.py
+          done <<< "$DETECTED_FILES"
 
-                  if person_id:
-                      post_data = {
-                          'author': f'urn:li:person:{person_id}',
-                          'lifecycleState': 'PUBLISHED',
-                          'specificContent': {
-                              'com.linkedin.ugc.ShareContent': {
-                                  'shareCommentary': {'text': message},
-                                  'shareMediaCategory': 'ARTICLE',
-                                  'media': [{
-                                      'status': 'READY',
-                                      'description': {'text': desc or title},
-                                      'originalUrl': url,
-                                      'title': {'text': title}
-                                  }]
-                              }
-                          },
-                          'visibility': {'com.linkedin.ugc.MemberNetworkVisibility': 'PUBLIC'}
-                      }
-                      req = urllib.request.Request('https://api.linkedin.com/v2/ugcPosts',
-                          data=json.dumps(post_data).encode(),
-                          headers={'Authorization': f'Bearer {li_token}', 'Content-Type': 'application/json', 'X-Restli-Protocol-Version': '2.0.0'},
-                          method='POST')
-                      urllib.request.urlopen(req)
-                      print('  ✅ LinkedIn posted!')
-                      results['linkedin'] = True
-                  else:
-                      print('  ❌ Could not get LinkedIn person ID')
-                      results['linkedin'] = False
-              except urllib.error.HTTPError as e:
-                  body = e.read().decode()[:500]
-                  print(f'  ❌ LinkedIn HTTP {e.code}: {body}')
-                  if e.code == 401:
-                      print('  💡 Token expired or invalid. Regenerate at: https://developer.linkedin.com > My Apps > Auth')
-                  results['linkedin'] = False
-              except Exception as e:
-                  print(f'  ❌ LinkedIn error: {e}')
-                  results['linkedin'] = False
-          
-          # ─── X (Twitter) — OAuth 2.0 with refresh token ───
-          x_refresh = os.environ.get('X_OAUTH2_REFRESH_TOKEN', '')
-          x_client_id = os.environ.get('X_OAUTH2_CLIENT_ID', '')
-          x_access = os.environ.get('X_OAUTH2_ACCESS_TOKEN', '')
-          x_client_secret = os.environ.get('X_OAUTH2_CLIENT_SECRET', '')  # Optional: confidential clients
-
-          if x_refresh and x_client_id:
-              print('🐦 Posting to X (OAuth 2.0)...')
-              access_token = None
-              try:
-                  # Step 1: Try refreshing the access token
-                  # For public clients (PKCE): only client_id needed
-                  # For confidential clients: client_id + client_secret (use Basic Auth)
-                  refresh_data = {
-                      'refresh_token': x_refresh,
-                      'grant_type': 'refresh_token',
-                      'client_id': x_client_id,
-                  }
-                  refresh_headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-
-                  # If client secret is set, use Basic Auth (confidential client)
-                  if x_client_secret:
-                      basic_auth = base64.b64encode(f'{x_client_id}:{x_client_secret}'.encode()).decode()
-                      refresh_headers['Authorization'] = f'Basic {basic_auth}'
-                      # Don't include client_id in body when using Basic Auth
-                      del refresh_data['client_id']
-
-                  refresh_req = urllib.request.Request(
-                      'https://api.twitter.com/2/oauth2/token',
-                      data=urllib.parse.urlencode(refresh_data).encode(),
-                      headers=refresh_headers,
-                      method='POST'
-                  )
-                  refresh_resp = urllib.request.urlopen(refresh_req, timeout=15)
-                  refresh_json = json.loads(refresh_resp.read().decode())
-                  access_token = refresh_json.get('access_token')
-                  if access_token:
-                      print('  ✓ Refreshed X access token')
-                  else:
-                      print(f'  ⚠ Refresh returned no access token: {refresh_json}')
-              except urllib.error.HTTPError as e:
-                  body = e.read().decode()[:500]
-                  print(f'  ⚠ Refresh failed (HTTP {e.code}): {body}')
-                  if e.code == 400 and 'invalid_client' in body:
-                      print('  💡 Client ID rejected. If app is a "Confidential Client",')
-                      print('     set X_OAUTH2_CLIENT_SECRET secret too.')
-                  # Fall through to try existing access token
-              except Exception as e:
-                  print(f'  ⚠ Refresh error: {e}')
-
-              # Step 2: If refresh failed, try the stored access token (may still be valid < 2hrs)
-              if not access_token and x_access:
-                  print('  → Trying stored access token (may still be valid)...')
-                  access_token = x_access
-
-              # Step 3: Post the tweet
-              if access_token:
-                  try:
-                      body = json.dumps({'text': message[:280]}).encode()
-                      req = urllib.request.Request(
-                          'https://api.twitter.com/2/tweets',
-                          data=body,
-                          headers={
-                              'Authorization': f'Bearer {access_token}',
-                              'Content-Type': 'application/json',
-                          },
-                          method='POST'
-                      )
-                      post_resp = urllib.request.urlopen(req, timeout=15)
-                      post_json = json.loads(post_resp.read().decode())
-                      tweet_id = post_json.get('data', {}).get('id', 'unknown')
-                      print(f'  ✅ X posted! Tweet ID: {tweet_id}')
-                      print(f'     URL: https://x.com/victor_ndunda/status/{tweet_id}')
-                      results['twitter'] = True
-                  except urllib.error.HTTPError as e:
-                      body = e.read().decode()[:500]
-                      print(f'  ❌ X post HTTP {e.code}: {body}')
-                      if e.code == 401:
-                          print('  💡 Access token expired AND refresh failed.')
-                          print('     Regenerate OAuth 2.0 tokens at:')
-                          print('     https://developer.x.com > App > OAuth 2.0 > Generate tokens')
-                      elif e.code == 403:
-                          print('  💡 App may not have tweet write permission. Check:')
-                          print('     https://developer.x.com > App > App settings > Permissions')
-                          print('     Required scope: tweet.read + tweet.write (or users.read)')
-                      results['twitter'] = False
-                  except Exception as e:
-                      print(f'  ❌ X post error: {e}')
-                      results['twitter'] = False
-              else:
-                  print('  ❌ No valid access token — cannot post to X')
-                  results['twitter'] = False
-          else:
-              # Fallback: try OAuth 1.0a if old-style tokens are set (legacy)
-              x_key = os.environ.get('X_API_KEY', '')
-              x_secret = os.environ.get('X_API_SECRET', '')
-              x_token = os.environ.get('X_ACCESS_TOKEN', '')
-              x_token_secret = os.environ.get('X_ACCESS_SECRET', '')
-              if all([x_key, x_secret, x_token, x_token_secret]):
-                  print('🐦 Posting to X (OAuth 1.0a legacy)...')
-                  try:
-                      method = 'POST'
-                      base_url = 'https://api.twitter.com/2/tweets'
-                      oauth_params = {
-                          'oauth_consumer_key': x_key,
-                          'oauth_nonce': secrets.token_hex(16),
-                          'oauth_signature_method': 'HMAC-SHA256',
-                          'oauth_timestamp': str(int(time.time())),
-                          'oauth_token': x_token,
-                          'oauth_version': '1.0',
-                      }
-                      body = json.dumps({'text': message[:280]}).encode()
-                      params_str = '&'.join(f'{quote(k, safe=\"\")}={quote(v, safe=\"\")}' for k, v in sorted(oauth_params.items()))
-                      base_string = f'{method}&{quote(base_url, safe=\"\")}&{quote(params_str, safe=\"\")}'
-                      signing_key = f'{quote(x_secret, safe=\"\")}&{quote(x_token_secret, safe=\"\")}'
-                      signature = base64.b64encode(hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha256).digest()).decode()
-                      oauth_params['oauth_signature'] = signature
-                      auth_header = 'OAuth ' + ', '.join(f'{k}=\"{quote(v, safe=\"\")}\"' for k, v in sorted(oauth_params.items()))
-                      req = urllib.request.Request(base_url, data=body,
-                          headers={'Authorization': auth_header, 'Content-Type': 'application/json'}, method='POST')
-                      urllib.request.urlopen(req)
-                      print('  ✅ X posted!')
-                      results['twitter'] = True
-                  except urllib.error.HTTPError as e:
-                      body = e.read().decode()[:500]
-                      print(f'  ❌ X HTTP {e.code}: {body}')
-                      results['twitter'] = False
-                  except Exception as e:
-                      print(f'  ❌ X error: {e}')
-                      results['twitter'] = False
-              else:
-                  print('🐦 X: No OAuth 2.0 refresh token or OAuth 1.0a credentials set — skipping')
-          
-          # ─── TikTok (Content Posting API) ────────────────
-          # Note: TikTok requires pre-generated video content.
-          # This stub logs the intent; full video generation requires a media pipeline.
-          tt_token = os.environ.get('TIKTOK_ACCESS_TOKEN', '')
-          if tt_token:
-              print('🎵 TikTok: article logged for video pipeline (text-to-video not yet automated).')
-              print(f'  Title: {title}')
-              print(f'  URL: {url}')
-              # When video pipeline is ready:
-              # POST https://open.tiktokapis.com/v2/post/publish/video/init/
-              # Headers: Authorization: Bearer {tt_token}
-              # Body: { title, privacy_level, video_url }
-              results['tiktok'] = 'pending-video-pipeline'
-          
-          print(f'\\n=== Summary ===')
-          for platform, success in results.items():
-              status = '✅' if success is True else ('⏳' if success == 'pending-video-pipeline' else '❌')
-              print(f'  {platform}: {status}')
-          "
-          done
-          
       - name: Summary
         if: steps.detect.outputs.files != ''
         run: |
@@ -291,11 +117,9 @@ jobs:
           echo "${{ steps.detect.outputs.files }}"
           echo ""
           echo "Active platforms:"
-          echo "  LinkedIn: ✅ (LINKEDIN_ACCESS_TOKEN)"
-          echo "  X/Twitter: ✅ (X_OAUTH2_CLIENT_ID, X_OAUTH2_REFRESH_TOKEN — OAuth 2.0 with auto-refresh)"
-          echo "  TikTok: ⏳ (TIKTOK_CLIENT_ID, TIKTOK_CLIENT_SECRET, TIKTOK_ACCESS_TOKEN) — under review"
-          echo ""
-          echo "Facebook: ❌ Removed (abandoned per product decision)"
+          echo "  LinkedIn: LINKEDIN_ACCESS_TOKEN"
+          echo "  X/Twitter: X_OAUTH2_CLIENT_ID + X_OAUTH2_REFRESH_TOKEN (OAuth 2.0, auto-refresh)"
+          echo "  TikTok: TIKTOK_ACCESS_TOKEN (video pipeline — under review)"
           echo ""
           echo "Note: If any platform fails, check token permissions (see SOCIAL-CMS.md)"
           echo "X OAuth 2.0 refresh tokens expire in 6 months — regenerate at:"

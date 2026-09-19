@@ -46,3 +46,7 @@ auth.private.js
 # Dashboard/Admin (if using locally)
 dashboard/data.json
 admin/uploads/
+
+# Python
+__pycache__/
+*.pyc

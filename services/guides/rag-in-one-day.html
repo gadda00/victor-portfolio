@@ -359,7 +359,7 @@
 </footer>
 
 <script>
-const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.querySelector('span').textContent=isDark?'☀️':'🌙';});themeToggle.querySelector('span').textContent=html.classList.contains('dark')?'🌙':'☀️';const mobileToggle=document.getElementById('mobileToggle');mobileToggle.addEventListener('click',()=>{const navLinks=document.getElementById('navLinks');const isOpen=navLinks.classList.toggle('open');mobileToggle.setAttribute('aria-expanded',isOpen?'true':'false');});window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');});const mobileToggle=document.getElementById('mobileToggle');mobileToggle.addEventListener('click',()=>{const navLinks=document.getElementById('navLinks');const isOpen=navLinks.classList.toggle('open');mobileToggle.setAttribute('aria-expanded',isOpen?'true':'false');});window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
 </script>
 </body>
 </html>

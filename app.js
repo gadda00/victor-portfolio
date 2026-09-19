@@ -378,42 +378,10 @@
   });
 
   // ═══════════════════════════════════════════════════════════════════
-  // 8. ANIMATED COUNT-UP STATS (hero)
+  // 8. COUNT-UP STATS — provided by liquid.js (.lg-count[data-count]).
+  //    The previous duplicate here fought liquid.js for the same
+  //    textContent (both ran rAF loops on the hero numbers).
   // ═══════════════════════════════════════════════════════════════════
-  function animateCount(el, target, suffix = '', duration = 1500) {
-    const start = 0;
-    const startTime = performance.now();
-    const isFloat = target % 1 !== 0;
-
-    function update(now) {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / duration, 1);
-      // Ease-out cubic
-      const eased = 1 - Math.pow(1 - progress, 3);
-      const value = start + (target - start) * eased;
-      el.textContent = (isFloat ? value.toFixed(0) : Math.floor(value)) + suffix;
-      if (progress < 1) requestAnimationFrame(update);
-      else el.textContent = (isFloat ? target : target) + suffix;
-    }
-    requestAnimationFrame(update);
-  }
-
-  const heroStats = document.querySelectorAll('.hero-stat .num');
-  if (heroStats.length && !REDUCED_MOTION) {
-    const statObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const raw = el.textContent.trim();
-          const num = parseInt(raw, 10);
-          const suffix = raw.replace(/[\d.]/g, '');
-          if (!isNaN(num)) animateCount(el, num, suffix, 1500);
-          statObserver.unobserve(el);
-        }
-      });
-    }, { threshold: 0.5 });
-    heroStats.forEach(s => statObserver.observe(s));
-  }
 
   // ═══════════════════════════════════════════════════════════════════
   // 9. COMMAND PALETTE (Cmd+K) — with blog article search
