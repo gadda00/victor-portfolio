@@ -231,7 +231,7 @@
 
 <div class="book-options">
   <div class="book-tabs" role="tablist" aria-label="Ways to get in touch">
-    <button class="book-tab" id="tab-schedule" role="tab" aria-selected="true" aria-controls="panel-schedule" data-tab="schedule">📅 Book a Call</button>
+    <button class="book-tab" id="tab-schedule" role="tab" aria-selected="true" aria-controls="panel-schedule" data-tab="schedule">📅 Schedule a Call</button>
     <button class="book-tab" id="tab-form" role="tab" aria-selected="false" aria-controls="panel-form" data-tab="form" tabindex="-1">💬 Send a Message</button>
     <button class="book-tab" id="tab-direct" role="tab" aria-selected="false" aria-controls="panel-direct" data-tab="direct" tabindex="-1">⚡ Direct Contact</button>
   </div>
@@ -239,7 +239,8 @@
   <!-- Schedule via Cal.com -->
   <div class="book-panel" id="panel-schedule" role="tabpanel" aria-labelledby="tab-schedule">
     <h2 style="text-align:center;margin-bottom:1rem">Pick a time that works for you</h2>
-    <p style="text-align:center;color:var(--text-muted);margin-bottom:2rem">Self-serve booking — no back-and-forth emails. You'll get a calendar invite instantly. Times shown in your local timezone.</p>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:1rem">Self-serve booking — no back-and-forth emails. You'll get a calendar invite instantly. Times shown in your local timezone.</p>
+    <p style="text-align:center;color:var(--text-muted);margin-bottom:2rem">📞 <strong style="color:var(--text)">Calls run on WhatsApp.</strong> Book the slot, then message <a href="https://wa.me/254724346971" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">+254 724 346 971</a> — Victor will call you on WhatsApp (voice or video) at the booked time.</p>
     <div id="cal-embed" style="min-height:600px">
       <div id="cal-loading" style="text-align:center;padding:3rem;color:var(--text-muted)">
         <p style="margin-bottom:1rem" aria-live="polite">📅 Calendar loading…</p>
@@ -357,6 +358,7 @@
 <div class="book-privacy">
   <p>
     <strong>What happens with your information:</strong> bookings are processed by Cal.com and messages are delivered by Web3Forms to my email.
+    When the assistant below produces an estimate or you choose a contact option, a minimal notification (the estimate configuration only — no chat text, no personal data) is emailed so enquiries aren't missed.
     This site sets no tracking cookies and runs no third-party analytics. See the <a href="/privacy-policy.html" style="color:var(--accent)">privacy policy</a> for details.
   </p>
 </div>
@@ -521,6 +523,8 @@ document.getElementById('quickForm')?.addEventListener('submit', async (e) => {
 
   try {
     const formData = new FormData(form);
+    // Use the centralized key (single rotation point above)
+    if (window.VN_W3F_KEY) formData.set('access_key', window.VN_W3F_KEY);
     // Override with sanitized values
     formData.set('name', name);
     formData.set('email', email);
@@ -548,7 +552,10 @@ document.getElementById('quickForm')?.addEventListener('submit', async (e) => {
       successEl.style.display = 'block';
       successEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
     } else {
-      setError('qf-message', 'err-message', 'Could not send message. Please email me directly at mututandunda@gmail.com');
+      const keyHint = (result.message && /invalid/i.test(result.message))
+        ? ' The form\'s Web3Forms access key is invalid — a new one must be created at web3forms.com and pasted into book/index.html.'
+        : '';
+      setError('qf-message', 'err-message', 'Could not send message. Please email me directly at mututandunda@gmail.com' + keyHint);
       submitBtn.disabled = false;
       submitBtn.textContent = 'Send Message →';
     }
@@ -564,6 +571,12 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav')?.classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
 </script>
-<script src="/book/assistant.js?v=7.1.0" defer></script>
+<script>
+// Web3Forms access key — THE single line to rotate when the key changes.
+// Create a free key at https://web3forms.com (Visual Scratch Pad → + Create Access Key)
+// and paste it here. Both the message form and the assistant notifications read it.
+window.VN_W3F_KEY = 'f695c261-e59a-4b77-a6cf-55f4b4883427';
+</script>
+<script src="/book/assistant.js?v=7.2.2" defer></script>
 </body>
 </html>

@@ -86,6 +86,13 @@ A multi-page static site (no build step) deployed on GitHub Pages with a custom 
 - **Idle timeout** — auto-logout after 30 minutes inactivity
 - **No third-party tracking** — privacy-friendly
 
+### Notifications & analytics (v8.1)
+- **Booking assistant → email**: estimate completions and hand-off choices email you via Web3Forms (privacy-safe: estimate configuration only — no chat text, no PII; rate-limited; disclosed in the privacy policy).
+- **⚠️ Web3Forms access key**: the key on the `window.VN_W3F_KEY` line in `book/index.html` is THE single rotation point for the message form and assistant notifications. If emails stop arriving (or the dashboard Notifications panel reports the key invalid), create a free key at web3forms.com and paste it there, then commit to `main`.
+- **Dashboard → Notifications panel**: routing table + a one-click pipeline test that validates the live key and shows rotation steps if it's dead.
+- **Analytics events**: the assistant and all `data-track` CTAs emit structured events to `window.__vnEvents` (in-memory only, zero network). Wire any provider by setting `window.__vnTrack = fn(ev)` before page scripts run — full taxonomy documented in the dashboard Analytics section.
+- **Session restore fix**: restoring a live session on `/dashboard/` previously crashed at `switchSection()` (sideLinks not yet initialized); the restore call now runs after all renderers are defined.
+
 ### SEO
 - **JSON-LD structured data**: Person, WebSite, Blog, Article (×9), BreadcrumbList (×11)
 - **Open Graph** + **Twitter Card** on all public pages
