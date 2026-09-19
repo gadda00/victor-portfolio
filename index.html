@@ -125,6 +125,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css?v=7.1.0" />
 <link rel="stylesheet" href="home.css?v=7.1.0" />
+<link rel="stylesheet" href="/liquid.css?v=9.0.0" />
 
 <!-- Performance: Preload critical resources -->
 <link rel="preload" href="/home.css?v=7.1.0" as="style" />
@@ -136,7 +137,6 @@
 <link rel="dns-prefetch" href="https://github.com" />
 <link rel="dns-prefetch" href="https://api.github.com" />
 <link rel="dns-prefetch" href="https://api.web3forms.com" />
-<link rel="dns-prefetch" href="https://app.cal.com" />
 
 <!-- View Transitions API (cross-page navigation, Chrome 115+) -->
 <meta name="view-transition" content="same-origin" />
@@ -232,7 +232,7 @@
     </h1>
     <p class="hero-sub">I help founders and product teams turn high-value workflows into reliable AI systems — RAG knowledge tools, agents, automation, forecasting, and fraud detection — with real evaluation, observability, and a clear path from pilot to production.</p>
     <div class="hero-cta">
-      <a href="/book/" class="btn btn-primary btn-accent-2" data-track="cta-book-hero">
+      <a href="/book/" class="btn btn-primary btn-accent-2 lg-shimmer" data-track="cta-book-hero">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
         Book a 30-Minute AI Systems Assessment
       </a>
@@ -242,8 +242,8 @@
       </a>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="num">6</span><span class="label">production AI systems shipped</span></div>
-      <div class="hero-stat"><span class="num">11K+</span><span class="label">learners on a shipped client product</span></div>
+      <div class="hero-stat"><span class="num lg-count" data-count="6">6</span><span class="label">production AI systems shipped</span></div>
+      <div class="hero-stat"><span class="num lg-count" data-count="11" data-suffix="K+">11K+</span><span class="label">learners on a shipped client product</span></div>
       <div class="hero-stat"><span class="num">EN·FR·SW</span><span class="label">multilingual, low-bandwidth delivery</span></div>
     </div>
   </div>
@@ -876,6 +876,7 @@
 </footer>
 
 <script src="app.js?v=7.1.0" defer></script>
+<script src="/liquid.js?v=9.0.0" defer></script>
 <script src="/i18n.js?v=7.1.0" defer></script>
 <script src="/enhancements.js?v=7.1.0" defer></script>
 <script src="/effects.js?v=7.1.0" defer></script>

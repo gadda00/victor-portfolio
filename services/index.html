@@ -35,6 +35,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
 <meta name="view-transition" content="same-origin" />
 <link rel="stylesheet" href="/styles.css?v=5.4.0" />
+<link rel="stylesheet" href="/liquid.css?v=9.0.0" />
 <link rel="stylesheet" href="/services/services.css" />
 
 <!-- Security Headers -->
@@ -149,11 +150,11 @@
 
 <!-- Stats bar -->
 <div class="svc-stats">
-  <div class="svc-stat"><div class="num">6</div><div class="lbl">Production AI systems shipped</div></div>
-  <div class="svc-stat"><div class="num">12</div><div class="lbl">Catalogue services</div></div>
-  <div class="svc-stat"><div class="num">4</div><div class="lbl">Engagement packages</div></div>
-  <div class="svc-stat"><div class="num">22+</div><div class="lbl">Data sources integrated</div></div>
-  <div class="svc-stat"><div class="num">91%</div><div class="lbl">CV accuracy (shipped system)</div></div>
+  <div class="svc-stat"><div class="num lg-count" data-count="6">6</div><div class="lbl">Production AI systems shipped</div></div>
+  <div class="svc-stat"><div class="num lg-count" data-count="12">12</div><div class="lbl">Catalogue services</div></div>
+  <div class="svc-stat"><div class="num lg-count" data-count="4">4</div><div class="lbl">Engagement packages</div></div>
+  <div class="svc-stat"><div class="num lg-count" data-count="22" data-suffix="+">22+</div><div class="lbl">Data sources integrated</div></div>
+  <div class="svc-stat"><div class="num lg-count" data-count="91" data-suffix="%">91%</div><div class="lbl">CV accuracy (shipped system)</div></div>
   <div class="svc-stat"><div class="num">EN·FR·SW</div><div class="lbl">Languages</div></div>
 </div>
 
@@ -321,6 +322,7 @@
 </footer>
 
 <script src="/services/services.js" defer></script>
+<script src="/liquid.js?v=9.0.0" defer></script>
 <script src="/enhancements.js?v=5.4.0" defer></script>
 <script>
 // Theme toggle

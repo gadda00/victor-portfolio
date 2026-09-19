@@ -1,0 +1,128 @@
+/* ═══════════════════════════════════════════════════════════════════
+   invoice.css — Victor Ndunda v9 invoicing system
+   Split-view builder (left) + live invoice preview (right, print-safe)
+   ═══════════════════════════════════════════════════════════════════ */
+
+.inv-wrap { max-width: 1200px; margin: 0 auto; padding: 7rem 2rem 4rem; }
+.inv-hero { text-align: center; margin-bottom: 2.5rem; position: relative; }
+.inv-hero h1 { font-size: clamp(1.8rem, 3.5vw, 2.5rem); margin-bottom: 0.75rem; }
+.inv-hero p { color: var(--text-muted); max-width: 640px; margin: 0 auto; }
+
+.inv-pipeline { display: flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center; margin: 1.75rem 0 0; }
+.inv-stage { display: inline-flex; align-items: center; gap: 0.35rem; padding: 0.35rem 0.8rem; border-radius: 99px; background: var(--glass); border: 1px solid var(--lg-edge-soft); font-size: 0.75rem; font-weight: 600; color: var(--text-muted); }
+.inv-stage.on { background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; border-color: transparent; }
+.inv-stage .n { opacity: .7; }
+
+.inv-grid { display: grid; grid-template-columns: minmax(340px, 480px) 1fr; gap: 1.5rem; align-items: start; }
+@media (max-width: 980px) { .inv-grid { grid-template-columns: 1fr; } }
+
+/* ── Builder column ── */
+.inv-builder { display: flex; flex-direction: column; gap: 1.25rem; }
+.inv-card { padding: 1.5rem; }
+.inv-card h2 { font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); margin-bottom: 1rem; }
+
+.inv-row { display: grid; gap: 0.75rem; grid-template-columns: 1fr 1fr; }
+.inv-row.one { grid-template-columns: 1fr; }
+@media (max-width: 480px) { .inv-row { grid-template-columns: 1fr; } }
+.inv-field { display: flex; flex-direction: column; gap: 0.3rem; }
+.inv-field label { font-size: 0.8125rem; font-weight: 600; }
+.inv-field input, .inv-field select, .inv-field textarea {
+  padding: 0.7rem 0.85rem; border-radius: 10px; background: var(--bg-elev);
+  border: 1px solid var(--border); color: var(--text); font-size: 0.9375rem;
+  font-family: inherit; outline: none; transition: border-color 0.2s;
+}
+.inv-field input:focus, .inv-field select:focus, .inv-field textarea:focus { border-color: var(--accent); }
+
+.inv-items { display: flex; flex-direction: column; gap: 0.6rem; }
+.inv-item { display: grid; grid-template-columns: 1fr 84px 96px 36px; gap: 0.5rem; align-items: center; }
+.inv-item input { padding: 0.55rem 0.7rem; font-size: 0.875rem; }
+.inv-item .qty, .inv-item .rate { text-align: right; }
+.inv-del { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--border); background: none; color: var(--text-muted); cursor: pointer; font-size: 1rem; line-height: 1; font-family: inherit; transition: color .2s, border-color .2s; }
+.inv-del:hover { color: #f87171; border-color: #f87171; }
+.inv-add { align-self: flex-start; }
+
+.inv-toggles { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+.inv-toggle { display: inline-flex; align-items: center; gap: 0.45rem; font-size: 0.875rem; color: var(--text-muted); cursor: pointer; }
+.inv-toggle input { accent-color: var(--accent); width: 16px; height: 16px; cursor: pointer; }
+
+.inv-summary { display: flex; flex-direction: column; gap: 0.4rem; padding: 1rem 1.25rem; border-radius: 12px; background: var(--glass); border: 1px solid var(--lg-edge-soft); font-size: 0.9375rem; }
+.inv-summary .line { display: flex; justify-content: space-between; color: var(--text-muted); }
+.inv-summary .line strong { color: var(--text); font-variant-numeric: tabular-nums; }
+.inv-summary .line.total { border-top: 1px dashed var(--border); padding-top: 0.5rem; margin-top: 0.3rem; font-size: 1.05rem; }
+.inv-summary .line.total strong { font-size: 1.15rem; }
+
+.inv-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+.inv-saved-list { display: flex; flex-direction: column; gap: 0.5rem; max-height: 300px; overflow-y: auto; }
+.inv-saved { display: flex; align-items: center; gap: 0.75rem; padding: 0.7rem 0.9rem; border-radius: 10px; background: var(--glass); border: 1px solid var(--lg-edge-soft); font-size: 0.875rem; }
+.inv-saved .no { font-family: 'JetBrains Mono', monospace; font-weight: 600; color: var(--accent); white-space: nowrap; }
+.inv-saved .who { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-muted); }
+.inv-saved .amt { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.inv-saved .st { font-size: 0.6875rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; padding: 0.2rem 0.5rem; border-radius: 99px; white-space: nowrap; }
+.st.draft { background: rgba(148, 163, 184, .15); color: #94a3b8; }
+.st.sent { background: rgba(0, 212, 255, .12); color: var(--accent); }
+.st.paid { background: rgba(16, 185, 129, .14); color: var(--accent-3); }
+.st.overdue { background: rgba(239, 68, 68, .14); color: #f87171; }
+.inv-saved .act { display: flex; gap: 0.3rem; }
+.inv-saved .act button { width: 28px; height: 28px; border-radius: 8px; border: 1px solid var(--border); background: none; color: var(--text-muted); cursor: pointer; font-size: 0.8rem; display: flex; align-items: center; justify-content: center; font-family: inherit; transition: color .2s, border-color .2s; }
+.inv-saved .act button:hover { color: var(--accent); border-color: var(--accent); }
+.inv-empty { text-align: center; color: var(--text-muted); font-size: 0.875rem; padding: 1.25rem; border: 1px dashed var(--border); border-radius: 12px; }
+.inv-import { padding: 0.75rem 1rem; border-radius: 12px; background: rgba(0,212,255,.07); border: 1px dashed var(--accent); color: var(--accent); font-size: 0.875rem; display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; flex-wrap: wrap; }
+
+/* ── Preview column (the invoice document) ── */
+.inv-doc-shell { position: sticky; top: 5rem; }
+.inv-doc {
+  background: var(--bg-elev); color: var(--text);
+  border: 1px solid var(--border); border-radius: 16px;
+  padding: 2.5rem; max-width: 800px; margin: 0 auto;
+  box-shadow: var(--lg-shadow);
+}
+.inv-doc-head { display: flex; justify-content: space-between; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.inv-doc-brand { display: flex; gap: 0.85rem; align-items: center; }
+.inv-doc-brand .mark { width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 800; font-size: 1.1rem; }
+.inv-doc-brand .nm { font-weight: 800; font-size: 1.05rem; }
+.inv-doc-brand .sm { color: var(--text-muted); font-size: 0.8125rem; }
+.inv-doc-meta { text-align: right; }
+.inv-doc-meta .ttl { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; }
+.inv-doc-meta .no { font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 600; }
+.inv-doc-meta .dt { color: var(--text-muted); font-size: 0.8125rem; margin-top: 0.3rem; line-height: 1.6; }
+.inv-doc-badges { margin-top: 0.5rem; }
+.inv-doc-parties { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.75rem; }
+@media (max-width: 520px) { .inv-doc { padding: 1.5rem; } .inv-doc-parties { grid-template-columns: 1fr; } .inv-doc-meta { text-align: left; } }
+.inv-doc-parties h4 { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-bottom: 0.4rem; }
+.inv-doc-parties .p { font-size: 0.9375rem; line-height: 1.6; white-space: pre-line; }
+table.inv-doc-items { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+table.inv-doc-items th { text-align: left; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); padding: 0.5rem 0.6rem; border-bottom: 2px solid var(--border); }
+table.inv-doc-items th:last-child, table.inv-doc-items td:last-child { text-align: right; }
+table.inv-doc-items td { padding: 0.65rem 0.6rem; border-bottom: 1px solid var(--border); font-size: 0.9375rem; }
+table.inv-doc-items td.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+table.inv-doc-items td.qty { white-space: nowrap; color: var(--text-muted); }
+.inv-doc-totals { margin-left: auto; max-width: 320px; display: flex; flex-direction: column; gap: 0.45rem; font-size: 0.9375rem; }
+.inv-doc-totals .line { display: flex; justify-content: space-between; }
+.inv-doc-totals .line span:last-child { font-variant-numeric: tabular-nums; }
+.inv-doc-totals .grand { border-top: 2px solid var(--text); padding-top: 0.5rem; margin-top: 0.25rem; font-size: 1.2rem; font-weight: 800; }
+.inv-doc-pay { margin-top: 1.75rem; padding: 1rem 1.25rem; border-radius: 12px; background: var(--glass); border: 1px solid var(--lg-edge-soft); font-size: 0.875rem; line-height: 1.7; color: var(--text-muted); }
+.inv-doc-pay strong { color: var(--text); }
+.inv-doc-pay .mth { display: inline-flex; align-items: center; gap: 0.3rem; margin-right: 1rem; color: var(--text); font-weight: 600; }
+.inv-doc-foot { margin-top: 1.5rem; font-size: 0.75rem; color: var(--text-dim); text-align: center; line-height: 1.6; }
+.inv-doc-status-stamp { display: inline-block; padding: 0.3rem 0.85rem; border-radius: 8px; font-size: 0.75rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; border: 2px solid currentColor; transform: rotate(-4deg); margin-left: 0.75rem; }
+.inv-doc-status-stamp.paid { color: var(--accent-3); }
+.inv-doc-status-stamp.overdue { color: #f87171; }
+.inv-doc-status-stamp.sent { color: var(--accent); }
+.inv-doc-status-stamp.draft { color: #94a3b8; }
+.inv-pays { margin-top: 1rem; font-size: 0.8125rem; color: var(--text-muted); }
+.inv-pays li { margin-bottom: 0.25rem; }
+
+/* ── Print: only the document ── */
+@media print {
+  body { background: #fff !important; }
+  .inv-wrap, .nav, footer, .noise-overlay, .lg-progress, .lg-top, .vn-toast-wrap, .liquid-bg { display: none !important; }
+  .inv-doc-print-slot { display: block !important; }
+  .inv-doc { border: none; box-shadow: none; border-radius: 0; max-width: none; background: #fff; color: #000; padding: 0; }
+  .inv-doc .mark { background: #000 !important; color: #fff !important; }
+  table.inv-doc-items th { color: #444; }
+  .inv-doc-parties h4 { color: #555; }
+  .inv-doc-totals .grand { border-top-color: #000; }
+  .inv-doc-pay { background: none; border: 1px solid #ddd; color: #333; }
+  .inv-doc-pay .mth { color: #000; }
+  .inv-doc-foot { color: #555; }
+}
