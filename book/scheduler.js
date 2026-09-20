@@ -341,9 +341,21 @@
     var slotLocal = eatToLocal(y, m, d, picked.slot);
 
     /* 1) Email the owner via Web3Forms (same backend as the message form) */
+    // v11.2: if the visitor completed the self-serve readiness assessment,
+    // their score + recommended package ride along on the booking email —
+    // so the owner opens the request already knowing the lead's context.
+    var asmtLine = '';
+    var asmtCtx = null;
+    try {
+      var ac = JSON.parse(localStorage.getItem('vn_assessment_ctx') || 'null');
+      if (ac && ac.score !== undefined) {
+        asmtCtx = ac;
+        asmtLine = 'Readiness assessment: ' + ac.score + '/100 (' + (ac.recName || 'package TBD') + ' suggested)\n';
+      }
+    } catch (e) {}
     var fd = new FormData();
     fd.set('access_key', window.VN_W3F_KEY || '');
-    fd.set('subject', 'Booking request: ' + fmtDay(picked.date) + ' ' + slotEAT + ' — ' + name);
+    fd.set('subject', 'Booking request: ' + fmtDay(picked.date) + ' ' + slotEAT + ' — ' + name + (asmtCtx ? ' [assessment ' + asmtCtx.score + ']' : ''));
     fd.set('from_name', 'victorndunda.com scheduler');
     fd.set('name', name);
     fd.set('email', email);
@@ -354,6 +366,7 @@
       'Slot (EAT): ' + slotEAT + '  |  Visitor local: ' + slotLocal + '\n' +
       'Visitor timezone: ' + (Intl.DateTimeFormat().resolvedOptions().timeZone || 'unknown') + '\n' +
       'Topic: ' + (topic || '—') + '\n' +
+      asmtLine +
       'Company: ' + (company || '—') + '\n' +
       'Notes: ' + (notes || '—') + '\n' +
       'Confirm on WhatsApp: https://wa.me/' + WHATSAPP);

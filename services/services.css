@@ -182,3 +182,24 @@
   .svc-quicknav { gap: 0.4rem; }
   .svc-quicknav a { padding: 0.4rem 0.85rem; font-size: 0.78rem; }
 }
+
+/* ─── Readiness assessment callout bar (v11.2) ─────────────── */
+.svc-asmt-bar {
+  display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap;
+  margin-top: 1.5rem; padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(168,85,247,0.08));
+  border: 1px solid rgba(0,212,255,0.35);
+  border-radius: 14px;
+  text-decoration: none;
+  transition: border-color 0.2s var(--ease, ease), transform 0.2s var(--ease, ease), box-shadow 0.2s var(--ease, ease);
+}
+.svc-asmt-bar:hover { border-color: var(--accent); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,212,255,0.12); }
+.svc-asmt-icon { font-size: 1.9rem; line-height: 1; }
+.svc-asmt-body { flex: 1 1 340px; display: flex; flex-direction: column; gap: 0.25rem; }
+.svc-asmt-body strong { color: var(--text); font-size: 1rem; font-weight: 700; }
+.svc-asmt-body span { color: var(--text-muted); font-size: 0.875rem; line-height: 1.55; text-wrap: pretty; }
+.svc-asmt-cta { color: var(--accent); font-weight: 700; font-size: 0.9rem; white-space: nowrap; }
+@media (max-width: 640px) {
+  .svc-asmt-bar { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .svc-asmt-cta { white-space: normal; }
+}

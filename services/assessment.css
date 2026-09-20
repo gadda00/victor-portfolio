@@ -1,0 +1,367 @@
+/* Victor Ndunda — AI Readiness Assessment styles
+   Extends /styles.css + wizard.css with assessment-specific UI:
+   progress, score dial, dimension bars, package card, ROI block,
+   email capture, print report. */
+
+/* ─── Progress (single slim bar, no numbered steps) ─────────────── */
+.asmt-progress {
+  padding: 0 0 0;
+}
+/* wizard.css sets display:flex on .wiz-nav — reassert the hidden
+   attribute so [hidden] actually hides (buttons + the bar itself). */
+[hidden] { display: none !important; }
+.asmt-progress .wizard-progress-fill {
+  transition: width 0.35s var(--ease);
+}
+.asmt-progress .wizard-progress-steps { display: none; }
+
+/* ─── Question meta chip ────────────────────────────────────────── */
+.asmt-q-meta {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.3rem 0.75rem;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+.asmt-q-meta .asmt-dim-chip {
+  color: var(--accent);
+}
+
+/* ─── Results layout ────────────────────────────────────────────── */
+.asmt-result {
+  max-width: 760px;
+  margin: 0 auto;
+  display: flex; flex-direction: column; gap: 2rem;
+}
+
+/* Score dial */
+.asmt-score-wrap {
+  text-align: center;
+  padding: 1.5rem 1rem 1.25rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+.asmt-dial {
+  width: 190px; height: 190px;
+  margin: 0 auto 0.5rem;
+  transform: rotate(-90deg);
+}
+.asmt-dial-track, .asmt-dial-fill {
+  fill: none;
+  stroke-width: 13;
+  stroke-linecap: round;
+}
+.asmt-dial-track { stroke: var(--border); }
+.asmt-dial-fill {
+  stroke: url(#dialG);
+  stroke-dasharray: 527.8;
+  stroke-dashoffset: 527.8;
+  transition: stroke-dashoffset 1.1s var(--ease);
+}
+.asmt-dial text { transform: rotate(90deg); transform-origin: 100px 100px; }
+.asmt-dial-num {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 44px; font-weight: 700;
+  fill: var(--text);
+  text-anchor: middle;
+}
+.asmt-dial-cap {
+  font-size: 13px; font-weight: 600;
+  fill: var(--text-muted);
+  text-anchor: middle;
+  letter-spacing: 0.08em;
+}
+.asmt-tier-badge {
+  display: inline-block;
+  padding: 0.35rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.8rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  background: rgba(0, 212, 255, 0.12);
+  color: var(--accent);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  margin-bottom: 0.6rem;
+}
+.asmt-tier-badge.t2 { background: rgba(16, 185, 129, 0.12); color: #10b981; border-color: rgba(16, 185, 129, 0.35); }
+.asmt-tier-badge.t3 { background: rgba(168, 85, 247, 0.12); color: #a855f7; border-color: rgba(168, 85, 247, 0.35); }
+.asmt-verdict {
+  color: var(--text-muted);
+  font-size: 0.95rem; line-height: 1.6;
+  max-width: 560px; margin: 0 auto;
+  text-wrap: pretty;
+}
+
+/* Dimension bars */
+.asmt-subhead {
+  font-size: 0.78rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 0.9rem;
+}
+.asmt-dims {
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+.asmt-dim { margin-bottom: 1rem; }
+.asmt-dim:last-of-type { margin-bottom: 0; }
+.asmt-dim-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 0.85rem; font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.asmt-dim-head span:last-child {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+.asmt-dim-bar {
+  height: 8px; border-radius: 99px;
+  background: var(--bg-elev, rgba(255,255,255,0.06));
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+.asmt-dim-fill {
+  height: 100%; width: 0;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #00d4ff, #a855f7);
+  transition: width 0.9s var(--ease);
+}
+.asmt-weakest {
+  margin: 1rem 0 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid var(--accent);
+  background: rgba(0, 212, 255, 0.05);
+  border-radius: 0 10px 10px 0;
+  color: var(--text-muted);
+  font-size: 0.88rem; line-height: 1.55;
+}
+.asmt-weakest strong { color: var(--text); }
+
+/* Package card */
+.asmt-pkg {
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+.asmt-pkg-card {
+  display: flex; flex-wrap: wrap; gap: 1.25rem; align-items: flex-start;
+}
+.asmt-pkg-icon {
+  font-size: 2rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.asmt-pkg-body { flex: 1 1 320px; }
+.asmt-pkg-name {
+  font-size: 1.2rem; font-weight: 800; letter-spacing: -0.01em;
+  margin: 0 0 0.3rem;
+}
+.asmt-pkg-price {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.95rem; font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.6rem;
+}
+.asmt-pkg-price .asmt-pkg-mo { color: var(--text-muted); font-weight: 500; }
+.asmt-pkg-desc {
+  color: var(--text-muted);
+  font-size: 0.92rem; line-height: 1.6;
+  margin: 0 0 0.75rem;
+  text-wrap: pretty;
+}
+.asmt-pkg-ul {
+  margin: 0; padding-left: 1.1rem;
+  color: var(--text-muted);
+  font-size: 0.85rem; line-height: 1.7;
+}
+
+/* ROI block */
+.asmt-roi {
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+.asmt-roi-lede {
+  color: var(--text-muted); font-size: 0.9rem; line-height: 1.55;
+  margin: -0.4rem 0 1.1rem;
+  text-wrap: pretty;
+}
+.asmt-roi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.1rem;
+}
+.asmt-roi-grid label {
+  display: flex; flex-direction: column; gap: 0.4rem;
+  font-size: 0.78rem; font-weight: 600;
+  color: var(--text-muted);
+}
+.asmt-roi-grid input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  background: var(--bg-elev, rgba(255,255,255,0.04));
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 0.95rem;
+}
+.asmt-roi-grid input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+.asmt-roi-out {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 0.75rem;
+}
+.asmt-roi-cell {
+  padding: 0.85rem 1rem;
+  background: var(--bg-elev, rgba(255,255,255,0.04));
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.asmt-roi-cell span {
+  display: block;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.3rem;
+}
+.asmt-roi-cell strong {
+  font-family: var(--font-mono, 'JetBrains Mono', monospace);
+  font-size: 1.05rem; font-weight: 700;
+  color: var(--text);
+}
+.asmt-roi-cell strong em { font-style: normal; color: var(--accent); }
+.asmt-roi-note {
+  margin: 1rem 0 0;
+  color: var(--text-muted);
+  font-size: 0.78rem; line-height: 1.6;
+}
+.asmt-roi-note a { color: var(--accent); }
+
+/* Actions */
+.asmt-actions {
+  display: flex; flex-wrap: wrap; gap: 0.75rem;
+  justify-content: center;
+}
+
+/* Email capture */
+.asmt-email {
+  padding: 1.5rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+}
+.asmt-email p {
+  color: var(--text-muted); font-size: 0.88rem; line-height: 1.6;
+  margin: -0.35rem 0 1rem;
+  text-wrap: pretty;
+}
+.asmt-email-row {
+  display: flex; flex-wrap: wrap; gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.asmt-email-row input {
+  flex: 1 1 260px;
+  padding: 0.65rem 0.85rem;
+  background: var(--bg-elev, rgba(255,255,255,0.04));
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-size: 0.95rem;
+}
+.asmt-email-row input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+  border-color: var(--accent);
+}
+.asmt-consent {
+  display: flex; align-items: flex-start; gap: 0.55rem;
+  font-size: 0.82rem; color: var(--text-muted);
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+}
+.asmt-consent input { margin-top: 0.18rem; accent-color: var(--accent); }
+.asmt-email-status {
+  font-size: 0.84rem; line-height: 1.5;
+  min-height: 1.2em; margin: 0.25rem 0 0;
+}
+.asmt-email-status.ok { color: #10b981; }
+.asmt-email-status.err { color: #f59e0b; }
+
+/* Meta row */
+.asmt-meta-row {
+  display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem;
+  justify-content: center;
+}
+.asmt-linkbtn {
+  background: none; border: none;
+  color: var(--text-muted);
+  font-size: 0.82rem; font-weight: 600;
+  cursor: pointer;
+  padding: 0.3rem 0.4rem;
+  border-radius: 8px;
+  transition: color 0.2s var(--ease), background 0.2s var(--ease);
+}
+.asmt-linkbtn:hover { color: var(--accent); background: var(--bg-card); }
+.asmt-footnote {
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.75rem; line-height: 1.55;
+  opacity: 0.85;
+}
+
+/* Shared-result notice */
+.asmt-shared-note {
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px dashed rgba(0, 212, 255, 0.35);
+  color: var(--text-muted);
+  font-size: 0.8rem; line-height: 1.5;
+  text-align: center;
+}
+
+/* ─── Reduced motion ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .asmt-dial-fill, .asmt-dim-fill, .asmt-progress .wizard-progress-fill {
+    transition: none;
+  }
+}
+
+/* ─── Mobile ────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .asmt-dial { width: 160px; height: 160px; }
+  .asmt-dial-num { font-size: 38px; }
+  .asmt-roi-grid, .asmt-roi-out { grid-template-columns: 1fr; }
+  .asmt-actions .btn { width: 100%; justify-content: center; }
+}
+
+/* ─── Print: report only ────────────────────────────────────────── */
+@media print {
+  nav#nav, .wizard-hero, .asmt-progress, .asmt-meta-row,
+  .asmt-email, .asmt-actions, footer, .noise-overlay,
+  #asmtNav, .wizard-back { display: none !important; }
+  body { background: #fff !important; color: #111 !important; }
+  .asmt-result { gap: 1rem; }
+  .asmt-score-wrap, .asmt-dims, .asmt-pkg, .asmt-roi {
+    background: #fff !important;
+    border: 1px solid #ddd !important;
+    break-inside: avoid;
+  }
+  .asmt-verdict, .asmt-pkg-desc, .asmt-roi-note, .asmt-weakest { color: #333 !important; }
+  .asmt-tier-badge { color: #0369a1 !important; border-color: #0369a1 !important; }
+  .asmt-roi-cell strong em { color: #0369a1 !important; }
+}

@@ -29,7 +29,7 @@
   // Centralized in book/index.html (single rotation point). Fallback for safety.
   var WEB3FORMS_KEY = (typeof window.VN_W3F_KEY === 'string' && window.VN_W3F_KEY)
     ? window.VN_W3F_KEY
-    : 'f695c261-e59a-4b77-a6cf-55f4b4883427';
+    : '4bf37d31-374a-4f3e-add6-3d2e36f7b784';
   var REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ── Estimate calibration (tuned v2) ────────────────────────────── */
@@ -111,6 +111,15 @@
       if (Date.now() - last < PING_MIN_GAP) return;
       sessionStorage.setItem('vn_ping_' + kind, String(Date.now()));
     } catch (e) { /* storage blocked — still send, it is a user-triggered signal */ }
+    // v11.2: carry the visitor's self-serve readiness score (if any) so the
+    // owner sees the lead's context in every assistant ping.
+    var asmt = '';
+    try {
+      var ac = JSON.parse(localStorage.getItem('vn_assessment_ctx') || 'null');
+      if (ac && ac.score !== undefined) {
+        asmt = '\nAssessment on file: ' + ac.score + '/100 — ' + (ac.recName || 'package TBD') + ' suggested.';
+      }
+    } catch (e) {}
     fetch('https://api.web3forms.com/submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
@@ -120,6 +129,7 @@
         from_name: 'Portfolio Assistant',
         name: 'Booking Assistant',
         message: lines.join('\n') +
+          asmt +
           '\n\n—\nPrivacy-safe ping: estimate configuration and channel only. ' +
           'No chat text, no personal data, no cookies.'
       })

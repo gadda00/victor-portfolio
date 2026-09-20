@@ -7,7 +7,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed — v11.1 Owner-Directed Pricing (Audit $2,000 · Starter $10,000 · Enterprise from $20,000)
+## [11.2.0] — 2026-09-21 — The Intelligence Layer: Assessment Funnel, Live Notifications, Professional Polish
+
+**AI Readiness Assessment — new top-of-funnel lead tool (`/services/assessment.html`):**
+- 12 questions across 4 dimensions (Data & Systems · Process Pain · Team Readiness · Goals & Momentum), fully client-side and private — no email required to see the result.
+- Scores 0–100 with animated dial, per-dimension bars, a "weakest link" insight with targeted advice, and a tier verdict (Foundation First / Ready to Build / Built for Production).
+- Recommendation maps to the live v11.1 price ladder (Audit $2,000 · Starter $10,000 · Growth $28,000 · Enterprise from $20,000), with an honest budget-reality cross-check: a high score with an under-$3K budget is bridged to the Audit (its fee credits 50% toward a build) instead of upselling.
+- Built-in ROI calculator ("what is doing nothing costing you?"): hours/week × loaded hourly cost + error costs → status-quo annual cost, conservative 20–40% automation-capture band, and payback period against the recommended package. Prefilled from the visitor's own pain answers.
+- Consent-gated email report: visitor opts in → Web3Forms sends the score, dimensions, and email to the owner as a pre-qualified lead ("Assessment lead — score 72/100 · AI Starter recommended").
+- Shareable result URLs (`?r=&tier=&rec=` — shared view shows the score honestly and nudges the visitor to take their own), print-to-PDF report stylesheet, keyboard shortcuts (1–4), ARIA progress + focus management, prefers-reduced-motion respected.
+- JSON-LD `WebApplication` schema; page added to sitemap.xml.
+
+**Funnel continuity — the lead's thread survives page transitions (v11.2):**
+- Assessment completion persists `vn_assessment_ctx`; the primary CTA books with `/book/?src=assessment&score=NN&rec=pkg`.
+- `/book/` picks the context up and shows an "Assessment on file — 72/100 · AI Starter suggested" chip above the contact options.
+- Scheduler request emails now carry "Readiness assessment: 72/100 (AI Starter suggested)" in the body and `[assessment 72]` in the subject line; every booking-assistant ping appends "Assessment on file: …" — the owner opens each request already knowing the lead's context.
+
+**Web3Forms pipeline brought back to life (owner provided a fresh key):**
+- New access key `4bf37d31-…b784` wired into all four rotation points (book/index.html hidden field + `VN_W3F_KEY`, assistant.js fallback, app.js newsletter). Message form, scheduler emails, assistant notifications, newsletter signups, and the new assessment lead capture all deliver again.
+- Assessment page carries the second `VN_W3F_KEY` rotation line (twin of the one in book/index.html) — README updated accordingly.
+
+**Professional polish:**
+- `/.well-known/security.txt` (RFC 9116): a proper, quiet disclosure channel via email; expires 2027, canonical URL set.
+- `/offline.html`: branded offline fallback (self-contained inline CSS, retry + home + services actions) now pre-cached in the SW shell and served by the fetch handler for uncached navigations — replaces the raw 503 text page.
+- `sw.js` → `vnd-v11.2.0`; changed JS assets re-versioned (`app.js`, `book/assistant.js`, `book/scheduler.js`, new `assessment.js` all at `?v=11.2.0`).
+
+**Discoverability of the assessment:**
+- Services page: new "Readiness Score" quicknav chip, paths-section copy links it, and a full-width self-serve callout bar under the three entry points.
+- Homepage booking band: "Not ready to talk? Score your AI readiness in 2 minutes — free, private, no email needed."
+
+## [11.1.0] — 2026-09-21 — Owner-Directed Pricing (Audit $2,000 · Starter $10,000 · Enterprise from $20,000)
 
 **AI Audit repositioned as a consulting gateway:**
 - $9,000 → **$2,000 / KES 160K** (owner rationale: the audit is consulting — advising, not building). The 50%-credit toward subsequent builds is unchanged, making it the cheapest published entry point and the new site-wide price floor (JSON-LD `priceRange` now `$2,000 - $200,000+`).

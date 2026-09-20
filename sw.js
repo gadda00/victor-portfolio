@@ -15,7 +15,7 @@
  * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v11.1.0';
+const CACHE_VERSION = 'vnd-v11.2.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -36,6 +36,7 @@ const SHELL_URLS = [
   '/enhancements.js',
   '/feed.xml',
   '/feed.xsl',
+  '/offline.html',
   '/favicon.svg',
   '/favicon-32.png',
   '/favicon-16.png',
@@ -124,11 +125,14 @@ self.addEventListener('fetch', event => {
             if (url.pathname === '/' || url.pathname === '/index.html') {
               return caches.match('/index.html');
             }
-            // For other paths, return a simple offline message
-            return new Response(
-              '<!DOCTYPE html><html><head><title>Offline</title></head><body style="font-family:sans-serif;text-align:center;padding:3rem"><h1>You are offline</h1><p>This page is not cached. Please reconnect to view it.</p><a href="/" style="color:#00d4ff">Go to Home</a></body></html>',
-              { headers: { 'Content-Type': 'text/html' }, status: 503 }
-            );
+            // For other paths, fall back to the branded offline page
+            // (pre-cached above) — with a raw fallback if even that is missing.
+            return caches.match('/offline.html').then(function (off) {
+              return off || new Response(
+                '<!DOCTYPE html><html><head><title>Offline</title></head><body style="font-family:sans-serif;text-align:center;padding:3rem"><h1>You are offline</h1><p>This page is not cached. Please reconnect to view it.</p><a href="/" style="color:#00d4ff">Go to Home</a></body></html>',
+                { headers: { 'Content-Type': 'text/html' }, status: 503 }
+              );
+            });
           });
         })
     );

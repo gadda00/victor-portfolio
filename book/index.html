@@ -41,6 +41,9 @@
 .book-hero .liquid-bg { top: -30%; bottom: auto; height: 160%; }
 .book-hero h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1rem; }
 .book-hero p { color: var(--text-muted); font-size: 1.0625rem; max-width: 600px; margin: 0 auto 2rem; }
+.asmt-ctx { display: flex; align-items: center; justify-content: center; gap: 0.6rem; flex-wrap: wrap; max-width: 640px; margin: -1rem auto 1.75rem; padding: 0.7rem 1.1rem; border-radius: 12px; background: rgba(0,212,255,.07); border: 1px solid rgba(0,212,255,.35); color: var(--text); font-size: 0.875rem; line-height: 1.5; }
+.asmt-ctx strong { color: var(--accent); font-family: var(--font-mono, 'JetBrains Mono', monospace); }
+.asmt-ctx a { color: var(--accent); font-weight: 600; }
 .book-faq { max-width: 900px; margin: 0 auto; padding: 0 2rem 1rem; }
 .book-faq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
 .book-faq-card { padding: 1.25rem 1.5rem; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; text-align: left; }
@@ -192,6 +195,7 @@
   </div>
   <h1>Book a 30-Minute <span class="grad-text">AI Systems Assessment.</span></h1>
   <p>Free, focused, and useful whether or not we ever work together. Bring one workflow, bottleneck, or AI idea — leave with an honest read on what's worth building.</p>
+  <div id="asmtCtx" class="asmt-ctx" hidden></div>
 </section>
 
 <div class="book-options">
@@ -288,7 +292,7 @@
     <h2 style="text-align:center;margin-bottom:1rem">Send me a quick message</h2>
     <p style="text-align:center;color:var(--text-muted);margin-bottom:2rem">Tell me about your project and I'll reply within 24 hours.</p>
     <form class="book-form" id="quickForm" novalidate>
-      <input type="hidden" name="access_key" value="f695c261-e59a-4b77-a6cf-55f4b4883427" />
+      <input type="hidden" name="access_key" value="4bf37d31-374a-4f3e-add6-3d2e36f7b784" />
       <input type="hidden" name="subject" value="New inquiry from victorndunda.com/book" />
       <input type="hidden" name="from_name" value="Victor Ndunda Portfolio" />
       <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true" />
@@ -626,11 +630,49 @@ window.addEventListener('keydown', (e) => {
 // Web3Forms access key — THE single line to rotate when the key changes.
 // Create a free key at https://web3forms.com (Visual Scratch Pad → + Create Access Key)
 // and paste it here. The message form, the scheduler, and the assistant notifications all read it.
-window.VN_W3F_KEY = 'f695c261-e59a-4b77-a6cf-55f4b4883427';
+window.VN_W3F_KEY = '4bf37d31-374a-4f3e-add6-3d2e36f7b784';
+</script>
+<script>
+// Assessment context pickup (v11.2): /book/?src=assessment&score=72&rec=starter
+// Keeps the lead's thread from the self-serve assessment into the call request —
+// the scheduler email and the assistant pings both include it for the owner.
+(function () {
+  try {
+    var p = new URLSearchParams(location.search);
+    if (p.get('src') === 'assessment' && p.get('score')) {
+      var score = parseInt(p.get('score'), 10);
+      var rec = p.get('rec') || 'audit';
+      if (!isNaN(score) && score >= 0 && score <= 100) {
+        var prev = null;
+        try { prev = JSON.parse(localStorage.getItem('vn_assessment_ctx') || 'null'); } catch (e) {}
+        if (prev && prev.score !== score) prev = null; // stale context from a different run — don't merge
+        localStorage.setItem('vn_assessment_ctx', JSON.stringify({
+          score: score,
+          tier: p.get('tier') || (prev && prev.tier) || 'ready',
+          tierLabel: (prev && prev.tierLabel) || '',
+          recId: rec,
+          recName: ({ audit: 'AI Audit', starter: 'AI Starter', growth: 'AI Growth', enterprise: 'AI Enterprise' })[rec] || 'AI Audit',
+          dims: (prev && prev.dims) || null,
+          t: Date.now()
+        }));
+      }
+    }
+    var ctx = JSON.parse(localStorage.getItem('vn_assessment_ctx') || 'null');
+    if (ctx && ctx.score !== undefined && Date.now() - (ctx.t || 0) < 1000 * 60 * 60 * 24 * 30) {
+      var box = document.getElementById('asmtCtx');
+      if (box) {
+        box.hidden = false;
+        box.innerHTML = '\ud83e\udded Assessment on file — <strong>' + ctx.score + '/100</strong> · ' +
+          (ctx.recName || 'AI Audit') + ' suggested. The call starts from your result' +
+          ' · <a href="/services/assessment.html">retake it</a>';
+      }
+    }
+  } catch (e) { /* storage blocked — chip is optional */ }
+})();
 </script>
 <script src="/liquid.js?v=11.0.0" defer></script>
 <script src="/enhancements.js?v=11.0.0" defer></script>
-<script src="/book/scheduler.js?v=11.0.0" defer></script>
-<script src="/book/assistant.js?v=11.1.0" defer></script>
+<script src="/book/scheduler.js?v=11.2.0" defer></script>
+<script src="/book/assistant.js?v=11.2.0" defer></script>
 </body>
 </html>
