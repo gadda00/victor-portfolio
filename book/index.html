@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <meta name="view-transition" content="same-origin" />
-<link rel="stylesheet" href="/styles.css?v=11.0.0" />
+<link rel="stylesheet" href="/styles.css?v=12.0.0" />
 <link rel="stylesheet" href="/liquid.css?v=11.0.0" />
 
 <!-- Security Headers -->
@@ -153,6 +153,7 @@
 .sc-email-note { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 0.75rem; }
 @media (max-width: 480px) { .sc-day { font-size: 0.8125rem; } .sc-slots { gap: 0.4rem; } }
 </style>
+<script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
@@ -196,6 +197,7 @@
   <h1>Book a 30-Minute <span class="grad-text">AI Systems Assessment.</span></h1>
   <p>Free, focused, and useful whether or not we ever work together. Bring one workflow, bottleneck, or AI idea — leave with an honest read on what's worth building.</p>
   <div id="asmtCtx" class="asmt-ctx" hidden></div>
+  <p style="display:flex;justify-content:center;align-items:center;gap:.5rem;margin:-0.5rem auto 1.5rem;font-size:.85rem;color:var(--accent);font-weight:600"><span class="pulse-dot" aria-hidden="true"></span><span data-availability="full" hidden></span></p>
 </section>
 
 <div class="book-options">
@@ -674,5 +676,8 @@ window.VN_W3F_KEY = '4bf37d31-374a-4f3e-add6-3d2e36f7b784';
 <script src="/enhancements.js?v=11.0.0" defer></script>
 <script src="/book/scheduler.js?v=11.2.0" defer></script>
 <script src="/book/assistant.js?v=11.2.0" defer></script>
+<script src="/book/draft-guard.js?v=12.0.0" defer></script>
+<script src="/availability.js?v=12.0.0" defer></script>
+<script src="/palette.js?v=12.0.0" defer></script>
 </body>
 </html>

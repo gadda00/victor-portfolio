@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [12.0.0] — 2026-09-21 — The Depth Layer: Site-wide Command Palette, Long-form Reading, Trust Signals
+
+**Site-wide Command Palette (⌘K / `/` on every page — `palette.js`):**
+- The old palette was homepage-only (`app.js` early-returns without `#bgCanvas`); it now ships on all 35 public pages as a self-injecting module — no per-page markup.
+- Searches every page, 12 services, 4 packages, 8 guides, 10 articles and 8 FAQs (from `data.json` + `posts.json`, 12h localStorage cache, offline fallback).
+- Recent-pages memory, context actions ("Resume your estimate", "Your readiness score: N/100"), WhatsApp with page context, copy-email / copy-link, theme toggle from any page.
+- Full keyboard nav + ARIA dialog/listbox semantics, focus restore, reduced-motion aware. `?q=` deep links preserved. Homepage `app.js` palette section removed (~140 lines) — one implementation everywhere.
+
+**Long-form reading layer (`article-enhance.js` on 10 articles + 8 guides):**
+- Auto TOC with scroll-spy — sticky rail on wide screens, collapsible "On this page" on mobile.
+- Per-heading anchor links (hover "#" copies the deep link).
+- Share row: copy link / WhatsApp / X with the article title.
+- Resume-where-you-left-off scroll memory per article (restores only 15–92% through, announced with a toast).
+- Related reading: 3 tag-similar articles (or sibling guides) rendered at the end of every long page.
+
+**Trust & conversion signals:**
+- `/ai-policy.html` — "How I Use AI" transparency policy: where AI is used, the rules never broken (no client data into third-party models without written consent), DPA 2019/GDPR handling, four human-review gates, model-risk mitigations, disclosure commitments, tools inventory, and five questions to ask any AI consultant. Linked from the footer, palette, sitemap, JSON-LD.
+- `victor-ndunda.vcf` — vCard "Save Contact" (home contact grid + resume page).
+- `availability.js` — honest, config-driven "Now booking {Month} · N project slots" on home, `/book/` and `/services/` (owner edits two constants; no fake countdowns).
+
+**Reliability:**
+- `book/draft-guard.js` — both booking forms (scheduler + message) now autosave drafts to localStorage (debounced), restore after crashes/refreshes with a toast, and clear on submit; "start over" clears saved drafts.
+- Speculation-Rules prefetch (`eagerness: moderate`) on 32 content pages — internal navigation feels instant in Chromium browsers.
+
+**Housekeeping:** `sw.js` → `vnd-v12.0.0` (palette/article-enhance/availability/ai-policy/vcf added to the offline shell); `styles.css` dead `.cmd-*` modal rules removed; all pages bumped to `styles.css?v=12.0.0`; `app.js` → `v12.0.0`.
+
+
 ## [11.2.0] — 2026-09-21 — The Intelligence Layer: Assessment Funnel, Live Notifications, Professional Polish
 
 **AI Readiness Assessment — new top-of-funnel lead tool (`/services/assessment.html`):**

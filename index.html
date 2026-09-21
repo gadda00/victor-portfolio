@@ -123,7 +123,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="styles.css?v=11.0.0" />
+<link rel="stylesheet" href="styles.css?v=12.0.0" />
 <link rel="stylesheet" href="home.css?v=11.0.0" />
 <link rel="stylesheet" href="/liquid.css?v=11.0.0" />
 
@@ -153,6 +153,7 @@
 <meta property="article:author" content="Victor Ndunda" />
 <meta property="article:section" content="Technology" />
 <meta property="article:tag" content="AI Engineering" />
+<script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
@@ -202,23 +203,7 @@
   </div>
 </nav>
 
-<!-- Command Palette -->
-<div class="cmd-palette" id="cmdPalette">
-  <div class="cmd-overlay" id="cmdOverlay"></div>
-  <div class="cmd-box">
-    <div class="cmd-input-wrap">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="cmdInput" placeholder="Search Victor's work, navigate, or ask..." autocomplete="off" aria-label="Search commands" />
-      <kbd>ESC</kbd>
-    </div>
-    <div class="cmd-results" id="cmdResults"></div>
-    <div class="cmd-footer">
-      <span><kbd>↑↓</kbd> navigate</span>
-      <span><kbd>↵</kbd> select</span>
-      <span><kbd>esc</kbd> close</span>
-    </div>
-  </div>
-</div>
+<!-- Command palette now lives in /palette.js (v12) — site-wide -->
 
 <!-- Hero -->
 <main id="main">
@@ -801,11 +786,15 @@
         <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3v9zm-1.5-10.3a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM19 19h-3v-4.7c0-1.1 0-2.5-1.5-2.5s-1.8 1.2-1.8 2.4V19h-3v-9h2.9v1.2h.04c.4-.75 1.4-1.5 2.8-1.5 3 0 3.6 2 3.6 4.5V19z"/></svg></div>
         <div><div class="contact-label">LinkedIn</div><div class="contact-value">Victor Ndunda</div></div>
       </a>
+      <a href="/victor-ndunda.vcf" download class="contact-card spot-card" data-track="contact-vcf">
+        <div class="contact-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg></div>
+        <div><div class="contact-label">Save Contact</div><div class="contact-value">victor-ndunda.vcf · one tap</div></div>
+      </a>
     </div>
 
     <!-- Booking CTA -->
     <div class="booking-cta-band">
-      <div class="booking-cta-eyebrow"><span class="pulse-dot"></span> Free · 30 minutes · No pitch</div>
+      <div class="booking-cta-eyebrow"><span class="pulse-dot"></span> Free · 30 minutes · No pitch · <span data-availability="slots" hidden></span></div>
       <h3 class="booking-cta-title">Book a 30-Minute AI Systems Assessment</h3>
       <p class="booking-cta-body">
         Bring one workflow, bottleneck, or AI idea. You'll leave with an honest read on what's worth building, what's risky, and the smallest useful first step — even if that step is "not yet."
@@ -864,7 +853,7 @@
       <div class="footer-links">
         <div><h5>Navigate</h5><a href="/services/">Services</a><a href="/projects/">Case Studies</a><a href="/blog/">Insights</a><a href="/resume/">Resume</a><a href="/book/">Book an Assessment</a><a href="#contact">Contact</a></div>
         <div><h5>Projects</h5><a href="https://busaraai.com">Busara AI</a><a href="https://github.com/gadda00/kilimopro">KilimoPRO</a><a href="https://github.com/gadda00/verxlite">Verxlite</a><a href="https://github.com/gadda00/fraud-detection-system">Fraud Detection</a><a href="https://github.com/gadda00/agentreplay">AgentReplay</a><a href="https://github.com/gadda00/IntelliFlow">IntelliFlow</a></div>
-        <div><h5>Legal</h5><a href="/terms-of-service.html">Terms of Service</a><a href="/privacy-policy.html">Privacy Policy</a></div>
+        <div><h5>Legal</h5><a href="/ai-policy.html">AI Policy</a><a href="/terms-of-service.html">Terms of Service</a><a href="/privacy-policy.html">Privacy Policy</a></div>
         <div><h5>Connect</h5><a href="mailto:mututandunda@gmail.com">Email</a><a href="https://wa.me/254724346971">WhatsApp</a><a href="https://github.com/gadda00">GitHub</a><a href="https://www.linkedin.com/in/victor-ndunda">LinkedIn</a></div>
       </div>
     </div>
@@ -875,7 +864,8 @@
   </div>
 </footer>
 
-<script src="app.js?v=11.2.0" defer></script>
+<script src="app.js?v=12.0.0" defer></script>
+<script src="/availability.js?v=12.0.0" defer></script>
 <script src="/liquid.js?v=11.0.0" defer></script>
 <script src="/i18n.js?v=7.1.0" defer></script>
 <script src="/enhancements.js?v=11.0.0" defer></script>
@@ -910,5 +900,6 @@
     });
   }
 </script>
+<script src="/palette.js?v=12.0.0" defer></script>
 </body>
 </html>

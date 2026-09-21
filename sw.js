@@ -15,7 +15,7 @@
  * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v11.2.0';
+const CACHE_VERSION = 'vnd-v12.0.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -34,6 +34,11 @@ const SHELL_URLS = [
   '/effects.js',
   '/i18n.js',
   '/enhancements.js',
+  '/palette.js',
+  '/article-enhance.js',
+  '/availability.js',
+  '/ai-policy.html',
+  '/victor-ndunda.vcf',
   '/feed.xml',
   '/feed.xsl',
   '/offline.html',

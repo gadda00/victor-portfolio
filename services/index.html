@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <meta name="view-transition" content="same-origin" />
-<link rel="stylesheet" href="/styles.css?v=11.0.0" />
+<link rel="stylesheet" href="/styles.css?v=12.0.0" />
 <link rel="stylesheet" href="/liquid.css?v=11.0.0" />
 <link rel="stylesheet" href="/services/services.css?v=11.0.0" />
 
@@ -47,6 +47,7 @@
 
 <!-- Structured Data: Service + Breadcrumb -->
 
+<script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
@@ -87,6 +88,7 @@
     <span class="label" style="display:inline-block;font-size:0.75rem;font-weight:700;text-transform:uppercase;letter-spacing:0.2em;color:var(--accent);margin-bottom:1rem;padding:0.3rem 0.8rem;border-radius:99px;background:var(--glass);border:1px solid var(--border)">AI Services &amp; Packages</span>
     <h1>From assessment to <span class="grad-text">production AI.</span></h1>
     <p>Three ways to start, one commercial system underneath — packages priced in USD and KES, scoped before any build begins. I build AI that ships, works in Swahili, and runs on the devices your users actually have.</p>
+    <p style="display:flex;justify-content:center;align-items:center;gap:.5rem;margin:1.2rem 0 0;font-size:.85rem;color:var(--accent);font-weight:600"><span class="pulse-dot" aria-hidden="true"></span><span data-availability="full" hidden></span></p>
     <div class="svc-hero-cta">
       <a href="/book/" class="svc-cta-btn primary">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
@@ -331,6 +333,7 @@
 </footer>
 
 <script src="/services/services.js?v=11.1.0" defer></script>
+<script src="/availability.js?v=12.0.0" defer></script>
 <script src="/liquid.js?v=11.0.0" defer></script>
 <script src="/enhancements.js?v=11.0.0" defer></script>
 <script>
@@ -358,5 +361,6 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
 </script>
+<script src="/palette.js?v=12.0.0" defer></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 /* Victor Ndunda — Portfolio App v3.0
    Particle system (spatial-grid optimized), typewriter (reduced-motion aware),
-   command palette (with blog search), theme toggle (class-safe), scroll effects (throttled),
+   theme toggle (class-safe), scroll effects (throttled),
    animated count-up stats, tilt/magnetic cards, copy-to-clipboard, toast system */
 
 (function () {
@@ -384,149 +384,9 @@
   // ═══════════════════════════════════════════════════════════════════
 
   // ═══════════════════════════════════════════════════════════════════
-  // 9. COMMAND PALETTE (Cmd+K) — with blog article search
+  // 9. COMMAND PALETTE — moved to /palette.js in v12: one palette, every
+  //    page, with services/guides/articles/FAQ search + recent pages.
   // ═══════════════════════════════════════════════════════════════════
-  const cmdPalette = document.getElementById('cmdPalette');
-  const cmdInput = document.getElementById('cmdInput');
-  const cmdResults = document.getElementById('cmdResults');
-  const cmdOverlay = document.getElementById('cmdOverlay');
-  let cmdSelectedIdx = 0;
-  let blogPosts = [];
-  let blogPostsLoaded = false;
-
-  // Fetch blog posts for search (lazy — only when palette opens first time)
-  function loadBlogPosts() {
-    if (blogPostsLoaded) return Promise.resolve(blogPosts);
-    blogPostsLoaded = true;
-    return fetch('/blog/posts.json')
-      .then(r => r.json())
-      .then(data => {
-        blogPosts = (data.posts || []).map(p => ({
-          icon: '📝', title: p.title, desc: p.excerpt.substring(0, 60) + '...',
-          action: () => window.location.href = p.url
-        }));
-        return blogPosts;
-      })
-      .catch(() => []);
-  }
-
-  const cmdCommands = [
-    { icon: '📅', title: 'Book an Assessment', desc: 'Free 30-minute AI systems call', action: () => window.location.href = '/book/' },
-    { icon: '🏠', title: 'Go to Home', desc: 'Back to the top', action: () => window.scrollTo({ top: 0, behavior: 'smooth' }) },
-    { icon: '👨‍💻', title: 'About Victor', desc: 'Learn about my background', action: () => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' }) },
-    { icon: '🚀', title: 'Case Studies', desc: 'Six shipped systems, measurable results', action: () => document.getElementById('case-studies')?.scrollIntoView({ behavior: 'smooth' }) },
-    { icon: '📋', title: 'All Work (Bento Grid)', desc: 'Busara AI, KilimoPRO & more', action: () => document.getElementById('work')?.scrollIntoView({ behavior: 'smooth' }) },
-    { icon: '🛠️', title: 'Tech Stack', desc: 'Languages, frameworks & tools', action: () => document.getElementById('techstack')?.scrollIntoView({ behavior: 'smooth' }) },
-    { icon: '📝', title: 'Insights', desc: 'Research and technical articles', action: () => window.location.href = '/blog/' },
-    { icon: '🛠️', title: 'Services', desc: 'What I can build for you', action: () => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' }) },
-    { icon: '📧', title: 'Contact Me', desc: 'Get in touch', action: () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) },
-    { icon: '📄', title: 'View Resume', desc: 'Full resume page', action: () => window.location.href = '/resume/' },
-    { icon: '⬇️', title: 'Download Resume PDF', desc: 'Victor-Ndunda-Resume.pdf', action: () => window.location.href = '/resume/Victor-Ndunda-Resume.pdf' },
-    { icon: '🚀', title: 'Visit Busara AI', desc: 'busaraai.com — live platform', action: () => window.open('https://busaraai.com', '_blank') },
-    { icon: '🌱', title: 'Visit KilimoPRO', desc: 'github.com/gadda00/kilimopro', action: () => window.open('https://github.com/gadda00/kilimopro', '_blank') },
-    { icon: '🏢', title: 'Visit Keja AI', desc: 'keja.app — real estate intelligence', action: () => window.open('https://keja.app', '_blank') },
-    { icon: '🐙', title: 'GitHub Profile', desc: 'github.com/gadda00', action: () => window.open('https://github.com/gadda00', '_blank') },
-    { icon: '💼', title: 'LinkedIn', desc: 'linkedin.com/in/victor-ndunda', action: () => window.open('https://www.linkedin.com/in/victor-ndunda', '_blank') },
-    { icon: '📧', title: 'Email Me', desc: 'mututandunda@gmail.com', action: () => window.location.href = 'mailto:mututandunda@gmail.com' },
-    { icon: '📱', title: 'WhatsApp Call', desc: '+254 724 346 971 — chat or call', action: () => window.open('https://wa.me/254724346971', '_blank') },
-    { icon: '💬', title: 'WhatsApp', desc: 'Chat on WhatsApp', action: () => window.open('https://wa.me/254724346971', '_blank') },
-    { icon: '🌓', title: 'Toggle Theme', desc: 'Switch dark/light mode', action: () => themeToggle?.click() },
-  ];
-
-  function getAllCommands() {
-    return [...cmdCommands, ...blogPosts];
-  }
-
-  function renderCmdResults(filter = '') {
-    const all = getAllCommands();
-    const filtered = filter
-      ? all.filter(c =>
-          c.title.toLowerCase().includes(filter.toLowerCase()) ||
-          c.desc.toLowerCase().includes(filter.toLowerCase()))
-      : all;
-    cmdSelectedIdx = 0;
-    cmdResults.innerHTML = filtered.slice(0, 12).map((c, i) => `
-      <div class="cmd-item ${i === 0 ? 'selected' : ''}" data-idx="${i}">
-        <div class="cmd-item-icon">${c.icon}</div>
-        <div class="cmd-item-text">
-          <div class="cmd-item-title">${c.title}</div>
-          <div class="cmd-item-desc">${c.desc}</div>
-        </div>
-      </div>
-    `).join('') || '<div style="padding:1rem;color:var(--text-muted);text-align:center;">No results found</div>';
-
-    cmdResults.querySelectorAll('.cmd-item').forEach((el, i) => {
-      el.addEventListener('click', () => { filtered[i].action(); closeCmd(); });
-      el.addEventListener('mouseenter', () => {
-        cmdResults.querySelectorAll('.cmd-item').forEach(e => e.classList.remove('selected'));
-        el.classList.add('selected');
-        cmdSelectedIdx = i;
-      });
-    });
-  }
-
-  function openCmd() {
-    cmdPalette.classList.add('open');
-    cmdInput.value = '';
-    renderCmdResults();
-    // Lazy load blog posts for search
-    loadBlogPosts().then(() => {
-      if (cmdPalette.classList.contains('open')) renderCmdResults(cmdInput.value);
-    });
-    setTimeout(() => cmdInput.focus(), 50);
-  }
-  function closeCmd() { cmdPalette.classList.remove('open'); }
-
-  const cmdTrigger = document.getElementById('cmdTrigger');
-  if (cmdTrigger) cmdTrigger.addEventListener('click', openCmd);
-  if (cmdOverlay) cmdOverlay.addEventListener('click', closeCmd);
-
-  document.addEventListener('keydown', e => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      cmdPalette.classList.contains('open') ? closeCmd() : openCmd();
-    }
-    if (e.key === 'Escape') closeCmd();
-    if (cmdPalette && cmdPalette.classList.contains('open')) {
-      if (e.key === 'ArrowDown') {
-        e.preventDefault();
-        const items = cmdResults.querySelectorAll('.cmd-item');
-        if (items.length === 0) return;
-        cmdSelectedIdx = Math.min(cmdSelectedIdx + 1, items.length - 1);
-        items.forEach(el => el.classList.remove('selected'));
-        items[cmdSelectedIdx]?.classList.add('selected');
-        items[cmdSelectedIdx]?.scrollIntoView({ block: 'nearest' });
-      }
-      if (e.key === 'ArrowUp') {
-        e.preventDefault();
-        const items = cmdResults.querySelectorAll('.cmd-item');
-        if (items.length === 0) return;
-        cmdSelectedIdx = Math.max(cmdSelectedIdx - 1, 0);
-        items.forEach(el => el.classList.remove('selected'));
-        items[cmdSelectedIdx]?.classList.add('selected');
-        items[cmdSelectedIdx]?.scrollIntoView({ block: 'nearest' });
-      }
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        const items = cmdResults.querySelectorAll('.cmd-item');
-        items[cmdSelectedIdx]?.click();
-      }
-    }
-  });
-
-  if (cmdInput) cmdInput.addEventListener('input', e => renderCmdResults(e.target.value));
-
-  // Support ?q= deep links — makes the WebSite SearchAction structured data honest
-  (function () {
-    const q = new URLSearchParams(window.location.search).get('q');
-    if (q && q.trim() && typeof openCmd === 'function') {
-      openCmd();
-      if (cmdInput) {
-        cmdInput.value = q.trim();
-        renderCmdResults(q.trim());
-      }
-    }
-  })();
 
   // ═══════════════════════════════════════════════════════════════════
   // 10. SCROLL REVEAL — Staggered, with IntersectionObserver

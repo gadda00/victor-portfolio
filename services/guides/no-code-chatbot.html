@@ -36,7 +36,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <meta name="view-transition" content="same-origin" />
-<link rel="stylesheet" href="/styles.css?v=11.0.0" />
+<link rel="stylesheet" href="/styles.css?v=12.0.0" />
 <link rel="stylesheet" href="/services/guides/guides.css" />
 
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
@@ -79,6 +79,7 @@
   ]
 }
 </script>
+<script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 </head><body>
 <a href="#main" class="skip-link">Skip to content</a>
 <div class="noise-overlay" aria-hidden="true"></div>
@@ -327,5 +328,7 @@
 <script>
 const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');});const mobileToggle=document.getElementById('mobileToggle');mobileToggle.addEventListener('click',()=>{const navLinks=document.getElementById('navLinks');const isOpen=navLinks.classList.toggle('open');mobileToggle.setAttribute('aria-expanded',isOpen?'true':'false');});window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
 </script>
+<script src="/palette.js?v=12.0.0" defer></script>
+<script src="/article-enhance.js?v=12.0.0" defer></script>
 </body>
 </html>

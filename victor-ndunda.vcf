@@ -1,0 +1,17 @@
+BEGIN:VCARD
+VERSION:3.0
+N:Ndunda;Victor;;;
+FN:Victor Ndunda
+ORG:Victor Ndunda — AI & Web Solutions
+TITLE:AI Engineer & Founder
+EMAIL;TYPE=INTERNET,PREF:mututandunda@gmail.com
+TEL;TYPE=CELL,VOICE:+254724346971
+URL:https://victorndunda.com
+URL:https://busaraai.com
+ADR;TYPE=WORK:;;;Nairobi;;;Kenya
+TZ:Africa/Nairobi
+NOTE:AI Engineer building multi-agent intelligence systems in Nairobi\, Kenya. Book a free 30-minute assessment at https://victorndunda.com/book/
+CATEGORIES:AI Engineer,Consultant,Web Developer
+GEO:36.8219;-1.2921
+REV:2026-09-21T00:00:00Z
+END:VCARD
