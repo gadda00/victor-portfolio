@@ -212,6 +212,14 @@
         brief.paymentStatus = 'plan-selected';
         brief.status = brief.status || 'contracted';
         saveBrief(brief);
+        // v13: sync into the encrypted Client Portal when signed in
+        try {
+          if (window.VNPortalCore && window.VNPortalCore.isAuthed()) {
+            var proj = window.VNPortalCore.findProjectByBrief(brief.id);
+            if (!proj) proj = window.VNPortalCore.addProject(brief);
+            if (proj) window.VNPortalCore.buildPaymentPlan(proj, btn.dataset.plan);
+          }
+        } catch (e) { /* portal optional */ }
       });
     });
   }

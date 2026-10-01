@@ -264,17 +264,22 @@
   sections.overview = function () {
     var activity = getActivity().slice(0, 6);
     var briefs = getBriefs();
+    var portalClients = getPortalClients();
     var apps = getApps();
     var resumeDls = parseInt(localStorage.getItem('vn_resume_downloads') || '0', 10);
     var visits = parseInt(localStorage.getItem('vn_visits') || '0', 10);
+    var mrr = portalClients.reduce(function (a, c) {
+      return a + (c.project && c.project.retainer && c.project.retainer.active ? (c.project.retainer.monthlyUsd || 0) : 0);
+    }, 0);
     return '<div class="page-head"><h1>Overview</h1><p>' + new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }) + '</p></div>' +
       '<div class="stat-grid">' +
       '<div class="stat"><div class="stat-label">Projects</div><div class="stat-val">' + (projectsData.length + getProjects().length) + '</div></div>' +
       '<div class="stat"><div class="stat-label">Articles</div><div class="stat-val">' + blogPosts.length + '</div></div>' +
-      '<div class="stat"><div class="stat-label">Client Briefs</div><div class="stat-val">' + briefs.length + '</div></div>' +
-      '<div class="stat"><div class="stat-label">Resume DLs</div><div class="stat-val">' + resumeDls + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Portal Clients</div><div class="stat-val">' + (portalClients.length + briefs.length) + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Retainer MRR</div><div class="stat-val">' + usd(mrr) + '</div></div>' +
       '</div>' +
       '<div class="actions">' +
+      '<a href="/services/client-dashboard.html" class="action"><span class="icon">🔐</span>Client Portal</a>' +
       '<a href="/services/wizard.html" class="action"><span class="icon">🚀</span>New Brief</a>' +
       '<a href="/projects/" class="action"><span class="icon">📦</span>View Projects</a>' +
       '<a href="/" class="action"><span class="icon">🌐</span>View Site</a>' +
@@ -591,22 +596,130 @@
       '</tbody></table></div>';
   };
 
+  // ─── Client Portal Command Center (v13) ─────────────────────────
+  // The client portal (/services/client-dashboard.html) is zero-backend:
+  // client data is AES-encrypted in THEIR browser. This command center
+  // is the owner's side of the bridge:
+  //   1. Portal events logged on this browser (testing / shared device)
+  //   2. Share codes — clients paste VN1.… codes to Victor, he imports
+  //      full project snapshots (payments, stages, retainer, contact)
+  //   3. Every client action ALSO emails you via Web3Forms instantly:
+  //      signups, plans chosen, payments marked, messages, cancellations.
+
+  function getPortalEvents() {
+    try { return JSON.parse(localStorage.getItem('vn_portal_events') || '[]'); } catch { return []; }
+  }
+  function getPortalClients() {
+    try { return JSON.parse(localStorage.getItem('vn_portal_clients') || '[]'); } catch { return []; }
+  }
+  function savePortalClients(arr) {
+    try { localStorage.setItem('vn_portal_clients', JSON.stringify(arr)); } catch {}
+  }
+
   sections.clients = function () {
+    var events = getPortalEvents();
+    var clients = getPortalClients();
     var briefs = getBriefs();
-    return '<div class="page-head"><h1>Client Briefs</h1><p>Project briefs from services wizard.</p></div>' +
+    var paidTotal = clients.reduce(function (a, c) {
+      return a + ((c.project && c.project.payments || []).filter(function (p) { return p.status === 'paid'; }).reduce(function (s, p) { return s + (p.usd || 0); }, 0));
+    }, 0);
+    var mrr = clients.reduce(function (a, c) {
+      return a + (c.project && c.project.retainer && c.project.retainer.active ? (c.project.retainer.monthlyUsd || 0) : 0);
+    }, 0);
+
+    return '<div class="page-head"><h1>Client Portal Command Center</h1><p>Everything your clients do in their encrypted portals — activity, imports, and revenue.</p></div>' +
       '<div class="stat-grid">' +
-      '<div class="stat"><div class="stat-label">Total</div><div class="stat-val">' + briefs.length + '</div></div>' +
-      '<div class="stat"><div class="stat-label">Contracted</div><div class="stat-val">' + briefs.filter(function (b) { return b.status === 'contracted'; }).length + '</div></div>' +
-      '<div class="stat"><div class="stat-label">In Progress</div><div class="stat-val">' + briefs.filter(function (b) { return b.status === 'in-progress'; }).length + '</div></div>' +
-      '<div class="stat"><div class="stat-label">Delivered</div><div class="stat-val">' + briefs.filter(function (b) { return b.status === 'delivered'; }).length + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Portal Clients</div><div class="stat-val">' + clients.length + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Paid (tracked)</div><div class="stat-val">' + usd(paidTotal) + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Retainer MRR</div><div class="stat-val">' + usd(mrr) + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Events (this device)</div><div class="stat-val">' + events.length + '</div></div>' +
       '</div>' +
-      (briefs.length ? '<div class="card"><table class="tbl"><thead><tr><th>Client</th><th>Package</th><th>Status</th><th>Date</th></tr></thead><tbody>' +
+
+      '<div class="card"><h3>📥 Import a client share code</h3>' +
+      '<p style="color:var(--txt2);font-size:0.85rem;line-height:1.6;margin:0 0 0.75rem">When a client clicks "Generate share code" in their portal, they get a <code>VN1.…</code> string. Paste it here to import their project snapshot — payments, pipeline stage, retainer and contact details — into this dashboard.</p>' +
+      '<div style="display:flex;gap:0.5rem;flex-wrap:wrap">' +
+      '<input type="text" id="portalImportInput" placeholder="VN1.eyJ2IjoxLCJraW5kIjoidm4tcG9ydGFs…" style="flex:1;min-width:220px" class="input" />' +
+      '<button class="btn" id="portalImportBtn">Import client</button>' +
+      '</div>' +
+      '<div id="portalImportOut" style="margin-top:0.6rem"></div>' +
+      '</div>' +
+
+      (clients.length ? '<div class="card"><h3>💼 Imported clients</h3><table class="tbl"><thead><tr><th>Client</th><th>Project</th><th>Pipeline</th><th>Paid / Value</th><th>Retainer</th><th>Imported</th></tr></thead><tbody>' +
+      clients.slice().reverse().map(function (c) {
+        var p = c.project || {};
+        var pays = p.payments || [];
+        var paid = pays.filter(function (x) { return x.status === 'paid'; }).reduce(function (s, x) { return s + (x.usd || 0); }, 0);
+        var value = pays.reduce(function (s, x) { return s + (x.usd || 0); }, 0) || (p.estimate && p.estimate.totalUsd) || 0;
+        var prog = p.progress != null ? p.progress : 0;
+        var ret = p.retainer;
+        return '<tr><td><strong>' + (c.client ? esc2(c.client.name || c.client.email) : '—') + '</strong><div style="font-size:0.7rem;color:var(--txt3)">' + (c.client ? esc2(c.client.email || '') : '') + '</div></td>' +
+          '<td>' + esc2(p.name || p.packageName || '—') + '</td>' +
+          '<td><span class="badge ' + (prog >= 100 ? 'b-green' : prog > 0 ? 'b-blue' : 'b-gray') + '">' + prog + '%</span> <span style="font-size:0.7rem;color:var(--txt3)">' + esc2(p.status || '') + '</span></td>' +
+          '<td>' + usd(paid) + ' / ' + usd(value) + '</td>' +
+          '<td>' + (ret ? (ret.active ? '<span class="badge b-green">' + usd(ret.monthlyUsd) + '/mo</span>' : '<span class="badge b-gray">ended</span>') : '—') + '</td>' +
+          '<td>' + (c.importedAt ? new Date(c.importedAt).toLocaleDateString() : '—') + '</td></tr>';
+      }).join('') + '</tbody></table></div>' : '') +
+
+      '<div class="card"><h3>⚡ How the portal pipeline reaches you</h3>' +
+      '<div class="set-row"><span class="set-label">Client signs up</span><span class="set-val">Instant email (Web3Forms) → mututandunda@gmail.com</span></div>' +
+      '<div class="set-row"><span class="set-label">Plan chosen / payment marked</span><span class="set-val">Instant email with M-Pesa ref for verification</span></div>' +
+      '<div class="set-row"><span class="set-label">Client message / support request</span><span class="set-val">Instant email — reply within 4 business hours</span></div>' +
+      '<div class="set-row"><span class="set-label">Retainer cancellation</span><span class="set-val">Instant email with reason — 30-day notice applies</span></div>' +
+      '<div class="set-row"><span class="set-label">Full project detail</span><span class="set-val">Client share code → import above</span></div>' +
+      '</div>' +
+
+      (events.length ? '<div class="card"><h3>📡 Recent portal events (this device)</h3>' +
+      events.slice(0, 15).map(function (e) {
+        var ic = { auth: '🔐', project: '📁', payment: '💳', retainer: '🛡️', message: '💬' }[e.type] || '•';
+        return '<div class="activity"><div class="icon">' + ic + '</div><div class="txt">' + esc2(e.text) + (e.email ? ' <span style="color:var(--txt3);font-size:0.75rem">(' + esc2(e.email) + ')</span>' : '') + '</div><div class="time">' + timeAgo(e.at) + '</div></div>';
+      }).join('') + '</div>' : '') +
+
+      (briefs.length ? '<div class="card"><h3>📋 Legacy briefs (pre-portal)</h3><table class="tbl"><thead><tr><th>Client</th><th>Package</th><th>Status</th><th>Date</th></tr></thead><tbody>' +
       briefs.map(function (b) {
         var pkg = b.recommendation ? b.recommendation.packageName : (b.estimate ? b.estimate.packageName : '—');
         var st = b.status || 'draft';
         var bc = { draft: 'b-gray', contracted: 'b-blue', 'in-progress': 'b-yellow', delivered: 'b-green' }[st] || 'b-gray';
-        return '<tr><td><strong>' + (b.details ? b.details.name : 'Unknown') + '</strong></td><td>' + pkg + '</td><td><span class="badge ' + bc + '">' + st + '</span></td><td>' + (b.createdAt ? new Date(b.createdAt).toLocaleDateString() : '—') + '</td></tr>';
-      }).join('') + '</tbody></table></div>' : '<div class="empty"><div class="icon">💼</div>No briefs yet.</div>');
+        return '<tr><td><strong>' + (b.details ? esc2(b.details.name) : 'Unknown') + '</strong></td><td>' + esc2(pkg) + '</td><td><span class="badge ' + bc + '">' + st + '</span></td><td>' + (b.createdAt ? new Date(b.createdAt).toLocaleDateString() : '—') + '</td></tr>';
+      }).join('') + '</tbody></table></div>' : '');
+  };
+
+  function esc2(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  listeners.clients = function () {
+    var btn = document.getElementById('portalImportBtn');
+    var input = document.getElementById('portalImportInput');
+    var out = document.getElementById('portalImportOut');
+    if (!btn || !input) return;
+    btn.addEventListener('click', function () {
+      var code = input.value.trim();
+      out.innerHTML = '';
+      if (!code) { out.innerHTML = '<span style="color:#f87171;font-size:0.8rem">Paste a share code first.</span>'; return; }
+      var snap = null;
+      try {
+        // decode VN1.<base64url> share codes produced by the client portal
+        var b = code.slice(4).replace(/-/g, '+').replace(/_/g, '/');
+        while (b.length % 4) b += '=';
+        snap = JSON.parse(decodeURIComponent(escape(atob(b))));
+      } catch (e) { snap = null; }
+      if (!snap || snap.kind !== 'vn-portal-project' || !snap.project) {
+        out.innerHTML = '<span style="color:#f87171;font-size:0.8rem">That is not a valid portal share code. Ask the client to re-copy it (starts with VN1.).</span>';
+        return;
+      }
+      var clients = getPortalClients().filter(function (c) { return c.project && c.project.id !== snap.project.id; });
+      clients.push({ client: snap.client, project: snap.project, importedAt: new Date().toISOString() });
+      if (clients.length > 50) clients = clients.slice(-50);
+      savePortalClients(clients);
+      var p = snap.project;
+      var paid = (p.payments || []).filter(function (x) { return x.status === 'paid'; }).reduce(function (s, x) { return s + (x.usd || 0); },0);
+      out.innerHTML = '<div class="check-item"><div class="check ok">✓</div><div><strong>Imported ' + esc2(p.name || p.packageName) + '</strong> — ' + esc2(snap.client ? snap.client.name : '') + ' · ' + usd(paid) + ' received · ' + (p.progress || 0) + '% through the pipeline.</div></div>';
+      input.value = '';
+      toast('Client imported into command center');
+      setTimeout(function () { switchSection('clients'); }, 900);
+    });
   };
 
   // ─── Invoicing (v9: full engagement pipeline, first-party) ──────

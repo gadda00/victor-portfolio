@@ -22,7 +22,7 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.web3forms.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
 <script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 </head>
 <body>
@@ -185,9 +185,10 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav')?.classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
 </script>
-<script src="/liquid.js?v=11.0.0" defer></script>
-<script src="/enhancements.js?v=11.0.0" defer></script>
-<script src="/services/invoice.js?v=11.0.0" defer></script>
-<script src="/palette.js?v=12.0.0" defer></script>
+<script src="/liquid.js?v=13.0.0" defer></script>
+<script src="/enhancements.js?v=13.0.0" defer></script>
+<script src="/palette.js?v=13.0.0" defer></script>
+<script src="/services/portal-core.js?v=13.0.0" defer></script>
+<script src="/services/invoice.js?v=13.0.0" defer></script>
 </body>
 </html>

@@ -197,6 +197,14 @@
       if (arr.length > 20) arr = arr.slice(-20);
       localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
     } catch (e) { /* ignore */ }
+
+    // v13: live-sync into the encrypted Client Portal when signed in
+    try {
+      if (window.VNPortalCore && window.VNPortalCore.isAuthed()) {
+        window.VNPortalCore.addProject(brief);
+        if (window.vnToast) window.vnToast('Brief added to your encrypted Client Portal', 3200);
+      }
+    } catch (e) { /* portal optional */ }
     return brief;
   }
 
@@ -257,16 +265,17 @@
           '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg>' +
           'Draft Proposal' +
         '</a>' +
+        '<a href="/services/client-dashboard.html" class="btn btn-primary" id="resultDashboard">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>' +
+          'Open in Client Portal →' +
+        '</a>' +
         '<a href="/services/payment.html?brief=' + (state._briefId || '') + '" class="btn btn-ghost" id="resultPay">' +
           '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>' +
           'See Payment Plan' +
         '</a>' +
-        '<a href="/services/client-dashboard.html" class="btn btn-ghost" id="resultDashboard">' +
-          'Save & View Later →' +
-        '</a>' +
       '</div>' +
 
-      '<p class="wiz-save-note">Your brief is saved in your browser. No data leaves your device until you proceed.</p>';
+      '<p class="wiz-save-note">Your brief is saved in your browser — and synced into your encrypted Client Portal if you\'re signed in. No data leaves your device until you proceed.</p>';
 
     $('#resultContent').innerHTML = html;
     $('#resultOverlay').hidden = false;

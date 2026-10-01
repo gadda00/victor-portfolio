@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [13.0.0] — 2026-10-01 — The Client Workspace: Encrypted Portal, Payments Engine, Retainer Lifecycle
+
+**Client Portal, rebuilt as a real product (`/services/client-dashboard.html` + `portal-core.js` + `portal.js` + `portal.css`):**
+- **Secure zero-knowledge auth** — PBKDF2-SHA256 (210,000 iterations) with split salts: one derives the stored login verifier, a second derives the AES-256-GCM vault key that is never persisted. Only the account email sits in the clear; name/company/projects/payments/messages are all ciphertext at rest. Sessions idle-timeout at 30 minutes; optional "keep me signed in" wraps the key for 7 days. Password change re-salts and re-encrypts the vault in place.
+- **Project management** — every wizard brief becomes a project with a 7-stage pipeline (Discovery → Solution Design → Contract & Deposit → Build → Review & QA → Launch → Support & Growth), auto-derived stage completion from real client actions, progress scoring, and a full activity timeline.
+- **Payments engine** — 50/50, milestone (30/40/30) and build+monthly plans generate installment schedules with due dates; "mark paid" captures the M-Pesa transaction code and method, auto-advances pipeline stages, and instantly notifies the owner by email with the reference for verification. Copy-to-clipboard M-Pesa paybill, overdue badges, per-project financial summaries (paid / outstanding / contract value).
+- **Retainer lifecycle (after-sales)** — monthly retainers auto-start with the Build+Monthly plan: renewal countdown, requests-per-cycle logging with 4-business-hour SLA display, 30-day-notice cancellation flow with reason capture, and a benefits matrix (monitoring, enhancements, analytics, priority support, strategy, training).
+- **Messaging** — per-project threads to the owner (Web3Forms-backed email delivery, stored encrypted), response-standard sidebar.
+- **Share codes** — one-click "VN1.…" base64url project snapshots the client can WhatsApp/email to Victor; the owner dashboard imports them into its command center. The bidirectional bridge for a zero-backend site.
+- **Settings & data control** — encrypted backup export, password rotation, account deletion, honest plain-language security explainer.
+
+**Owner's end — dashboard rebuilt section (`dashboard.js` "Client Portal" tab):**
+- Client Portal Command Center: portal-client count, tracked paid revenue, retainer MRR, share-code importer (full project + contact snapshots), device portal-event feed, and a routing table documenting exactly which client actions email the owner.
+- Overview tab now leads with Portal Clients + Retainer MRR and links the portal directly.
+
+**Pipeline integrations (portal-aware everywhere):**
+- `wizard.js` — briefs saved while signed in sync straight into the encrypted vault; the wizard result CTA is now "Open in Client Portal →".
+- `contract.js` — generating a contract records the document and completes the Contract stage in the vault.
+- `payment.js` — choosing a plan on the classic payment page mirrors into the portal payment schedule.
+- `invoice.js` — saved invoices are recorded as portal documents.
+- `portal-core.js` self-boots on every page that includes it, silently restoring sessions so all of the above sync without re-login.
+
+**Fixes surfaced by the rebuild:**
+- CSP on the portal/wizard/contract/invoice/payment pages now allows `connect-src https://api.web3forms.com` — the previous policy silently blocked owner notifications from ever leaving the browser.
+- Service worker bumped to `vnd-v13.0.0`; the portal and `portal-core.js` are never cached (auth UI must never be stale).
+- Command palette: Client Portal added to pages and actions.
+- `services/index.html`: Client Portal CTA in the hero and quick-nav.
+
+**QA:** full agent-browser pass on a fresh profile — signup → wizard → brief auto-import → plan selection → M-Pesa payment with reference → pipeline auto-advance → share-code round-trip → logout/login vault decryption → messages → retainer countdown; 12 key pages swept with zero console or page errors; mobile viewport verified.
 ## [12.0.0] — 2026-09-21 — The Depth Layer: Site-wide Command Palette, Long-form Reading, Trust Signals
 
 **Site-wide Command Palette (⌘K / `/` on every page — `palette.js`):**

@@ -15,7 +15,7 @@
  * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v12.0.0';
+const CACHE_VERSION = 'vnd-v13.0.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -51,12 +51,14 @@ const SHELL_URLS = [
   '/logo.svg',
 ];
 
-// Never cache these (would break OAuth + live job data + dashboard freshness)
+// Never cache these (would break OAuth + live job data + dashboard/portal freshness)
 const NEVER_CACHE = [
   '/admin/',
   '/dashboard/',
   '/jobs/',
   '/book/',
+  '/services/client-dashboard',
+  '/services/portal-core.js',
   'accounts.google.com',
   'api.linkedin.com',
   'api.twitter.com',

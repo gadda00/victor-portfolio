@@ -4,8 +4,8 @@
 <meta charset="UTF-8" />
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Client Portal — Victor Ndunda | My AI Project</title>
-<meta name="description" content="Your personal client portal. Track your AI project briefs, contracts, payments, milestones, and delivery — all in one place." />
+<title>Client Portal — Victor Ndunda | Your AI Projects</title>
+<meta name="description" content="Your secure client workspace. Projects, contracts, payments, retainers and messages — encrypted in your browser." />
 <meta name="author" content="Victor Ndunda" />
 <meta name="robots" content="noindex, nofollow" />
 <link rel="canonical" href="https://victorndunda.com/services/client-dashboard.html" />
@@ -17,17 +17,17 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/styles.css?v=12.0.0" />
+<link rel="stylesheet" href="/styles.css?v=13.0.0" />
 <link rel="stylesheet" href="/services/services.css" />
-<link rel="stylesheet" href="/services/wizard.css" />
-<link rel="stylesheet" href="/services/portal.css" />
+<link rel="stylesheet" href="/services/portal.css?v=13.0.0" />
 <meta name="theme-color" content="#0a0e1a" />
 <meta name="color-scheme" content="dark light" />
 <meta name="view-transition" content="same-origin" />
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<!-- CSP: connect-src allows Web3Forms owner notifications -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.web3forms.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
 <script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 </head>
 <body>
@@ -54,12 +54,11 @@
       <a href="/" class="nav-link">Home</a>
       <a href="/services/" class="nav-link">Services</a>
       <a href="/services/wizard.html" class="nav-link">Wizard</a>
-      <a href="/services/client-dashboard.html" class="nav-link active">My Project</a>
+      <a href="/services/client-dashboard.html" class="nav-link active">Client Portal</a>
       <a href="/resume/" class="nav-link">Resume</a>
       <a href="/#contact" class="nav-link">Contact</a>
     </div>
     <div class="nav-actions">
-      <a href="/services/wizard.html" class="btn btn-primary btn-sm nav-portal-btn">+ New Brief</a>
       <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle dark/light theme">
         <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
         <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -73,142 +72,119 @@
 
 <main id="main">
 
-<!-- Portal hero -->
-<header class="portal-hero">
-  <div class="container">
-    <span class="portal-eyebrow"><span class="pulse-dot"></span> Client Portal · Local to your browser</span>
-    <h1 class="portal-title">Your <span class="grad-text">projects.</span></h1>
-    <p class="portal-sub">Track your AI project briefs, contracts, payments, and milestones. Everything you need from scoping to launch — in one place.</p>
-    <div class="portal-cta">
-      <a href="/services/wizard.html" class="btn btn-primary">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-        Start New Brief
-      </a>
-      <a href="/services/" class="btn btn-ghost">View Packages</a>
+<!-- ═══════════ AUTH GATE ═══════════ -->
+<div id="authGate" class="auth-gate" style="display:none">
+  <div class="auth-card">
+    <div class="auth-brand">
+      <span class="pulse-dot" aria-hidden="true"></span>
+      <span>Client Portal · Encrypted workspace</span>
     </div>
-  </div>
-</header>
+    <h1 id="authTitle">Create your workspace</h1>
+    <p id="authSub" class="auth-sub">Your projects, contracts, payments and retainers — encrypted in your browser.</p>
 
-<!-- KPI strip -->
-<section class="portal-kpis" aria-label="Project summary">
-  <div class="container">
-    <div class="kpi-grid" id="kpiGrid">
-      <div class="kpi-card">
-        <div class="kpi-icon">📋</div>
-        <div class="kpi-body">
-          <div class="kpi-value" id="kpiBriefs">—</div>
-          <div class="kpi-label">Saved briefs</div>
-        </div>
+    <form id="authForm" class="auth-fields">
+      <div id="authNameWrap" class="auth-fld">
+        <label for="authName">Full name</label>
+        <input id="authName" type="text" autocomplete="name" placeholder="Jane Wanjiru" required />
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon">📄</div>
-        <div class="kpi-body">
-          <div class="kpi-value" id="kpiContracts">—</div>
-          <div class="kpi-label">Contracts</div>
-        </div>
+      <div id="authCompanyWrap" class="auth-fld">
+        <label for="authCompany">Company <span class="mut">(optional)</span></label>
+        <input id="authCompany" type="text" autocomplete="organization" placeholder="Acme Ltd" />
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon">💳</div>
-        <div class="kpi-body">
-          <div class="kpi-value" id="kpiPayments">—</div>
-          <div class="kpi-label">Payments tracked</div>
-        </div>
+      <div class="auth-fld">
+        <label for="authEmail">Email</label>
+        <input id="authEmail" type="email" autocomplete="email" placeholder="jane@acme.co.ke" required />
       </div>
-      <div class="kpi-card">
-        <div class="kpi-icon">🚀</div>
-        <div class="kpi-body">
-          <div class="kpi-value" id="kpiActive">—</div>
-          <div class="kpi-label">Active projects</div>
-        </div>
+      <div class="auth-fld">
+        <label for="authPassword">Password</label>
+        <input id="authPassword" type="password" autocomplete="new-password" placeholder="Min 8 characters" minlength="8" required />
       </div>
-    </div>
-  </div>
-</section>
+      <label class="auth-remember">
+        <input type="checkbox" id="authRemember" />
+        <span>Keep me signed in on this device (7 days)</span>
+      </label>
+      <button type="submit" class="btn btn-primary auth-btn" id="authSubmit">Create encrypted workspace</button>
+      <div id="authError" class="auth-error" style="display:none" role="alert"></div>
+    </form>
 
-<!-- Briefs list -->
-<section class="portal-section">
-  <div class="container">
-    <div class="portal-section-head">
-      <h2>Your project briefs</h2>
-      <p>Each brief is a saved snapshot from the Project Scope Wizard. Generate a contract or payment plan from any brief.</p>
-    </div>
-    <div id="briefsList" class="portal-briefs">
-      <!-- Filled by JS -->
-    </div>
-  </div>
-</section>
+    <button id="authSwitchBtn" class="auth-switch">Already registered? Sign in</button>
 
-<!-- How it works -->
-<section class="portal-section portal-how">
-  <div class="container">
-    <div class="portal-section-head">
-      <h2>How the journey works</h2>
-      <p>From first idea to launched AI product — here's every step.</p>
+    <div class="auth-trust">
+      <div class="auth-trust-item"><span class="ic">🔒</span><div><strong>Zero-knowledge</strong><div>AES-256-GCM encryption, keys derived from your password</div></div></div>
+      <div class="auth-trust-item"><span class="ic">💾</span><div><strong>Local-first</strong><div>Data lives in your browser — export or delete anytime</div></div></div>
+      <div class="auth-trust-item"><span class="ic">⚡</span><div><strong>Live notifications</strong><div>Victor is alerted instantly to payments & messages</div></div></div>
     </div>
-    <div class="portal-journey-grid">
-      <div class="portal-step">
-        <div class="portal-step-num">1</div>
-        <h3>Scope</h3>
-        <p>Use the <a href="/services/wizard.html">Project Scope Wizard</a> — 6 questions, 3 minutes. Get an intelligent package recommendation and instant price estimate.</p>
-      </div>
-      <div class="portal-step">
-        <div class="portal-step-num">2</div>
-        <h3>Register</h3>
-        <p>Your brief is saved to your browser. Add your name, email, and company. No password — your data stays on your device.</p>
-      </div>
-      <div class="portal-step">
-        <div class="portal-step-num">3</div>
-        <h3>Contract</h3>
-        <p>Generate a draft <a href="/services/contract.html">contract</a> from your brief. Download as PDF. Review and sign when ready.</p>
-      </div>
-      <div class="portal-step">
-        <div class="portal-step-num">4</div>
-        <h3>Pay</h3>
-        <p>Choose your payment plan — 50/50, milestones, or monthly. Pay via M-Pesa, Flutterwave, or Stripe. <a href="/services/payment.html">See payment options</a>.</p>
-      </div>
-      <div class="portal-step">
-        <div class="portal-step-num">5</div>
-        <h3>Track</h3>
-        <p>Watch your project move through milestones: Discovery → Build → Review → Launch. Status updates land here automatically.</p>
-      </div>
-      <div class="portal-step">
-        <div class="portal-step-num">6</div>
-        <h3>Launch</h3>
-        <p>Your AI tool goes live. Get training, documentation, and 30–90 days of support. Then we iterate on what users actually need.</p>
-      </div>
-    </div>
+    <p class="auth-foot">Have a scope wizard brief? It imports automatically when you sign in. <a href="/services/wizard.html">Run the wizard →</a></p>
   </div>
-</section>
+</div>
 
-<!-- Data management -->
-<section class="portal-section">
-  <div class="container">
-    <div class="portal-data-card">
-      <div>
-        <h3>Your data, your control</h3>
-        <p>All briefs, contracts, and payment records are stored locally in your browser (localStorage). Nothing is sent to any server until you explicitly email or share a brief. Clearing your browser data removes everything.</p>
+<!-- ═══════════ PORTAL APP ═══════════ -->
+<div id="portalApp" style="display:none">
+
+  <header class="portal-hero">
+    <div class="container portal-hero-row">
+      <div class="portal-hero-left">
+        <span class="portal-eyebrow"><span class="pulse-dot"></span> Client Portal</span>
+        <h1 class="portal-title" id="portalHello">Welcome</h1>
+        <p class="portal-sub" id="portalEmail">—</p>
       </div>
-      <div class="portal-data-actions">
-        <button class="btn btn-ghost btn-sm" id="exportData">Export backup</button>
-        <button class="btn btn-ghost btn-sm" id="clearData">Clear all data</button>
+      <div class="portal-user">
+        <div class="portal-avatar" id="portalAvatar" aria-hidden="true">C</div>
+        <button class="btn btn-ghost btn-sm" id="portalLogout">Sign out</button>
       </div>
     </div>
-  </div>
-</section>
+  </header>
+
+  <nav class="portal-tabs" aria-label="Portal sections">
+    <div class="container portal-tabs-inner">
+      <button class="portal-tab active" data-view="overview">🏠 Overview</button>
+      <button class="portal-tab" data-view="projects">📁 Projects</button>
+      <button class="portal-tab" data-view="payments">💳 Payments</button>
+      <button class="portal-tab" data-view="retainer">🛡️ Retainer</button>
+      <button class="portal-tab" data-view="messages">💬 Messages</button>
+      <button class="portal-tab" data-view="settings">⚙️ Settings</button>
+    </div>
+  </nav>
+
+  <section class="portal-view-section">
+    <div class="container">
+      <div id="portalView"><!-- rendered by portal.js --></div>
+    </div>
+  </section>
+
+  <section class="portal-how">
+    <div class="container">
+      <div class="portal-section-head">
+        <h2>The world-class journey</h2>
+        <p>From first idea to launched AI product — every step, tracked and transparent.</p>
+      </div>
+      <div class="portal-journey-grid">
+        <div class="portal-step"><div class="portal-step-num">1</div><h3>Scope</h3><p>Use the <a href="/services/wizard.html">Project Scope Wizard</a> — 6 questions, 3 minutes, instant estimate. Your brief lands here automatically.</p></div>
+        <div class="portal-step"><div class="portal-step-num">2</div><h3>Secure workspace</h3><p>Your account is protected by browser-side encryption — a private vault for every document, decision and dollar.</p></div>
+        <div class="portal-step"><div class="portal-step-num">3</div><h3>Contract</h3><p>Generate a draft <a href="/services/contract.html">contract</a> from your brief. Download as PDF. Review and sign when ready.</p></div>
+        <div class="portal-step"><div class="portal-step-num">4</div><h3>Pay as you go</h3><p>Choose 50/50, milestones, or build + monthly. M-Pesa, card, or bank — with installment tracking and receipts. <a href="/services/payment.html">See options</a>.</p></div>
+        <div class="portal-step"><div class="portal-step-num">5</div><h3>Track delivery</h3><p>Watch your project move through the 7-stage pipeline: Discovery → Design → Contract → Build → QA → Launch → Support.</p></div>
+        <div class="portal-step"><div class="portal-step-num">6</div><h3>Grow with a retainer</h3><p>Post-launch support, monitoring, monthly enhancements, and quarterly strategy — all managed from your Retainer tab.</p></div>
+      </div>
+    </div>
+  </section>
+
+</div>
 
 </main>
 
 <footer>
   <div class="container">
     <div class="footer-bottom" style="border-top:none;padding-top:1.5rem">
-      <p>© 2026 Victor Ndunda · Client Portal</p>
-      <p>victorndunda.com/services/client-dashboard.html</p>
+      <p>© 2026 Victor Ndunda · Client Portal v13</p>
+      <p>victorndunda.com · Encrypted client workspace</p>
     </div>
   </div>
 </footer>
 
-<script src="/services/portal.js" defer></script>
-<script src="/enhancements.js?v=11.0.0" defer></script>
-<script src="/palette.js?v=12.0.0" defer></script>
+<script src="/palette.js?v=13.0.0" defer></script>
+<script src="/services/portal-core.js?v=13.0.0" defer></script>
+<script src="/services/portal.js?v=13.0.0" defer></script>
+<script src="/enhancements.js?v=13.0.0" defer></script>
 </body>
 </html>

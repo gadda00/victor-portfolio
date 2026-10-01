@@ -54,6 +54,7 @@
 
   var PAGES = [
     { i: '🏠', t: 'Home', d: 'Portfolio, case studies & contact', u: '/' },
+    { i: '🔐', t: 'Client Portal', d: 'Your encrypted projects, payments & retainers', u: '/services/client-dashboard.html' },
     { i: '🛠️', t: 'Services', d: 'Packages, catalogue, calculator & FAQs', u: '/services/' },
     { i: '📊', t: 'AI Readiness Assessment', d: 'Score your AI readiness in 2 minutes', u: '/services/assessment.html' },
     { i: '🧭', t: 'Scope Wizard', d: 'Scope a project, get a live estimate', u: '/services/wizard.html' },
@@ -78,6 +79,7 @@
   ];
 
   var ACTIONS = [
+    { i: '🔐', t: 'Open my Client Portal', d: 'Projects, payments, retainer & messages', a: function () { window.location.href = '/services/client-dashboard.html'; } },
     { i: '📧', t: 'Email Victor', d: EMAIL, a: function () { window.location.href = 'mailto:' + EMAIL; } },
     { i: '💬', t: 'WhatsApp with context', d: 'Opens WhatsApp, mentions this page', a: function () {
         window.open(WA + '?text=' + encodeURIComponent('Hi Victor — I have a question about ' + shortTitle() + ' (' + window.location.origin + here() + ')'), '_blank', 'noopener');

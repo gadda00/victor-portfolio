@@ -279,7 +279,7 @@
     doc.save('Victor-Ndunda-Contract-' + contractId + '.pdf');
   }
 
-  // ── Init ──────────────────────────────────────────────────────────
+  // ── Init ───────────────────────────────────────────────────────────
   function init() {
     var briefId = getBriefId();
     var brief = briefId ? getBrief(briefId) : null;
@@ -304,6 +304,15 @@
     var all = getBriefs();
     var idx = all.findIndex(function (b) { return b.id === brief.id; });
     if (idx >= 0) { all[idx] = brief; localStorage.setItem('vn_client_briefs', JSON.stringify(all)); }
+
+    // v13: sync into the encrypted Client Portal when signed in
+    try {
+      if (window.VNPortalCore && window.VNPortalCore.isAuthed()) {
+        var proj = window.VNPortalCore.findProjectByBrief(brief.id);
+        if (!proj) proj = window.VNPortalCore.addProject(brief);
+        if (proj) window.VNPortalCore.recordDocument(proj, 'contract', 'AI Services Agreement — contract generated');
+      }
+    } catch (e) { /* portal optional */ }
 
     $('#downloadPdf').addEventListener('click', function () { downloadPdf(brief); });
     $('#printContract').addEventListener('click', function () { window.print(); });

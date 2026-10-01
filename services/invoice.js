@@ -311,6 +311,16 @@
     if (save(list)) {
       state.editingId = inv.id; state.number = inv.number;
       window.vnToast('Invoice ' + inv.number + ' saved', '💾');
+      // v13: record the invoice in the encrypted Client Portal when signed in
+      try {
+        if (window.VNPortalCore && window.VNPortalCore.isAuthed()) {
+          var v = window.VNPortalCore.vault();
+          if (v && v.projects && v.projects.length) {
+            var proj = v.projects[v.projects.length - 1];
+            window.VNPortalCore.recordDocument(proj, 'invoice', 'Invoice ' + inv.number + ' — ' + money(totals().totalUsd, 'USD'));
+          }
+        }
+      } catch (e) { /* portal optional */ }
       renderSaved(); renderDoc();
     }
   }
