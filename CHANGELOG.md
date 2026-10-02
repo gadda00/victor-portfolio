@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Consistency & Truth Pass (2026-10-02)
+
+- **Sitemap `lastmod` is now evidence-based.** The weekly workflow rewrote *every* lastmod to the run date (all 30 URLs showed the same day — meaningless to crawlers). Each URL's lastmod now comes from the last commit that touched that page's source file (`update-sitemap.yml`, with `fetch-depth: 0`); the committed `sitemap.xml` was regenerated with the same logic.
+- **Busara AI's DAG corrected from "7-stage" to 6-stage / 50 agents everywhere.** The owner's own write-up enumerates Stage 0–5 (Ingest, Engineer, Detect, Forecast, Infer, Report) with agent counts summing exactly to 50; the "7" was a conflation with the platform's v7.0 version number. Fixed across homepage, projects directory, resume, blog article + metadata, feed, social strategy doc, and services data. IntelliFlow's 7-stage pipeline and the 7-stage client-delivery pipeline are genuinely 7 and unchanged.
+- **Stale docs neutralised.** `MARKETING-STRATEGY.md` and `IMPROVEMENTS.md` now open with historical-document banners that map each outdated figure ($5,000 Starter, Calendly, 19 sitemap URLs, $50K+ Enterprise) to the current source of truth. README gained the v13 Client Workspace bullet so it describes the present site.
+- **Offer clarity.** The two audit entry points on `/services/` now state their audience explicitly: *Opportunity Assessment* for teams with little/no AI in production; *Reliability Audit* for teams whose shipped AI breaks or drifts. The published 50%-fee credit toward a subsequent build is surfaced on the Opportunity card. No prices or commercial terms were changed.
+- **Honest Swahili labelling.** The SW toggle now carries a "partial translation (menus and key UI)" title/aria-label, so the site never implies full Kiswahili coverage.
+- **Owner-guide corrections.** M-Pesa Paybill 4071186 marked done (was listed as a placeholder "action needed"); auth scope text updated for the v8+ world (admin/jobs are stubs; client portal auth is separate).
+
 ## [13.0.0] — 2026-10-01 — The Client Workspace: Encrypted Portal, Payments Engine, Retainer Lifecycle
 
 **Client Portal, rebuilt as a real product (`/services/client-dashboard.html` + `portal-core.js` + `portal.js` + `portal.css`):**
