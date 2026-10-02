@@ -27,14 +27,73 @@ jobs:
       - uses: actions/checkout@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
+          # Full history is required so lastmod can be derived from the last
+          # commit that actually touched each page's source file.
+          fetch-depth: 0
 
-      - name: Update sitemap.xml lastmod dates
+      - name: Update sitemap.xml lastmod dates (evidence-based)
         run: |
-          TODAY=$(date -u +%Y-%m-%d)
-          echo "Updating sitemap with date: $TODAY"
+          echo "Updating sitemap lastmod from per-file git history…"
 
-          # Update all lastmod dates to today
-          sed -i "s|<lastmod>[^<]*</lastmod>|<lastmod>$TODAY</lastmod>|g" sitemap.xml
+          # Each <loc>'s lastmod is set to the date of the last commit that
+          # modified that page's source file — NOT the run date. Unchanged
+          # pages keep their real last-modified date, so lastmod stays honest.
+          python3 - << 'PYEOF'
+          import re, subprocess, sys
+
+          with open('sitemap.xml', 'r') as f:
+              xml = f.read()
+
+          def source_file_for(url):
+              path = url.replace('https://victorndunda.com', '') or '/'
+              path = path.strip('/')
+              if not path:
+                  return 'index.html'
+              if path.endswith('/'):
+                  return path + 'index.html'
+              return path
+
+          def last_commit_date(path):
+              try:
+                  out = subprocess.run(
+                      ['git', 'log', '-1', '--format=%as', '--', path],
+                      capture_output=True, text=True, check=True
+                  ).stdout.strip()
+                  return out if out else None
+              except subprocess.CalledProcessError:
+                  return None
+
+          def fix_url_block(m):
+              block = m.group(0)
+              loc = re.search(r'<loc>(.*?)</loc>', block)
+              if not loc:
+                  return block
+              src = source_file_for(loc.group(1))
+              date = last_commit_date(src)
+              if not date:
+                  # Fall back to file modification time for untracked files
+                  import os, datetime
+                  if os.path.exists(src):
+                      date = datetime.date.fromtimestamp(
+                          os.path.getmtime(src)).isoformat()
+                      print(f"  ! no git history for {src}; using mtime {date}", file=sys.stderr)
+              if not date:
+                  print(f"  ! no date found for {src}; leaving lastmod unchanged", file=sys.stderr)
+                  return block
+              new_block, n = re.subn(r'<lastmod>[^<]*</lastmod>',
+                                     f'<lastmod>{date}</lastmod>', block, count=1)
+              if n == 0:
+                  # No lastmod element: insert one after <loc>
+                  new_block = block.replace(
+                      f'<loc>{loc.group(1)}</loc>',
+                      f'<loc>{loc.group(1)}</loc>\n    <lastmod>{date}</lastmod>', 1)
+              return new_block
+
+          xml = re.sub(r'<url>.*?</url>', fix_url_block, xml, flags=re.S)
+          with open('sitemap.xml', 'w') as f:
+              f.write(xml)
+          print("sitemap.xml lastmod dates updated from git history.")
+          PYEOF
 
           # Show the result
           echo "Updated sitemap.xml:"
