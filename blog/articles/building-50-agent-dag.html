@@ -5,7 +5,7 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Building a 50-Agent Multi-Agent DAG Pipeline — Victor Ndunda</title>
-<meta name="description" content="How I designed and built Busara AI's 7-stage parallel DAG pipeline with 50 specialized agents — from Kahn's topological sort to circuit breakers and O(1) LRU caching." />
+<meta name="description" content="How I designed and built Busara AI's 6-stage parallel DAG pipeline with 50 specialized agents — from Kahn's topological sort to circuit breakers and O(1) LRU caching." />
 <link rel="canonical" href="https://victorndunda.com/blog/articles/building-50-agent-dag.html" />
 <meta name="author" content="Victor Ndunda" />
 <meta name="keywords" content="multi-agent, DAG, TypeScript, Busara AI, orchestration" />
@@ -13,7 +13,7 @@
 <meta name="color-scheme" content="dark light" />
 <meta property="og:type" content="article" />
 <meta property="og:title" content="Building a 50-Agent Multi-Agent DAG Pipeline" />
-<meta property="og:description" content="Deep technical breakdown of Busara AI's 50-agent multi-agent DAG pipeline. Covers Kahn's topological sort, parallel execution, circuit breakers, O(1) LRU caching, and 7-stage orchestration in TypeScript." />
+<meta property="og:description" content="Deep technical breakdown of Busara AI's 50-agent multi-agent DAG pipeline. Covers Kahn's topological sort, parallel execution, circuit breakers, O(1) LRU caching, and 6-stage orchestration in TypeScript." />
 <meta property="og:url" content="https://victorndunda.com/blog/articles/building-50-agent-dag.html" />
 <meta property="og:image" content="https://victorndunda.com/og-image.png" />
 <meta property="og:site_name" content="Victor Ndunda" />
@@ -28,7 +28,7 @@
 <meta property="article:tag" content="orchestration" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Building a 50-Agent Multi-Agent DAG Pipeline" />
-<meta name="twitter:description" content="Deep technical breakdown of Busara AI's 50-agent multi-agent DAG pipeline. Covers Kahn's topological sort, parallel execution, circuit breakers, O(1) LRU caching, and 7-stage orchestration in TypeScript." />
+<meta name="twitter:description" content="Deep technical breakdown of Busara AI's 50-agent multi-agent DAG pipeline. Covers Kahn's topological sort, parallel execution, circuit breakers, O(1) LRU caching, and 6-stage orchestration in TypeScript." />
 <meta name="twitter:image" content="https://victorndunda.com/og-image.png" />
 <meta name="twitter:creator" content="@victor_ndunda" />
 
@@ -46,7 +46,7 @@
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "Building a 50-Agent Multi-Agent DAG Pipeline",
-  "description": "Deep technical breakdown of Busara AI's 50-agent multi-agent DAG pipeline. Covers Kahn's topological sort, parallel execution, circuit breakers, O(1) LRU caching, and 7-stage orchestration in TypeScript.",
+  "description": "Deep technical breakdown of Busara AI's 50-agent multi-agent DAG pipeline. Covers Kahn's topological sort, parallel execution, circuit breakers, O(1) LRU caching, and 6-stage orchestration in TypeScript.",
   "image": "https://victorndunda.com/og-image.png",
   "url": "https://victorndunda.com/blog/articles/building-50-agent-dag.html",
   "datePublished": "2026-07-01",
@@ -164,7 +164,7 @@
     <p>The multi-agent approach is different. Instead of one model trying to do everything, you have 50 specialized agents, each focused on a specific domain. The Data Profiling agent knows everything about statistical summaries. The Anomaly Ensemble agent is an expert in Z-score, IQR, and EWMA detection. The Holt-Winters Forecast agent lives and breathes triple exponential smoothing. Each agent does one thing extremely well, and the results are combined into a comprehensive analysis.</p>
 
     <h2>The Architecture: DAG-Based Orchestration</h2>
-    <p>The core of the framework is a <strong>Directed Acyclic Graph (DAG)</strong> that defines the execution order and dependencies between agents. Agents are organized into 7 stages, and within each stage, agents run in parallel. The DAG ensures that an agent only executes after all its dependencies have completed.</p>
+    <p>The core of the framework is a <strong>Directed Acyclic Graph (DAG)</strong> that defines the execution order and dependencies between agents. Agents are organized into 6 stages, and within each stage, agents run in parallel. The DAG ensures that an agent only executes after all its dependencies have completed.</p>
     <p>Here's the stage layout:</p>
     <ul>
       <li><strong>Stage 0 — Ingest (10 agents):</strong> Data ingestion, schema inference, profiling, PII detection, quality scoring</li>
@@ -220,7 +220,7 @@
     <p>One of the most important features for user experience is transparency. When a user uploads a dataset, they don't want to stare at a spinner for 30 seconds — they want to see what's happening. I implemented <strong>Server-Sent Events (SSE)</strong> to stream progress updates in real time. As each agent starts, runs, and completes, the server pushes an event to the client, which updates the DAG visualizer with status colors and timing information.</p>
 
     <h2>Results</h2>
-    <p>The 50-agent pipeline processes a typical dataset (1,000 rows × 10 columns) in under 30 seconds. The parallel execution within stages means that the total time is roughly the sum of the longest agent in each stage, not the sum of all agents. With 50 agents across 7 stages, the effective parallelism ratio is about 7x — meaning the pipeline runs 7 times faster than sequential execution would.</p>
+    <p>The 50-agent pipeline processes a typical dataset (1,000 rows × 10 columns) in under 30 seconds. The parallel execution within stages means that the total time is roughly the sum of the longest agent in each stage, not the sum of all agents. With 50 agents across 6 stages, the effective parallelism ratio is about 6x — meaning the pipeline runs roughly six times faster than sequential execution would.</p>
     <p>But the real result isn't speed — it's depth. In 30 seconds, a user gets anomaly detection, forecasting, causal inference, clustering, regression, code generation, and a narrative report. That's the power of multi-agent orchestration: not one model trying to do everything, but 50 experts working together.</p>
 
     <div style="margin:3rem 0 0;padding:1.75rem;border:1px solid var(--border);border-radius:14px;background:var(--bg-elev,var(--bg-card));text-align:center">

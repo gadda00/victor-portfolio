@@ -35,8 +35,8 @@
     <link>https://victorndunda.com/blog/articles/building-50-agent-dag.html</link>
     <guid isPermaLink="true">https://victorndunda.com/blog/articles/building-50-agent-dag.html</guid>
     <pubDate>Wed, 01 Jul 2026 00:00:00 +0000</pubDate>
-    <description>How I designed and built Busara AI&#x27;s 7-stage parallel DAG pipeline with 50 specialized agents — from Kahn&#x27;s topological sort to circuit breakers and O(1) LRU caching.</description>
-    <content:encoded><![CDATA[<p>How I designed and built Busara AI's 7-stage parallel DAG pipeline with 50 specialized agents — from Kahn's topological sort to circuit breakers and O(1) LRU caching.</p><p>Read time: 12 min · Word count: 2400</p><p><a href="https://victorndunda.com/blog/articles/building-50-agent-dag.html">Read full article →</a></p>]]></content:encoded>
+    <description>How I designed and built Busara AI&#x27;s 6-stage parallel DAG pipeline with 50 specialized agents — from Kahn&#x27;s topological sort to circuit breakers and O(1) LRU caching.</description>
+    <content:encoded><![CDATA[<p>How I designed and built Busara AI's 6-stage parallel DAG pipeline with 50 specialized agents — from Kahn's topological sort to circuit breakers and O(1) LRU caching.</p><p>Read time: 12 min · Word count: 2400</p><p><a href="https://victorndunda.com/blog/articles/building-50-agent-dag.html">Read full article →</a></p>]]></content:encoded>
     <author>mututandunda@gmail.com (Victor Ndunda)</author>      <category>multi-agent</category>
       <category>DAG</category>
       <category>TypeScript</category>

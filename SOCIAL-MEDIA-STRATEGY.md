@@ -34,7 +34,7 @@ I'm an AI Engineer and Founder based in Nairobi, Kenya. I build production AI �
 
 WHAT I'VE BUILT:
 
-🧠 Busara AI (busaraai.com) — A 50-agent multi-agent data intelligence platform. 7-stage parallel DAG pipeline with real statistical algorithms: Holt-Winters, OLS regression, K-Means++, GARCH. Not LLM vibes — actual math. Circuit breakers, O(1) LRU caching, production-grade reliability.
+🧠 Busara AI (busaraai.com) — A 50-agent multi-agent data intelligence platform. 6-stage parallel DAG pipeline with real statistical algorithms: Holt-Winters, OLS regression, K-Means++, GARCH. Not LLM vibes — actual math. Circuit breakers, O(1) LRU caching, production-grade reliability.
 
 🌾 KilimoPRO (kilimo.pro) — AI-powered agricultural intelligence for 5 million Kenyan farmers. On-device crop disease detection (TensorFlow Lite, MobileNetV3, 91% accuracy, <4MB model — runs offline on $40 phones). Multi-LLM Council with 5 expert personas. Quant-based price forecasting (EWMA, GARCH, VaR). 22+ verified data sources.
 

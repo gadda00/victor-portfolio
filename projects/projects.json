@@ -74,7 +74,7 @@
       "id": "busara-ai",
       "name": "Busara AI",
       "tagline": "Multi-agent data intelligence platform",
-      "description": "A multi-agent data intelligence PWA running a multi-agent system across a 7-stage parallel DAG pipeline (v7.0). Ingest → Engineer → Detect → Forecast → Infer → Report. Real statistical algorithms, not wrapper code. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA).",
+      "description": "A multi-agent data intelligence PWA running a multi-agent system across a 6-stage parallel DAG pipeline (v7.0). Ingest → Engineer → Detect → Forecast → Infer → Report. Real statistical algorithms, not wrapper code. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA).",
       "category": "AI Platform",
       "status": "production",
       "featured": true,
@@ -119,7 +119,7 @@
         }
       ],
       "highlights": [
-        "50 AI agents across 7 parallel DAG stages",
+        "50 AI agents across 6 parallel DAG stages",
         "Real statistical algorithms (Holt-Winters, OLS, K-Means++, GARCH)",
         "4 pricing tiers with 99.9% SLA",
         "Africa Market Intelligence agent (M-Pesa, AfCFTA, forex)"
