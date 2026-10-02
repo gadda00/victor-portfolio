@@ -49,7 +49,7 @@
     <guid isPermaLink="true">https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html</guid>
     <pubDate>Sun, 28 Jun 2026 00:00:00 +0000</pubDate>
     <description>Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data.</description>
-    <content:encoded><![CDATA[<p>Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data.</p><p>Read time: 3 min · Word count: 491</p><p><a href="https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html">Read full article →</a></p>]]></content:encoded>
+    <content:encoded><![CDATA[<p>Designing agricultural intelligence that works offline on low-end Android phones. Integrating KilimoSTAT, FAOSTAT, Google Earth Engine, and KALRO data.</p><p>Read time: 3 min · Word count: 500</p><p><a href="https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html">Read full article →</a></p>]]></content:encoded>
     <author>mututandunda@gmail.com (Victor Ndunda)</author>      <category>KilimoPRO</category>
       <category>agriculture</category>
       <category>Flutter</category>
@@ -75,7 +75,7 @@
     <guid isPermaLink="true">https://victorndunda.com/blog/articles/real-math-not-vibes.html</guid>
     <pubDate>Sat, 20 Jun 2026 00:00:00 +0000</pubDate>
     <description>Holt-Winters triple exponential smoothing, OLS regression via the normal equation, K-Means++ with silhouette scoring — the statistical engines behind Busara AI, and why real math matters when forecasts drive decisions.</description>
-    <content:encoded><![CDATA[<p>Holt-Winters triple exponential smoothing, OLS regression via the normal equation, K-Means++ with silhouette scoring — the statistical engines behind Busara AI, and why real math matters when forecasts drive decisions.</p><p>Read time: 3 min · Word count: 515</p><p><a href="https://victorndunda.com/blog/articles/real-math-not-vibes.html">Read full article →</a></p>]]></content:encoded>
+    <content:encoded><![CDATA[<p>Holt-Winters triple exponential smoothing, OLS regression via the normal equation, K-Means++ with silhouette scoring — the statistical engines behind Busara AI, and why real math matters when forecasts drive decisions.</p><p>Read time: 3 min · Word count: 546</p><p><a href="https://victorndunda.com/blog/articles/real-math-not-vibes.html">Read full article →</a></p>]]></content:encoded>
     <author>mututandunda@gmail.com (Victor Ndunda)</author>      <category>TypeScript</category>
       <category>statistics</category>
       <category>Holt-Winters</category>

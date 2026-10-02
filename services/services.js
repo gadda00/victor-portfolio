@@ -335,14 +335,19 @@
       el.textContent = 'From ' + trainPriceStr(t, currency);
     });
 
-    // Update guides
+    // Update guides (keep the USD/KES pair visible, like the service cards)
     DATA.guides.forEach(g => {
       if (g.free) return;
       const el = $(`[data-guide-price="${g.id}"]`);
       if (!el) return;
-      const val = currency === 'kes' ? g.price.kes : g.price.usd;
-      const std = currency === 'kes' ? g.price.kesStandard : g.price.usdStandard;
-      el.textContent = fmtMoney(val, currency) + (g.price.label ? ' ' + g.price.label : '') + (std ? ' · ' + fmtMoney(std, currency) + ' standard' : '');
+      const cur = currency;
+      const other = cur === 'kes' ? 'usd' : 'kes';
+      const val = cur === 'kes' ? g.price.kes : g.price.usd;
+      const oval = cur === 'kes' ? g.price.usd : g.price.kes;
+      const std = cur === 'kes' ? g.price.kesStandard : g.price.usdStandard;
+      el.textContent = fmtMoney(val, cur) + (g.price.label ? ' ' + g.price.label : '') +
+        ' (' + fmtMoney(oval, other) + (other === 'kes' ? ' local)' : ')') +
+        (std ? ' · ' + fmtMoney(std, cur) + ' standard' : '');
     });
 
     // Update calculator result
