@@ -24,7 +24,7 @@
   var WHATSAPP = '254724346971';
   var MPESA_PAYBILL = '4071186';           // live merchant detail (payment.js)
   var VAT_RATE = 0.16;                     // Kenya VAT, applied only when toggled
-  var DEFAULT_FX = 78;                     // KES per USD implied by published catalogue
+  var DEFAULT_FX = 80;                     // KES per USD implied by published local-market schedule (~80 vs ~130 spot)
 
   /* ── Utilities ── */
   function $(s) { return document.querySelector(s); }

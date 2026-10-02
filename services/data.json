@@ -108,7 +108,7 @@
         "kesOneTime": 1600000,
         "usdMonthly": "Custom",
         "kesMonthly": "Custom",
-        "note": "From $20,000, scaling with scope — typical enterprise programs run $20K–$200K+ build + $10K–$40K/mo support. Equity-for-services available for startups."
+        "note": "From $20,000, custom-scoped after discovery. Final quote reflects the number of systems, integrations, compliance work, and SLA tier — scoped in writing before any build. Equity-for-services available for startups."
       },
       "outcome": "Enterprise-wide AI aligned to board priorities — measurable P&L impact",
       "color": "#a855f7"
@@ -617,7 +617,10 @@
       "free": false,
       "price": {
         "usd": 400,
-        "kes": 16000
+        "kes": 16000,
+        "usdStandard": 500,
+        "kesStandard": 20000,
+        "label": "early bird"
       },
       "url": "/services/guides/rag-in-one-day.html"
     }
@@ -670,6 +673,22 @@
     }
   ],
   "faqs": [
+    {
+      "q": "What does an Enterprise engagement typically cost?",
+      "a": "Enterprise programs are custom-scoped from $20,000. Large programs — multiple production systems, deep integrations, compliance work, and dedicated SLAs — can run to $200K+ build with $10K–$40K/month support. The discovery call sizes yours precisely: you receive a written scope and price before any commitment."
+    },
+    {
+      "q": "AI Audit or AI Reliability Audit — which do I need?",
+      "a": "The AI Audit ($2,000 / KES 160K, 1–2 weeks) maps opportunities before you build: current-state, ranked use cases, and a make-vs-buy recommendation. The AI Reliability Audit ($2,000 / KES 160K, 1–2 weeks) reviews an AI system you've already shipped — quality, latency, cost, and trust — and returns a prioritized remediation backlog. If nothing is in production yet, start with the AI Audit."
+    },
+    {
+      "q": "What do the monthly support plans actually cover?",
+      "a": "Starter care ($1,400/mo) covers hosting, monitoring, and prompt tweaks on a best-effort basis. Growth care ($6,000/mo) adds monitoring, monthly feature releases, analytics reviews, and priority support with a 4-hour response during business hours. Enterprise support is a custom plan — the published tier includes a 99.5% uptime SLA with 1-hour critical response. Model and API usage costs follow the published usage-based model (transparent pass-through) and are agreed in writing before any build."
+    },
+    {
+      "q": "Are your KES prices a currency conversion?",
+      "a": "No. KES prices use a local-market convention (~KES 80 per USD, below the ~130 spot rate) — a published local schedule for Kenyan clients, not an auto-conversion. The two currencies are priced as separate schedules, so USD and KES figures are not equivalent spot conversions."
+    },
     {
       "q": "Do you work with small businesses or only enterprises?",
       "a": "Both. The AI Starter package ($10,000 + $1,400/mo) is built specifically for SMBs, micro-businesses, and solo founders — or start with the $2,000 AI Audit if you're still mapping opportunities. I also serve enterprises with custom multi-agent systems from $20,000. Pricing scales with scope — not company size."

@@ -209,11 +209,25 @@
   }
 
   // ─── Training ──────────────────────────────────────────────
+  function trainPriceStr(t, cur) {
+    const p = t.price;
+    const parts = [];
+    if (cur === 'kes') {
+      if (p.kesPerPerson) parts.push(fmtMoney(p.kesPerPerson, 'kes') + '/person');
+      if (p.kesCorporate) parts.push(fmtMoney(p.kesCorporate, 'kes') + ' flat/team');
+      if (p.kesPerTeam) parts.push(fmtMoney(p.kesPerTeam, 'kes') + '/team');
+      if (p.kesPerExtraPerson) parts.push('+' + fmtMoney(p.kesPerExtraPerson, 'kes') + '/extra person');
+    } else {
+      if (p.usdPerPerson) parts.push(fmtMoney(p.usdPerPerson, 'usd') + '/person');
+      if (p.usdCorporate) parts.push(fmtMoney(p.usdCorporate, 'usd') + ' flat/team');
+      if (p.usdPerTeam) parts.push(fmtMoney(p.usdPerTeam, 'usd') + '/team');
+      if (p.usdPerExtraPerson) parts.push('+' + fmtMoney(p.usdPerExtraPerson, 'usd') + '/extra person');
+    }
+    return parts.join(' · ');
+  }
   function renderTraining() {
     const html = DATA.training.map(t => {
-      const priceFrom = currency === 'kes'
-        ? (t.price.kesPerPerson ? fmtMoney(t.price.kesPerPerson, 'kes') + '/person' : fmtMoney(t.price.kesPerTeam, 'kes') + '/team')
-        : (t.price.usdPerPerson ? fmtMoney(t.price.usdPerPerson, 'usd') + '/person' : fmtMoney(t.price.usdPerTeam, 'usd') + '/team');
+      const priceFrom = trainPriceStr(t, currency);
       return `
         <div class="svc-train-card">
           <span class="duration">${esc(t.duration)}</span>
@@ -242,7 +256,7 @@
         <div class="price-row">
           ${g.free
             ? '<span class="free">✓ Free</span>'
-            : `<span class="paid" data-guide-price="${g.id}">${fmtMoney(g.price.usd, 'usd')} (${fmtMoney(g.price.kes, 'kes')})</span>`
+            : `<span class="paid" data-guide-price="${g.id}">${fmtMoney(g.price.usd, 'usd')}${g.price.label ? ' ' + g.price.label : ''} (${fmtMoney(g.price.kes, 'kes')})${g.price.usdStandard ? ' · ' + fmtMoney(g.price.usdStandard, 'usd') + ' standard' : ''}</span>`
           }
           <span style="font-size:0.75rem;color:var(--text-dim)">${g.free ? 'Read →' : 'Enroll →'}</span>
         </div>
@@ -318,10 +332,7 @@
     DATA.training.forEach(t => {
       const el = $(`.price-from[data-train="${t.id}"]`);
       if (!el) return;
-      const priceFrom = currency === 'kes'
-        ? (t.price.kesPerPerson ? fmtMoney(t.price.kesPerPerson, 'kes') + '/person' : fmtMoney(t.price.kesPerTeam, 'kes') + '/team')
-        : (t.price.usdPerPerson ? fmtMoney(t.price.usdPerPerson, 'usd') + '/person' : fmtMoney(t.price.usdPerTeam, 'usd') + '/team');
-      el.textContent = 'From ' + priceFrom;
+      el.textContent = 'From ' + trainPriceStr(t, currency);
     });
 
     // Update guides
@@ -330,7 +341,8 @@
       const el = $(`[data-guide-price="${g.id}"]`);
       if (!el) return;
       const val = currency === 'kes' ? g.price.kes : g.price.usd;
-      el.textContent = fmtMoney(val, currency);
+      const std = currency === 'kes' ? g.price.kesStandard : g.price.usdStandard;
+      el.textContent = fmtMoney(val, currency) + (g.price.label ? ' ' + g.price.label : '') + (std ? ' · ' + fmtMoney(std, currency) + ' standard' : '');
     });
 
     // Update calculator result
@@ -442,7 +454,7 @@
       el.innerHTML = `
         <div class="est-label">Estimated Range</div>
         <div class="est-value">Custom</div>
-        <div class="est-detail">Enterprise engagements start at ${currency === 'kes' ? 'KES 1.6M' : '$20,000'} build + ${currency === 'kes' ? 'KES 800K/mo' : '$10K/mo'} support — custom-scoped after discovery</div>
+        <div class="est-detail">Enterprise engagements start at ${currency === 'kes' ? 'KES 1.6M' : '$20,000'} build — support plan scoped to your SLA tier after discovery</div>
         <a href="/#contact" class="est-cta">Book a discovery call →</a>
       `;
     } else {

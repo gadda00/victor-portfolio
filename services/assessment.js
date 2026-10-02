@@ -147,7 +147,7 @@
       id: 'audit', icon: '🔍', name: 'AI Audit',
       price: '$2,000 · KES 160K', monthly: '',
       timeline: '1–2 weeks',
-      desc: 'A consulting engagement, not a build: current-state assessment, 5–10 ranked opportunities, a quick-win pilot plan, and a make-vs-buy recommendation. 50% of the fee is credited toward any build within 6 months.',
+      desc: 'A consulting engagement, not a build: current-state assessment, 5–10 ranked opportunities, a quick-win pilot plan, and a make-vs-buy recommendation. 50% of the fee is credited toward any subsequent build package.',
       ul: ['Opportunity map, ranked by return', 'Data & readiness review', 'Risk and compliance check', 'Executive readout + 12-month roadmap', 'Fee credited 50% toward a build']
     },
     starter: {
@@ -160,17 +160,17 @@
     growth: {
       id: 'growth', icon: '📈', name: 'AI Growth',
       price: '$28,000 · KES 2.2M', monthly: ' + $6,000/mo care',
-      timeline: '4–8 weeks',
-      desc: 'Production AI integrated with your CRM/ERP: multi-agent orchestration, RAG with citations, analytics, and team training. For operations that are ready to run on AI.',
-      ul: ['CRM/ERP-integrated production system', 'Multi-agent orchestration', 'RAG with citations + evaluation suite', 'Team training session included', '3 revisions + 90 days support'],
+      timeline: '6–10 weeks',
+      desc: 'Production AI integrated with your CRM/ERP: RAG with citations, predictive analytics, and a custom agent for one workflow. For operations that are ready to run on AI.',
+      ul: ['CRM/ERP-integrated production system', 'RAG with citations + evaluation suite', '2–3 integrations (CRM, ERP, WhatsApp)', 'Predictive analytics dashboard', 'Priority support (4-hour response, business hours)'],
       alt: { icon: '🏢', name: 'AI Enterprise', price: 'from $20,000, scaling with scope', note: 'If you need 50+ specialized agents, SLAs, and 24/7 monitoring, the Enterprise tier starts at $20,000 — the Scope Wizard can size it precisely.' }
     },
     enterprise: {
       id: 'enterprise', icon: '🏢', name: 'AI Enterprise',
-      price: 'from $20,000', monthly: ' + $10,000/mo care',
-      timeline: '8–16 weeks',
+      price: 'from $20,000', monthly: ' + custom support plan',
+      timeline: '12–24 weeks',
       desc: 'Custom multi-agent systems with SLAs, monitoring, and compliance reviews — scoped precisely to your operation.',
-      ul: ['50+ specialized agents', 'SLAs + 24/7 monitoring', 'Security + compliance review', 'Dedicated engineer', '12 months support']
+      ul: ['50+ specialized agents', '99.5% uptime SLA + 1-hour critical response', 'Security & compliance review', 'Dedicated engineer + Slack/Teams channel', 'Quarterly roadmap + executive reviews']
     }
   };
 

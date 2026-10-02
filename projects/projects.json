@@ -86,7 +86,7 @@
         "TypeScript",
         "Next.js 15",
         "Multi-Agent System",
-        "7-Stage DAG",
+        "6-Stage DAG",
         "GLM-4.6",
         "PostgreSQL",
         "PWA",
@@ -108,12 +108,12 @@
       "badgeClass": "busara",
       "links": [
         {
-          "label": "Live Demo",
+          "label": "Live Platform",
           "url": "https://busaraai.com",
           "type": "primary"
         },
         {
-          "label": "GitHub",
+          "label": "GitHub — IntelliFlow foundation",
           "url": "https://github.com/gadda00/IntelliFlow",
           "type": "secondary"
         }
@@ -176,7 +176,7 @@
         }
       ],
       "highlights": [
-        "Serves 300M+ people across 8 IGAD countries",
+        "A 300M+ person market across 8 IGAD countries",
         "On-device crop disease detection for 15 crops (TFLite)",
         "GARCH/VaR market price forecasting",
         "Multi-LLM advisory council in Swahili + English",

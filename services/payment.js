@@ -141,7 +141,7 @@
         name: 'Monthly retainer',
         desc: 'One-time build + monthly support. Cancel with 30 days notice.',
         schedule: isEnterprise
-          ? '<div>Build: Custom</div><div>Monthly: $' + (monthlyUsd * 1000).toLocaleString() + '+/mo</div>'
+          ? '<div>Build: Custom</div><div>Monthly: Custom support plan (scoped with your SLA tier)</div>'
           : '<div>Build: $' + totalUsd.toLocaleString() + '</div><div>Monthly: $' + monthlyUsd + '/mo (KES ' + monthlyKes.toLocaleString() + ')</div>'
       }
     ];

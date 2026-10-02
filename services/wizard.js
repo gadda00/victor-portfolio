@@ -40,14 +40,14 @@
     growth: {
       id: 'growth', name: 'AI Growth', icon: '📈', color: '#00d4ff',
       priceUsd: 28000, priceKes: 2200000, monthlyUsd: 6000, monthlyKes: 480000,
-      timeline: '4–8 weeks',
-      features: ['Production AI integrated with CRM/ERP','Multi-agent orchestration','RAG with citations','Analytics + dashboard','Team training (1 session)','3 revisions + 90 days support']
+      timeline: '6–10 weeks',
+      features: ['RAG knowledge bot over company documents','2–3 integrations (CRM, ERP, WhatsApp, email, or API)','Predictive analytics dashboard (forecasting, churn, demand)','Custom AI agent for one workflow','Monthly enhancements + analytics review','Priority support (4-hour response, business hours)']
     },
     enterprise: {
       id: 'enterprise', name: 'AI Enterprise', icon: '🏢', color: '#a855f7',
-      priceUsd: 20000, priceKes: 1600000, monthlyUsd: 10000, monthlyKes: 800000,
-      timeline: '8–16 weeks',
-      features: ['Custom multi-agent system (50+ agents)','Fine-tuned models','SLAs + 24/7 monitoring','Security + compliance review','Dedicated engineer','Unlimited revisions + 12 months support']
+      priceUsd: 20000, priceKes: 1600000, monthlyUsd: 0, monthlyKes: 0,
+      timeline: '12–24 weeks',
+      features: ['Custom multi-agent DAG orchestration (50+ agents)','LLM fine-tuning on your domain','On-prem or private-cloud deployment','Security & compliance review','Dedicated Slack/Teams channel + named engineer','99.5% uptime SLA + 1-hour critical response']
     }
   };
 
