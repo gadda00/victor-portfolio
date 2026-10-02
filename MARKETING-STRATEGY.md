@@ -1,5 +1,20 @@
 # Marketing & Growth Strategy — Victor Ndunda
 
+> ⚠️ **HISTORICAL DOCUMENT (July 2026) — superseded. Kept for reference only.**
+>
+> This plan predates the v11 pricing realignment and the v9–v13 first-party pipeline. Several
+> figures below are **out of date** and must not be quoted as current:
+>
+> | Stale value in this doc | Current source of truth |
+> |---|---|
+> | "AI Starter ($5,000)" | AI Starter **$10,000 + $1,400/mo** — `services/data.json` |
+> | "from a $5,000 SMB chatbot to a 50-agent enterprise platform" | Starter from $10,000; Busara AI is a 6-stage / 50-agent platform — `services/data.json`, `projects/projects.json` |
+> | "AI Enterprise ($50K+)" | Enterprise **from $20,000** — `services/data.json` |
+> | Calendly scheduling | Replaced by the first-party scheduler at `/book/` (v9) — `book/scheduler.js` |
+>
+> For current positioning, offers, and pricing, read `README.md` and `services/data.json`.
+> Owner: Victor Ndunda · Originally dated 2026-07-04.
+
 > A 90-day operating plan to turn victorndunda.com into a client-generating machine.
 > Last updated: 2026-07-04 · Owner: Victor Ndunda
 

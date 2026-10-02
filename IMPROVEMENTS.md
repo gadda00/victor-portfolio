@@ -1,5 +1,12 @@
 # Portfolio Improvements — July 2026
 
+> ⚠️ **HISTORICAL DOCUMENT (July 2026) — describes the site as it was, not as it is.**
+>
+> Kept as an audit record. Numbers below are frozen at July 2026 state; several have since
+> changed — e.g. the sitemap now lists **30 URLs** (not 19), pricing was realigned in v11/v11.1
+> (see `services/data.json`), and the client portal was rebuilt as an encrypted workspace in v13.
+> For the current state, read `README.md` and `CHANGELOG.md` (latest entries first).
+
 This document outlines all the improvements made to victorndunda.com during the comprehensive audit and enhancement process.
 
 ## Security Enhancements

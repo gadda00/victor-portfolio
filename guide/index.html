@@ -209,7 +209,7 @@
         </div>
       </div>
       <div class="callout callout-warning">
-        <strong>Action needed:</strong> Replace the placeholder M-Pesa Paybill, Flutterwave link, and Stripe link in <code>services/payment.js</code> (the <code>METHODS</code> array) with your actual merchant details.
+        <strong>Done:</strong> M-Pesa Paybill <strong>4071186</strong> is live in <code>services/payment.js</code> (the <code>METHODS</code> array). Flutterwave/Stripe links remain placeholders — enable them only if you start accepting card payments, and replace with your real merchant details then.
       </div>
     </section>
 
@@ -266,7 +266,7 @@
         <div class="guide-row"><div><strong>Settings</strong></div><div>Account, session, danger zone</div><div>✅ Live</div></div>
       </div>
       <div class="callout callout-info">
-        <strong>Auth:</strong> Google OAuth (primary) or password fallback. Allowlist: <code>mututandunda@gmail.com</code>, <code>torv54@gmail.com</code>. To change the password, edit <code>CONFIG.FALLBACK_AUTH</code> in <code>/auth.js</code> (shared by dashboard and jobs).
+        <strong>Auth:</strong> Google OAuth (primary) or password fallback. Allowlist: <code>mututandunda@gmail.com</code>, <code>torv54@gmail.com</code>. To change the password, edit <code>CONFIG.FALLBACK_AUTH</code> in <code>/auth.js</code> (powers the dashboard; <code>/admin/</code> and <code>/jobs/</code> are redirect stubs into it). Client logins are separate — they use the encrypted portal at <code>/services/client-dashboard.html</code>.
       </div>
     </section>
 
