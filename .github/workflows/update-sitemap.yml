@@ -38,11 +38,26 @@ jobs:
           # Each <loc>'s lastmod is set to the date of the last commit that
           # modified that page's source file — NOT the run date. Unchanged
           # pages keep their real last-modified date, so lastmod stays honest.
+          # Blog ARTICLES are the exception (v15): their lastmod comes from
+          # posts.json dateModified — the recorded CONTENT modification date —
+          # because git history also counts structural-only commits (script
+          # includes, template tweaks) that do not change the article itself.
           python3 - << 'PYEOF'
-          import re, subprocess, sys
+          import re, subprocess, sys, json
 
           with open('sitemap.xml', 'r') as f:
               xml = f.read()
+
+          # Content-truth dates for blog articles
+          article_dates = {}
+          try:
+              with open('blog/posts.json', 'r') as f:
+                  for p in json.load(f).get('posts', []):
+                      if p.get('dateModified') or p.get('date'):
+                          article_dates['https://victorndunda.com' + p.get('url', '')] = \
+                              p.get('dateModified') or p.get('date')
+          except Exception as e:
+              print(f"  ! could not read blog/posts.json: {e}", file=sys.stderr)
 
           def source_file_for(url):
               path = url.replace('https://victorndunda.com', '') or '/'
@@ -68,31 +83,36 @@ jobs:
               loc = re.search(r'<loc>(.*?)</loc>', block)
               if not loc:
                   return block
-              src = source_file_for(loc.group(1))
-              date = last_commit_date(src)
+              url = loc.group(1)
+              # Articles: content-truth date from posts.json
+              if url in article_dates:
+                  date = article_dates[url]
+              else:
+                  src = source_file_for(url)
+                  date = last_commit_date(src)
               if not date:
                   # Fall back to file modification time for untracked files
                   import os, datetime
-                  if os.path.exists(src):
+                  if os.path.exists(source_file_for(url)):
                       date = datetime.date.fromtimestamp(
-                          os.path.getmtime(src)).isoformat()
+                          os.path.getmtime(source_file_for(url))).isoformat()
                       print(f"  ! no git history for {src}; using mtime {date}", file=sys.stderr)
               if not date:
-                  print(f"  ! no date found for {src}; leaving lastmod unchanged", file=sys.stderr)
+                  print(f"  ! no date found for {url}; leaving lastmod unchanged", file=sys.stderr)
                   return block
               new_block, n = re.subn(r'<lastmod>[^<]*</lastmod>',
                                      f'<lastmod>{date}</lastmod>', block, count=1)
               if n == 0:
                   # No lastmod element: insert one after <loc>
                   new_block = block.replace(
-                      f'<loc>{loc.group(1)}</loc>',
-                      f'<loc>{loc.group(1)}</loc>\n    <lastmod>{date}</lastmod>', 1)
+                      f'<loc>{url}</loc>',
+                      f'<loc>{url}</loc>\n    <lastmod>{date}</lastmod>', 1)
               return new_block
 
           xml = re.sub(r'<url>.*?</url>', fix_url_block, xml, flags=re.S)
           with open('sitemap.xml', 'w') as f:
               f.write(xml)
-          print("sitemap.xml lastmod dates updated from git history.")
+          print("sitemap.xml lastmod dates updated (git history + posts.json content dates).")
           PYEOF
 
           # Show the result

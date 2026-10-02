@@ -41,7 +41,7 @@
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/agentreplay-deterministic-replay.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-07-12</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -53,55 +53,55 @@
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/kilimopro-ai-for-farmers.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-06-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/chinese-smart-agriculture.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-06-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/real-math-not-vibes.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/multi-llm-council.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-06-15</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/quant-finance-for-agriculture.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-06-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/22-data-sources.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/on-device-disease-detection.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-06-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://victorndunda.com/blog/articles/nasip-2026-2030-opportunity.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-05-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
     <loc>https://victorndunda.com/services/guides/ai-for-farmers.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -137,7 +137,7 @@
   </url>
   <url>
     <loc>https://victorndunda.com/services/guides/rag-in-one-day.html</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-10-02</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -167,6 +167,11 @@
   </url>
   <url>
     <loc>https://victorndunda.com/ai-policy.html</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
     <loc>https://victorndunda.com/terms-of-service.html</loc>
     <lastmod>2026-09-21</lastmod>
     <changefreq>yearly</changefreq>

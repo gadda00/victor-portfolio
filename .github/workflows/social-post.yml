@@ -1,9 +1,11 @@
 name: Auto-Post to Social Media
 
+# v15: push trigger REMOVED by owner instruction — social posting must never
+# fire as a side effect of a code push (a maintenance commit once re-announced
+# a retitled article). Run this workflow manually (workflow_dispatch) only,
+# when an article is intentionally published. Posting also requires valid
+# platform tokens; see SOCIAL-CMS.md.
 on:
-  push:
-    branches: [main]
-    paths: ['blog/articles/**']
   workflow_dispatch:
 
 permissions:
