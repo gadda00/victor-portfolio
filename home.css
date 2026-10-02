@@ -40,7 +40,7 @@ html.light {
   --v6-stroke-hi: rgba(30,41,82,0.24);
   --v6-text-hi: #0c1230;
   --v6-text-mid: #3d4768;
-  --v6-text-dim: #6b7494;
+  --v6-text-dim: #5b6480;
   --v6-cyan: #0e7490;
   --v6-violet: #4f46e5;
   --v6-emerald: #047857;
@@ -250,6 +250,8 @@ nav#nav a.logo {
 }
 
 .nav-links { display: flex; align-items: center; gap: .35rem; }
+/* v15 a11y: mobile-only language selector (shown inside open menu <1080px) */
+.nav-lang-mobile { display: none; }
 
 .nav-link {
   position: relative;
@@ -1391,6 +1393,29 @@ html.light footer { background: rgba(230,234,248,.4); }
   }
   html.light .nav-links.open { background: rgba(246,248,254,.97); }
   .nav-links.open .nav-link { padding: .8rem 1rem; font-size: 1rem; }
+  /* v15 a11y: language toggle reachable inside the mobile menu */
+  .nav-lang-mobile { display: none; }
+  .nav-links.open .nav-lang-mobile {
+    display: flex;
+    gap: .5rem;
+    padding: .6rem 1rem .2rem;
+    border-top: 1px solid var(--v6-stroke);
+    margin-top: .5rem;
+  }
+  .nav-lang-mobile button {
+    background: none;
+    border: 1px solid var(--v6-stroke);
+    color: var(--v6-text-mid);
+    font: 600 .78rem/1 inherit;
+    padding: .55rem .8rem;
+    border-radius: 8px;
+    cursor: pointer;
+    min-height: 44px;
+  }
+  .nav-lang-mobile button[aria-pressed="true"] {
+    border-color: var(--v6-cyan);
+    color: var(--v6-cyan);
+  }
   .newsletter-form { flex-direction: column; }
   .booking-cta-band { padding: 2.4rem 1.5rem; }
   .dag-stages { gap: .4rem; }

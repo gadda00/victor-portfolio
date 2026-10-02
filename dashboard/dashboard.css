@@ -388,3 +388,13 @@ html.light .dash-nav { background: rgba(248,250,252,0.85); }
 }
 .empty-state-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.5; }
 .empty-state p { font-size: 0.9375rem; }
+
+/* ─── v15 a11y: visible focus ring on dashboard form controls ─── */
+.auth-form input:focus-visible,
+.social-composer input:focus-visible,
+.social-composer select:focus-visible,
+.social-composer textarea:focus-visible,
+.dash-search input:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}

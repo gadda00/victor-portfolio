@@ -235,3 +235,14 @@
   .msg{max-width:92%}
   .ret-stats{grid-template-columns:1fr 1fr 1fr}
 }
+
+/* ─── v15 a11y: visible focus ring on all portal form controls ─── */
+.auth-fld input:focus,
+.fld input:focus,
+.fld select:focus,
+.msg-form textarea:focus,
+.pw-form input:focus {
+  border-color: var(--accent, #22d3ee);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.18);
+  outline: none;
+}

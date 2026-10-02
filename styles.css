@@ -14,9 +14,9 @@
 html.light {
   --bg: #f8fafc; --bg-elev: #ffffff; --bg-card: rgba(0,0,0,0.025);
   --text: #0f172a; --text-muted: #475569; --text-dim: #64748b;
-  --accent: #0891b2; --accent-2: #7c3aed; --accent-3: #059669;
+  --accent: #0e7490; --accent-2: #7c3aed; --accent-3: #059669;
   --border: rgba(0,0,0,0.08); --glass: rgba(0,0,0,0.025);
-  --glow: rgba(8,145,178,0.12); --glow-2: rgba(124,58,237,0.12);
+  --glow: rgba(14,116,144,0.12); --glow-2: rgba(124,58,237,0.12);
 }
 
 /* ─── Reset ──────────────────────────────────────────────────────── */
@@ -80,7 +80,9 @@ a:focus-visible, button:focus-visible, .nav-link:focus-visible,
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
     scroll-behavior: auto !important;
   }
 }
@@ -720,8 +722,6 @@ p, li, .about-text, .resume-bullets li {
 }
 
 
-  to   { opacity: 1; transform: translateY(0); }
-}
 @media (max-width: 600px) {
   .pwa-install-banner { left: 0.75rem; right: 0.75rem; padding: 0.875rem 1rem; }
   .pwa-install-banner .pwa-icon { display: none; }
@@ -788,9 +788,9 @@ p, li, .about-text, .resume-bullets li {
 /* ─── Toast Notification System ─────────────────────────────────── */
 .toast-container {
   position: fixed;
-  bottom: 5.5rem;
+  bottom: 10.5rem;
   right: 1.25rem;
-  z-index: 3000;
+  z-index: 3100;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -1521,7 +1521,9 @@ html.light .gh-repo:hover, html.light .now-card:hover {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+    animation-delay: 0s !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
   }
   .gradient-animated { animation: none !important; }
   .now-progress-fill::after { display: none; }

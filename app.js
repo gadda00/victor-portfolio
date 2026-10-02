@@ -196,13 +196,8 @@
 
   if (twEl) {
     if (REDUCED_MOTION) {
-      // Show first tagline statically, cycle slowly via interval
+      // Reduced motion: static tagline, no rotation, no interval
       twEl.textContent = taglines[0];
-      let idx = 0;
-      setInterval(() => {
-        idx = (idx + 1) % taglines.length;
-        twEl.textContent = taglines[idx];
-      }, 4000);
     } else {
       let tagIdx = 0, charIdx = 0, isDeleting = false;
       function typewriter() {
@@ -320,6 +315,22 @@
   }
 
   // ═══════════════════════════════════════════════════════════════════
+  // 5b. FAB — hide while the final booking CTA band is on screen, so the
+  // floating button never competes with the real close (v15)
+  // ═══════════════════════════════════════════════════════════════════
+  const fabStack = document.querySelector('.fab-stack');
+  const bookingBand = document.querySelector('.booking-cta-band');
+  if (fabStack && bookingBand && 'IntersectionObserver' in window) {
+    const ctaObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        fabStack.style.opacity = entry.isIntersecting ? '0' : '';
+        fabStack.style.pointerEvents = entry.isIntersecting ? 'none' : '';
+      });
+    }, { threshold: 0.35 });
+    ctaObserver.observe(bookingBand);
+  }
+
+  // ═══════════════════════════════════════════════════════════════════
   // 6. TOAST NOTIFICATION SYSTEM
   // ═══════════════════════════════════════════════════════════════════
   window.showToast = function(message, type = 'info', duration = 3000) {
@@ -361,9 +372,11 @@
     copyBtn.className = 'contact-copy';
     copyBtn.setAttribute('aria-label', `Copy ${value}`);
     copyBtn.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
-    copyBtn.style.cssText = 'background:none;border:none;color:var(--text-dim);cursor:pointer;padding:0.25rem;opacity:0;transition:opacity 0.2s;flex-shrink:0;';
+    copyBtn.style.cssText = 'background:none;border:none;color:var(--text-dim);cursor:pointer;padding:0.5rem;margin:-0.25rem;opacity:0;transition:opacity 0.2s;flex-shrink:0;';
     card.addEventListener('mouseenter', () => copyBtn.style.opacity = '1');
     card.addEventListener('mouseleave', () => copyBtn.style.opacity = '0');
+    copyBtn.addEventListener('focus', () => copyBtn.style.opacity = '1');
+    copyBtn.addEventListener('blur', () => copyBtn.style.opacity = '0');
     copyBtn.addEventListener('click', async (e) => {
       e.preventDefault();
       e.stopPropagation();
