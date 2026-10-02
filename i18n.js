@@ -149,6 +149,16 @@
       var active = b.getAttribute('data-lang-btn') === lang;
       b.classList.toggle('active', active);
       b.setAttribute('aria-pressed', active ? 'true' : 'false');
+      // Honest coverage labelling: Swahili is a partial translation
+      // (navigation + key UI strings). Article bodies, case studies and
+      // service copy remain English — the buttons say so up front.
+      if (b.getAttribute('data-lang-btn') === 'sw') {
+        b.setAttribute('title', 'Kiswahili — partial translation (menus and key UI). Full articles remain in English.');
+        b.setAttribute('aria-label', 'Switch to Kiswahili — partial translation, navigation and key interface only');
+      } else {
+        b.setAttribute('title', 'English (default)');
+        b.setAttribute('aria-label', 'Switch to English');
+      }
     });
   }
 
