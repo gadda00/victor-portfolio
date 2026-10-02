@@ -848,8 +848,8 @@
     return '<div class="page-head"><h1>Analytics</h1><p>Privacy-friendly — events are buffered in the visitor\'s browser; nothing is sent until you connect a provider.</p></div>' +
       '<div class="stat-grid">' +
       '<div class="stat"><div class="stat-label">Sessions (this browser)</div><div class="stat-val">' + visits + '</div></div>' +
-      '<div class="stat"><div class="stat-label">Resume DLs</div><div class="stat-val">' + resumeDls + '</div></div>' +
-      '<div class="stat"><div class="stat-label">Job Apps</div><div class="stat-val">' + apps + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Resume DLs (this browser)</div><div class="stat-val">' + resumeDls + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Job Apps (this browser)</div><div class="stat-val">' + apps + '</div></div>' +
       '<div class="stat"><div class="stat-label">Articles</div><div class="stat-val">' + blogPosts.length + '</div></div>' +
       '</div>' +
       '<div class="card"><h3>Assistant & CTA event taxonomy</h3>' +
