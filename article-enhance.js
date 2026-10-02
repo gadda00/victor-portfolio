@@ -39,17 +39,14 @@
   /* ── 2. TOC (needs ≥3 h2s to be worth it) ──────────────────────── */
   var tocNav = null;
   if (h2s.length >= 3) {
-    tocNav = document.createElement('nav');
-    tocNav.className = 'vn-toc';
-    tocNav.setAttribute('aria-label', 'Table of contents');
-
+    /* Mobile / narrow: collapsible nav block right after the intro meta */
     var tocHtml = h2s.map(function (h) {
       var num = h2s.indexOf(h) + 1;
       return '<a href="#' + h.id + '" class="vn-toc-l' + (h.tagName === 'H3' ? ' sub' : '') + '" data-toc="' + h.id + '">' +
         '<span class="vn-toc-n">' + (num < 10 ? '0' + num : num) + '</span>' + h.textContent.replace(/<[^>]*>/g, '') + '</a>';
     }).join('');
 
-    /* Mobile / narrow: collapsible block right after the intro meta */
+    /* Mobile / narrow: collapsible nav right after the intro meta */
     var details = document.createElement('details');
     details.className = 'vn-toc-mobile';
     details.innerHTML = '<summary><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="10" y2="18"/></svg>On this page</summary><div>' + tocHtml + '</div>';
@@ -57,9 +54,10 @@
     var meta = mount.querySelector('.article-meta') || body.previousElementSibling;
     (meta ? meta.nextSibling ? mount.insertBefore(details, meta.nextSibling) : mount.appendChild(details) : mount.insertBefore(details, body));
 
-    /* Wide screens: fixed right rail (scrollable if long) */
-    var rail = document.createElement('div');
+    /* Wide screens: fixed right rail — a real nav landmark (v15 a11y) */
+    var rail = document.createElement('nav');
     rail.className = 'vn-toc-rail';
+    rail.setAttribute('aria-label', 'Table of contents');
     rail.innerHTML = '<div class="vn-toc-rail-h">On this page</div>' + tocHtml;
     document.body.appendChild(rail);
 
