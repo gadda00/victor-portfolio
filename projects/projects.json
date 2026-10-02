@@ -3,7 +3,7 @@
     {
       "id": "tapi-learn",
       "name": "Tapi Learn (ACLA)",
-      "tagline": "Multilingual AI learning product — 11K+ learners, 38 countries",
+      "tagline": "Multilingual AI learning product — 11K+ learners (client-reported), 38 countries",
       "description": "Client engagement for ACLA: a free, Africa-built, multilingual mobile learning platform for climate leadership. Built the 24/7 AI Career Coach (CV reviews, interview prep, career advice), the multilingual NLP pipeline (English · Français · Kiswahili), personalized learning recommendations, and the opportunities board. Live at acla.io/tapi-learn.",
       "category": "Client Work",
       "status": "active",
@@ -31,7 +31,8 @@
           "url": "https://acla.io/tapi-learn",
           "type": "primary"
         }
-      ]
+      ],
+      "role": "AI engineer for client ACLA — built the 24/7 AI Career Coach, the multilingual NLP pipeline (EN·FR·SW), and the recommendation engine"
     },
     {
       "id": "keja-ai",
@@ -68,13 +69,14 @@
           "url": "https://keja.app",
           "type": "primary"
         }
-      ]
+      ],
+      "role": "Client engagement for CHACADOM INVESTMENTS — built the AI assistant, investment scoring, and verification tooling"
     },
     {
       "id": "busara-ai",
       "name": "Busara AI",
       "tagline": "Multi-agent data intelligence platform",
-      "description": "A multi-agent data intelligence PWA running a multi-agent system across a 6-stage parallel DAG pipeline (v7.0). Ingest → Engineer → Detect → Forecast → Infer → Report. Real statistical algorithms, not wrapper code. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA).",
+      "description": "A multi-agent data intelligence PWA running a multi-agent system across a 6-stage parallel DAG pipeline (v7.0). Ingest → Engineer → Detect → Forecast → Infer → Report. Real statistical algorithms, not wrapper code. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA target).",
       "category": "AI Platform",
       "status": "production",
       "featured": true,
@@ -104,7 +106,7 @@
       "visual": "dag-pipeline",
       "accentColor": "#00d4ff",
       "icon": "🚀",
-      "badge": "Flagship · Data Intelligence",
+      "badge": "Owned Product · Data Intelligence",
       "badgeClass": "busara",
       "links": [
         {
@@ -121,9 +123,10 @@
       "highlights": [
         "50 AI agents across 6 parallel DAG stages",
         "Real statistical algorithms (Holt-Winters, OLS, K-Means++, GARCH)",
-        "4 pricing tiers with 99.9% SLA",
+        "4 pricing tiers with 99.9% SLA target",
         "Africa Market Intelligence agent (M-Pesa, AfCFTA, forex)"
-      ]
+      ],
+      "role": "Founder & lead engineer — designed and built end-to-end (2023–present)"
     },
     {
       "id": "kilimopro",
@@ -161,7 +164,7 @@
       "visual": "crop-scan",
       "accentColor": "#10b981",
       "icon": "🌱",
-      "badge": "Agricultural Intelligence",
+      "badge": "Open-Source · Agricultural Intelligence",
       "badgeClass": "kilimo",
       "links": [
         {
@@ -181,13 +184,14 @@
         "GARCH/VaR market price forecasting",
         "Multi-LLM advisory council in Swahili + English",
         "$0/month operating cost — all data sources free"
-      ]
+      ],
+      "role": "Founder & lead engineer — open-sourced; designed for East African smallholders"
     },
     {
       "id": "fraud-detection-system",
       "name": "Fraud Detection System",
       "tagline": "Enterprise-grade real-time fraud scoring in Go",
-      "description": "A real-time transaction fraud scoring engine in Go — 7 statistical detectors (Z-Score, IQR, Velocity, Geo-Distance, Device Fingerprint, Merchant Risk, Behavioral Anomaly) fused by a weighted-vote ensemble, calibrated by logistic regression, overlaid with a deterministic rules engine. Scores in ~33 µs per transaction. Full case-management workflow, RBAC auth, Prometheus metrics, OTel tracing, and Slack alerts. 84% recall, 1.37% false-positive rate. Built for PCI-DSS / PSD2 / GDPR Article 22 compliance.",
+      "description": "A real-time transaction fraud scoring engine in Go — 7 statistical detectors (Z-Score, IQR, Velocity, Geo-Distance, Device Fingerprint, Merchant Risk, Behavioral Anomaly) fused by a weighted-vote ensemble, calibrated by logistic regression, overlaid with a deterministic rules engine. Scores in ~33 µs per transaction; validated on 1,000 labelled transactions with the methodology published alongside the code. Full case-management workflow, RBAC auth, Prometheus metrics, OTel tracing, and Slack alerts. 84% recall, 1.37% false-positive rate. Built for PCI-DSS / PSD2 / GDPR Article 22 compliance.",
       "category": "Enterprise · Fintech",
       "status": "active",
       "featured": true,
@@ -221,7 +225,7 @@
       "visual": "architecture-wireframe",
       "accentColor": "#ef4444",
       "icon": "🛡️",
-      "badge": "Enterprise · Regulated Finance",
+      "badge": "Open-Source · Regulated-Grade Fintech",
       "badgeClass": "fraud",
       "links": [
         {
@@ -240,9 +244,10 @@
         "~33 µs per-transaction scoring latency",
         "84% recall, 1.37% false-positive rate",
         "Full case management + RBAC + Prometheus + OTel",
-        "PCI-DSS / PSD2 / GDPR Article 22 compliant",
+        "Designed for PCI-DSS / PSD2 / GDPR Article 22 — formal compliance is deployment-specific",
         "Postgres + Kafka + Stripe + Email/SMS + Grafana + retraining pipeline"
-      ]
+      ],
+      "role": "Builder — self-initiated; code and methodology public"
     },
     {
       "id": "verxlite",
@@ -281,7 +286,7 @@
       "visual": "workflow-pipeline",
       "accentColor": "#a855f7",
       "icon": "⚡",
-      "badge": "Sales & Ops Automation",
+      "badge": "Open-Source · Sales & Ops Automation",
       "badgeClass": "verxlite",
       "links": [
         {
@@ -302,13 +307,14 @@
         "Langfuse observability for every workflow step",
         "281-defect code review + full P0/P1 remediation",
         "83 backend tests, CI/CD all green"
-      ]
+      ],
+      "role": "Builder & maintainer — self-initiated SaaS build with a public 281-defect code review"
     },
     {
       "id": "agentreplay",
       "name": "AgentReplay",
       "tagline": "Deterministic replay for AI agents — zero model calls",
-      "description": "Deterministic replay and counterfactual debugging for AI agents. Captures every LLM call, tool response, clock read, and RNG draw — then replays the run bit-exact with zero model calls. 0.67% overhead, 100% reproduction fidelity, 99 tests. LangGraph-first. Backed by a research whitepaper.",
+      "description": "Deterministic replay and counterfactual debugging for AI agents. Captures every LLM call, tool response, clock read, and RNG draw — then replays the run bit-exact with zero model calls. 0.67% overhead and 100% reproduction fidelity on the synthetic validation set; 99 tests. LangGraph-first. Backed by a research whitepaper.",
       "category": "Open-Source · Developer Tools",
       "status": "shipped",
       "featured": true,
@@ -356,7 +362,8 @@
         "Counterfactual mutation + CI regression corpus",
         "LangGraph-first with adapters for OpenAI, Anthropic, CrewAI, AutoGen",
         "Backed by a research whitepaper"
-      ]
+      ],
+      "role": "Creator & maintainer — research-backed, MIT-licensed (2026–present)"
     },
     {
       "id": "intelliflow",
@@ -389,7 +396,7 @@
       "visual": "agent-graph",
       "accentColor": "#00d4ff",
       "icon": "🧠",
-      "badge": "Multi-Agent · Self-Evolving",
+      "badge": "Open-Source · Multi-Agent Platform",
       "badgeClass": "busara",
       "links": [
         {
@@ -403,13 +410,14 @@
         "Trajectory-based learning inspired by AReaL",
         "Turborepo monorepo with Next.js 15",
         "Foundation of the Busara AI platform"
-      ]
+      ],
+      "role": "Builder — the open-source foundation beneath Busara AI"
     },
     {
       "id": "financial-forecasting-suite",
       "name": "Financial Forecasting Suite",
       "tagline": "Production-grade time series forecasting toolkit",
-      "description": "Production-grade time series forecasting toolkit for financial metrics. Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition, ensemble forecasting with automatic model selection. 87.3% mean accuracy (1-MAPE) across 12 financial metrics with 12-24 month forecast horizons.",
+      "description": "Production-grade time series forecasting toolkit for financial metrics. Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition, ensemble forecasting with automatic model selection. 87.3% mean accuracy (1-MAPE) across 12 financial metrics with 12–24 month forecast horizons (from delivered client systems).",
       "category": "Data Science",
       "status": "shipped",
       "featured": false,
@@ -434,7 +442,7 @@
       "visual": "chart-line",
       "accentColor": "#10b981",
       "icon": "📊",
-      "badge": "Quant Finance",
+      "badge": "Client Work · Quant Finance",
       "badgeClass": "kilimo",
       "links": [
         {
@@ -448,7 +456,8 @@
         "Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition",
         "Automatic model selection + ensemble forecasting",
         "12-24 month forecast horizons"
-      ]
+      ],
+      "role": "Built for retirement-benefits and fintech clients (2019–2022); open-sourced as a toolkit"
     },
     {
       "id": "customer-segmentation-engine",
@@ -479,7 +488,7 @@
       "visual": "cluster-scatter",
       "accentColor": "#a855f7",
       "icon": "🎯",
-      "badge": "Data Science",
+      "badge": "Client Work · Data Science",
       "badgeClass": "verxlite",
       "links": [
         {
@@ -493,6 +502,57 @@
         "89% month-over-month stability",
         "23% lift in campaign response rate",
         "3D PCA/t-SNE visualizations"
+      ],
+      "role": "Built for financial-services clients (2019–2022); open-sourced"
+    },
+    {
+      "id": "eco-africa-awards",
+      "name": "Eco Africa Awards",
+      "tagline": "Awards platform for African climate leadership — an initiative of ACLA",
+      "description": "Celebrating climate leadership across Africa — an initiative of ACLA, the organization behind Tapi Learn. Built with Next.js, Three.js, and AI. Live at ecoafricaawards.com.",
+      "category": "Client Work",
+      "status": "active",
+      "featured": false,
+      "priority": 10,
+      "github": "gadda00/eco-africa-awards",
+      "liveUrl": "https://ecoafricaawards.com",
+      "repo": "https://github.com/gadda00/eco-africa-awards",
+      "technologies": [
+        "TypeScript",
+        "Next.js",
+        "Three.js",
+        "AI"
+      ],
+      "metrics": {
+        "stars": 0,
+        "forks": 0,
+        "languages": {
+          "TypeScript": 90,
+          "Other": 10
+        }
+      },
+      "visual": "chart-bars",
+      "accentColor": "#34d399",
+      "icon": "🌍",
+      "badge": "Client Engagement · Nonprofit",
+      "badgeClass": "client",
+      "role": "Built for ACLA (client engagement) — platform build with AI features",
+      "links": [
+        {
+          "label": "Live Platform",
+          "url": "https://ecoafricaawards.com",
+          "type": "primary"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/gadda00/eco-africa-awards",
+          "type": "secondary"
+        }
+      ],
+      "highlights": [
+        "Live at ecoafricaawards.com",
+        "Client engagement — an ACLA initiative",
+        "Next.js + Three.js awards platform"
       ]
     }
   ],
@@ -538,5 +598,5 @@
       "icon": "📊"
     }
   ],
-  "lastUpdated": "2026-09-18"
+  "lastUpdated": "2026-10-02"
 }

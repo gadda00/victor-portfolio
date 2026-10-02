@@ -5,7 +5,7 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Case Studies — Production AI Systems by Victor Ndunda</title>
-<meta name="description" content="Five shipped systems with constraints and validation: fraud scoring at 84% recall, offline-first agri AI, a client product with 11K+ learners. See the evidence." />
+<meta name="description" content="Eleven builds, honestly labelled: client engagements, live products, and open-source systems — fraud scoring at 84% recall on a labelled validation set, a client product with 11K+ learners, public code reviews. See the evidence." />
 <meta name="author" content="Victor Ndunda" />
 <meta name="keywords" content="Victor Ndunda projects, AI projects, Busara AI, KilimoPRO, Fraud Detection System, Verxlite, AgentReplay, multi-agent systems, Go, Python, TypeScript, Nairobi, Kenya" />
 <link rel="canonical" href="https://victorndunda.com/projects/" />
@@ -39,7 +39,7 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
 <!-- Structured Data -->
@@ -256,6 +256,7 @@
   letter-spacing: 0.05em;
 }
 .card-badge.busara { background: rgba(0,212,255,0.1); color: #00d4ff; border: 1px solid rgba(0,212,255,0.2); }
+.card-badge.client { background: rgba(52,211,153,0.1); color: #34d399; border: 1px solid rgba(52,211,153,0.2); }
 .card-badge.kilimo { background: rgba(16,185,129,0.1); color: #10b981; border: 1px solid rgba(16,185,129,0.2); }
 .card-badge.fraud { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
 .card-badge.verxlite { background: rgba(168,85,247,0.1); color: #a855f7; border: 1px solid rgba(168,85,247,0.2); }
@@ -278,6 +279,14 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
+}
+.card-role {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0.3rem 0 0.1rem;
+  padding-left: 0.65rem;
+  border-left: 2px solid var(--border);
 }
 .card-tagline {
   color: var(--text-muted);
@@ -704,7 +713,7 @@
   <div class="container">
     <span class="label"><span class="pulse-dot"></span> Case Studies</span>
     <h1>Case studies <span class="grad-text">&amp; systems.</span></h1>
-    <p>Five production systems plus one shipped client product — each with the constraint that shaped it and the validation that stands behind it. Built in Nairobi, shipped to the world.</p>
+    <p>Client engagements, live products, and open-source systems — every card below states what it is, the constraint that shaped it, and the validation behind it. Built in Nairobi, shipped to the world.</p>
     <div style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center">
       <a href="/book/" class="btn btn-primary" style="padding:0.8rem 1.5rem;font-weight:700">Discuss a similar system →</a>
       <a href="/services/" class="btn btn-ghost" style="padding:0.8rem 1.5rem">See how we'd work together</a>
@@ -715,7 +724,7 @@
 <!-- Stats -->
 <section class="projects-stats cv-auto" id="projectsStats">
   <div class="proj-stat"><span class="num" id="statTotal">—</span><span class="lbl">Projects</span></div>
-  <div class="proj-stat"><span class="num" id="statProduction">—</span><span class="lbl">In Production</span></div>
+  <div class="proj-stat"><span class="num" id="statProduction">—</span><span class="lbl">Live Products</span></div>
   <div class="proj-stat"><span class="num" id="statOpenSource">—</span><span class="lbl">Open-Source</span></div>
   <div class="proj-stat"><span class="num" id="statTech">—</span><span class="lbl">Technologies</span></div>
 </section>
@@ -728,6 +737,14 @@
 
 <!-- Filters -->
 <div class="projects-filters" id="projectsFilters"></div>
+
+<!-- Status legend (v15): visible key for the status dots -->
+<div class="status-legend" style="display:flex;gap:1.1rem;flex-wrap:wrap;justify-content:center;margin:0.6rem auto 1.2rem;font-size:0.72rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.05em">
+  <span><span class="card-status-dot production" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>Production</span>
+  <span><span class="card-status-dot active" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>Active / maintained</span>
+  <span><span class="card-status-dot trial" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>Public trial</span>
+  <span><span class="card-status-dot shipped" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>Shipped</span>
+</div>
 
 <!-- Bento Grid -->
 <div class="bento-grid" id="bentoGrid">
@@ -752,6 +769,7 @@
       <li>🧠 <strong>IntelliFlow</strong> — self-evolving multi-agent platform · <a href="https://github.com/gadda00/IntelliFlow" style="color:var(--accent)">GitHub</a></li>
       <li>📊 <strong>Financial Forecasting Suite</strong> — Holt-Winters, ARIMA, ensembles · <a href="https://github.com/gadda00/financial-forecasting-suite" style="color:var(--accent)">GitHub</a></li>
       <li>📊 <strong>Customer Segmentation Engine</strong> — RFM + K-Means + GMM · <a href="https://github.com/gadda00/customer-segmentation-engine" style="color:var(--accent)">GitHub</a></li>
+      <li>🌍 <strong>Eco Africa Awards</strong> — climate-leadership awards platform for ACLA · <a href="https://ecoafricaawards.com" style="color:var(--accent)">Live</a></li>
     </ul>
     <p style="margin:1.25rem 0 0;font-size:0.9rem">Want a system like one of these? <a href="/book/" style="color:var(--accent)">Book a free 30-minute assessment</a>.</p>
   </div>
@@ -830,7 +848,7 @@
       (p.technologies || []).forEach(function(t) { techSet[t] = true; });
     });
     document.getElementById('statTotal').textContent = allProjects.length;
-    document.getElementById('statProduction').textContent = allProjects.filter(function(p) { return p.status === 'production' || p.status === 'active'; }).length;
+    document.getElementById('statProduction').textContent = allProjects.filter(function(p) { return p.liveUrl; }).length;
     document.getElementById('statOpenSource').textContent = allProjects.filter(function(p) { return p.github; }).length;
     document.getElementById('statTech').textContent = Object.keys(techSet).length;
   }
@@ -915,6 +933,7 @@
           '<span class="card-status-dot ' + p.status + '" title="' + p.status + '"></span>' +
         '</div>' +
         '<div class="card-title">' + (p.icon ? p.icon + ' ' : '') + p.name + '</div>' +
+        (p.role ? '<div class="card-role">' + p.role + '</div>' : '') +
         '<div class="card-tagline">' + p.tagline + '</div>' +
         '<div class="card-desc">' + p.description + '</div>' +
         highlightsHTML +
