@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/styles.css?v=12.0.0" />
+<link rel="stylesheet" href="/styles.css?v=13.0.0" />
 <meta name="view-transition" content="same-origin" />
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -907,10 +907,31 @@
 
     var ghStats = '';
     if (p.github) {
+      // Static seeds from projects.json (v16): real numbers on first paint —
+      // the GitHub API is only a background refresh, so the page never
+      // depends on it (and rate-limit failures change nothing).
+      var seed = p.ghStats || {};
+      var seedStars = seed.stars !== undefined ? seed.stars : '—';
+      var seedForks = seed.forks !== undefined ? seed.forks : '—';
+      var seedDonut = '';
+      if (seed.langs) {
+        var slTotal = 0; for (var sl in seed.langs) slTotal += seed.langs[sl];
+        if (slTotal > 0) {
+          var slColors = ['#00d4ff', '#a855f7', '#10b981', '#fbbf24', '#ef4444', '#64748b'];
+          var slGrad = []; var slCum = 0;
+          Object.keys(seed.langs).sort(function(a, b) { return seed.langs[b] - seed.langs[a]; }).slice(0, 6).forEach(function(lang, i) {
+            var pct = (seed.langs[lang] / slTotal) * 100;
+            slGrad.push(slColors[i] + ' ' + slCum + '% ' + (slCum + pct) + '%');
+            slCum += pct;
+          });
+          if (slCum < 100) slGrad.push('#64748b ' + slCum + '% 100%');
+          seedDonut = 'background: conic-gradient(' + slGrad.join(', ') + ')';
+        }
+      }
       ghStats = '<div class="card-gh-stats" data-repo="' + p.github + '">' +
-        '<span class="gh-stat" title="Stars">⭐ <span class="gh-stars">…</span></span>' +
-        '<span class="gh-stat" title="Forks">🍴 <span class="gh-forks">…</span></span>' +
-        '<span class="gh-lang-donut" style="background: conic-gradient(var(--card-accent) 0%, var(--border) 0%)" title="Languages"></span>' +
+        '<span class="gh-stat" title="Stars">⭐ <span class="gh-stars">' + seedStars + '</span></span>' +
+        '<span class="gh-stat" title="Forks">🍴 <span class="gh-forks">' + seedForks + '</span></span>' +
+        '<span class="gh-lang-donut"' + (seedDonut ? ' style="' + seedDonut + '"' : ' style="background: conic-gradient(var(--card-accent) 0%, var(--border) 0%)"') + ' title="Languages"></span>' +
         '</div>';
     }
 
@@ -1044,26 +1065,66 @@
   }
 
   // ─── Live GitHub data ───────────────────────────────────────────
+  // Unauthenticated GitHub API allows only 60 req/hr per IP — a handful of
+  // visitors exhaust it, which used to spray 403 console errors. v16:
+  // cache every success in localStorage for 6h, check r.ok, fail silently
+  // to the static fallback values from projects.json.
   function fetchGitHubData() {
-    var ghStats = document.querySelectorAll('[data-repo]');
-    ghStats.forEach(function(el) {
-      var repo = el.getAttribute('data-repo');
-      // Use the GitHub API (unauthenticated — 60 req/hr limit, fine for ~8 repos)
-      fetch('https://api.github.com/repos/' + repo)
-        .then(function(r) { return r.json(); })
+    var GH_CACHE_TTL = 6 * 60 * 60 * 1000;
+    function ghCacheGet(key) {
+      try {
+        var hit = JSON.parse(localStorage.getItem('gh_' + key) || 'null');
+        if (hit && (Date.now() - hit.t) < GH_CACHE_TTL) return hit.d;
+      } catch (e) { /* corrupt cache = miss */ }
+      return null;
+    }
+    function ghCacheSet(key, data) {
+      try { localStorage.setItem('gh_' + key, JSON.stringify({ t: Date.now(), d: data })); } catch (e) {}
+    }
+    function ghFetch(path, key) {
+      var cached = ghCacheGet(key);
+      if (cached) return Promise.resolve(cached);
+      return fetch('https://api.github.com' + path)
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status); // 403 rate-limit etc.
+          return r.json();
+        })
         .then(function(data) {
-          if (data.stargazers_count !== undefined) {
+          ghCacheSet(key, data);
+          return data;
+        });
+    }
+    // Backoff: if any GitHub request fails (e.g. shared rate limit),
+    // skip ALL gh fetches for an hour — one failed request, not sixteen.
+    try {
+      if (Date.now() - JSON.parse(localStorage.getItem('gh_backoff') || '0') < 60 * 60 * 1000) return;
+    } catch (e) {}
+    var ghStats = document.querySelectorAll('[data-repo]');
+    // Sequential (v16): one rate-limit failure stops the whole run — the
+    // remaining repos keep their static seeds instead of spraying 403s.
+    var ghList = Array.from(ghStats);
+    function ghNext(i) {
+      if (i >= ghList.length) return;
+      try {
+        if (Date.now() - JSON.parse(localStorage.getItem('gh_backoff') || '0') < 60 * 60 * 1000) return;
+      } catch (e) {}
+      var el = ghList[i];
+      var repo = el.getAttribute('data-repo');
+      // Repo stats (stars/forks) — cached 6h, silent fallback to static seed
+      ghFetch('/repos/' + repo, 'repo_' + repo)
+        .then(function(data) {
+          if (data && data.stargazers_count !== undefined) {
             el.querySelector('.gh-stars').textContent = data.stargazers_count;
             el.querySelector('.gh-forks').textContent = data.forks_count;
           }
         })
         .catch(function() {
-          el.querySelector('.gh-stars').textContent = '—';
-          el.querySelector('.gh-forks').textContent = '—';
-        });
-      // Fetch languages for the donut
-      fetch('https://api.github.com/repos/' + repo + '/languages')
-        .then(function(r) { return r.json(); })
+          try { localStorage.setItem('gh_backoff', String(Date.now())); } catch (e) {}
+          // keep the static seed values — already rendered
+        })
+        .then(function() { ghNext(i + 1); });
+      // Languages for the donut — cached 6h
+      ghFetch('/repos/' + repo + '/languages', 'lang_' + repo)
         .then(function(langs) {
           var total = 0;
           var entries = [];
@@ -1091,7 +1152,8 @@
           }
         })
         .catch(function() {});
-    });
+    }
+    ghNext(0);
   }
 
 })();

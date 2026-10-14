@@ -43,10 +43,9 @@
   /* ── Published data (fallback if /services/data.json fetch fails) ── */
   var FALLBACK = {
     packages: [
-      { id: 'audit', name: 'AI Audit', price: { usdOneTime: 2000, kesOneTime: 160000 }, timeline: '1–2 weeks' },
-      { id: 'starter', name: 'AI Starter', price: { usdOneTime: 10000, kesOneTime: 800000, usdMonthly: 1400, kesMonthly: 112000 }, timeline: '2–3 weeks' },
-      { id: 'growth', name: 'AI Growth', price: { usdOneTime: 28000, kesOneTime: 2200000, usdMonthly: 6000, kesMonthly: 480000 }, timeline: '6–10 weeks' },
-      { id: 'enterprise', name: 'AI Enterprise', price: { usdOneTime: 20000, kesOneTime: 1600000 }, timeline: '12–24 weeks' }
+      { id: 'audit', name: 'Needs Assessment', price: { usdOneTime: 2500, kesOneTime: 200000 }, timeline: '1–2 weeks' },
+      { id: 'starter', name: 'Starter Build', price: { usdOneTime: 10000, kesOneTime: 800000, usdMonthly: 1400, kesMonthly: 112000 }, timeline: '2–3 weeks' },
+      { id: 'growth', name: 'Big Projects', price: { usdOneTime: 28000, kesOneTime: 2200000, usdMonthly: 6000, kesMonthly: 480000 }, timeline: '6–24 weeks' }
     ],
     services: [
       { id: 'chatbots', name: 'AI Chatbots & Virtual Assistants', fromPrice: { usd: 3000, kes: 240000 } },
@@ -608,7 +607,7 @@
       'The exact quote comes out of the free assessment — scoped in writing before any build.',
       'Optional support retainer from $1,400/mo (published package rates).'
     ];
-    if (capped) assumptions.push('Scope exceeds standard multipliers — Enterprise-class territory (custom quote, from $20,000 scaling to $200K+).');
+    if (capped) assumptions.push('Scope exceeds standard multipliers — Big Project territory (custom quote, from $28,000 scaling to $200K+).');
 
     botReply(
       '<strong>Ballpark: $' + usdLow.toLocaleString('en-US') + '–$' + usdHigh.toLocaleString('en-US') + ' · KES ' + kesLow.toLocaleString('en-US') + '–' + kesHigh.toLocaleString('en-US') + '</strong> for ' + esc(estimate.service.name) + '.',
@@ -736,7 +735,7 @@
   function teamAnswer() {
     track('assistant_team');
     botReply(
-      'You work with <strong>me directly</strong> — the same person scopes, builds, and ships. Engagements are structured so delivery never depends on a big team: the <strong>AI Audit</strong> (1–2 weeks) defines the scope in writing, then <strong>Starter or Growth</strong> packages deliver in stages with evaluation gates. For larger builds, the work plan names every dependency up front.',
+      'You work with <strong>me directly</strong> — the same person scopes, builds, and ships. Engagements are structured so delivery never depends on a big team: the <strong>Needs Assessment</strong> (1–2 weeks) defines the scope in writing, then <strong>Starter Build</strong> or a <strong>Big Project</strong> delivers in stages with evaluation gates. For larger builds, the work plan names every dependency up front.',
       { actions: [{ label: 'See the engagement model', href: '/#engagement', track: 'assistant-team-process' }] },
       DEFAULT_CHIPS
     );
@@ -790,7 +789,7 @@
     if (has(t, ['estimate'])) { startEstimate(); return; }
     if (has(t, ['how long', 'timeline', 'duration', 'when can', 'how fast', 'how quick', 'delivery', 'weeks', 'months'])) {
       track('assistant_intent', { i: 'timeline' });
-      botReply('Published timelines: <strong>AI Audit 1–2 weeks</strong> · <strong>AI Starter 2–3 weeks</strong> · <strong>AI Growth 6–10 weeks</strong> · <strong>Enterprise 12–24 weeks</strong>. Custom builds scale with scope — we agree the timeline in writing before starting.',
+      botReply('Published timelines: <strong>Needs Assessment 1–2 weeks</strong> · <strong>Starter Build 2–3 weeks</strong> · <strong>Big Projects 6–24 weeks</strong>. Custom builds scale with scope — we agree the timeline in writing before starting.',
         { actions: [{ label: '📅 Book the free assessment', primary: true, onClick: function () { goTab('schedule'); }, track: 'assistant-cta-book-tl' }] }, DEFAULT_CHIPS);
       return;
     }
@@ -839,7 +838,7 @@
     }
     if (has(t, ['small business', 'startup', 'smb', 'sme', 'chama'])) {
       track('assistant_intent', { i: 'smb' });
-      botReply('Yes — there\'s a dedicated <strong>AI for Small Business</strong> service from <strong>$3,000 / KES 240K</strong>, and the <strong>AI Starter</strong> package ($10,000 + $1,400/mo) is built for first AI projects.');
+      botReply('Yes — there\'s a dedicated <strong>AI for Small Business</strong> service from <strong>$3,000 / KES 240K</strong>, and the <strong>Starter Build</strong> ($10,000 + $1,400/mo care) is built for first AI projects.');
       return;
     }
     if (has(t, ['training', 'workshop', 'team', 'upskill', 'coach'])) {

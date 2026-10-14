@@ -261,7 +261,7 @@
     return projects.slice().reverse().map(function (p) {
       var pct = C.progress(p);
       var t = C.totals(p);
-      var icons = { audit: '🔍', starter: '🚀', growth: '📈', enterprise: '🏢' };
+      var icons = { audit: '🔍', starter: '🚀', growth: '🏗️', enterprise: '🏗️' }; // 'enterprise' = legacy briefs
       return '<button class="proj-card" data-id="' + p.id + '">' +
         statusBadge(p.status) +
         '<div class="proj-head"><span class="proj-ic">' + (icons[p.packageId] || '📋') + '</span>' +

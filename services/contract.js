@@ -47,10 +47,9 @@
 
   // ── Package details ───────────────────────────────────────────────
   var PACKAGES = {
-    audit: { name: 'AI Audit', timeline: '1–2 weeks', features: ['Current-state assessment','Opportunity map (5–10 ranked use cases)','Quick-win pilot plan','Make-vs-buy recommendation','Risk + compliance review','Executive readout + 12-month roadmap'] },
-    starter: { name: 'AI Starter', timeline: '2–3 weeks', features: ['WhatsApp or web FAQ chatbot','1 automation workflow','Knowledge base (50 docs)','Basic analytics dashboard','Multilingual (EN + SW)','2 revisions + 30 days support'] },
-    growth: { name: 'AI Growth', timeline: '4–8 weeks', features: ['Production AI integrated with CRM/ERP','Multi-agent orchestration','RAG with citations','Analytics + dashboard','Team training (1 session)','3 revisions + 90 days support'] },
-    enterprise: { name: 'AI Enterprise', timeline: '8–16 weeks', features: ['Custom multi-agent system (50+ agents)','Fine-tuned models','SLAs + 24/7 monitoring','Security + compliance review','Dedicated engineer','Unlimited revisions + 12 months support'] }
+    audit: { name: 'Needs Assessment', timeline: '1–2 weeks', features: ['Current-state assessment','Opportunity map (5–10 ranked use cases with ROI)','Quick-win pilot plan','Make-vs-buy recommendation','Reliability mode for shipped systems','Risk + compliance review','Executive readout + 12-month roadmap'] },
+    starter: { name: 'Starter Build', timeline: '2–3 weeks', features: ['WhatsApp or web FAQ chatbot','1 automation workflow','Knowledge base (50 docs)','Basic analytics dashboard','Multilingual (EN + SW)','2 revisions + 30 days support'] },
+    growth: { name: 'Big Projects', timeline: '6–24 weeks', features: ['RAG knowledge platform with citations','2–3+ integrations (CRM, ERP, WhatsApp, APIs)','Multi-agent orchestration (50+ agent DAGs)','Predictive analytics + dashboard','Computer vision, fine-tuning, private deployment where scoped','Security + compliance review (SOC2, ISO 27001, GDPR, Kenya DPA)','99.5% uptime SLA + 1-hour critical response','Dedicated engineer','3 revisions + 90 days support'] }
   };
 
   // ── Generate contract ─────────────────────────────────────────────
@@ -65,8 +64,8 @@
     var featuresHtml = pkg.features.map(function (f) { return '<li>' + f + '</li>'; }).join('');
     var typesHtml = (state.types || []).map(function (t) { return '<li>' + t.replace(/-/g, ' ') + '</li>'; }).join('');
 
-    var priceText = est.packageId === 'enterprise'
-      ? 'From USD $' + (est.totalUsd || 20000).toLocaleString() + ' (KES ' + (est.totalKes || 1600000).toLocaleString() + ') one-time — final scope confirmed after the discovery call. Enterprise programs typically scale to $200K+ build + $10K–$40K/month support.'
+    var priceText = est.packageId === 'growth'
+      ? 'From USD $' + (est.totalUsd || 28000).toLocaleString() + ' (KES ' + (est.totalKes || 2200000).toLocaleString() + ') one-time — final scope confirmed in writing after the Needs Assessment. Big Project programs typically scale to $200K+ build + $6K–$40K/month care.'
       : 'USD $' + (est.totalUsd || 0).toLocaleString() + ' (KES ' + (est.totalKes || 0).toLocaleString() + ') one-time' +
         (est.monthlyUsd ? ' plus USD $' + est.monthlyUsd + '/month (KES ' + (est.monthlyKes || 0).toLocaleString() + '/month) for ongoing support' : '');
 

@@ -18,19 +18,20 @@
   /* ── Package defaults (mirror services/data.json v1.3) ── */
   var PACKAGES = {
     audit: {
-      name: 'AI Audit', total: 2000, monthly: 0, timeline: '1–2 weeks',
-      approach: 'A focused discovery engagement: current-state assessment of people, data and systems; an opportunity map of 5–10 ranked use cases with an ROI model per use case; one quick-win pilot plan ready to build; a make-vs-buy recommendation; and a risk + compliance review (Kenya DPA 2019, GDPR). Ends with an executive readout and a 12-month roadmap.',
+      name: 'Needs Assessment', total: 2500, monthly: 0, timeline: '1–2 weeks',
+      approach: 'A focused discovery engagement: current-state assessment of people, data and systems; an opportunity map of 5–10 ranked use cases with an ROI model per use case; one quick-win pilot plan ready to build; a make-vs-buy recommendation; and a risk + compliance review (Kenya DPA 2019, GDPR). For teams with AI already shipped, runs in reliability mode: failure taxonomy, evaluation plan, prioritized fix backlog. Ends with an executive readout and a 12-month roadmap.',
       deliverables: [
         'Current-state assessment (people, data, systems)',
         'Opportunity map — 5–10 ranked use cases with ROI model',
         'Quick-win pilot plan (1 actionable project ready to build)',
         'Make-vs-buy recommendation',
+        'Reliability mode for shipped systems (failure taxonomy, fix backlog)',
         'Risk + compliance review (Kenya DPA 2019, GDPR)',
         'Executive readout + 12-month roadmap'
       ]
     },
     starter: {
-      name: 'AI Starter', total: 10000, monthly: 1400, timeline: '2–3 weeks',
+      name: 'Starter Build', total: 10000, monthly: 1400, timeline: '2–3 weeks',
       approach: 'A focused first build: a WhatsApp or website FAQ chatbot trained on your documents, one automation workflow (lead capture, auto-reply or appointment booking), a knowledge base of up to 50 documents, a basic analytics dashboard, and English + Swahili support. Two revision rounds and 30 days of post-launch support are included.',
       deliverables: [
         'WhatsApp or website FAQ chatbot (70–80% of routine questions)',
@@ -42,29 +43,19 @@
       ]
     },
     growth: {
-      name: 'AI Growth', total: 28000, monthly: 6000, timeline: '6–10 weeks',
-      approach: 'Production AI woven into your stack: a RAG knowledge bot over company documents with citations, 2–3 integrations (CRM, ERP, WhatsApp Business, email or custom API), a predictive analytics dashboard, a custom AI agent for one workflow, and an admin console with user management. Includes monthly enhancements, an analytics review, and priority support (4-hour response, business hours).',
+      name: 'Big Projects', total: 28000, monthly: 6000, timeline: '6–24 weeks',
+      approach: 'Production AI programs that run the business: a RAG knowledge platform over company documents with citations, 2–3+ integrations (CRM, ERP, WhatsApp Business, email or custom APIs), predictive analytics, custom AI agents or multi-agent orchestration on the Busara AI DAG framework (50+ agents), computer-vision pipelines where needed, LLM fine-tuning on your domain, and on-prem or private-cloud deployment options for data sovereignty. Includes a security + compliance review (SOC2, ISO 27001, GDPR, Kenya DPA), admin console with user management, dedicated engineer, 99.5% uptime SLA with 1-hour critical response, and quarterly executive business reviews. Custom-scoped after a Needs Assessment.',
       deliverables: [
-        'RAG knowledge bot over company documents, with citations',
-        '2–3 integrations (CRM, ERP, WhatsApp Business, email, custom API)',
-        'Predictive analytics dashboard (forecasting, churn, demand, anomalies)',
-        'Custom AI agent for one workflow (e.g. lead qualification, support triage)',
-        'Admin console + user management',
-        'Monthly enhancements + analytics review',
-        'Priority support — 4-hour response, business hours'
-      ]
-    },
-    enterprise: {
-      name: 'AI Enterprise', total: 20000, monthly: 0, timeline: '12–24 weeks',
-      approach: 'A custom multi-agent system (50+ agents on the Busara AI DAG framework), LLM fine-tuning on your domain, computer-vision pipelines where needed, on-prem or private-cloud deployment for data sovereignty, and a security + compliance review (SOC2, ISO 27001, GDPR, Kenya DPA). Dedicated engineer, named contact channel, 99.5% uptime SLA with 1-hour critical response, and quarterly executive business reviews.',
-      deliverables: [
-        'Custom multi-agent DAG orchestration (Busara AI framework — 50+ agents)',
-        'LLM fine-tuning on your domain (legal, medical, agricultural, financial)',
+        'RAG knowledge platform over company documents, with citations',
+        '2–3+ integrations (CRM, ERP, WhatsApp Business, email, custom APIs)',
+        'Predictive analytics (forecasting, churn, demand, anomalies)',
+        'Custom AI agents or multi-agent orchestration (50+ agent DAGs)',
         'Computer-vision pipelines where required (defect detection, OCR)',
-        'On-prem or private-cloud deployment (data sovereignty)',
-        'Security & compliance review (SOC2, ISO 27001, GDPR, Kenya DPA)',
-        'Dedicated Slack/Teams channel + named engineer',
-        '99.5% uptime SLA + 1-hour critical response',
+        'LLM fine-tuning on your domain (legal, medical, agricultural, financial)',
+        'On-prem or private-cloud deployment options (data sovereignty)',
+        'Security & compliance review (SOC2, ISO 27001, GDPR, Kenya DPA 2019)',
+        'Admin console + user management; dedicated Slack/Teams channel + named engineer',
+        '99.5% uptime SLA + 1-hour critical response (top SLA tier)',
         'Quarterly roadmap + executive business reviews'
       ]
     },
@@ -149,7 +140,7 @@
   function renderDoc() {
     var p = PACKAGES[state.packageId] || PACKAGES.custom;
     var pkgName = p.name;
-    var isEnterprise = state.packageId === 'enterprise' || state.packageId === 'custom';
+    var isCustom = state.packageId === 'custom';
     var total = Number(state.totalUsd) || 0;
     var monthly = Number(state.monthlyUsd) || 0;
     var kesTotal = Math.round(total * (Number(state.fx) || 80) / 1000) * 1000;
@@ -183,7 +174,7 @@
         '<div class="inv-doc-meta">' +
           '<div class="ttl">Proposal' + stamp + '</div>' +
           '<div class="no">' + esc(state.number || 'PRP-DRAFT') + '</div>' +
-          '<div class="dt">Issued ' + esc(issue) + ' · Valid until ' + esc(validStr) + '<br/>' + esc(pkgName) + (isEnterprise ? '' : ' package') + '</div>' +
+          '<div class="dt">Issued ' + esc(issue) + ' · Valid until ' + esc(validStr) + '<br/>' + esc(pkgName) + (isCustom ? '' : ' service') + '</div>' +
         '</div>' +
       '</div>' +
 
@@ -212,7 +203,7 @@
         '<div class="big">' +
           (total > 0
             ? '<span class="amt">' + money(total, 'USD') + '</span><span class="cur">≈ ' + money(kesTotal, 'KES') + ' one-time</span>'
-            : '<span class="amt">Custom — scoped after discovery</span><span class="cur">' + (state.packageId === 'enterprise' ? 'from $20,000 — typical $20K–$200K+ build + $10K–$40K/mo support' : 'scoped in writing') + '</span>') +
+            : '<span class="amt">Custom — scoped after discovery</span><span class="cur">typical $28K–$200K+ build + $6K–$40K/mo care — scoped in writing</span>') +
         '</div>' +
         (monthly > 0 ? '<div class="mth">Optional support retainer: <b>' + money(monthly, 'USD') + '/mo</b> (≈ ' + money(kesMonthly, 'KES') + '/mo) — monitoring, enhancements, analytics, support. Cancel with 30 days notice.</div>' : '') +
         (total > 0 ? '<table class="pr-sched"><thead><tr><th>Payment schedule</th><th style="text-align:right">Amount</th></tr></thead><tbody>' + schedRows + '</tbody></table>' : '') +

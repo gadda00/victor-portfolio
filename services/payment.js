@@ -115,7 +115,7 @@
     var totalKes = est.totalKes || 0;
     var monthlyUsd = est.monthlyUsd || 0;
     var monthlyKes = est.monthlyKes || 0;
-    var isEnterprise = est.packageId === 'enterprise';
+    var isCustom = est.packageId === 'custom' || est.packageId === 'enterprise'; // 'enterprise' kept for legacy briefs
 
     // Plan calculations
     var plans = [
@@ -124,7 +124,7 @@
         name: '50 / 50',
         badge: 'Most popular',
         desc: 'Half now, half on delivery. Simple and predictable.',
-        schedule: isEnterprise
+        schedule: isCustom
           ? '<div>Deposit: Custom</div><div>On delivery: Custom</div>'
           : '<div>Deposit: $' + Math.round(totalUsd * 0.5).toLocaleString() + ' (KES ' + Math.round(totalKes * 0.5).toLocaleString() + ')</div><div>On delivery: $' + Math.round(totalUsd * 0.5).toLocaleString() + ' (KES ' + Math.round(totalKes * 0.5).toLocaleString() + ')</div>'
       },
@@ -132,7 +132,7 @@
         id: 'milestone',
         name: 'Milestone-based',
         desc: '30% kickoff, 40% midpoint, 30% delivery. Pay as you see progress.',
-        schedule: isEnterprise
+        schedule: isCustom
           ? '<div>Kickoff: Custom</div><div>Midpoint: Custom</div><div>Delivery: Custom</div>'
           : '<div>Kickoff (30%): $' + Math.round(totalUsd * 0.3).toLocaleString() + '</div><div>Midpoint (40%): $' + Math.round(totalUsd * 0.4).toLocaleString() + '</div><div>Delivery (30%): $' + Math.round(totalUsd * 0.3).toLocaleString() + '</div>'
       },
@@ -140,7 +140,7 @@
         id: 'monthly',
         name: 'Monthly retainer',
         desc: 'One-time build + monthly support. Cancel with 30 days notice.',
-        schedule: isEnterprise
+        schedule: isCustom
           ? '<div>Build: Custom</div><div>Monthly: Custom support plan (scoped with your SLA tier)</div>'
           : '<div>Build: $' + totalUsd.toLocaleString() + '</div><div>Monthly: $' + monthlyUsd + '/mo (KES ' + monthlyKes.toLocaleString() + ')</div>'
       }
@@ -175,7 +175,7 @@
       '<div class="payment-summary">' +
         '<div class="payment-summary-head">' +
           '<div class="payment-summary-pkg">' + (est.packageName || 'Package') + '</div>' +
-          '<div class="payment-summary-amount">' + (isEnterprise ? 'Custom' : fmtMoney(totalUsd, totalKes)) + '</div>' +
+          '<div class="payment-summary-amount">' + (isCustom ? 'Custom' : fmtMoney(totalUsd, totalKes)) + '</div>' +
         '</div>' +
         '<div class="payment-summary-grid">' +
           '<div class="payment-summary-cell"><div class="payment-summary-label">Contract ID</div><div class="payment-summary-value">' + contractId + '</div></div>' +

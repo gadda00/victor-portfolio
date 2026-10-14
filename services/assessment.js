@@ -3,8 +3,8 @@
    12 questions across 4 dimensions (Data, Pain, Team, Goals).
    - 100% client-side: no tracking, no server, no PII collected
    - Score 0–100 + per-dimension breakdown + weakest-link insight
-   - Recommendation mapped to the live package ladder (v11.1):
-     audit $2,000 · starter $10,000 · growth $28,000 · enterprise from $20,000
+   - Recommendation mapped to the three services (v16):
+     Needs Assessment $2,500 · Starter Build $10,000 · Big Projects from $28,000
    - Optional email report: sends score + visitor email to the owner
      via Web3Forms only when the visitor explicitly consents
    - Result is shareable (?r=&tier=&rec=) and printable
@@ -141,46 +141,38 @@
       ]}
   ];
 
-  /* ── Package ladder (mirrors services/data.json v1.3.0) ────────── */
+  /* ── Service ladder (mirrors services/data.json v1.4.0) ────────── */
   var PACKAGES = {
     audit: {
-      id: 'audit', icon: '🔍', name: 'AI Audit',
-      price: '$2,000 · KES 160K', monthly: '',
+      id: 'audit', icon: '🔍', name: 'Needs Assessment',
+      price: '$2,500 · KES 200K', monthly: '',
       timeline: '1–2 weeks',
-      desc: 'A consulting engagement, not a build: current-state assessment, 5–10 ranked opportunities, a quick-win pilot plan, and a make-vs-buy recommendation. 50% of the fee is credited toward any subsequent build package.',
-      ul: ['Opportunity map, ranked by return', 'Data & readiness review', 'Risk and compliance check', 'Executive readout + 12-month roadmap', 'Fee credited 50% toward a build']
+      desc: 'A consulting engagement, not a build: current-state assessment, 5–10 ranked opportunities, a quick-win pilot plan, and a make-vs-buy recommendation. 50% of the fee is credited toward any subsequent build.',
+      ul: ['Opportunity map, ranked by return', 'Reliability mode for shipped systems', 'Data & readiness review', 'Risk and compliance check', 'Executive readout + 12-month roadmap', 'Fee credited 50% toward a build']
     },
     starter: {
-      id: 'starter', icon: '🚀', name: 'AI Starter',
+      id: 'starter', icon: '🚀', name: 'Starter Build',
       price: '$10,000 · KES 800K', monthly: ' + $1,400/mo care',
       timeline: '2–3 weeks',
       desc: 'Ship one focused production system — a WhatsApp or web assistant, one automation workflow, a working knowledge base — and prove the value before scaling.',
       ul: ['One production workflow, live in weeks', 'Knowledge base (50 docs) with citations', 'EN + Swahili out of the box', 'Basic analytics dashboard', '2 revisions + 30 days support']
     },
     growth: {
-      id: 'growth', icon: '📈', name: 'AI Growth',
-      price: '$28,000 · KES 2.2M', monthly: ' + $6,000/mo care',
-      timeline: '6–10 weeks',
-      desc: 'Production AI integrated with your CRM/ERP: RAG with citations, predictive analytics, and a custom agent for one workflow. For operations that are ready to run on AI.',
-      ul: ['CRM/ERP-integrated production system', 'RAG with citations + evaluation suite', '2–3 integrations (CRM, ERP, WhatsApp)', 'Predictive analytics dashboard', 'Priority support (4-hour response, business hours)'],
-      alt: { icon: '🏢', name: 'AI Enterprise', price: 'from $20,000, scaling with scope', note: 'If you need 50+ specialized agents, SLAs, and 24/7 monitoring, the Enterprise tier starts at $20,000 — the Scope Wizard can size it precisely.' }
-    },
-    enterprise: {
-      id: 'enterprise', icon: '🏢', name: 'AI Enterprise',
-      price: 'from $20,000', monthly: ' + custom support plan',
-      timeline: '12–24 weeks',
-      desc: 'Custom multi-agent systems with SLAs, monitoring, and compliance reviews — scoped precisely to your operation.',
-      ul: ['50+ specialized agents', '99.5% uptime SLA + 1-hour critical response', 'Security & compliance review', 'Dedicated engineer + Slack/Teams channel', 'Quarterly roadmap + executive reviews']
+      id: 'growth', icon: '🏗️', name: 'Big Projects',
+      price: 'from $28,000 · KES 2.2M', monthly: ' + from $6,000/mo care',
+      timeline: '6–24 weeks',
+      desc: 'Production AI programs that run the business: RAG platforms, multi-agent orchestration, vision and forecasting — integrated with your CRM/ERP, compliance-reviewed, SLA-backed. Custom-scoped after a Needs Assessment.',
+      ul: ['Multi-system production program', 'RAG with citations + evaluation suite', '2–3+ integrations (CRM, ERP, WhatsApp, APIs)', 'Multi-agent orchestration (50+ agent DAGs)', 'On-prem or private-cloud options', '99.5% uptime SLA + 1-hour critical response']
     }
   };
 
   var TIERS = [
     { min: 0,  id: 'explorer', label: 'Foundation First', cls: '',
-      verdict: 'You have honest upside, but the foundations aren\u2019t mapped yet — building now would mean guessing. Start with the Audit: it turns \u201cwe should use AI\u201d into a ranked, costed roadmap, and half its fee comes back as credit toward a build.' },
+      verdict: 'You have honest upside, but the foundations aren\u2019t mapped yet — building now would mean guessing. Start with the Needs Assessment: it turns \u201cwe should use AI\u201d into a ranked, costed roadmap, and half its fee comes back as credit toward a build.' },
     { min: 40, id: 'ready',    label: 'Ready to Build', cls: 't2',
       verdict: 'You have enough structure, pain, and ownership to ship a focused first system — and see returns in weeks, not quarters. Start with one workflow that pays for itself, then scale from proof.' },
     { min: 70, id: 'primed',   label: 'Built for Production', cls: 't3',
-      verdict: 'Your data, team, and mandate can carry production-grade AI. The question isn\u2019t whether to build — it\u2019s what to build first, and at what depth. A Growth-tier system (or Enterprise scale) is within reach.' }
+      verdict: 'Your data, team, and mandate can carry production-grade AI. The question isn\u2019t whether to build — it\u2019s what to build first, and at what depth. A Big Project engagement is within reach.' }
   ];
 
   var DIM_ADVICE = {
@@ -236,7 +228,7 @@
     var budget = state.answers[11];
     var budgetVal = budget === null ? null : QUESTIONS[11].opts[budget][1];
     if (recId !== 'audit' && budgetVal !== null && budgetVal <= 1) {
-      bridging = 'Your score supports the ' + PACKAGES[recId].name + ', but your stated budget is under $3,000 — so the honest start is the AI Audit ($2,000). Half its fee is credited toward the build when you\u2019re ready, so nothing is lost by mapping first.';
+      bridging = 'Your score supports the ' + PACKAGES[recId].name + ', but your stated budget is under $3,000 — so the honest start is the Needs Assessment ($2,500). Half its fee is credited toward the build when you\u2019re ready, so nothing is lost by mapping first.';
       recId = 'audit';
     }
     return { tier: tier, recId: recId, bridging: bridging };
@@ -422,7 +414,7 @@
 
   /* ── ROI calculator ────────────────────────────────────────────── */
   function pkgPriceUsd(id) {
-    return { audit: 2000, starter: 10000, growth: 28000, enterprise: 20000 }[id] || 2000;
+    return { audit: 2500, starter: 10000, growth: 28000 }[id] || 2500;
   }
   function updateRoi(recId) {
     var h = parseFloat($('#roiHours').value) || 0;

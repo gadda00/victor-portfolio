@@ -26,7 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
 <meta name="view-transition" content="same-origin" />
-<link rel="stylesheet" href="/styles.css?v=12.0.0" />
+<link rel="stylesheet" href="/styles.css?v=13.0.0" />
 <link rel="stylesheet" href="/liquid.css?v=11.0.0" />
 
 <!-- Security Headers -->
@@ -653,7 +653,7 @@ window.VN_W3F_KEY = '4bf37d31-374a-4f3e-add6-3d2e36f7b784';
           tier: p.get('tier') || (prev && prev.tier) || 'ready',
           tierLabel: (prev && prev.tierLabel) || '',
           recId: rec,
-          recName: ({ audit: 'AI Audit', starter: 'AI Starter', growth: 'AI Growth', enterprise: 'AI Enterprise' })[rec] || 'AI Audit',
+          recName: ({ audit: 'Needs Assessment', starter: 'Starter Build', growth: 'Big Projects', enterprise: 'Big Projects' })[rec] || 'Needs Assessment',
           dims: (prev && prev.dims) || null,
           t: Date.now()
         }));
@@ -665,7 +665,7 @@ window.VN_W3F_KEY = '4bf37d31-374a-4f3e-add6-3d2e36f7b784';
       if (box) {
         box.hidden = false;
         box.innerHTML = '\ud83e\udded Assessment on file — <strong>' + ctx.score + '/100</strong> · ' +
-          (ctx.recName || 'AI Audit') + ' suggested. The call starts from your result' +
+          (ctx.recName || 'Needs Assessment') + ' suggested. The call starts from your result' +
           ' · <a href="/services/assessment.html">retake it</a>';
       }
     }
@@ -675,7 +675,7 @@ window.VN_W3F_KEY = '4bf37d31-374a-4f3e-add6-3d2e36f7b784';
 <script src="/liquid.js?v=11.0.0" defer></script>
 <script src="/enhancements.js?v=11.0.0" defer></script>
 <script src="/book/scheduler.js?v=11.2.0" defer></script>
-<script src="/book/assistant.js?v=11.2.0" defer></script>
+<script src="/book/assistant.js?v=16.0.0" defer></script>
 <script src="/book/draft-guard.js?v=12.0.0" defer></script>
 <script src="/availability.js?v=12.0.0" defer></script>
 <script src="/palette.js?v=12.0.0" defer></script>

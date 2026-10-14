@@ -109,7 +109,7 @@ nav.scrolled { padding: 0.6rem 0; box-shadow: 0 4px 30px rgba(0,0,0,0.1); }
 .logo { display: flex; align-items: center; gap: 0.5rem; font-size: 1.125rem; font-weight: 800; }
 .logo span { background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .nav-links { display: flex; gap: 0.25rem; align-items: center; }
-.nav-link { padding: 0.5rem 0.875rem; border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 500; color: var(--text-muted); transition: color 0.2s var(--ease), background-color 0.2s var(--ease); position: relative; }
+.nav-link { padding: 0.5rem 0.875rem; border-radius: var(--radius-sm); font-size: 0.875rem; font-weight: 500; color: var(--text-muted); transition: color 0.2s var(--ease), background-color 0.2s var(--ease); position: relative; white-space: nowrap; }
 .nav-link::after { content: ""; position: absolute; left: 0.875rem; right: 0.875rem; bottom: 0.15rem; height: 2px; border-radius: 2px; background: linear-gradient(90deg, var(--accent), var(--accent-2)); transform: scaleX(0); transform-origin: 0 50%; transition: transform 0.25s var(--ease); }
 .nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
 .nav-link:hover { color: var(--text); background: var(--glass); }

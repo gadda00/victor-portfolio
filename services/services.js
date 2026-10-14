@@ -24,7 +24,7 @@
   // ─── Init ──────────────────────────────────────────────────
   async function init() {
     try {
-      const resp = await fetch('/services/data.json?v=1.3');
+      const resp = await fetch('/services/data.json?v=1.4');
       if (!resp.ok) throw new Error('Failed to load services data');
       DATA = await resp.json();
       renderAll();
@@ -53,7 +53,7 @@
         if (typeof p.price.usdOneTime === 'number') {
           o.priceSpecification = { '@type': 'PriceSpecification', 'price': p.price.usdOneTime, 'priceCurrency': 'USD' };
         } else {
-          o.priceSpecification = { '@type': 'PriceSpecification', 'minPrice': 20000, 'priceCurrency': 'USD' };
+          o.priceSpecification = { '@type': 'PriceSpecification', 'minPrice': 28000, 'priceCurrency': 'USD' };
         }
         return o;
       });
@@ -71,7 +71,7 @@
         'description': 'Production AI systems for African and global businesses: chatbots, RAG knowledge systems, document AI, computer vision, predictive analytics, and multi-agent platforms. Remote-first from Nairobi.',
         'url': base + '/services/',
         'image': base + '/og-image.png',
-        'priceRange': '$2,000 - $200,000+',
+        'priceRange': '$2,500 - $200,000+',
         'areaServed': ['Kenya', 'East Africa', 'Worldwide (remote)'],
         'availableLanguage': ['en', 'sw', 'fr'],
         'provider': {
@@ -455,12 +455,17 @@
     const el = $('#calcResult');
     if (!el) return;
 
-    if (pkg.id === 'enterprise') {
+    if (pkg.id === 'growth') {
+      // Big Projects are custom-scoped: the computed number is a floor, not a quote
+      const floor = Math.round(subtotal);
       el.innerHTML = `
-        <div class="est-label">Estimated Range</div>
-        <div class="est-value">Custom</div>
-        <div class="est-detail">Enterprise engagements start at ${currency === 'kes' ? 'KES 1.6M' : '$20,000'} build — support plan scoped to your SLA tier after discovery</div>
-        <a href="/#contact" class="est-cta">Book a discovery call →</a>
+        <div class="est-label">Estimated Range (from)</div>
+        <div class="est-value">${fmtMoney(floor, currency)}+</div>
+        <div class="est-detail">Big Projects are custom-scoped after a Needs Assessment — final quote in writing before any build
+          ${monthly > 0 ? `<br/>${fmtMoney(monthly, currency)}/mo care plan (SLA-scoped)` : ''}
+          <br/><small>Includes: ${pkg.name}${calc.services.size > 0 ? ' + ' + calc.services.size + ' service' + (calc.services.size > 1 ? 's' : '') : ''} · ${calc.timeline} timeline</small>
+        </div>
+        <a href="/#contact" class="est-cta">Get a detailed quote →</a>
       `;
     } else {
       const total = Math.round(subtotal);

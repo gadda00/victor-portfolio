@@ -23,31 +23,25 @@
   var TOTAL_STEPS = 6;
   var STORAGE_KEY = 'vn_client_briefs';
 
-  // ── Package data (mirrors services/data.json) ─────────────────────
+  // ── Service data (mirrors services/data.json — 3 services, v16) ──
   var PACKAGES = {
     audit: {
-      id: 'audit', name: 'AI Audit', icon: '🔍', color: '#64748b',
-      priceUsd: 2000, priceKes: 160000, monthlyUsd: 0, monthlyKes: 0,
+      id: 'audit', name: 'Needs Assessment', icon: '🔍', color: '#64748b',
+      priceUsd: 2500, priceKes: 200000, monthlyUsd: 0, monthlyKes: 0,
       timeline: '1–2 weeks',
-      features: ['Current-state assessment','Opportunity map (5–10 ranked use cases)','Quick-win pilot plan','Make-vs-buy recommendation','Risk + compliance review','Executive readout + 12-month roadmap']
+      features: ['Current-state assessment','Opportunity map (5–10 ranked use cases with ROI)','Quick-win pilot plan','Make-vs-buy recommendation','Reliability mode for shipped systems','Risk + compliance review','Executive readout + 12-month roadmap']
     },
     starter: {
-      id: 'starter', name: 'AI Starter', icon: '🚀', color: '#10b981',
+      id: 'starter', name: 'Starter Build', icon: '🚀', color: '#10b981',
       priceUsd: 10000, priceKes: 800000, monthlyUsd: 1400, monthlyKes: 112000,
       timeline: '2–3 weeks',
       features: ['WhatsApp or web FAQ chatbot','1 automation workflow','Knowledge base (50 docs)','Basic analytics dashboard','Multilingual (EN + SW)','2 revisions + 30 days support']
     },
     growth: {
-      id: 'growth', name: 'AI Growth', icon: '📈', color: '#00d4ff',
+      id: 'growth', name: 'Big Projects', icon: '🏗️', color: '#00d4ff',
       priceUsd: 28000, priceKes: 2200000, monthlyUsd: 6000, monthlyKes: 480000,
-      timeline: '6–10 weeks',
-      features: ['RAG knowledge bot over company documents','2–3 integrations (CRM, ERP, WhatsApp, email, or API)','Predictive analytics dashboard (forecasting, churn, demand)','Custom AI agent for one workflow','Monthly enhancements + analytics review','Priority support (4-hour response, business hours)']
-    },
-    enterprise: {
-      id: 'enterprise', name: 'AI Enterprise', icon: '🏢', color: '#a855f7',
-      priceUsd: 20000, priceKes: 1600000, monthlyUsd: 0, monthlyKes: 0,
-      timeline: '12–24 weeks',
-      features: ['Custom multi-agent DAG orchestration (50+ agents)','LLM fine-tuning on your domain','On-prem or private-cloud deployment','Security & compliance review','Dedicated Slack/Teams channel + named engineer','99.5% uptime SLA + 1-hour critical response']
+      timeline: '6–24 weeks',
+      features: ['RAG knowledge platform over company documents','2–3+ integrations (CRM, ERP, WhatsApp, email, or APIs)','Predictive analytics (forecasting, churn, demand, anomalies)','Custom AI agents or multi-agent orchestration (50+ agent DAGs)','Computer vision pipelines (defect detection, crop disease, OCR)','LLM fine-tuning on your domain','On-prem or private-cloud deployment options','Security & compliance review (SOC2, ISO 27001, GDPR, Kenya DPA)','Dedicated Slack/Teams channel + named engineer','99.5% uptime SLA + 1-hour critical response (top SLA tier)']
     }
   };
 
@@ -70,49 +64,49 @@
   function $$(s) { return Array.from(document.querySelectorAll(s)); }
 
   // ── Recommendation engine ─────────────────────────────────────────
-  // Scores each package 0–100 based on state. Returns { packageId, score, why }
+  // Scores each service 0–100 based on state. Returns { packageId, score, why }
   function recommend() {
-    var scores = { audit: 0, starter: 0, growth: 0, enterprise: 0 };
-    var reasons = { audit: [], starter: [], growth: [], enterprise: [] };
+    var scores = { audit: 0, starter: 0, growth: 0 };
+    var reasons = { audit: [], starter: [], growth: [] };
 
     // Goal scoring
-    if (state.goal === 'research') { scores.audit += 50; reasons.audit.push('You want to explore AI before building — an audit is the right start.'); }
-    if (state.goal === 'automate') { scores.starter += 30; reasons.starter.push('Automation fits the Starter package perfectly.'); }
-    if (state.goal === 'insights') { scores.growth += 30; reasons.growth.push('Data insights typically need the Growth package with real statistical models.'); }
-    if (state.goal === 'product') { scores.growth += 25; scores.enterprise += 15; reasons.growth.push('Building a customer-facing AI product fits the Growth tier.'); }
-    if (state.goal === 'train') { scores.audit += 20; scores.starter += 15; reasons.audit.push('Training pairs well with an audit to identify the highest-ROI topics.'); }
+    if (state.goal === 'research') { scores.audit += 50; reasons.audit.push('You want to explore AI before building — a Needs Assessment is the right start.'); }
+    if (state.goal === 'automate') { scores.starter += 30; reasons.starter.push('Automation fits the Starter Build perfectly.'); }
+    if (state.goal === 'insights') { scores.growth += 30; reasons.growth.push('Data insights typically need a Big Project with real statistical models.'); }
+    if (state.goal === 'product') { scores.growth += 40; reasons.growth.push('Building a customer-facing AI product fits the Big Projects tier.'); }
+    if (state.goal === 'train') { scores.audit += 20; scores.starter += 15; reasons.audit.push('Training pairs well with a Needs Assessment to identify the highest-ROI topics.'); }
 
     // Scale scoring
-    if (state.scale === 'solo') { scores.starter += 35; reasons.starter.push('Solo/micro-business — the Starter package is sized for you.'); }
-    if (state.scale === 'smb') { scores.starter += 20; scores.growth += 25; reasons.growth.push('Small business with real data — Growth gives you production AI.'); }
-    if (state.scale === 'midmarket') { scores.growth += 35; scores.enterprise += 15; reasons.growth.push('Mid-market — Growth is the sweet spot for integrated production AI.'); }
-    if (state.scale === 'enterprise') { scores.enterprise += 50; scores.growth += 10; reasons.enterprise.push('Enterprise scale — the Enterprise package handles your SLA and security needs.'); }
+    if (state.scale === 'solo') { scores.starter += 35; reasons.starter.push('Solo/micro-business — the Starter Build is sized for you.'); }
+    if (state.scale === 'smb') { scores.starter += 20; scores.growth += 25; reasons.growth.push('Small business with real data — a Big Project gives you production AI.'); }
+    if (state.scale === 'midmarket') { scores.growth += 50; reasons.growth.push('Mid-market — Big Projects are the sweet spot for integrated production AI.'); }
+    if (state.scale === 'enterprise') { scores.growth += 60; reasons.growth.push('Enterprise scale — Big Projects handle your SLA and security needs.'); }
 
     // Type scoring
-    if (state.types.has('multi-agent')) { scores.enterprise += 40; scores.growth += 10; reasons.enterprise.push('Multi-agent systems are enterprise-grade by nature.'); }
-    if (state.types.has('computer-vision')) { scores.growth += 15; scores.enterprise += 10; }
+    if (state.types.has('multi-agent')) { scores.growth += 50; reasons.growth.push('Multi-agent systems are big-project-grade by nature.'); }
+    if (state.types.has('computer-vision')) { scores.growth += 25; }
     if (state.types.has('predictive')) { scores.growth += 15; }
     if (state.types.has('agriculture')) { scores.growth += 15; }
     if (state.types.has('chatbots') && state.types.size === 1) { scores.starter += 20; }
     if (state.types.has('rag') && state.types.size === 1) { scores.starter += 10; scores.growth += 10; }
-    if (state.types.size >= 4) { scores.enterprise += 20; scores.growth += 10; reasons.enterprise.push('You need ' + state.types.size + ' AI capabilities — that\'s an enterprise-grade scope.'); }
+    if (state.types.size >= 4) { scores.growth += 30; reasons.growth.push('You need ' + state.types.size + ' AI capabilities — that\'s a big-project scope.'); }
 
     // Budget scoring
-    if (state.budget === 'under-3k') { scores.audit += 40; scores.starter += 10; reasons.audit.push('The $2,000 AI Audit fits a tight budget — and half of it is credited toward a later build.'); }
-    if (state.budget === '3k-10k') { scores.starter += 35; scores.growth += 10; reasons.starter.push('The Starter package ($10,000) tops this range — a real first AI tool.'); }
-    if (state.budget === '10k-30k') { scores.growth += 30; scores.enterprise += 15; reasons.growth.push('Your budget range aligns with the Growth package.'); reasons.enterprise.push('Enterprise engagements start at $20,000 — within this range.'); }
-    if (state.budget === '30k-plus') { scores.enterprise += 40; scores.growth += 5; reasons.enterprise.push('Your budget supports the Enterprise package.'); }
-    if (state.budget === 'equity') { scores.audit += 15; scores.starter += 20; reasons.starter.push('Equity-for-services is available for the Starter and Audit tiers.'); }
+    if (state.budget === 'under-3k') { scores.audit += 40; scores.starter += 10; reasons.audit.push('The $2,500 Needs Assessment fits a tight budget — and half of it is credited toward a later build.'); }
+    if (state.budget === '3k-10k') { scores.starter += 35; scores.growth += 10; reasons.starter.push('The Starter Build ($10,000) tops this range — a real first AI tool.'); }
+    if (state.budget === '10k-30k') { scores.growth += 35; scores.starter += 10; reasons.growth.push('Your budget range aligns with Big Projects (from $28,000).'); }
+    if (state.budget === '30k-plus') { scores.growth += 45; reasons.growth.push('Your budget supports a Big Project engagement.'); }
+    if (state.budget === 'equity') { scores.audit += 15; scores.starter += 20; reasons.starter.push('Equity-for-services is available for the Starter and Assessment tiers.'); }
     if (state.budget === 'unsure') { scores.audit += 10; }
 
     // Timeline scoring
     if (state.timeline === 'asap') {
       scores.audit += 10; scores.starter += 15;
-      reasons.starter.push('Rush timeline — Starter and Audit ship fastest (1–3 weeks).');
+      reasons.starter.push('Rush timeline — Starter and Assessment ship fastest (1–3 weeks).');
     }
     if (state.timeline === 'quarter' || state.timeline === 'flexible') {
-      scores.growth += 10; scores.enterprise += 10;
-      reasons.growth.push('Flexible timeline unlocks the Growth package (and a 15% discount).');
+      scores.growth += 20;
+      reasons.growth.push('Flexible timeline unlocks Big Projects (and up to a 15% discount).');
     }
 
     // Cap scores at 100
