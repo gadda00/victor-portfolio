@@ -433,7 +433,7 @@
     $('#pr-date').addEventListener('change', function () { state.issue = this.value; renderDoc(); });
     $('#pr-package').addEventListener('change', function () {
       state.packageId = this.value;
-      var p = PACKAGES[this.value];
+      var p = PACKAGES[this.value] || PACKAGES.custom;
       state.approach = p.approach;
       state.deliverables = p.deliverables.join('\n');
       state.timeline = p.timeline;
