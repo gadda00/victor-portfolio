@@ -436,6 +436,12 @@
         { n: 2, label: 'Midpoint (40%)', share: 0.40, dueOffset: 21 },
         { n: 3, label: 'Delivery (30%)', share: 0.30, dueOffset: 42 }
       ];
+    } else if (type === 'instalments') { // v18: 3 × 33%, no fees
+      installments = [
+        { n: 1, label: 'Instalment 1 · kickoff (33%)', share: 0.3333, dueOffset: 0 },
+        { n: 2, label: 'Instalment 2 · mid-build (33%)', share: 0.3333, dueOffset: 14 },
+        { n: 3, label: 'Instalment 3 · delivery (34%)', share: 0.3334, dueOffset: 30 }
+      ];
     } else if (type === 'monthly') {
       installments = [
         { n: 1, label: 'Build (100%)', share: 1.0, dueOffset: 0 }
@@ -610,6 +616,10 @@
 
   /* ── Owner notifications (Web3Forms → email) ───────────────────── */
   function notifyOwner(subject, fields) {
+    // v18: demo workspaces never email the owner
+    try {
+      if (vault && vault.profile && String(vault.profile.email).indexOf('demo-') === 0) return;
+    } catch (e) { /* fall through */ }
     try {
       var fd = new FormData();
       fd.append('access_key', WEB3FORMS_KEY);

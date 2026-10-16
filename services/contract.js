@@ -65,7 +65,7 @@
     var typesHtml = (state.types || []).map(function (t) { return '<li>' + t.replace(/-/g, ' ') + '</li>'; }).join('');
 
     var priceText = est.packageId === 'growth'
-      ? 'From USD $' + (est.totalUsd || 28000).toLocaleString() + ' (KES ' + (est.totalKes || 2200000).toLocaleString() + ') one-time — final scope confirmed in writing after the Needs Assessment. Big Project programs typically scale to $200K+ build + $6K–$40K/month care.'
+      ? 'From USD $' + (est.totalUsd || 35000).toLocaleString() + ' (KES ' + (est.totalKes || 2800000).toLocaleString() + ') one-time — final scope confirmed in writing after the Needs Assessment. Big Project programs typically scale to $200K+ build + $5K–$40K/month care.'
       : 'USD $' + (est.totalUsd || 0).toLocaleString() + ' (KES ' + (est.totalKes || 0).toLocaleString() + ') one-time' +
         (est.monthlyUsd ? ' plus USD $' + est.monthlyUsd + '/month (KES ' + (est.monthlyKes || 0).toLocaleString() + '/month) for ongoing support' : '');
 

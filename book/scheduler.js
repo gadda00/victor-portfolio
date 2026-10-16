@@ -395,6 +395,24 @@
         }, { once: true });
         /* 3) WhatsApp handoff */
         done.querySelector('.sc-wa-btn').href = waLink(name, topic);
+        /* 3b) Google Calendar one-tap add (v18) */
+        var gcal = done.querySelector('.sc-gcal-btn');
+        if (gcal) {
+          var y2 = picked.date.getFullYear(), m2 = picked.date.getMonth(), d2 = picked.date.getDate();
+          var sUtc = new Date(Date.UTC(y2, m2, d2, Math.floor(picked.slot / 60), picked.slot % 60) - EAT_OFFSET_MIN * 60000);
+          var eUtc = new Date(sUtc.getTime() + DURATION_MIN * 60000);
+          function pad2(n) { return String(n).padStart(2, '0'); }
+          function gfmt(dt) {
+            return dt.getUTCFullYear() + pad2(dt.getUTCMonth() + 1) + pad2(dt.getUTCDate()) + 'T' +
+              pad2(dt.getUTCHours()) + pad2(dt.getUTCMinutes()) + '00Z';
+          }
+          var details = '30-minute call on WhatsApp. Requested via victorndunda.com/book — confirmation follows by email/WhatsApp. Contact: +254 724 346 971.';
+          gcal.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+            '&text=' + encodeURIComponent('AI Systems Assessment — Victor Ndunda') +
+            '&dates=' + gfmt(sUtc) + '/' + gfmt(eUtc) +
+            '&details=' + encodeURIComponent(details) +
+            '&location=' + encodeURIComponent('WhatsApp call (+254 724 346 971)');
+        }
         var summary = done.querySelector('.sc-summary');
         if (summary) {
           summary.innerHTML = '';

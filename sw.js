@@ -15,7 +15,7 @@
  * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v17.0.0';
+const CACHE_VERSION = 'vnd-v18.0.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -37,6 +37,7 @@ const SHELL_URLS = [
   '/palette.js',
   '/article-enhance.js',
   '/availability.js',
+  '/proof-chip.js',
   '/ai-policy.html',
   '/victor-ndunda.vcf',
   '/feed.xml',
@@ -49,6 +50,14 @@ const SHELL_URLS = [
   '/manifest.webmanifest',
   '/og-image.png',
   '/logo.svg',
+  '/services/roi.html',
+  '/services/roi.js',
+  '/services/roi.css',
+  '/services/rate-card.html',
+  '/services/rate-card.css',
+  '/services/care.html',
+  '/services/faq.html',
+  '/services/faq.js',
 ];
 
 // Never cache these (would break OAuth + live job data + dashboard/portal freshness)

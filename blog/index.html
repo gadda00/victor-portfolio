@@ -42,7 +42,7 @@
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.web3forms.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
 <!-- Structured Data: Blog + Breadcrumb -->
@@ -106,7 +106,7 @@
       <a href="/" class="nav-link">Home</a>
       <a href="/services/" class="nav-link">Services</a>
       <a href="/projects/" class="nav-link">Case Studies</a>
-      <a href="/blog/" class="nav-link active" aria-current="page">Insights</a>
+      <a href="/blog/" class="nav-link active" aria-current="page" aria-current="page">Insights</a>
       <a href="/#about" class="nav-link">About</a>
       <a href="/resume/" class="nav-link">Resume</a>
       <a href="/book/" class="nav-link" style="background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;padding:0.5rem 1rem;border-radius:10px;font-weight:700">Book an Assessment</a>
@@ -155,6 +155,18 @@
 
 <footer>
   <div class="container">
+    <!-- v18: newsletter capture — Web3Forms, no backend, no trackers -->
+    <div class="blog-subscribe" id="blogSubscribe">
+      <div class="blog-subscribe-inner">
+        <h3 class="blog-subscribe-title">📡 Get the next article</h3>
+        <p class="blog-subscribe-sub">One email when a new article lands — production AI writing, no newsletter filler. Unsubscribe by replying "stop".</p>
+        <form class="blog-subscribe-form" id="blogSubForm">
+          <input type="email" id="blogSubEmail" placeholder="you@company.com" aria-label="Your email for article alerts" required />
+          <button type="submit" class="btn btn-primary btn-sm" id="blogSubBtn">Notify me</button>
+        </form>
+        <p class="blog-subscribe-status" id="blogSubStatus" role="status"></p>
+      </div>
+    </div>
     <div class="footer-bottom">
       <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
       <p><a href="/" style="color:var(--accent);">← Back to Home</a></p>
@@ -217,6 +229,54 @@ mobileToggle.addEventListener('click', () => {
 window.addEventListener('scroll', () => {
   document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
 });
+</script>
+<script>
+// v18: newsletter capture — Web3Forms (same key family as the booking form)
+(function () {
+  var form = document.getElementById('blogSubForm');
+  if (!form) return;
+  var KEY = '4bf37d31-374a-4f3e-add6-3d2e36f7b784';
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var email = (document.getElementById('blogSubEmail').value || '').trim();
+    var btn = document.getElementById('blogSubBtn');
+    var status = document.getElementById('blogSubStatus');
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      status.textContent = 'That email does not look right — check it and try again.';
+      status.className = 'blog-subscribe-status err';
+      return;
+    }
+    btn.disabled = true; btn.textContent = 'Subscribing…'; status.textContent = '';
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        access_key: KEY,
+        subject: 'Blog subscribe — ' + email,
+        from_name: 'victorndunda.com insights',
+        name: 'Insights subscribe',
+        email: email,
+        message: 'BLOG SUBSCRIBE (victorndunda.com/insights)\nEmail: ' + email + '\nTime: ' + new Date().toLocaleString() + '\n\nOwner: add to the article-alert list. Unsubscribe = reply stop.'
+      })
+    }).then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j && j.success) {
+          btn.textContent = 'Subscribed ✓';
+          status.textContent = 'You are on the list — the next article lands in your inbox.';
+          status.className = 'blog-subscribe-status ok';
+        } else {
+          btn.disabled = false; btn.textContent = 'Notify me';
+          status.textContent = 'Could not subscribe (' + ((j && j.message) || 'error') + ') — try again shortly.';
+          status.className = 'blog-subscribe-status err';
+        }
+      })
+      .catch(function () {
+        btn.disabled = false; btn.textContent = 'Notify me';
+        status.textContent = 'Network hiccup — try again.';
+        status.className = 'blog-subscribe-status err';
+      });
+  });
+})();
 </script>
 <script src="/enhancements.js?v=11.0.0" defer></script>
 <script src="/palette.js?v=12.0.0" defer></script>

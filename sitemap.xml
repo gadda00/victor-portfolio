@@ -28,6 +28,31 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://victorndunda.com/services/roi.html</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/services/rate-card.html</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/services/care.html</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/services/faq.html</loc>
+    <lastmod>2026-10-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
     <loc>https://victorndunda.com/projects/</loc>
     <lastmod>2026-10-14</lastmod>
     <changefreq>monthly</changefreq>

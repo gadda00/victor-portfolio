@@ -44,8 +44,8 @@
   var FALLBACK = {
     packages: [
       { id: 'audit', name: 'Needs Assessment', price: { usdOneTime: 2500, kesOneTime: 200000 }, timeline: '1–2 weeks' },
-      { id: 'starter', name: 'Starter Build', price: { usdOneTime: 10000, kesOneTime: 800000, usdMonthly: 1400, kesMonthly: 112000 }, timeline: '2–3 weeks' },
-      { id: 'growth', name: 'Big Projects', price: { usdOneTime: 28000, kesOneTime: 2200000, usdMonthly: 6000, kesMonthly: 480000 }, timeline: '6–24 weeks' }
+      { id: 'starter', name: 'Starter Build', price: { usdOneTime: 12000, kesOneTime: 960000, usdMonthly: 1400, kesMonthly: 112000 }, timeline: '2–3 weeks' },
+      { id: 'growth', name: 'Big Projects', price: { usdOneTime: 35000, kesOneTime: 2800000, usdMonthly: 5000, kesMonthly: 400000 }, timeline: '6–24 weeks' }
     ],
     services: [
       { id: 'chatbots', name: 'AI Chatbots & Virtual Assistants', fromPrice: { usd: 3000, kes: 240000 } },
@@ -607,7 +607,7 @@
       'The exact quote comes out of the free assessment — scoped in writing before any build.',
       'Optional support retainer from $1,400/mo (published package rates).'
     ];
-    if (capped) assumptions.push('Scope exceeds standard multipliers — Big Project territory (custom quote, from $28,000 scaling to $200K+).');
+    if (capped) assumptions.push('Scope exceeds standard multipliers — Big Project territory (custom quote, from $35,000 scaling to $200K+).');
 
     botReply(
       '<strong>Ballpark: $' + usdLow.toLocaleString('en-US') + '–$' + usdHigh.toLocaleString('en-US') + ' · KES ' + kesLow.toLocaleString('en-US') + '–' + kesHigh.toLocaleString('en-US') + '</strong> for ' + esc(estimate.service.name) + '.',
@@ -699,7 +699,7 @@
   function supportAnswer() {
     track('assistant_support');
     botReply(
-      'Every build hands over with <strong>documentation, monitoring, and an observability baseline</strong> — quality is measured, not assumed. After that: <strong>support retainers from $1,400/mo</strong> (the published Starter rate; Growth runs $6,000/mo) cover fixes, tuning and small improvements. Bigger changes become a scoped sprint. The free assessment output includes what ongoing support your specific system would need.',
+      'Every build hands over with <strong>documentation, monitoring, and an observability baseline</strong> — quality is measured, not assumed. After that: <strong>support retainers from $1,400/mo</strong> (the published Starter rate; Big Project care runs from $5,000/mo) cover fixes, tuning and small improvements. Bigger changes become a scoped sprint. The free assessment output includes what ongoing support your specific system would need.',
       { actions: [{ label: 'See packages & retainers', href: '/services/#packages-section', track: 'assistant-support-pkg' }] },
       DEFAULT_CHIPS
     );
@@ -838,7 +838,7 @@
     }
     if (has(t, ['small business', 'startup', 'smb', 'sme', 'chama'])) {
       track('assistant_intent', { i: 'smb' });
-      botReply('Yes — there\'s a dedicated <strong>AI for Small Business</strong> service from <strong>$3,000 / KES 240K</strong>, and the <strong>Starter Build</strong> ($10,000 + $1,400/mo care) is built for first AI projects.');
+      botReply('Yes — there\'s a dedicated <strong>AI for Small Business</strong> service from <strong>$3,000 / KES 240K</strong>, and the <strong>Starter Build</strong> ($12,000 — or 3 instalments of $4,200 — + $1,400/mo care) is built for first AI projects.');
       return;
     }
     if (has(t, ['training', 'workshop', 'team', 'upskill', 'coach'])) {

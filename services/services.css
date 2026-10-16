@@ -203,3 +203,39 @@
   .svc-asmt-bar { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
   .svc-asmt-cta { white-space: normal; }
 }
+
+/* ── v18: Most-popular badge + comparison matrix ─────────────────── */
+.pkg-popular { position: relative; border-color: var(--accent) !important; box-shadow: 0 0 0 1px var(--accent), 0 18px 44px rgba(16, 185, 129, 0.13); }
+.pkg-badge {
+  position: absolute; top: -13px; right: 14px;
+  background: linear-gradient(135deg, #10b981, #0d9488);
+  color: #fff; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.04em;
+  padding: 4px 12px; border-radius: 999px; box-shadow: 0 6px 16px rgba(16, 185, 129, 0.35);
+}
+.cmp-section { margin-top: 3.25rem; }
+.cmp-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-card); padding: 0.25rem; }
+.cmp-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 680px; }
+.cmp-table th, .cmp-table td { padding: 0.7rem 0.9rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); color: var(--text-muted); }
+.cmp-table thead th { font-weight: 700; color: var(--text); font-size: 0.92rem; white-space: nowrap; background: var(--bg-card); position: sticky; top: 0; }
+.cmp-table tbody th { font-weight: 600; color: var(--text); white-space: nowrap; }
+.cmp-table tbody tr:last-child th, .cmp-table tbody tr:last-child td { border-bottom: none; }
+.cmp-pop { background: rgba(16, 185, 129, 0.07); }
+.cmp-star { color: #10b981; }
+.cmp-note { margin: 0.85rem 0 0; font-size: 0.8rem; color: var(--text-muted); text-align: center; }
+.cmp-table tbody tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+/* ── v18: pricing tools hub ──────────────────────────────────────── */
+.svc-tools-hub {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0.9rem; margin-top: 1.75rem; max-width: 980px; margin-left: auto; margin-right: auto;
+}
+.svc-tool-chip {
+  display: flex; gap: 0.8rem; align-items: flex-start; padding: 1rem 1.1rem;
+  border: 1px solid var(--border); border-radius: 13px; background: var(--bg-card);
+  text-decoration: none; color: var(--text-muted); transition: border-color 0.2s, transform 0.2s;
+  font-size: 0.86rem; line-height: 1.5;
+}
+.svc-tool-chip:hover { border-color: var(--accent); transform: translateY(-2px); }
+.svc-tool-chip strong { color: var(--text); font-size: 0.92rem; }
+.svc-tool-chip small { font-size: 0.74rem; color: var(--text-muted); }
+.svc-tool-ic { font-size: 1.3rem; line-height: 1; }

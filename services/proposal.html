@@ -95,8 +95,8 @@
           <div class="inv-field"><label for="pr-package">Service</label>
             <select id="pr-package">
               <option value="audit">Needs Assessment — $2,500 · 1–2 weeks</option>
-              <option value="starter">Starter Build — $10,000 + $1,400/mo care · 2–3 weeks</option>
-              <option value="growth" selected>Big Projects — from $28,000 + from $6,000/mo care · 6–24 weeks</option>
+              <option value="starter">Starter Build — $12,000 + $1,400/mo care · 2–3 weeks</option>
+              <option value="growth" selected>Big Projects — from $35,000 + from $5,000/mo care · 6–24 weeks</option>
               <option value="custom">Custom / scoped engagement</option>
             </select>
           </div>
@@ -138,13 +138,14 @@
       <div class="lg-panel inv-card">
         <h2>Investment</h2>
         <div class="inv-row">
-          <div class="inv-field"><label for="pr-total">Total (USD) *</label><input id="pr-total" type="number" min="0" step="50" placeholder="28000" /></div>
-          <div class="inv-field"><label for="pr-monthly">Monthly (USD, optional)</label><input id="pr-monthly" type="number" min="0" step="50" placeholder="6000" /></div>
+          <div class="inv-field"><label for="pr-total">Total (USD) *</label><input id="pr-total" type="number" min="0" step="50" placeholder="35000" /></div>
+          <div class="inv-field"><label for="pr-monthly">Monthly (USD, optional)</label><input id="pr-monthly" type="number" min="0" step="50" placeholder="5000" /></div>
         </div>
         <div class="inv-row" style="margin-top:0.75rem">
           <div class="inv-field"><label for="pr-plan">Payment schedule</label>
             <select id="pr-plan">
               <option value="fifty">50% deposit · 50% on delivery</option>
+              <option value="instalments">Instalments — 3 payments · no fees</option>
               <option value="milestone">Milestones — 30% · 40% · 30%</option>
               <option value="monthly">Build + monthly retainer</option>
             </select>
@@ -188,6 +189,17 @@
     <!-- ── Live preview ── -->
     <div class="inv-doc-shell">
       <div class="inv-doc pr-doc" id="prDoc" aria-live="polite"></div>
+
+      <!-- v18: client e-signature (typed name, page-side; renders into the doc on sign) -->
+      <div class="pr-sign-form" id="prSignForm">
+        <h3 class="pr-sign-title">✍ Client acceptance</h3>
+        <p class="pr-sign-sub" id="prSignSub">Type the client's full name to sign electronically — it records the name, date, and proposal number on the document and marks it accepted.</p>
+        <div class="pr-sign-row">
+          <input type="text" id="prSignName" placeholder="Client full name" autocomplete="name" aria-label="Client full name for e-signature" />
+          <button type="button" class="btn btn-primary" id="prSignBtn">Sign &amp; accept</button>
+        </div>
+        <p class="pr-sign-note">Electronic signature under Kenya's Business Laws (Amendment) Act 2020 §6 and common electronic-signature practice — the signed PDF plus this tool's local record serve as evidence of assent. A written reply referencing the proposal number works too.</p>
+      </div>
       <p style="text-align:center;font-size:0.75rem;color:var(--text-dim);margin-top:0.9rem">
         The preview mirrors the printable document — use Print / Save PDF for the client copy.
       </p>

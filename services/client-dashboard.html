@@ -64,7 +64,7 @@
       <a href="/" class="nav-link">Home</a>
       <a href="/services/" class="nav-link">Services</a>
       <a href="/services/wizard.html" class="nav-link">Wizard</a>
-      <a href="/services/client-dashboard.html" class="nav-link active">Client Portal</a>
+      <a href="/services/client-dashboard.html" class="nav-link active" aria-current="page">Client Portal</a>
       <a href="/resume/" class="nav-link">Resume</a>
       <a href="/#contact" class="nav-link">Contact</a>
     </div>
@@ -119,6 +119,12 @@
 
     <button id="authSwitchBtn" class="auth-switch">Already registered? Sign in</button>
 
+    <!-- v18: demo workspace entry -->
+    <div class="auth-demo">
+      <button type="button" class="btn btn-ghost" id="authDemoBtn">👁 Try the demo workspace</button>
+      <p class="auth-demo-note">A fully working portal with a sample project — real encryption, fake data, nothing leaves your browser. One click to start, one click to wipe.</p>
+    </div>
+
     <div class="auth-trust">
       <div class="auth-trust-item"><span class="ic">🔒</span><div><strong>Zero-knowledge</strong><div>AES-256-GCM encryption, keys derived from your password</div></div></div>
       <div class="auth-trust-item"><span class="ic">💾</span><div><strong>Local-first</strong><div>Data lives in your browser — export or delete anytime</div></div></div>
@@ -137,6 +143,10 @@
         <span class="portal-eyebrow"><span class="pulse-dot"></span> Client Portal</span>
         <h1 class="portal-title" id="portalHello">Welcome</h1>
         <p class="portal-sub" id="portalEmail">—</p>
+        <div class="portal-demo-banner" id="portalDemoBanner" hidden>
+          <span>👁 <strong>Demo workspace</strong> — everything works, the data is a sample, and it never leaves this browser.</span>
+          <button type="button" class="btn btn-ghost btn-sm" id="portalDemoExit">Exit &amp; wipe demo</button>
+        </div>
       </div>
       <div class="portal-user">
         <div class="portal-avatar" id="portalAvatar" aria-hidden="true">C</div>

@@ -33,13 +33,13 @@
     },
     starter: {
       id: 'starter', name: 'Starter Build', icon: '🚀', color: '#10b981',
-      priceUsd: 10000, priceKes: 800000, monthlyUsd: 1400, monthlyKes: 112000,
+      priceUsd: 12000, priceKes: 960000, monthlyUsd: 1400, monthlyKes: 112000,
       timeline: '2–3 weeks',
       features: ['WhatsApp or web FAQ chatbot','1 automation workflow','Knowledge base (50 docs)','Basic analytics dashboard','Multilingual (EN + SW)','2 revisions + 30 days support']
     },
     growth: {
       id: 'growth', name: 'Big Projects', icon: '🏗️', color: '#00d4ff',
-      priceUsd: 28000, priceKes: 2200000, monthlyUsd: 6000, monthlyKes: 480000,
+      priceUsd: 35000, priceKes: 2800000, monthlyUsd: 5000, monthlyKes: 400000,
       timeline: '6–24 weeks',
       features: ['RAG knowledge platform over company documents','2–3+ integrations (CRM, ERP, WhatsApp, email, or APIs)','Predictive analytics (forecasting, churn, demand, anomalies)','Custom AI agents or multi-agent orchestration (50+ agent DAGs)','Computer vision pipelines (defect detection, crop disease, OCR)','LLM fine-tuning on your domain','On-prem or private-cloud deployment options','Security & compliance review (SOC2, ISO 27001, GDPR, Kenya DPA)','Dedicated Slack/Teams channel + named engineer','99.5% uptime SLA + 1-hour critical response (top SLA tier)']
     }
@@ -93,8 +93,8 @@
 
     // Budget scoring
     if (state.budget === 'under-3k') { scores.audit += 40; scores.starter += 10; reasons.audit.push('The $2,500 Needs Assessment fits a tight budget — and half of it is credited toward a later build.'); }
-    if (state.budget === '3k-10k') { scores.starter += 35; scores.growth += 10; reasons.starter.push('The Starter Build ($10,000) tops this range — a real first AI tool.'); }
-    if (state.budget === '10k-30k') { scores.growth += 35; scores.starter += 10; reasons.growth.push('Your budget range aligns with Big Projects (from $28,000).'); }
+    if (state.budget === '3k-10k') { scores.starter += 35; scores.growth += 10; reasons.starter.push('The Starter Build ($12,000, or 3 instalments of $4,200) tops this range — a real first AI tool.'); }
+    if (state.budget === '10k-30k') { scores.growth += 35; scores.starter += 10; reasons.growth.push('Your budget range aligns with Big Projects (from $35,000).'); }
     if (state.budget === '30k-plus') { scores.growth += 45; reasons.growth.push('Your budget supports a Big Project engagement.'); }
     if (state.budget === 'equity') { scores.audit += 15; scores.starter += 20; reasons.starter.push('Equity-for-services is available for the Starter and Assessment tiers.'); }
     if (state.budget === 'unsure') { scores.audit += 10; }
@@ -269,7 +269,13 @@
         '</a>' +
       '</div>' +
 
-      '<p class="wiz-save-note">Your brief is saved in your browser — and synced into your encrypted Client Portal if you\'re signed in. No data leaves your device until you proceed.</p>';
+      '<p class="wiz-save-note">Your brief is saved in your browser — and synced into your encrypted Client Portal if you\'re signed in. No data leaves your device until you proceed.</p>' +
+
+      '<div class="wiz-email-row">' +
+        '<input type="email" id="wizEmailInput" placeholder="you@company.com — email me this estimate" aria-label="Your email to receive the estimate" />' +
+        '<button type="button" class="btn btn-ghost" id="wizEmailBtn">✉ Email me this estimate</button>' +
+        '<span class="wiz-email-status" id="wizEmailStatus" role="status"></span>' +
+      '</div>';
 
     $('#resultContent').innerHTML = html;
     $('#resultOverlay').hidden = false;
@@ -282,6 +288,69 @@
     var c = $('#resultContract'); if (c) c.href = '/services/contract.html?brief=' + brief.id;
     var pr = $('#resultProposal'); if (pr) pr.href = '/services/proposal.html?brief=' + brief.id;
     var p = $('#resultPay'); if (p) p.href = '/services/payment.html?brief=' + brief.id;
+
+    // ── v18: email-me-this-estimate (Web3Forms, same pattern as the assessment page) ──
+    var trackLocal = function (name, data) {
+      try {
+        (window.__vnEvents = window.__vnEvents || []).push({ name: name, data: data, t: Date.now() });
+        if (typeof window.__vnTrack === 'function') window.__vnTrack({ name: name, data: data });
+      } catch (e) { /* tracking must never break the page */ }
+    };
+    var eb = $('#wizEmailBtn');
+    if (eb) eb.addEventListener('click', function () {
+      var emailInput = $('#wizEmailInput');
+      var status = $('#wizEmailStatus');
+      var email = (emailInput.value || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        status.textContent = 'Enter a valid email first';
+        status.className = 'wiz-email-status err';
+        emailInput.focus();
+        return;
+      }
+      eb.disabled = true; eb.textContent = 'Sending…'; status.textContent = '';
+      var key = (typeof window.VN_W3F_KEY === 'string' && window.VN_W3F_KEY) ? window.VN_W3F_KEY : '';
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          access_key: key,
+          subject: 'Wizard lead — ' + recom.packageId + ' · $' + est.totalUsd.toLocaleString() + ' · ' + email,
+          from_name: 'victorndunda.com scope wizard',
+          name: 'Project Scope Wizard',
+          email: email,
+          message:
+            'SCOPE WIZARD LEAD (victorndunda.com)\n' +
+            'Recommended: ' + pkg.name + ' (' + recom.score + '% match)\n' +
+            'Estimate: $' + est.totalUsd.toLocaleString() + ' · KES ' + est.totalKes.toLocaleString() +
+            (est.monthlyUsd ? ' + $' + est.monthlyUsd.toLocaleString() + '/mo care' : '') + '\n' +
+            'Timeline: ' + est.timeline + ' (' + est.timelineLabel + ')\n' +
+            'Goal: ' + (state.goal || '—') + ' · Scale: ' + (state.scale || '—') + ' · Budget: ' + (state.budget || '—') + '\n' +
+            'Capabilities: ' + Array.from(state.types).join(', ') + '\n' +
+            'Details: ' + (state.details.name || '—') + ' / ' + (state.details.email || email) + ' / ' + (state.details.company || '—') + '\n' +
+            'Brief ID: ' + brief.id + '\n' +
+            'Time: ' + new Date().toLocaleString() + '\n\n' +
+            'The visitor asked to receive this estimate by email — reply with the estimate + a booking link.'
+        })
+      }).then(function (r) { return r.json(); })
+        .then(function (j) {
+          trackLocal('wizard_lead', { sent: !!(j && j.success), pkg: recom.packageId });
+          if (j && j.success) {
+            eb.textContent = 'Estimate sent ✓';
+            status.textContent = 'Sent to ' + email + ' — Victor follows up with the same numbers.';
+            status.className = 'wiz-email-status ok';
+          } else {
+            eb.disabled = false; eb.textContent = '✉ Email me this estimate';
+            status.textContent = 'The send failed' + (j && j.message ? ' (' + j.message + ')' : '') + ' — you can still book a call with this brief attached.';
+            status.className = 'wiz-email-status err';
+          }
+        })
+        .catch(function () {
+          trackLocal('wizard_lead', { sent: false, pkg: recom.packageId });
+          eb.disabled = false; eb.textContent = '✉ Email me this estimate';
+          status.textContent = 'Network hiccup — try again, or book the call directly.';
+          status.className = 'wiz-email-status err';
+        });
+    });
   }
 
   function closeResult() {

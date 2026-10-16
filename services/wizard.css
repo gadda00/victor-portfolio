@@ -460,3 +460,17 @@
   .wiz-result-modal { padding: 1.5rem; }
   .wiz-result-actions .btn { min-width: 100%; }
 }
+
+/* ── v18: email-me-this-estimate row ────────────────────────────── */
+.wiz-email-row {
+  margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--border);
+  display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;
+}
+.wiz-email-row input {
+  flex: 1; min-width: 230px; padding: 0.6rem 0.8rem; font-size: 0.9rem;
+  background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 10px;
+}
+.wiz-email-row input:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.wiz-email-status { flex-basis: 100%; font-size: 0.78rem; color: var(--text-muted); }
+.wiz-email-status.ok { color: var(--accent); }
+.wiz-email-status.err { color: #f59e0b; }

@@ -248,6 +248,11 @@
         <li><a href="/blog/articles/22-data-sources.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>22 Data Sources for Kenyan Agricultural Intelligence</a></li>
         <li><a href="/blog/"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>All Articles</a></li>
       </ul>
+      <!-- v18: smart "did you mean" — fuzzy-matches the broken URL against real routes -->
+      <div id="smartSuggest" hidden style="margin-top:1.4rem">
+        <h3>Did you mean…?</h3>
+        <ul id="smartSuggestList"></ul>
+      </div>
     </div>
   </div>
 </section>
@@ -276,6 +281,102 @@
   if (redirects[path]) {
     window.location.replace(redirects[path]);
   }
+
+  // ── v18: smart "did you mean" — fuzzy match the broken URL ──
+  (function () {
+    var ROUTES = [
+      ['/', 'Home'], ['/services/', 'Services'], ['/services/wizard.html', 'Project Scope Wizard'],
+      ['/services/assessment.html', 'AI Readiness Assessment'], ['/services/roi.html', 'ROI Calculator'],
+      ['/services/rate-card.html', 'Rate Card'], ['/services/care.html', 'Care Plans'],
+      ['/services/faq.html', 'FAQ'], ['/services/proposal.html', 'Proposal Generator'],
+      ['/services/contract.html', 'Contract Generator'], ['/services/invoice.html', 'Invoicing'],
+      ['/services/payment.html', 'Payment Plans'], ['/services/client-dashboard.html', 'Client Portal'],
+      ['/book/', 'Book a Free Assessment'], ['/blog/', 'Insights & Articles'],
+      ['/projects/', 'Case Studies'], ['/resume/', 'Resume / CV'], ['/ai-policy.html', 'AI Policy'],
+      ['/privacy-policy.html', 'Privacy Policy'], ['/terms-of-service.html', 'Terms of Service'],
+      ['/blog/articles/building-50-agent-dag.html', 'Building a 50-Agent Multi-Agent DAG Pipeline'],
+      ['/blog/articles/kilimopro-ai-for-farmers.html', 'KilimoPRO: AI for 5 Million Kenyan Farmers'],
+      ['/blog/articles/real-math-not-vibes.html', 'The Statistical Engines Behind Honest Forecasting'],
+      ['/blog/articles/22-data-sources.html', '20 Data Sources for Kenyan Agricultural Intelligence'],
+      ['/blog/articles/multi-llm-council.html', 'Multi-LLM Council'],
+      ['/blog/articles/nasip-2026-2030-opportunity.html', 'NASIP 2026–2030 Opportunity'],
+      ['/services/guides/ai-for-farmers.html', 'Guide: AI for Farmers'],
+      ['/services/guides/ai-tools-smb.html', 'Guide: AI Tools for SMBs'],
+      ['/services/guides/no-code-chatbot.html', 'Guide: No-Code Chatbot'],
+      ['/services/guides/prompt-engineering.html', 'Guide: Prompt Engineering'],
+      ['/services/guides/rag-in-one-day.html', 'Guide: RAG in One Day'],
+      // semantic aliases: what people type when they mean a specific page
+      ['/services/rate-card.html', 'Rate Card', 'prices pricing cost rates quote budget how much'],
+      ['/services/roi.html', 'ROI Calculator', 'roi return payback value savings worth'],
+      ['/services/care.html', 'Care Plans', 'retainer support maintenance sla aftercare'],
+      ['/services/faq.html', 'FAQ', 'questions help answers'],
+      ['/book/', 'Book a Free Assessment', 'call meeting consult appointment talk'],
+      ['/resume/', 'Resume / CV', 'cv bio experience hire job']
+    ];
+    function lev(a, b) { // Levenshtein — cheap for short URL segments
+      var m = a.length, n = b.length;
+      if (!m) return n; if (!n) return m;
+      var prev = new Array(n + 1), cur = new Array(n + 1);
+      for (var j = 0; j <= n; j++) prev[j] = j;
+      for (var i = 1; i <= m; i++) {
+        cur[0] = i;
+        for (var k = 1; k <= n; k++) {
+          cur[k] = Math.min(prev[k] + 1, cur[k - 1] + 1, prev[k - 1] + (a[i - 1] === b[k - 1] ? 0 : 1));
+        }
+        var t = prev; prev = cur; cur = t;
+      }
+      return prev[n];
+    }
+    function lastSeg(s) {
+      var parts = s.split('/').filter(Boolean);
+      return parts.length ? parts[parts.length - 1] : '';
+    }
+    function score(route, q) {
+      var r = route.toLowerCase().replace(/\.html?/g, '').replace(/[^a-z0-9/]+/g, ' ').trim();
+      var qq = q.toLowerCase().replace(/\.html?/g, '').replace(/[^a-z0-9/]+/g, ' ').trim();
+      if (!qq) return 0;
+      if (r === qq || r.replace(/\//g, ' ') === qq.replace(/\//g, ' ')) return 100;
+      var words = qq.split(' ').filter(function (w) { return w.length > 2; });
+      var hits = 0;
+      words.forEach(function (w) { if (r.indexOf(w) !== -1) hits++; });
+      var base = words.length ? hits / words.length : 0;
+      // last-segment fuzzy match (edit-distance tolerant — catches typos)
+      var lastQ = lastSeg(qq);
+      var lastR = lastSeg(r);
+      if (lastQ && lastR) {
+        var d = lev(lastQ, lastR);
+        var sim = 1 - d / Math.max(lastQ.length, lastR.length);
+        if (sim > 0.72) base = Math.max(base, 0.55 + sim * 0.4);
+        else if (lastR.indexOf(lastQ) !== -1 || lastQ.indexOf(lastR) !== -1) base += 0.35;
+      }
+      return base * 100;
+    }
+    function scoreRoute(entry, typed) {
+      var s = score(entry[0], typed);
+      var aliases = entry[2] || '';
+      if (aliases) {
+        var t = typed.toLowerCase().replace(/\.html?/g, '').replace(/[^a-z0-9]+/g, ' ').trim();
+        aliases.split(' ').forEach(function (kw) {
+          if (kw.length > 3 && t.indexOf(kw) !== -1) s = Math.max(s, 62);
+        });
+      }
+      return s;
+    }
+    var typed = decodeURIComponent(location.pathname);
+    var scored = ROUTES.map(function (p) { return { path: p[0], label: p[1], s: scoreRoute(p, typed) }; })
+      .filter(function (x) { return x.s >= 34; })
+      .sort(function (a, b) { return b.s - a.s; })
+      .filter(function (x, i, arr) { return arr.findIndex(function (y) { return y.path === x.path; }) === i; }) // dedupe alias entries
+      .slice(0, 4);
+    if (!scored.length) return;
+    var box = document.getElementById('smartSuggest');
+    var ul = document.getElementById('smartSuggestList');
+    if (!box || !ul) return;
+    ul.innerHTML = scored.map(function (x) {
+      return '<li><a href="' + x.path + '"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>' + x.label + '</a></li>';
+    }).join('');
+    box.hidden = false;
+  })();
 </script>
 <script src="/palette.js?v=12.0.0" defer></script>
 </body>

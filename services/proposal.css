@@ -59,3 +59,23 @@
   .pr-sign .blk .who { color: #444; }
   .pr-validity { background: none; border: 1px solid #0a6a8a; color: #0a6a8a; }
 }
+
+/* ── v18: e-signature form + signed line ────────────────────────── */
+.pr-sign-form {
+  margin: 1.5rem auto 0; max-width: 760px; padding: 1.25rem 1.4rem;
+  border: 1px solid var(--border); border-radius: 14px; background: var(--bg-card);
+}
+.pr-sign-form.signed { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
+.pr-sign-title { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 700; }
+.pr-sign-sub { margin: 0 0 0.9rem; font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+.pr-sign-row { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+.pr-sign-row input {
+  flex: 1; min-width: 220px; padding: 0.6rem 0.8rem; font-size: 0.95rem;
+  background: var(--bg); color: var(--text); border: 1px solid var(--border); border-radius: 10px;
+}
+.pr-sign-row input:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.pr-sign-note { margin: 0.85rem 0 0; font-size: 0.72rem; color: var(--text-muted); line-height: 1.6; }
+.pr-sign .ln-signed { border-bottom: 2px solid var(--accent); }
+.pr-sched-note td { text-align: right; font-size: 0.78rem; color: var(--text-muted); font-style: italic; }
+
+@media print { .pr-sign-form { display: none !important; } }

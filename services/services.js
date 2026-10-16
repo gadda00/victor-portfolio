@@ -53,7 +53,7 @@
         if (typeof p.price.usdOneTime === 'number') {
           o.priceSpecification = { '@type': 'PriceSpecification', 'price': p.price.usdOneTime, 'priceCurrency': 'USD' };
         } else {
-          o.priceSpecification = { '@type': 'PriceSpecification', 'minPrice': 28000, 'priceCurrency': 'USD' };
+          o.priceSpecification = { '@type': 'PriceSpecification', 'minPrice': 35000, 'priceCurrency': 'USD' };
         }
         return o;
       });
@@ -105,6 +105,7 @@
   // ─── Render all sections ───────────────────────────────────
   function renderAll() {
     renderPackages();
+    renderComparison();
     renderServices();
     renderCaseStudies();
     renderTraining();
@@ -123,7 +124,8 @@
       const monthlyStr = monthly ? (typeof monthly === 'number' ? fmtMoney(monthly, currency) : monthly) : null;
 
       return `
-        <div class="svc-package" id="pkg-${p.id}" style="--pkg-color:${p.color}">
+        <div class="svc-package${p.popular ? ' pkg-popular' : ''}" id="pkg-${p.id}" style="--pkg-color:${p.color}">
+          ${p.popular ? '<div class="pkg-badge" aria-label="Most popular">★ Most popular</div>' : ''}
           <div class="icon">${p.icon}</div>
           <div class="name">${esc(p.name)}</div>
           <div class="tagline">${esc(p.tagline)}</div>
@@ -151,6 +153,69 @@
       `;
     }).join('');
     $('#packages').innerHTML = html;
+  }
+
+  // ─── Comparison matrix (renders from DATA so prices never drift) ──
+  function renderComparison() {
+    const el = $('#compare-matrix');
+    if (!el || !DATA.packages.length) return;
+
+    const money = (p) => {
+      const oneTime = currency === 'kes' ? p.price.kesOneTime : p.price.usdOneTime;
+      const s = typeof oneTime === 'number' ? fmtMoney(oneTime, currency) : (oneTime || 'Custom');
+      const monthly = currency === 'kes' ? p.price.kesMonthly : p.price.usdMonthly;
+      if (p.tier === 'discovery') return s + (p.id === 'audit' ? (currency === 'kes' ? ' · 50% credited' : ' · 50% credited') : '');
+      return (p.id === 'growth' ? 'From ' + s : s) + (monthly ? ' + ' + fmtMoney(monthly, currency) + '/mo care' : '');
+    };
+
+    const FEATURES = {
+      audit: {
+        revision: '—', support: '30 days email Q&A on the roadmap',
+        sla: '—', integrations: '— (inventory only)', compliance: 'Risk + compliance review included',
+        handover: 'Board-ready readout + 12-month roadmap', payment: '100% on booking (50% credited to a build)'
+      },
+      starter: {
+        revision: '2 revision rounds', support: '30 days post-launch support included',
+        sla: 'Best-effort fixes in care plan', integrations: '1 workflow integration (WhatsApp, email, or CRM)',
+        compliance: 'Kenya DPA data-handling review', handover: 'Docs + evaluation suite + observability baseline',
+        payment: '50% deposit · 50% on delivery — or 3 instalments of $4,200'
+      },
+      growth: {
+        revision: '3 revision rounds', support: 'Care plan with named engineer',
+        sla: '99.5% uptime SLA · 1-hour critical response', integrations: '2–3+ (CRM, ERP, WhatsApp Business, custom APIs)',
+        compliance: 'SOC2 / ISO 27001 / GDPR / Kenya DPA review', handover: 'Full docs, evals, admin console, quarterly business reviews',
+        payment: 'Milestone-based (30/40/30), scoped in writing'
+      },
+    };
+
+    const rows = [
+      ['Build investment', (p) => money(p)],
+      ['Timeline', (p) => esc(p.timeline)],
+      ['Revisions', (p) => FEATURES[p.id]?.revision || '—'],
+      ['Post-launch support', (p) => FEATURES[p.id]?.support || '—'],
+      ['SLA', (p) => FEATURES[p.id]?.sla || '—'],
+      ['Integrations', (p) => FEATURES[p.id]?.integrations || '—'],
+      ['Compliance review', (p) => FEATURES[p.id]?.compliance || '—'],
+      ['Handover', (p) => FEATURES[p.id]?.handover || '—'],
+      ['Payment structure', (p) => FEATURES[p.id]?.payment || '—'],
+    ];
+
+    const head = DATA.packages.map(p => `<th scope="col"${p.popular ? ' class="cmp-pop"' : ''}>${p.icon} ${esc(p.name)}${p.popular ? ' <span class="cmp-star">★</span>' : ''}</th>`).join('');
+    const body = rows.map(([label, fn]) => `
+      <tr>
+        <th scope="row">${label}</th>
+        ${DATA.packages.map(p => `<td${p.popular ? ' class="cmp-pop"' : ''}>${fn(p)}</td>`).join('')}
+      </tr>`).join('');
+
+    el.innerHTML = `
+      <div class="cmp-wrap" role="region" aria-label="Service comparison table" tabindex="0">
+        <table class="cmp-table">
+          <thead><tr><th scope="col">Compare</th>${head}</tr></thead>
+          <tbody>${body}</tbody>
+        </table>
+      </div>
+      <p class="cmp-note">Starter instalments: 3 × $4,200 (KES 336K) — no fees, first before kickoff. Care plans cancel anytime; Big Project care saves 10% billed quarterly.</p>
+    `;
   }
 
   // ─── Services ──────────────────────────────────────────────
@@ -293,6 +358,8 @@
     $$('.svc-currency-toggle button').forEach(btn => {
       btn.addEventListener('click', () => {
         currency = btn.dataset.curr;
+        renderPackages();
+        renderComparison();
         $$('.svc-currency-toggle button').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         applyCurrency();

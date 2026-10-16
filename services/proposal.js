@@ -31,7 +31,7 @@
       ]
     },
     starter: {
-      name: 'Starter Build', total: 10000, monthly: 1400, timeline: '2–3 weeks',
+      name: 'Starter Build', total: 12000, monthly: 1400, timeline: '2–3 weeks',
       approach: 'A focused first build: a WhatsApp or website FAQ chatbot trained on your documents, one automation workflow (lead capture, auto-reply or appointment booking), a knowledge base of up to 50 documents, a basic analytics dashboard, and English + Swahili support. Two revision rounds and 30 days of post-launch support are included.',
       deliverables: [
         'WhatsApp or website FAQ chatbot (70–80% of routine questions)',
@@ -43,7 +43,7 @@
       ]
     },
     growth: {
-      name: 'Big Projects', total: 28000, monthly: 6000, timeline: '6–24 weeks',
+      name: 'Big Projects', total: 35000, monthly: 5000, timeline: '6–24 weeks',
       approach: 'Production AI programs that run the business: a RAG knowledge platform over company documents with citations, 2–3+ integrations (CRM, ERP, WhatsApp Business, email or custom APIs), predictive analytics, custom AI agents or multi-agent orchestration on the Busara AI DAG framework (50+ agents), computer-vision pipelines where needed, LLM fine-tuning on your domain, and on-prem or private-cloud deployment options for data sovereignty. Includes a security + compliance review (SOC2, ISO 27001, GDPR, Kenya DPA), admin console with user management, dedicated engineer, 99.5% uptime SLA with 1-hour critical response, and quarterly executive business reviews. Custom-scoped after a Needs Assessment.',
       deliverables: [
         'RAG knowledge platform over company documents, with citations',
@@ -84,7 +84,8 @@
     packageId: 'growth', title: '',
     understanding: '', approach: '', deliverables: '', whyMe: WHY_DEFAULT.join('\n'),
     timeline: '', totalUsd: null, monthlyUsd: null, fx: 80,
-    plan: 'fifty', validityDays: 14, issue: '', notes: ''
+    plan: 'fifty', validityDays: 14, issue: '', notes: '',
+    signedBy: null, signedAt: null
   };
 
   function $(s) { return document.querySelector(s); }
@@ -125,6 +126,15 @@
         { label: 'Delivery (30%)', usd: t - Math.round(t * 0.3) - Math.round(t * 0.4) }
       ];
     }
+    if (state.plan === 'instalments') {
+      var third = Math.round(t / 3);
+      return [
+        { label: 'Instalment 1 · kickoff (33%)', usd: third },
+        { label: 'Instalment 2 · mid-build (33%)', usd: third },
+        { label: 'Instalment 3 · on delivery (34%)', usd: t - third - third },
+        { label: 'No instalment fees', usd: 0, note: true }
+      ].filter(function (r) { return r.note || r.usd; });
+    }
     if (state.plan === 'monthly') {
       var rows = [{ label: 'Build (one-time)', usd: t }];
       if (Number(state.monthlyUsd) > 0) rows.push({ label: 'Support retainer (monthly)', usd: Number(state.monthlyUsd), monthly: true });
@@ -157,6 +167,7 @@
     var why = lines(state.whyMe).length ? lines(state.whyMe) : WHY_DEFAULT;
     var whyHtml = '<ul class="pr-list">' + why.map(function (w) { return '<li>' + esc(w) + '</li>'; }).join('') + '</ul>';
     var schedRows = schedule().map(function (r) {
+      if (r.note) return '<tr><td colspan="2" class="pr-sched-note">' + esc(r.label) + '</td></tr>';
       return '<tr><td>' + esc(r.label) + '</td><td class="num">' + money(r.usd, 'USD') +
         (r.monthly ? '<small style="color:var(--text-muted)"> /mo</small>' : '') + '</td></tr>';
     }).join('');
@@ -203,7 +214,7 @@
         '<div class="big">' +
           (total > 0
             ? '<span class="amt">' + money(total, 'USD') + '</span><span class="cur">≈ ' + money(kesTotal, 'KES') + ' one-time</span>'
-            : '<span class="amt">Custom — scoped after discovery</span><span class="cur">typical $28K–$200K+ build + $6K–$40K/mo care — scoped in writing</span>') +
+            : '<span class="amt">Custom — scoped after discovery</span><span class="cur">typical $35K–$200K+ build + $5K–$40K/mo care — scoped in writing</span>') +
         '</div>' +
         (monthly > 0 ? '<div class="mth">Optional support retainer: <b>' + money(monthly, 'USD') + '/mo</b> (≈ ' + money(kesMonthly, 'KES') + '/mo) — monitoring, enhancements, analytics, support. Cancel with 30 days notice.</div>' : '') +
         (total > 0 ? '<table class="pr-sched"><thead><tr><th>Payment schedule</th><th style="text-align:right">Amount</th></tr></thead><tbody>' + schedRows + '</tbody></table>' : '') +
@@ -222,7 +233,11 @@
 
       '<div class="pr-sign">' +
         '<div class="blk"><div class="ln"></div><div class="who">Victor Ndunda — Service Provider · Date</div></div>' +
-        '<div class="blk"><div class="ln"></div><div class="who">' + esc(state.client.name || 'Client') + ' — Client · Date</div></div>' +
+        '<div class="blk"><div class="ln' + (state.signedBy ? ' ln-signed' : '') + '"></div><div class="who">' +
+          (state.signedBy
+            ? '<strong>✍ ' + esc(state.signedBy) + '</strong> — Client · signed electronically ' + esc(state.signedAt) + ' · ' + esc(state.number || 'PRP-DRAFT')
+            : esc(state.client.name || 'Client') + ' — Client · Date') +
+        '</div></div>' +
       '</div>' +
 
       '<div class="inv-doc-foot">' + esc(state.number || 'PRP-DRAFT') + ' · Generated from victorndunda.com/services/proposal.html · This proposal is an offer, not a contract — the signed agreement governs.' +
@@ -396,7 +411,7 @@
     if (!prop) return;
     if (e.target.getAttribute('data-load')) {
       state = JSON.parse(JSON.stringify(prop));
-      syncInputs(); renderDoc();
+      syncInputs(); renderDoc(); syncSignForm();
       window.scrollTo({ top: 0, behavior: 'smooth' });
       window.vnToast('Loaded ' + prop.number, '✏️');
     } else if (e.target.getAttribute('data-mark')) {
@@ -458,6 +473,48 @@
     var contract = $('#prContract');
     if (contract) contract.href = '/services/contract.html' + (state.id ? '?brief=' + state.id : '');
     $('#prSaved').addEventListener('click', savedClick);
+
+    // ── v18: e-signature ──
+    var signBtn = $('#prSignBtn');
+    if (signBtn) signBtn.addEventListener('click', function () {
+      if (state.signedBy) {
+        if (confirm('This proposal is already signed by ' + state.signedBy + '. Sign again (replaces the signature)?')) {
+          state.signedBy = null; state.signedAt = null; renderDoc(); syncSignForm();
+        }
+        return;
+      }
+      var name = ($('#prSignName').value || '').trim();
+      if (!name || name.length < 3) { window.vnToast('Type the client\'s full name to sign', '⚠️'); return; }
+      state.signedBy = name;
+      state.signedAt = new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+      state.status = 'accepted';
+      var list = load();
+      var idx = list.findIndex(function (p) { return p.id === state.id; });
+      if (idx >= 0) { list[idx] = JSON.parse(JSON.stringify(state)); save(list); renderSaved(); }
+      renderDoc(); syncSignForm();
+      window.vnToast((state.number || 'Proposal') + ' signed by ' + name, '✍️');
+    });
+    if ($('#prSignName')) $('#prSignName').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') signBtn && signBtn.click();
+    });
+  }
+
+  /* keep the signature form in sync with state (after load / sign) */
+  function syncSignForm() {
+    var form = document.getElementById('prSignForm');
+    if (!form) return;
+    var sub = document.getElementById('prSignSub');
+    var btn = document.getElementById('prSignBtn');
+    var input = document.getElementById('prSignName');
+    if (state.signedBy) {
+      form.classList.add('signed');
+      if (sub) sub.innerHTML = '✍ <strong>' + esc(state.signedBy) + '</strong> signed electronically on ' + esc(state.signedAt) + '. The signature, date, and proposal number are printed on the document.';
+      if (btn) btn.textContent = 'Re-sign / undo';
+      if (input) input.value = state.signedBy;
+    } else {
+      form.classList.remove('signed');
+      if (btn) btn.textContent = 'Sign & accept';
+    }
   }
 
   /* ── Init ── */
@@ -469,6 +526,7 @@
     syncInputs();
     renderSaved();
     renderDoc();
+    syncSignForm();
     tryEstimateHint();
     if (briefId || localStorage.getItem('vn_client_briefs')) {
       var hint = $('#prBriefHint'), txt = $('#prBriefHintText');

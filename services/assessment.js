@@ -4,7 +4,7 @@
    - 100% client-side: no tracking, no server, no PII collected
    - Score 0–100 + per-dimension breakdown + weakest-link insight
    - Recommendation mapped to the three services (v16):
-     Needs Assessment $2,500 · Starter Build $10,000 · Big Projects from $28,000
+     Needs Assessment $2,500 · Starter Build $12,000 · Big Projects from $35,000
    - Optional email report: sends score + visitor email to the owner
      via Web3Forms only when the visitor explicitly consents
    - Result is shareable (?r=&tier=&rec=) and printable
@@ -152,14 +152,14 @@
     },
     starter: {
       id: 'starter', icon: '🚀', name: 'Starter Build',
-      price: '$10,000 · KES 800K', monthly: ' + $1,400/mo care',
+      price: '$12,000 · KES 960K', monthly: ' + $1,400/mo care',
       timeline: '2–3 weeks',
       desc: 'Ship one focused production system — a WhatsApp or web assistant, one automation workflow, a working knowledge base — and prove the value before scaling.',
       ul: ['One production workflow, live in weeks', 'Knowledge base (50 docs) with citations', 'EN + Swahili out of the box', 'Basic analytics dashboard', '2 revisions + 30 days support']
     },
     growth: {
       id: 'growth', icon: '🏗️', name: 'Big Projects',
-      price: 'from $28,000 · KES 2.2M', monthly: ' + from $6,000/mo care',
+      price: 'from $35,000 · KES 2.8M', monthly: ' + from $5,000/mo care',
       timeline: '6–24 weeks',
       desc: 'Production AI programs that run the business: RAG platforms, multi-agent orchestration, vision and forecasting — integrated with your CRM/ERP, compliance-reviewed, SLA-backed. Custom-scoped after a Needs Assessment.',
       ul: ['Multi-system production program', 'RAG with citations + evaluation suite', '2–3+ integrations (CRM, ERP, WhatsApp, APIs)', 'Multi-agent orchestration (50+ agent DAGs)', 'On-prem or private-cloud options', '99.5% uptime SLA + 1-hour critical response']
@@ -414,7 +414,7 @@
 
   /* ── ROI calculator ────────────────────────────────────────────── */
   function pkgPriceUsd(id) {
-    return { audit: 2500, starter: 10000, growth: 28000 }[id] || 2500;
+    return { audit: 2500, starter: 12000, growth: 35000 }[id] || 2500;
   }
   function updateRoi(recId) {
     var h = parseFloat($('#roiHours').value) || 0;

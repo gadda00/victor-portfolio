@@ -128,8 +128,94 @@
     $('#portalHello').textContent = 'Welcome, ' + (p.name || 'client').split(' ')[0];
     $('#portalAvatar').textContent = (p.name || 'C').trim().charAt(0).toUpperCase();
     $('#portalEmail').textContent = p.email || '';
+    var demoBanner = $('#portalDemoBanner');
+    if (demoBanner && isDemoAccount()) demoBanner.hidden = false;
     C.migrateLegacyBriefs();
     go('overview');
+  }
+
+  /* ═════════════════════════════════════════════════════════════════
+     v18 DEMO WORKSPACE — a real encrypted account with sample data.
+     notifyOwner() is silenced for demo emails inside portal-core, so
+     nothing ever emails the owner from a demo session.
+     ═════════════════════════════════════════════════════════════════ */
+  var DEMO_STORE = 'vn_demo_account';
+  var DEMO_PASSWORD = 'demo-workspace-2026';
+
+  function isDemoAccount() {
+    var p = C.profile();
+    return !!(p && p.email && p.email.indexOf('demo-') === 0 && p.email.indexOf('@demo.victorndunda.com') !== -1);
+  }
+
+  function seedDemoVault() {
+    var brief = {
+      id: 'demo-brief-' + Date.now(),
+      createdAt: new Date().toISOString(),
+      estimate: {
+        packageId: 'starter', packageName: 'Starter Build',
+        totalUsd: 12000, totalKes: 960000,
+        monthlyUsd: 1400, monthlyKes: 112000, timeline: '2–3 weeks'
+      },
+      state: { goal: 'automate', types: ['chatbots', 'automation'], scale: 'smb', budget: '3k-10k', timeline: 'month' },
+      details: { name: 'Demo Client', email: '', company: 'Awaifi Supplies Ltd (demo)', industry: 'Distribution', description: 'Sample brief: WhatsApp FAQ assistant + lead-capture automation for a Nairobi distribution SME.', consent: true }
+    };
+    var p = C.addProject(brief);
+    if (!p) return;
+    p.name = 'Starter Build — WhatsApp FAQ Assistant (demo)';
+    C.completeStage(p, 'design', 'Solution design demo note');
+    C.buildPaymentPlan(p, 'instalments');
+    C.markPaymentPaid(p, 1, 'MPESA-DEMO-1');
+    // a couple of activity lines + one message thread
+    p.activity = p.activity || [];
+    p.activity.push({ at: new Date().toISOString(), text: 'Demo seeded — this project shows the 7-stage pipeline, instalment payments and messaging.' });
+    C.addMessage(p, 'Hi Victor — this is a demo message. The portal looks great!');
+    C.persistVault();
+  }
+
+  async function startDemo() {
+    var btn = $('#authDemoBtn');
+    var errBox = $('#authError');
+    if (btn) { btn.disabled = true; btn.textContent = 'Creating demo workspace…'; }
+    try {
+      var saved = null;
+      try { saved = JSON.parse(localStorage.getItem(DEMO_STORE) || 'null'); } catch (e) { /* ignore */ }
+      if (saved && saved.email) {
+        // reuse the demo account already on this device
+        await C.login(saved.email, DEMO_PASSWORD, false);
+      } else {
+        var email = 'demo-' + Date.now().toString(36) + '@demo.victorndunda.com';
+        await C.signup('Demo Client', email, 'Awaifi Supplies Ltd (demo)', DEMO_PASSWORD, false);
+        try { localStorage.setItem(DEMO_STORE, JSON.stringify({ email: email })); } catch (e) { /* ignore */ }
+        seedDemoVault();
+      }
+      enterApp();
+      toast('Demo workspace ready — everything works, nothing is real', '👁');
+    } catch (e) {
+      // demo account corrupted / password mismatch → wipe and retry once cleanly
+      try {
+        localStorage.removeItem(DEMO_STORE);
+        C.deleteAccount();
+      } catch (e2) { /* ignore */ }
+      if (errBox) { errBox.textContent = 'Demo could not start (' + (e.message || 'error') + ') — try again.'; errBox.style.display = 'block'; }
+    } finally {
+      if (btn) { btn.disabled = false; btn.textContent = '👁 Try the demo workspace'; }
+    }
+  }
+
+  function wireDemo() {
+    var btn = $('#authDemoBtn');
+    if (btn) btn.addEventListener('click', function () { startDemo(); });
+    var exit = $('#portalDemoExit');
+    if (exit) exit.addEventListener('click', function () {
+      if (!confirm('Wipe the demo workspace from this browser?')) return;
+      try { localStorage.removeItem(DEMO_STORE); } catch (e) { /* ignore */ }
+      C.deleteAccount();
+      location.href = '/services/client-dashboard.html';
+    });
+    // deep link: ?demo=1 (also works from marketing copy)
+    if (new URLSearchParams(location.search).get('demo') === '1' && !C.isAuthed()) {
+      setTimeout(function () { startDemo(); }, 300);
+    }
   }
 
   /* ═══ APP NAV ═══════════════════════════════════════════════════ */
@@ -703,6 +789,7 @@
   async function boot() {
     var ok = false;
     try { ok = await C.restoreSession(); } catch (e) { ok = false; }
+    wireDemo();
     if (ok && C.isAuthed()) enterApp();
     else renderAuthGate();
   }

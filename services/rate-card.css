@@ -1,0 +1,56 @@
+/* ═══════════════════════════════════════════════════════════════════
+ * Rate Card styles — victorndunda.com/services/rate-card.html (v18)
+ * Print-friendly: dark theme inverts to paper-light on @media print.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.rc-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+.rc-body { padding-bottom: 3.5rem; }
+.rc-section { margin-top: 2.1rem; }
+.rc-h2 { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 0.9rem; }
+.rc-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 14px; background: var(--bg-card); }
+.rc-table { width: 100%; border-collapse: collapse; font-size: 0.86rem; min-width: 640px; }
+.rc-table th, .rc-table td { padding: 0.8rem 0.95rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); color: var(--text-muted); line-height: 1.55; }
+.rc-table thead th { font-weight: 700; color: var(--text); background: var(--bg-card); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.05em; }
+.rc-table tbody th { font-weight: 700; color: var(--text); white-space: nowrap; }
+.rc-table tbody tr:last-child th, .rc-table tbody tr:last-child td { border-bottom: none; }
+.rc-price { font-weight: 800; font-family: var(--font-mono, 'JetBrains Mono', monospace); color: var(--text); font-size: 0.95rem; white-space: nowrap; }
+.rc-mut { font-weight: 500; font-family: inherit; color: var(--text-muted); }
+.rc-pop-row { background: rgba(16, 185, 129, 0.07); }
+.rc-badge {
+  display: inline-block; background: linear-gradient(135deg, #10b981, #0d9488); color: #fff;
+  font-size: 0.64rem; font-weight: 700; padding: 3px 9px; border-radius: 999px;
+  margin-left: 0.4rem; white-space: nowrap; vertical-align: middle;
+}
+.rc-note { font-size: 0.76rem; color: var(--text-muted); margin: 0.8rem 0 0; line-height: 1.6; }
+.rc-terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.9rem; }
+.rc-terms-grid > div { border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem 1rem; font-size: 0.82rem; line-height: 1.6; color: var(--text-muted); background: var(--bg-card); }
+.rc-terms-grid strong { color: var(--text); display: inline-block; margin-right: 0.35rem; }
+.rc-cta { display: flex; align-items: center; gap: 0.75rem; margin-top: 2.25rem; flex-wrap: wrap; }
+.rc-validity { font-size: 0.74rem; color: var(--text-muted); }
+
+@media (max-width: 700px) {
+  .rc-cmp .rc-mut, .rc-table { min-width: 560px; }
+}
+
+/* ── Print: paper version ── */
+@media print {
+  :root, html.dark, html {
+    --bg: #ffffff !important; --bg-card: #ffffff !important;
+    --text: #111827 !important; --text-muted: #4b5563 !important;
+    --border: #d1d5db !important; --accent: #047857 !important;
+  }
+  body { background: #fff !important; color: #111827 !important; }
+  nav, footer, .noise-overlay, .rc-actions, .rc-cta .btn, .wizard-back, .skip-link { display: none !important; }
+  .rc-cta { display: block; }
+  .rc-cta .rc-validity { display: block; margin-top: 0.5rem; }
+  .wizard-hero { padding-top: 0.5rem !important; background: none !important; }
+  .wizard-title { color: #111827 !important; }
+  .grad-text { background: none !important; -webkit-text-fill-color: #047857 !important; color: #047857 !important; }
+  .rc-table-wrap { border-color: #d1d5db !important; }
+  .rc-section { break-inside: avoid; }
+  .rc-table thead { display: table-header-group; }
+  .rc-pop-row { background: #f0fdf4 !important; }
+  a { color: #047857 !important; text-decoration: none; }
+  main { padding: 0 !important; }
+  .container { max-width: 100% !important; padding: 0 0.5rem !important; }
+}

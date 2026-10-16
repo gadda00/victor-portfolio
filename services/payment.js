@@ -129,6 +129,15 @@
           : '<div>Deposit: $' + Math.round(totalUsd * 0.5).toLocaleString() + ' (KES ' + Math.round(totalKes * 0.5).toLocaleString() + ')</div><div>On delivery: $' + Math.round(totalUsd * 0.5).toLocaleString() + ' (KES ' + Math.round(totalKes * 0.5).toLocaleString() + ')</div>'
       },
       {
+        id: 'instalments',
+        name: 'Instalments',
+        badge: 'No fees',
+        desc: 'Three equal payments — kickoff, mid-build, delivery. Built for SMB cashflow.',
+        schedule: isCustom
+          ? '<div>Each instalment: Custom</div><div>No fees, no interest</div>'
+          : '<div>Instalment 1 (kickoff): $' + Math.round(totalUsd / 3).toLocaleString() + '</div><div>Instalment 2 (mid-build): $' + Math.round(totalUsd / 3).toLocaleString() + '</div><div>Instalment 3 (delivery): $' + (totalUsd - 2 * Math.round(totalUsd / 3)).toLocaleString() + '</div>'
+      },
+      {
         id: 'milestone',
         name: 'Milestone-based',
         desc: '30% kickoff, 40% midpoint, 30% delivery. Pay as you see progress.',

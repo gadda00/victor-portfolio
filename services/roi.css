@@ -1,0 +1,111 @@
+/* ═══════════════════════════════════════════════════════════════════
+ * ROI Calculator styles — victorndunda.com/services/roi.html (v18)
+ * Shares the wizard.css base (wizard-hero, pulse-dot, grad-text).
+ * ═══════════════════════════════════════════════════════════════════ */
+
+.roi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.75rem; }
+.roi-card {
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 16px; padding: 1.5rem;
+}
+.roi-card-title { font-size: 1.05rem; font-weight: 700; margin: 0 0 1.1rem; letter-spacing: -0.01em; }
+.roi-hint { display: block; font-size: 0.76rem; color: var(--text-muted); font-weight: 400; margin-top: 0.2rem; }
+
+.roi-field { margin-bottom: 1.15rem; }
+.roi-field > label { font-size: 0.88rem; font-weight: 600; display: block; margin-bottom: 0.45rem; }
+.roi-input-row { display: flex; align-items: center; gap: 0.6rem; }
+.roi-input-row input[type="number"] {
+  width: 110px; padding: 0.55rem 0.7rem; font-size: 1rem; font-weight: 700;
+  background: var(--bg); color: var(--text); border: 1px solid var(--border);
+  border-radius: 10px; font-family: var(--font-mono, 'JetBrains Mono', monospace);
+}
+.roi-input-row input[type="number"]:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.roi-unit { font-size: 0.82rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.4rem; }
+.roi-unit select {
+  padding: 0.35rem 0.45rem; font-size: 0.8rem; background: var(--bg);
+  color: var(--text); border: 1px solid var(--border); border-radius: 8px;
+}
+input[type="range"] {
+  width: 100%; margin-top: 0.55rem; accent-color: var(--accent); height: 4px;
+}
+.roi-presets { margin: 0.5rem 0 0; font-size: 0.74rem; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 0.4rem; align-items: center; }
+.roi-presets button {
+  font-size: 0.72rem; padding: 0.22rem 0.6rem; border-radius: 999px;
+  border: 1px solid var(--border); background: var(--bg); color: var(--text-muted); cursor: pointer;
+}
+.roi-presets button:hover { border-color: var(--accent); color: var(--accent); }
+
+.roi-toggle { display: flex; gap: 0.55rem; align-items: flex-start; font-size: 0.86rem; font-weight: 600; cursor: pointer; }
+.roi-toggle input { accent-color: var(--accent); margin-top: 0.2rem; }
+.roi-toggle .roi-hint { margin-top: 0.1rem; }
+
+/* ── Results ── */
+.roi-stat { padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 12px; margin-bottom: 0.75rem; background: var(--bg); }
+.roi-stat-primary { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), 0 14px 34px rgba(16,185,129,0.12); }
+.roi-stat-label { font-size: 0.74rem; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); font-weight: 700; }
+.roi-stat-value { font-size: 1.7rem; font-weight: 800; font-family: var(--font-mono, 'JetBrains Mono', monospace); letter-spacing: -0.02em; margin: 0.15rem 0; }
+.roi-stat-primary .roi-stat-value { color: var(--accent); font-size: 2.1rem; }
+.roi-stat-sub { font-size: 0.74rem; color: var(--text-muted); }
+.roi-share-row { display: flex; gap: 0.6rem; margin-top: 1rem; flex-wrap: wrap; }
+
+/* ── Payback grid ── */
+.roi-payback { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 1.5rem; }
+.roi-payback-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 0.5rem; }
+.roi-pay-card {
+  border: 1px solid var(--border); border-radius: 14px; padding: 1.1rem 1.15rem;
+  background: var(--bg); display: flex; flex-direction: column; gap: 0.55rem;
+}
+.roi-pay-card.popular { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); position: relative; }
+.roi-pay-badge {
+  position: absolute; top: -11px; right: 12px; background: linear-gradient(135deg,#10b981,#0d9488);
+  color: #fff; font-size: 0.66rem; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+}
+.roi-pay-name { font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 0.45rem; }
+.roi-pay-price { font-size: 0.8rem; color: var(--text-muted); }
+.roi-pay-months { font-size: 1.45rem; font-weight: 800; font-family: var(--font-mono, 'JetBrains Mono', monospace); }
+.roi-pay-months.fast { color: var(--accent); }
+.roi-pay-months.never { color: #f59e0b; font-size: 1rem; }
+.roi-pay-net { font-size: 0.78rem; color: var(--text-muted); }
+.roi-pay-net b { color: var(--text); }
+.roi-fineprint { font-size: 0.74rem; color: var(--text-muted); line-height: 1.65; margin: 1.1rem 0 0; }
+.roi-ctas { display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .roi-grid { grid-template-columns: 1fr; }
+  .roi-payback-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Care page extras (v18) — shares roi.css card styles ────────── */
+.care-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.9rem; }
+.care-point { border: 1px solid var(--border); border-radius: 12px; padding: 0.9rem 1rem; font-size: 0.82rem; line-height: 1.6; color: var(--text-muted); background: var(--bg); }
+.care-point strong { color: var(--text); }
+.care-list { list-style: none; margin: 0.3rem 0 0; padding: 0; display: grid; gap: 0.45rem; }
+.care-list li { font-size: 0.78rem; line-height: 1.55; color: var(--text-muted); padding-left: 1.1rem; position: relative; }
+.care-list li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+.care-list li strong { color: var(--text); }
+.care-rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 0.9rem; }
+.care-rules > div { border: 1px solid var(--border); border-radius: 12px; padding: 0.95rem 1.05rem; font-size: 0.82rem; line-height: 1.62; color: var(--text-muted); background: var(--bg); }
+.care-rules strong { color: var(--text); }
+
+/* ── FAQ page (v18) ─────────────────────────────────────────────── */
+.faq-search-wrap { margin-top: 1.5rem; position: relative; max-width: 640px; }
+.faq-search {
+  width: 100%; padding: 0.85rem 8.5rem 0.85rem 1.05rem; font-size: 0.95rem;
+  background: var(--bg-card); color: var(--text); border: 1px solid var(--border); border-radius: 12px;
+}
+.faq-search:focus { outline: 2px solid var(--accent); outline-offset: 1px; border-color: var(--accent); }
+.faq-count { position: absolute; right: 0.85rem; top: 50%; transform: translateY(-50%); font-size: 0.74rem; color: var(--text-muted); pointer-events: none; }
+.faq-list { display: grid; gap: 0.65rem; margin-top: 1.5rem; max-width: 860px; }
+.faq-item { border: 1px solid var(--border); border-radius: 12px; background: var(--bg-card); overflow: hidden; }
+.faq-item[open] { border-color: var(--accent); }
+.faq-item summary {
+  cursor: pointer; list-style: none; padding: 0.95rem 1.15rem; font-weight: 600; font-size: 0.92rem;
+  display: flex; justify-content: space-between; gap: 0.75rem; align-items: center;
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.faq-chev { color: var(--accent); transition: transform 0.18s ease; flex-shrink: 0; }
+.faq-item[open] .faq-chev { transform: rotate(180deg); }
+.faq-a { padding: 0 1.15rem 1.05rem; font-size: 0.86rem; line-height: 1.7; color: var(--text-muted); }
+.faq-a strong { color: var(--text); }
+.faq-empty { margin-top: 1.5rem; padding: 1.25rem 1.4rem; border: 1px dashed var(--border); border-radius: 12px; font-size: 0.88rem; color: var(--text-muted); }

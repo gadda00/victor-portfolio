@@ -7,6 +7,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 2: Optimized Pricing Ladder, 4 New Pages, E-Signature, Instalments & Demo Portal (v18, 2026-10-15)
+
+**Pricing optimization (owner-delegated, research-based):**
+- **Starter Build: $10,000 → $12,000 / KES 800K → KES 960K** (+20% margin; sits mid-band of the 2026 custom-build market $5K–$30K). Conversion protected with a NEW **3-instalment plan — $4,200 × 3 (KES 336K), no fees** — offered in the wizard, proposal generator, payment page, portal payment plans, FAQ, homepage and rate card. Care stays $1,400/mo.
+- **Big Projects: from $28,000 → from $35,000 / KES 2.2M → KES 2.8M** (floor raised to signal program class — the 2026 agent-program band is $15K–$60K; $28K under-sold it) while **care drops $6,000 → from $5,000/mo (KES 400K)** (friendlier recurring commitment). Net first-year at entry tiers is ~revenue-neutral; the ladder reads stronger. Quarterly care billing now takes 10% off.
+- **Needs Assessment: $2,500 unchanged** (validated mid-market) + NEW **Express option, +$1,000 for 1-week delivery** — surfaced in data.json, services page, rate card and FAQ.
+- Budget bands realigned everywhere (Under $3K · $3–12K · $12–40K · $40K+). Propagated through **22 files**: data.json v1.5.0, services.js (+JSON-LD minPrice), services/index.html, homepage offers, wizard (PACKAGES + scoring + budget labels), proposal generator (PACKAGES, select labels, placeholders, custom-range text), contract.js, assessment.js, booking assistant, payment plans, portal-core, four guides, README — with a stale-price scan coming back clean (remaining matches are service-catalog add-on rates, not package prices).
+
+**Four new pages (all share the site shell, OG/Twitter cards, JSON-LD, noscript fallbacks):**
+- **/services/roi.html — ROI Calculator.** Team size × hours on routine work × hourly cost × automatable-share → hours recoverable, monthly/yearly value, per-service payback and 12-month net. Sliders + presets (Kenya admin $1.2/hr … EU/US $25/hr), USD/KES, URL-param shareable (`?team=8&hours=6&rate=25`), localStorage persistence, "no payback at these inputs" honesty mode. WebApplication JSON-LD.
+- **/services/rate-card.html — Rate Card.** Every published rate on one page — the 3 services, care plans, workshops, cohort, equity — plus the honest comparison table (big agency $50–150K · in-house $70–150K/yr loaded · marketplace lottery vs. independent engineer) and payment terms at a glance. **Print stylesheet inverts to paper-light** for Print/Save-PDF (nav/footer/chrome hidden). Product+Offer JSON-LD.
+- **/services/care.html — Care Plans.** Why shipped AI drifts, what $1,400/mo (Starter) and from $5,000/mo (Big Project, SLA-backed) actually buy — itemized — and the plain-language rules: cancel anytime, pause not cancel, price-locked to build date, escalation path, and what care is *not*. Service JSON-LD.
+- **/services/faq.html — Searchable FAQ.** data.json's 12 FAQs + 6 new v18 pricing FAQs (instalments, express, why the care price moved, ROI assumptions, cancel terms, quarterly discount) = 18 answers with instant search, deep-link queries (`?q=swahili`), FAQPage JSON-LD for rich results.
+
+**New capabilities in existing tools:**
+- **Proposal e-signature.** Client acceptance is now one click: type the client's name → the document prints "✍ {name} — signed electronically {date} · {PRP-number}", the status flips to accepted, and the signature persists with the saved proposal (verified: reload + load round-trip). Kenya Business Laws (Amendment) Act 2020 §6 cited in the page note. The interactive form is print-hidden so the PDF stays clean.
+- **Instalments everywhere.** proposal.js schedule (3 × 33% + "No instalment fees" line), the #pr-plan select, payment.js plan cards (badge: No fees), and portal-core buildPaymentPlan (new 'instalments' type).
+- **Wizard: "Email me this estimate."** The result modal gained an email row → Web3Forms lead to the owner (same key family, route-tested without hitting the live endpoint), with validation, sending states and failure fallback to booking.
+- **Client Portal demo mode.** "Try the demo workspace" (or `?demo=1`) creates a REAL encrypted account (demo-*@demo.victorndunda.com) seeded with a sample Starter Build project — 2 stages done, instalment plan, first payment marked, a message thread. notifyOwner() is hard-silenced for demo emails in portal-core, so demos can never email the owner. One-click "Exit & wipe".
+- **404 smart suggestions.** "Did you mean…?" — fuzzy-matches the broken URL against 31 real routes (word-overlap + last-segment bonus), injected client-side; typo redirects preserved.
+- **Homepage proof chip.** "Currently live: {newest live project}" pulls from projects.json (priority-sorted), silent-hidden on failure.
+- **Blog newsletter capture.** Web3Forms subscribe box in the Insights footer (CSP extended for api.web3forms.com), with subscribe states.
+- **Booking: Add to Google Calendar.** One-tap gcal template link alongside the existing .ics download on the confirmation step.
+
+**Enhancements:**
+- **"★ Most popular" badge** on the Starter Build on the services page (data.json `popular` flag → services.js) and the homepage offer card, with accent glow.
+- **Side-by-side comparison matrix** on the services page (9 rows: price → payment structure), rendered from data.json + services.js so prices can never drift from the source; re-renders on the USD/KES toggle; "Most popular" column highlighted.
+- **Pricing tools hub** on the services page linking the 4 new pages (icon chips).
+- **Command palette** indexes the 4 new pages (ROI, Rate Card, Care, FAQ).
+- **aria-current="page"** on active nav links across 23 pages (WCAG 2.4.8 current-page identification).
+- Verified (not rebuilt — already shipped in earlier waves): currency toggle, project filter chips (11 cards → 2 on AI Platforms), related-articles blocks, sitemap workflow. Lazy-image audit: the site renders almost entirely via CSS/SVG — the single `<img>` (dashboard) now carries `loading="lazy" decoding="async"`.
+- **sitemap.xml**: 4 new content URLs (ROI, rate card, care, FAQ) — the transactional tools (wizard/proposal/invoice/payment) stay intentionally unlisted.
+- **sw.js → vnd-v18.0.0**, precache extended with the new pages/assets; `styles.css` gained the newsletter styles.
+
 ### QA Sweep: Sign-In CSP Repair, Proposal Crash Guard & Social Unfurling (v17, 2026-10-15)
 
 - **Google Sign-In stylesheet was CSP-blocked on the client dashboard.** `dashboard/index.html` ships a meta-tag CSP whose `style-src` allow-list omitted `https://accounts.google.com` — the GSI button's stylesheet was rejected on every dashboard visit, so the "Continue with Google" button rendered unstyled/broken for every client. `style-src` now allows the GSI origin; the button renders as designed. (Found by headless-browser console sweep; the GSI *origin* error visible on localhost is expected — the client ID is bound to victorndunda.com.)
