@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 5: Studio Pass — OG Image Refresh, Homepage Completeness, Mobile Case-Studies UX, Print Guard (2026-10-28)
+
+**Social-sharing image brought in line with the current positioning:**
+- `og-image.png` still introduced Victor as **"AI Engineer & Founder"** with Busara AI / KilimoPRO pills — the exact framing the identity pass retired. Every WhatsApp, LinkedIn, X and iMessage preview of every page carried the outdated card. Regenerated at 1200×630 in the site's design language (dark gradient, cyan→purple accent, glass pills): **"Victor Ndunda — AI Systems Engineer"**, tagline "Production AI — multi-agent platforms, RAG, fraud detection — designed, built, evaluated & maintained end-to-end", status chip "AI that works beyond the demo", and pills reflecting the 2026 portfolio: **Keja AI (award-nominated) · Tapi Learn (11K+ learners) · AgentReplay (open-source) · Busara AI**, plus victorndunda.com and "Nairobi, Kenya". Rendered via headless-browser capture from an HTML/CSS source (text stays crisp, no AI-image drift), palette-quantized **105 KB → 29 KB** with a clean VLM quality pass (no banding, no artifacts). Same filename — all ~40 pages' `og:image` references and the SW precache pick it up via the cache bump.
+
+**Homepage Work section now honors its own promise:**
+- The section copy says *"Live client platforms lead"* — but only Keja AI was featured; **Tapi Learn**, the other live client platform (11,000+ learners, 38 countries, 4.8/5 — client-reported), appeared only in the Case Studies strip. Added a **Tapi Learn featured card** directly after the Keja flagship (emerald `.work-badge.tapi` styling, metrics row 11K+ / 38 / 4.8★ with client-reported qualifiers, AI Career Coach + EN·FR·SW NLP copy, "Live Product" + "Discuss a similar build" CTAs), data reconciled 1:1 with its `projects.json` entry — no invented stack or numbers.
+- Bento spans rebalanced for the 8-card deck: flagship (full-width) → Tapi + FirstLight → AgentReplay + Fraud → Verxlite + Busara pairs → KilimoPRO closes full-width (was: three consecutive full-width cards at the tail). Mobile (≤1080px) unaffected — all featured cards stack full-width.
+
+**Case-studies page mobile UX (review findings):**
+- The 8 filter pills wrapped into a cramped 4–5-row cluster at phone widths. On ≤700px they now form a **single horizontal scroll rail**: `nowrap` + `overflow-x` + scroll-snap points, hidden scrollbar, and a right-edge mask fade — the native app chip-bar pattern.
+- **Evidence chips compacted on phones** (`.metric-chip`, `.card-tags`): same data, tighter font/padding rhythm, reducing the wall-of-tags effect the review flagged on dense cards (Fraud, Keja).
+
+**Print/reliability guard (site-wide):**
+- `content-visibility: auto` (the `.cv-auto` scroll optimization) can render as **empty placeholders in paged media** — printing or PDF-saving a page could lose entire sections, and full-page captures by crawlers/preview bots showed voids. The `@media print` block now forces `content-visibility: visible` for `.cv-auto`, and cards (`work-card`, `case-card`, `offer-card`, `resume-card`, `bento-card`, `about-card`) get `break-inside: avoid` so project cards never split across pages.
+
+**Cache hygiene:**
+- `home.css` content changed in Cycle 4 but still shipped as `?v=11.0.0` — returning visitors would miss the Keja/FirstLight badge styles. Bumped to **v12.0.0**; `styles.css` print block → **v14.0.0** across all 39 pages (verified: no stray version params); `sw.js` → **vnd-v20.0.0** so the precached shell (both CSS files + `og-image.png`) refreshes on first visit.
+
+**Repo metadata:** GitHub description updated to the AI Systems Engineer positioning with the 2026 client platforms (Keja AI, Tapi Learn) + descriptive topics.
+
+### Cycle 4: Identity Harmonization, Resume Overhaul & Latest-First Portfolio (2026-10-28)
+
+- **Site-wide identity harmonization:** "AI Engineer & Founder" → **"AI Systems Engineer"** across 10 blog articles, `posts.json`, 8 service guides, `services.js` JSON-LD, the proposal signature block, the PWA manifest and the vCard TITLE; i18n hero rotation word Founder → Builder (Swahili Mwanzilishi → Mjenzi); `app.js` typewriter taglines moved to creator/builder phrasing; README + social-strategy bios de-founder-ified.
+- **Resume page full overhaul:** repositioned to AI Systems Engineer & Consultant (umbrella role, 2022–Present) with the 2026 client wins (Tapi Learn/ACLA, Keja AI/CHACADOM award nominee, FirstLight) leading; formal experience from the original CV merged in (Research Intern — Retirement Benefits Authority 2024; Data Analyst Intern — Enwealth Financial Services 2022; Administration Intern — NSSF 2020–21); new **Research & Publications** section; Data & Analytics skills row; German added to languages; education corrected to 2018–2024. Busara AI & KilimoPRO retitled **"Creator & lead engineer"** — not Founder. Regenerated `Victor-Ndunda-Resume.pdf` (2 pages, ATS-friendly FreeSerif, 47 KB — was 300 KB); dead kilimo.pro link swapped for GitHub.
+- **Projects directory, latest first:** `projects.json` reordered so 2026 work leads (Keja AI, FirstLight, Tapi Learn, AgentReplay, Verxlite, Fraud Detection), Busara AI / KilimoPRO follow the client work; priorities renumbered 0–12; Keja's Africa AI Future Awards nomination surfaced (gold badge + metric); **FirstLight card redesigned** with a dedicated geo-hex H3 visual (was reusing Busara's DAG pipeline art — the source of the "looks bad" card); metric chips gained an accent left border; roles retitled 'Creator & lead engineer'; noscript fallback synced to the new order.
+- **Homepage:** Keja AI promoted to **flagship** with the 7-stage transaction-lifecycle visualization and award-nomination copy; Work section retitled "Shipped systems, latest first."; FirstLight promoted from More Projects; Hazina Assist added to More Projects; About "currently building" refreshed; JSON-LD jobTitle → 'AI Systems Engineer' and `worksFor` de-founder-ified.
+- `sw.js` → vnd-v19.0.0 (this cycle's shell).
+
 ### Cycle 3: Portfolio Review Implementation — New Projects, Accessibility, Evidence & Quality Gates (2026-10-28)
 
 **New projects (11 → 13):**
