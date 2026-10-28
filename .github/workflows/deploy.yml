@@ -16,7 +16,18 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  validate:
+    name: Validate site (JSON, a11y, links, content sync)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Run site quality gate
+        run: python3 scripts/validate_site.py
+
   build:
+    needs: validate
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

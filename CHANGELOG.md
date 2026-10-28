@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 3: Portfolio Review Implementation — New Projects, Accessibility, Evidence & Quality Gates (2026-10-28)
+
+**New projects (11 → 13):**
+- **FirstLight** — Geo-AI decision layer for disaster response: damage & flood detection, Uber H3 need-score zoning, Dijkstra routing on post-event road graphs, human-in-the-loop review queue, hash-verified sitreps. Verified details from github.com/gadda00/firstlight (created 2026-10-28); live demo at gadda00.github.io/firstlight. Featured (priority 1) with "New · Public Demo" badge and demo-vs-operational honesty ("simulated, provenance-labeled data").
+- **Hazina Assist** — added as an explicitly-labeled "In Development" placeholder (new `dev` status with pulsing slate dot + legend entry); repo/demo links intentionally omitted until the public milestone. No invented metrics.
+- Homepage "More Projects" grid gains a FirstLight spot-card (live demo + GitHub).
+
+**Evidence-led case studies (review rec #2):**
+- Project cards now render a **metrics chip row** — measurement context included, not bare numbers: Tapi Learn ("11,000+ learners *(client-reported, Oct 2026)*", 38 countries, 4.8/5 client-reported, EN·FR·SW) and Keja AI (7-stage lifecycle, 8 workspaces, 87+ listings *(public trial, Oct 2026)*, 70 listings Trust ≥ 80, 12 counties) plus every other project's existing metrics (41 chips total).
+
+**Consistency & counts (review rec #1):**
+- Homepage archive copy reconciled: "Three of the six shipped production systems… The full archive — 13 projects spanning client builds, platforms, data-science work, and open-source tools…" (was "All six live here" while the projects page listed 11).
+- `scripts/validate_site.py` now **fails the deploy** if the homepage count drifts from projects.json.
+
+**Accessibility (review rec #4):**
+- Removed **duplicated `aria-current="page"`** from 15 pages (home, services, resume, blog, 12 articles, projects — the v18 propagation wrote it twice; invalid HTML).
+- Project **filter buttons** now expose `aria-pressed` state and toggle it on click; `type="button"` added.
+- Filter/search results **announced to screen readers** via a polite live region ("Showing 4 of 13 projects").
+
+**Robustness & hardening (review rec #5):**
+- `<noscript>` fallback extended with FirstLight + Hazina — the no-JS/crawler path lists all 13 projects; a CI check now fails if it drifts from projects.json.
+- Project data fetch switched to a **relative path** (`projects.json`) so alternate base paths / GitHub Pages sub-deploys can't break it.
+- Card rendering **escapes all data fields** and **validates link protocols** before they reach href (defense-in-depth for future data edits); load failures now offer a **Retry** button instead of a dead end.
+
+**Quality gates (review: deployment quality gate):**
+- `scripts/validate_site.py` (stdlib-only): JSON validity + required fields + statuses, duplicate attributes/ids, noscript sync, internal-link resolution (635 links), fetch-path check, count sync, title/meta on main pages — wired into **deploy.yml as a `validate` job that gates Pages deployment**.
+- `scripts/smoke_test.js` (Playwright): 18 browser checks — 13 cards render, filter/search behavior + announcements, FirstLight/Hazina content, metrics chips, homepage wording, zero console errors, well-formed GitHub API URLs.
+
 ### Cycle 2: Optimized Pricing Ladder, 4 New Pages, E-Signature, Instalments & Demo Portal (v18, 2026-10-15)
 
 **Pricing optimization (owner-delegated, research-based):**
