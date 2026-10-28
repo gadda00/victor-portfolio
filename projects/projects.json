@@ -19,7 +19,12 @@
         "Recommendations",
         "Mobile"
       ],
-      "metrics": {},
+      "metrics": {
+        "learners": "11,000+ (client-reported, Oct 2026)",
+        "countries": "38",
+        "rating": "4.8/5 (client-reported)",
+        "languages": "EN · FR · SW"
+      },
       "visual": "spark-line",
       "accentColor": "#34d399",
       "icon": "🤝",
@@ -33,6 +38,51 @@
         }
       ],
       "role": "AI engineer for client ACLA — built the 24/7 AI Career Coach, the multilingual NLP pipeline (EN·FR·SW), and the recommendation engine"
+    },
+    {
+      "id": "firstlight",
+      "name": "FirstLight",
+      "tagline": "Geo-AI decision layer for disaster response — damage & flood detection, H3 priority zoning, grounded sitreps",
+      "description": "From raw imagery to a prioritized, routable response map — for the first six hours after a disaster. Fuses simulated damage & flood detections with road networks, population grids, and critical facilities: Uber H3 need-score zoning (tunable weights), Dijkstra routing on the post-event graph, hospital isochrones, isolation analysis, a human-in-the-loop review queue for low-confidence detections, and provenance-labeled, hash-verified situation reports. Fully client-side demo platform — every artifact is procedurally simulated and labeled with its provenance; no operational data is processed.",
+      "category": "AI Platform",
+      "status": "trial",
+      "featured": true,
+      "priority": 1,
+      "github": "gadda00/firstlight",
+      "liveUrl": "https://gadda00.github.io/firstlight/",
+      "repo": "https://github.com/gadda00/firstlight",
+      "technologies": [
+        "Next.js",
+        "MapLibre GL",
+        "Uber H3",
+        "Geo-AI",
+        "SAR",
+        "TypeScript"
+      ],
+      "metrics": {
+        "zoning": "H3 res-8 need scoring (D·Pexp·Iso·Crit)",
+        "routing": "Dijkstra on OSM road graph",
+        "sitreps": "FNV-1a hash-verified, approval-gated",
+        "data": "Simulated & provenance-labeled (demo)"
+      },
+      "visual": "dag-pipeline",
+      "accentColor": "#f59e0b",
+      "icon": "🔦",
+      "badge": "New · Public Demo",
+      "badgeClass": "oss",
+      "links": [
+        {
+          "label": "Live Demo",
+          "url": "https://gadda00.github.io/firstlight/",
+          "type": "primary"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/gadda00/firstlight",
+          "type": "secondary"
+        }
+      ],
+      "role": "Self-initiated project — architecture, Geo-AI pipeline, H3 scoring engine, and the full EOC interface"
     },
     {
       "id": "keja-ai",
@@ -56,7 +106,11 @@
       ],
       "metrics": {
         "lifecycle": "7 stages — Discover to Manage",
-        "stakeholders": "8 stakeholder workspaces"
+        "stakeholders": "8 stakeholder workspaces",
+        "listings": "87+ (public trial, Oct 2026)",
+        "trust": "70 listings with Trust Score ≥ 80",
+        "counties": "12 Kenyan counties",
+        "languages": "EN · SW · FR"
       },
       "visual": "building",
       "accentColor": "#38bdf8",
@@ -632,6 +686,28 @@
           "JavaScript": 1790
         }
       }
+    },
+    {
+      "id": "hazina-assist",
+      "name": "Hazina Assist",
+      "tagline": "In early development — public details will be published when the project reaches its first milestone",
+      "description": "A new AI product currently in early development. Full methodology, scope, and access details will be published on this page when the project reaches its first public milestone. This entry is a placeholder until the repository and demo go live.",
+      "category": "AI Platform",
+      "status": "dev",
+      "featured": false,
+      "priority": 11,
+      "github": null,
+      "liveUrl": null,
+      "repo": null,
+      "technologies": [],
+      "metrics": {},
+      "visual": "spark-line",
+      "accentColor": "#64748b",
+      "icon": "🚧",
+      "badge": "In Development",
+      "badgeClass": "oss",
+      "links": [],
+      "role": "Early-stage project — details to be announced"
     }
   ],
   "categories": [
@@ -676,5 +752,5 @@
       "icon": "📊"
     }
   ],
-  "lastUpdated": "2026-10-02"
+  "lastUpdated": "2026-10-28"
 }
