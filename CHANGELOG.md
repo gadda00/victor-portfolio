@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 6: Resume Claims Trim & Summary Rewrite (2026-10-28)
+
+**Owner-requested removals (resume page + PDF):**
+- **"Africa AI Future Awards nominee (2026)" removed from the resume entirely** — from the professional summary, the Keja AI engagement bullet, the Selected Projects entry, and the Certifications & Recognition list. Rationale: a *nomination* for a ceremony that hasn't happened yet (27 Nov 2026) reads as a weak, unverifiable claim on a formal document; the homepage and case-studies directory keep the badge where it works as marketing. Resume meta description and `og:description` de-award-nominated to match ("Keja AI (7-stage real-estate platform, public trial)").
+- **"Author of 10 long-form technical articles (22,000+ words)" removed** — the word/quantity count is the kind of self-graded metric a resume is stronger without; the blog link, the 8 SMB guides line, and the Research & Publications section still cover writing credibility.
+
+**Professional summary rewritten:**
+- The old summary was a ~250-word single-paragraph project dump that re-listed every build with full metrics, burying the positioning. New summary (~130 words) leads with what Victor *does* — "designs and ships production AI — multi-agent platforms, RAG systems, and applied machine learning — with a bias for systems that survive real-world constraints: low bandwidth, low-end devices, and multilingual users" — then carries only the strongest proof points (Tapi Learn 11K+/38 countries, Keja AI public trial, Busara/KilimoPRO/AgentReplay one-line each, RBA/NSSF/Enwealth foundation) and closes with availability.
+
+**PDF regenerated** (`Victor-Ndunda-Resume.pdf`, still exactly 2 pages, 46 KB, ATS single-column FreeSerif): same removals applied, summary harmonized 1:1 with the page, the orphaned "CERTIFICATIONS & RECOGNITION" header renamed **"CERTIFICATIONS & LANGUAGES"** to honestly describe its contents. Download links cache-busted **v12 → v13** (nav, hero CTA, references note).
+
+**QA:** `validate_site.py` 8/8 (638 links), `smoke_test.js` 18/18, `verify_order.js` 29/29 — including two new negative assertions (resume must not mention the award nomination or the article-count claim) so the removals are enforced on every future pass. `pdf_qa.py` clean (the single "cover not full-bleed" warning is the known resume false-positive), VLM layout review of both pages PASS.
+
 ### Cycle 5: Studio Pass — OG Image Refresh, Homepage Completeness, Mobile Case-Studies UX, Print Guard (2026-10-28)
 
 **Social-sharing image brought in line with the current positioning:**
