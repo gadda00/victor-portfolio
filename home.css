@@ -867,6 +867,8 @@ html.light .hero-badge { background: rgba(4,120,87,.08); border-color: rgba(4,12
 .work-badge.verxlite { background: rgba(251,191,36,.09); border-color: rgba(251,191,36,.32); color: var(--v6-amber); }
 .work-badge.research { background: rgba(129,140,248,.1); border-color: rgba(129,140,248,.35); color: #a5b4fc; }
 .work-badge.fraud { background: rgba(244,114,182,.09); border-color: rgba(244,114,182,.32); color: #f472b6; }
+.work-badge.keja { background: linear-gradient(135deg, rgba(251,191,36,.14), rgba(56,189,248,.08)); border-color: rgba(251,191,36,.4); color: var(--v6-amber); }
+.work-badge.firstlight { background: rgba(251,146,60,.09); border-color: rgba(251,146,60,.35); color: #fb923c; }
 
 html.light .work-badge { filter: saturate(2.4) brightness(.75); }
 

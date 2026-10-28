@@ -5,7 +5,7 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Case Studies — Production AI Systems by Victor Ndunda</title>
-<meta name="description" content="Eleven builds, honestly labelled: client engagements, live products, and open-source systems — fraud scoring at 84% recall on a labelled validation set, a client product with 11K+ learners, public code reviews. See the evidence." />
+<meta name="description" content="Thirteen builds, latest first: client engagements, live products, and open-source systems — an award-nominated real-estate platform in public trial, a client product with 11K+ learners, fraud scoring at 84% recall on a labelled validation set. Every card states its validation. See the evidence." />
 <meta name="author" content="Victor Ndunda" />
 <meta name="keywords" content="Victor Ndunda projects, AI projects, Busara AI, KilimoPRO, Fraud Detection System, Verxlite, AgentReplay, multi-agent systems, Go, Python, TypeScript, Nairobi, Kenya" />
 <link rel="canonical" href="https://victorndunda.com/projects/" />
@@ -261,6 +261,8 @@
 .card-badge.fraud { background: rgba(239,68,68,0.1); color: #ef4444; border: 1px solid rgba(239,68,68,0.2); }
 .card-badge.verxlite { background: rgba(168,85,247,0.1); color: #a855f7; border: 1px solid rgba(168,85,247,0.2); }
 .card-badge.research { background: rgba(251,191,36,0.1); color: #fbbf24; border: 1px solid rgba(251,191,36,0.2); }
+.card-badge.award { background: linear-gradient(135deg, rgba(251,191,36,0.16), rgba(245,158,11,0.1)); color: #fbbf24; border: 1px solid rgba(251,191,36,0.35); }
+.card-badge.award::before { content: "🏆 "; }
 
 .card-status-dot {
   width: 8px; height: 8px;
@@ -332,8 +334,10 @@
   border-radius: 6px;
   background: rgba(255,255,255,0.04);
   border: 1px solid var(--border);
+  border-left: 2px solid var(--card-accent, var(--accent));
   color: var(--text-muted);
   line-height: 1.4;
+  max-width: 100%;
 }
 .card-metrics .metric-chip b { color: var(--text); font-weight: 700; }
 .card-footer {
@@ -408,6 +412,32 @@
   overflow: hidden;
   border-bottom: 1px solid var(--border);
 }
+.visual-hex {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding: 0.75rem 1rem;
+  height: 100%;
+}
+.visual-hex .hex-row { display: flex; gap: 4px; }
+.visual-hex .hx {
+  width: 22px; height: 24px;
+  clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+  background: var(--card-accent, var(--accent));
+  opacity: 0.16;
+}
+.visual-hex .hx.dim { opacity: 0.07; }
+.visual-hex .hx.hot { opacity: 0.95; animation: hexpulse 2.4s ease-in-out infinite; }
+.visual-hex .hex-label {
+  margin-top: 0.5rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--text-dim);
+  letter-spacing: 0.04em;
+}
+@keyframes hexpulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
 .visual-dag {
   display: flex;
   align-items: center;
@@ -734,7 +764,7 @@
   <div class="container">
     <span class="label"><span class="pulse-dot"></span> Case Studies</span>
     <h1>Case studies <span class="grad-text">&amp; systems.</span></h1>
-    <p>Client engagements, live products, and open-source systems — every card below states what it is, the constraint that shaped it, and the validation behind it. Built in Nairobi, shipped to the world.</p>
+    <p>Client engagements, live products, and open-source systems — <strong>latest work first</strong>. Every card below states what it is, the constraint that shaped it, and the validation behind it. Built in Nairobi, shipped to the world.</p>
     <div style="margin-top:1.5rem;display:flex;gap:0.75rem;flex-wrap:wrap;justify-content:center">
       <a href="/book/" class="btn btn-primary" style="padding:0.8rem 1.5rem;font-weight:700">Discuss a similar system →</a>
       <a href="/services/" class="btn btn-ghost" style="padding:0.8rem 1.5rem">See how we'd work together</a>
@@ -784,19 +814,19 @@
     <h2 style="font-size:1.1rem;margin:0 0 0.25rem">All systems</h2>
     <p style="color:var(--text-muted);font-size:0.875rem;margin:0 0 1rem">The interactive grid needs JavaScript — these links work without it.</p>
     <ul style="list-style:none;padding:0;margin:0;display:grid;gap:0.6rem;color:var(--text-muted);font-size:0.925rem">
-      <li>🤝 <strong>Tapi Learn (ACLA)</strong> — client engagement · 11K+ learners, 38 countries · <a href="https://acla.io/tapi-learn" style="color:var(--accent)">acla.io/tapi-learn</a></li>
-      <li>🏢 <strong>Keja AI</strong> — real-estate intelligence &amp; trust infrastructure (public trial) · <a href="https://keja.app" style="color:var(--accent)">keja.app</a></li>
-      <li>🚀 <strong>Busara AI</strong> — multi-agent data intelligence platform · <a href="https://busaraai.com" style="color:var(--accent)">busaraai.com</a></li>
+      <li>🏢 <strong>Keja AI</strong> — real-estate intelligence &amp; trust infrastructure (public trial · Africa AI Future Awards nominee) · <a href="https://keja.app" style="color:var(--accent)">keja.app</a></li>
       <li>🔦 <strong>FirstLight</strong> — Geo-AI disaster-response decision layer (public demo) · <a href="https://gadda00.github.io/firstlight/" style="color:var(--accent)">Live demo</a> · <a href="https://github.com/gadda00/firstlight" style="color:var(--accent)">GitHub</a></li>
-      <li>🌱 <strong>KilimoPRO</strong> — offline-first agri AI for 8 IGAD countries · <a href="https://github.com/gadda00/kilimopro" style="color:var(--accent)">GitHub</a></li>
-      <li>🛡️ <strong>Fraud Detection System</strong> — 84% recall · ~33µs/score · <a href="https://github.com/gadda00/fraud-detection-system" style="color:var(--accent)">GitHub</a></li>
-      <li>⚡ <strong>Verxlite</strong> — sales &amp; ops AI workflow agent · <a href="https://github.com/gadda00/verxlite" style="color:var(--accent)">GitHub</a></li>
+      <li>🤝 <strong>Tapi Learn (ACLA)</strong> — client engagement · 11K+ learners, 38 countries · <a href="https://acla.io/tapi-learn" style="color:var(--accent)">acla.io/tapi-learn</a></li>
       <li>🔄 <strong>AgentReplay</strong> — deterministic replay for AI agents · <a href="https://github.com/gadda00/agentreplay" style="color:var(--accent)">GitHub</a></li>
+      <li>⚡ <strong>Verxlite</strong> — sales &amp; ops AI workflow agent · <a href="https://github.com/gadda00/verxlite" style="color:var(--accent)">GitHub</a></li>
+      <li>🛡️ <strong>Fraud Detection System</strong> — 84% recall · ~33µs/score · <a href="https://github.com/gadda00/fraud-detection-system" style="color:var(--accent)">GitHub</a></li>
+      <li>🚧 <strong>Hazina Assist</strong> — in early development; details will be published at the first public milestone</li>
+      <li>🚀 <strong>Busara AI</strong> — multi-agent data intelligence platform · <a href="https://busaraai.com" style="color:var(--accent)">busaraai.com</a></li>
+      <li>🌱 <strong>KilimoPRO</strong> — offline-first agri AI for 8 IGAD countries · <a href="https://github.com/gadda00/kilimopro" style="color:var(--accent)">GitHub</a></li>
       <li>🧠 <strong>IntelliFlow</strong> — self-evolving multi-agent platform · <a href="https://github.com/gadda00/IntelliFlow" style="color:var(--accent)">GitHub</a></li>
+      <li>🌍 <strong>Eco Africa Awards</strong> — climate-leadership awards platform for ACLA · <a href="https://ecoafricaawards.com" style="color:var(--accent)">Live</a></li>
       <li>📊 <strong>Financial Forecasting Suite</strong> — Holt-Winters, ARIMA, ensembles · <a href="https://github.com/gadda00/financial-forecasting-suite" style="color:var(--accent)">GitHub</a></li>
       <li>📊 <strong>Customer Segmentation Engine</strong> — RFM + K-Means + GMM · <a href="https://github.com/gadda00/customer-segmentation-engine" style="color:var(--accent)">GitHub</a></li>
-      <li>🌍 <strong>Eco Africa Awards</strong> — climate-leadership awards platform for ACLA · <a href="https://ecoafricaawards.com" style="color:var(--accent)">Live</a></li>
-      <li>🚧 <strong>Hazina Assist</strong> — in early development; details will be published at the first public milestone</li>
     </ul>
     <p style="margin:1.25rem 0 0;font-size:0.9rem">Want a system like one of these? <a href="/book/" style="color:var(--accent)">Book a free 30-minute assessment</a>.</p>
   </div>
@@ -1028,6 +1058,13 @@
   function renderVisual(type, color) {
     var c = color || 'var(--accent)';
     switch (type) {
+      case 'geo-hex':
+        return '<div class="visual-hex">' +
+          '<div class="hex-row"><span class="hx"></span><span class="hx"></span><span class="hx dim"></span></div>' +
+          '<div class="hex-row"><span class="hx"></span><span class="hx hot" style="animation-delay:0.7s"></span><span class="hx"></span><span class="hx dim"></span></div>' +
+          '<div class="hex-row"><span class="hx dim"></span><span class="hx"></span><span class="hx hot"></span><span class="hx"></span></div>' +
+          '<div class="hex-label">H3 need-score grid · simulated cells</div>' +
+        '</div>';
       case 'dag-pipeline':
         return '<div class="visual-dag">' +
           '<div class="dag-node">Ingest</div><span class="dag-arrow">→</span>' +
