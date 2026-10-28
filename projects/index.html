@@ -271,6 +271,10 @@
 .card-status-dot.active { background: #00d4ff; box-shadow: 0 0 8px #00d4ff; }
 .card-status-dot.shipped { background: #a855f7; box-shadow: 0 0 8px #a855f7; }
 .card-status-dot.trial { background: #fbbf24; box-shadow: 0 0 8px #fbbf24; }
+.card-status-dot.dev { background: #64748b; box-shadow: 0 0 8px #64748b; animation: devpulse 2s ease-in-out infinite; }
+@keyframes devpulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
 .card-title {
   font-size: 1.5rem;
@@ -316,6 +320,22 @@
   border: 1px solid var(--border);
   color: var(--text-muted);
 }
+.card-metrics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: 0.75rem;
+}
+.card-metrics .metric-chip {
+  font-size: 0.7rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+.card-metrics .metric-chip b { color: var(--text); font-weight: 700; }
 .card-footer {
   display: flex;
   justify-content: space-between;
@@ -684,7 +704,7 @@
     <div class="nav-links" id="navLinks">
       <a href="/" class="nav-link">Home</a>
       <a href="/services/" class="nav-link">Services</a>
-      <a href="/projects/" class="nav-link active" aria-current="page" aria-current="page">Case Studies</a>
+      <a href="/projects/" class="nav-link active" aria-current="page">Case Studies</a>
       <a href="/blog/" class="nav-link">Insights</a>
       <a href="/#about" class="nav-link">About</a>
       <a href="/resume/" class="nav-link">Resume</a>
@@ -745,7 +765,11 @@
   <span><span class="card-status-dot active" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>Active / maintained</span>
   <span><span class="card-status-dot trial" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>Public trial</span>
   <span><span class="card-status-dot shipped" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>Shipped</span>
+  <span><span class="card-status-dot dev" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>In development</span>
 </div>
+
+<!-- Screen-reader announcement for filter/search results (a11y) -->
+<div id="projectsLive" class="sr-only" aria-live="polite" role="status"></div>
 
 <!-- Bento Grid -->
 <div class="bento-grid" id="bentoGrid">
@@ -763,6 +787,7 @@
       <li>🤝 <strong>Tapi Learn (ACLA)</strong> — client engagement · 11K+ learners, 38 countries · <a href="https://acla.io/tapi-learn" style="color:var(--accent)">acla.io/tapi-learn</a></li>
       <li>🏢 <strong>Keja AI</strong> — real-estate intelligence &amp; trust infrastructure (public trial) · <a href="https://keja.app" style="color:var(--accent)">keja.app</a></li>
       <li>🚀 <strong>Busara AI</strong> — multi-agent data intelligence platform · <a href="https://busaraai.com" style="color:var(--accent)">busaraai.com</a></li>
+      <li>🔦 <strong>FirstLight</strong> — Geo-AI disaster-response decision layer (public demo) · <a href="https://gadda00.github.io/firstlight/" style="color:var(--accent)">Live demo</a> · <a href="https://github.com/gadda00/firstlight" style="color:var(--accent)">GitHub</a></li>
       <li>🌱 <strong>KilimoPRO</strong> — offline-first agri AI for 8 IGAD countries · <a href="https://github.com/gadda00/kilimopro" style="color:var(--accent)">GitHub</a></li>
       <li>🛡️ <strong>Fraud Detection System</strong> — 84% recall · ~33µs/score · <a href="https://github.com/gadda00/fraud-detection-system" style="color:var(--accent)">GitHub</a></li>
       <li>⚡ <strong>Verxlite</strong> — sales &amp; ops AI workflow agent · <a href="https://github.com/gadda00/verxlite" style="color:var(--accent)">GitHub</a></li>
@@ -771,6 +796,7 @@
       <li>📊 <strong>Financial Forecasting Suite</strong> — Holt-Winters, ARIMA, ensembles · <a href="https://github.com/gadda00/financial-forecasting-suite" style="color:var(--accent)">GitHub</a></li>
       <li>📊 <strong>Customer Segmentation Engine</strong> — RFM + K-Means + GMM · <a href="https://github.com/gadda00/customer-segmentation-engine" style="color:var(--accent)">GitHub</a></li>
       <li>🌍 <strong>Eco Africa Awards</strong> — climate-leadership awards platform for ACLA · <a href="https://ecoafricaawards.com" style="color:var(--accent)">Live</a></li>
+      <li>🚧 <strong>Hazina Assist</strong> — in early development; details will be published at the first public milestone</li>
     </ul>
     <p style="margin:1.25rem 0 0;font-size:0.9rem">Want a system like one of these? <a href="/book/" style="color:var(--accent)">Book a free 30-minute assessment</a>.</p>
   </div>
@@ -826,7 +852,7 @@
   var searchTerm = '';
 
   // ─── Fetch projects ─────────────────────────────────────────────
-  fetch('/projects/projects.json')
+  fetch('projects.json')
     .then(function(r) { return r.json(); })
     .then(function(data) {
       allProjects = data.projects || [];
@@ -839,7 +865,8 @@
     })
     .catch(function(err) {
       console.error('Failed to load projects:', err);
-      document.getElementById('bentoGrid').innerHTML = '<div class="projects-empty">Failed to load projects. <a href="/" style="color:var(--accent)">Return home</a></div>';
+      document.getElementById('bentoGrid').innerHTML = '<div class="projects-empty">Failed to load projects. <button type="button" id="projRetry" style="margin:0.8rem auto 0;display:inline-block;padding:0.55rem 1.2rem;border-radius:10px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;font-size:0.9rem">Retry loading</button><br><a href="/#work" style="color:var(--accent)">or browse project highlights on the homepage</a></div>';
+      document.getElementById('projRetry').addEventListener('click', function() { window.location.reload(); });
     });
 
   // ─── Stats ──────────────────────────────────────────────────────
@@ -858,12 +885,17 @@
   function renderFilters() {
     var container = document.getElementById('projectsFilters');
     container.innerHTML = categories.map(function(c) {
-      return '<button class="proj-filter' + (c.id === 'all' ? ' active' : '') + '" data-cat="' + c.id + '">' + c.icon + ' ' + c.label + '</button>';
+      var pressed = c.id === 'all';
+      return '<button type="button" class="proj-filter' + (pressed ? ' active' : '') + '" data-cat="' + c.id + '" aria-pressed="' + pressed + '">' + c.icon + ' ' + c.label + '</button>';
     }).join('');
     container.querySelectorAll('.proj-filter').forEach(function(btn) {
       btn.addEventListener('click', function() {
-        container.querySelectorAll('.proj-filter').forEach(function(b) { b.classList.remove('active'); });
+        container.querySelectorAll('.proj-filter').forEach(function(b) {
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
         activeFilter = btn.getAttribute('data-cat');
         renderGrid();
       });
@@ -888,6 +920,7 @@
 
     if (filtered.length === 0) {
       document.getElementById('bentoGrid').innerHTML = '<div class="projects-empty"><div style="font-size:3rem;margin-bottom:1rem">🔍</div>No projects found. Try a different filter or search term.</div>';
+      document.getElementById('projectsLive').textContent = 'No projects match the current filter and search. Showing 0 of ' + allProjects.length + ' projects.';
       return;
     }
 
@@ -895,12 +928,27 @@
       var span = p.featured ? (i === 0 ? 'wide' : (i === 1 ? 'narrow' : '')) : '';
       return renderCard(p, span);
     }).join('');
+    document.getElementById('projectsLive').textContent = 'Showing ' + filtered.length + ' of ' + allProjects.length + ' projects.';
 
     // Attach 3D tilt handlers
     attachTilt();
   }
 
   // ─── Render one card ────────────────────────────────────────────
+  // Data comes from the repo's own projects.json, but escape everything
+  // anyway (defense-in-depth) and validate link protocols before they
+  // reach an href attribute.
+  function esc(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function(ch) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    });
+  }
+  function safeUrl(u) {
+    var s = String(u == null ? '' : u);
+    if (/^(https?:\/\/|mailto:|tel:|\/#)/i.test(s)) return esc(s);
+    return '#';
+  }
+
   function renderCard(p, span) {
     var accentStyle = p.accentColor ? 'style="--card-accent:' + p.accentColor + '"' : '';
     var visualHTML = renderVisual(p.visual, p.accentColor);
@@ -935,14 +983,21 @@
         '</div>';
     }
 
+    var metricsHTML = '';
+    if (p.metrics && Object.keys(p.metrics).length > 0) {
+      metricsHTML = '<div class="card-metrics">' + Object.keys(p.metrics).map(function(k) {
+        return '<span class="metric-chip"><b>' + esc(k) + ':</b> ' + esc(p.metrics[k]) + '</span>';
+      }).join('') + '</div>';
+    }
+
     var linksHTML = (p.links || []).map(function(l) {
-      return '<a href="' + l.url + '" target="_blank" rel="noopener noreferrer" class="' + l.type + '">' + l.label + '</a>';
+      return '<a href="' + safeUrl(l.url) + '" target="_blank" rel="noopener noreferrer" class="' + esc(l.type) + '">' + esc(l.label) + '</a>';
     }).join('');
 
     var highlightsHTML = '';
     if (p.highlights && p.highlights.length > 0) {
       highlightsHTML = '<ul class="card-highlights">' + p.highlights.slice(0, 4).map(function(h) {
-        return '<li>' + h + '</li>';
+        return '<li>' + esc(h) + '</li>';
       }).join('') + '</ul>';
     }
 
@@ -951,15 +1006,16 @@
       (visualHTML ? '<div class="card-visual">' + visualHTML + '</div>' : '') +
       '<div class="card-body">' +
         '<div class="card-header">' +
-          '<span class="card-badge ' + (p.badgeClass || '') + '">' + p.badge + '</span>' +
-          '<span class="card-status-dot ' + p.status + '" title="' + p.status + '"></span>' +
+          '<span class="card-badge ' + (p.badgeClass || '') + '">' + esc(p.badge) + '</span>' +
+          '<span class="card-status-dot ' + esc(p.status) + '" title="' + esc(p.status) + '"></span>' +
         '</div>' +
-        '<div class="card-title">' + (p.icon ? p.icon + ' ' : '') + p.name + '</div>' +
-        (p.role ? '<div class="card-role">' + p.role + '</div>' : '') +
-        '<div class="card-tagline">' + p.tagline + '</div>' +
-        '<div class="card-desc">' + p.description + '</div>' +
+        '<div class="card-title">' + (p.icon ? p.icon + ' ' : '') + esc(p.name) + '</div>' +
+        (p.role ? '<div class="card-role">' + esc(p.role) + '</div>' : '') +
+        '<div class="card-tagline">' + esc(p.tagline) + '</div>' +
+        '<div class="card-desc">' + esc(p.description) + '</div>' +
+        metricsHTML +
         highlightsHTML +
-        '<div class="card-tags">' + (p.technologies || []).map(function(t) { return '<span>' + t + '</span>'; }).join('') + '</div>' +
+        '<div class="card-tags">' + (p.technologies || []).map(function(t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>' +
         '<div class="card-footer">' +
           '<div class="card-links">' + linksHTML + '<a href="/book/" class="discuss">Discuss a similar system →</a></div>' +
           ghStats +
