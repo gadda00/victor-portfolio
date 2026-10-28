@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="/styles.css?v=13.0.0" />
+<link rel="stylesheet" href="/styles.css?v=14.0.0" />
 <meta name="view-transition" content="same-origin" />
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -704,6 +704,31 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* ─── Mobile UX: filter rail + chip compaction ───────────────────────
+   The 8 filter pills wrap into a cramped 4-5-row cluster on phones;
+   on small screens they become a single horizontal scroll rail with
+   snap points and a right-edge fade, mirroring native app chip bars. */
+@media (max-width: 700px) {
+  .projects-filters {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 1.25rem 1.5rem;
+    scrollbar-width: none;
+    -webkit-mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), rgba(0,0,0,0.35) 100%);
+    mask-image: linear-gradient(90deg, #000 0, #000 calc(100% - 28px), rgba(0,0,0,0.35) 100%);
+  }
+  .projects-filters::-webkit-scrollbar { display: none; }
+  .proj-filter { flex: 0 0 auto; scroll-snap-align: start; }
+  /* Compact evidence chips: same data, tighter rhythm on phones */
+  .card-metrics { gap: 0.35rem; }
+  .metric-chip { font-size: 0.7rem; padding: 0.25rem 0.55rem; }
+  .card-tags { gap: 0.3rem; }
+  .card-tags span { font-size: 0.68rem; padding: 0.18rem 0.5rem; }
 }
 </style>
 <script>try{var l=localStorage.getItem("vn_lang");if(l)document.documentElement.lang=l;}catch(e){}</script>
