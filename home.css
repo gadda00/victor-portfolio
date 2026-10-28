@@ -840,12 +840,14 @@ html.light .hero-badge { background: rgba(4,120,87,.08); border-color: rgba(4,12
   box-shadow: 0 30px 70px -30px rgba(2,6,20,.9);
 }
 
-/* Bento spans: Busara full-width flagship, then balanced 2x2 */
+/* Bento spans: flagship full-width, then balanced pairs; last featured card closes full-width */
 .work-card.featured { grid-column: span 6; }
 .work-card.featured:nth-child(2),
 .work-card.featured:nth-child(3),
 .work-card.featured:nth-child(4),
-.work-card.featured:nth-child(5) { grid-column: span 3; }
+.work-card.featured:nth-child(5),
+.work-card.featured:nth-child(6),
+.work-card.featured:nth-child(7) { grid-column: span 3; }
 
 .work-badge {
   display: inline-flex;
@@ -868,6 +870,7 @@ html.light .hero-badge { background: rgba(4,120,87,.08); border-color: rgba(4,12
 .work-badge.research { background: rgba(129,140,248,.1); border-color: rgba(129,140,248,.35); color: #a5b4fc; }
 .work-badge.fraud { background: rgba(244,114,182,.09); border-color: rgba(244,114,182,.32); color: #f472b6; }
 .work-badge.keja { background: linear-gradient(135deg, rgba(251,191,36,.14), rgba(56,189,248,.08)); border-color: rgba(251,191,36,.4); color: var(--v6-amber); }
+.work-badge.tapi { background: rgba(52,211,153,.09); border-color: rgba(52,211,153,.35); color: var(--v6-emerald); }
 .work-badge.firstlight { background: rgba(251,146,60,.09); border-color: rgba(251,146,60,.35); color: #fb923c; }
 
 html.light .work-badge { filter: saturate(2.4) brightness(.75); }
@@ -1359,7 +1362,8 @@ html.light footer { background: rgba(230,234,248,.4); }
   .about-grid { grid-template-columns: 1fr; }
   .now-grid { grid-template-columns: repeat(2, 1fr); }
   .work-card.featured, .work-card.featured:nth-child(2), .work-card.featured:nth-child(3),
-  .work-card.featured:nth-child(4), .work-card.featured:nth-child(5) { grid-column: span 6; }
+  .work-card.featured:nth-child(4), .work-card.featured:nth-child(5), .work-card.featured:nth-child(6),
+  .work-card.featured:nth-child(7) { grid-column: span 6; }
   .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
   .svc-quick-grid { grid-template-columns: repeat(2, 1fr); }
   .work-grid { grid-template-columns: repeat(2, 1fr); }
