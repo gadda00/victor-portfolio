@@ -7,7 +7,7 @@
  */
 const { chromium } = require('playwright');
 
-const BASE = 'http://localhost:8099';
+const BASE = process.env.BASE || 'http://localhost:8099';
 const EXPECTED = 13;
 
 (async () => {
