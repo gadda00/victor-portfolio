@@ -78,7 +78,7 @@
           '@type': 'Person',
           'name': 'Victor Ndunda',
           'url': base + '/',
-          'jobTitle': 'AI Engineer & Founder',
+          'jobTitle': 'AI Systems Engineer',
           'address': { '@type': 'PostalAddress', 'addressLocality': 'Nairobi', 'addressCountry': 'KE' },
           'sameAs': ['https://github.com/gadda00', 'https://www.linkedin.com/in/victor-ndunda']
         },

@@ -1,6 +1,6 @@
 # Victor Ndunda — Portfolio
 
-> Personal portfolio, blog, and private admin dashboard for **Victor Ndunda** — AI Engineer & Founder of Busara AI and KilimoPRO, and creator of AgentReplay. Built in Nairobi, Kenya 🇰🇪.
+> Personal portfolio, blog, and private admin dashboard for **Victor Ndunda** — AI Systems Engineer, creator of Busara AI, KilimoPRO & AgentReplay, with client platforms Tapi Learn (11K+ learners) and Keja AI (award-nominated) in production. Built in Nairobi, Kenya 🇰🇪.
 
 **Live**: [victorndunda.com](https://victorndunda.com)
 

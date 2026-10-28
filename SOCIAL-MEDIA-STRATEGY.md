@@ -12,17 +12,17 @@
 
 **Option A (recommended — 196 chars):**
 ```
-AI Engineer & Founder | Building 50-agent systems with real math, not vibes | Busara AI · KilimoPRO · Tapi Learn (11K+ learners, 38 countries) | RAG · Computer Vision · Swahili AI | Nairobi 🇰🇪 → 🌍
+AI Systems Engineer | Building 50-agent systems with real math, not vibes | Busara AI · KilimoPRO · Tapi Learn (11K+ learners, 38 countries) | RAG · Computer Vision · Swahili AI | Nairobi 🇰🇪 → 🌍
 ```
 
 **Option B (183 chars):**
 ```
-AI Engineer & Founder @ Busara AI | Multi-agent systems · RAG · Computer Vision | 50 agents live · 11K+ learners in 38 countries | Swahili-first AI for low-end phones | Nairobi, Kenya
+AI Systems Engineer | Multi-agent systems · RAG · Computer Vision | 50 agents live · 11K+ learners in 38 countries · Keja AI award nominee | Swahili-first AI for low-end phones | Nairobi, Kenya
 ```
 
 **Option C (190 chars):**
 ```
-Founder, Busara AI — 50-agent data intelligence platform | Building production AI in Nairobi for Africa & the world | Real math, not wrappers, not demos | RAG · CV · Multi-agent · Swahili AI
+Building Busara AI — a 50-agent data intelligence platform | Production AI from Nairobi for Africa & the world | Real math, not wrappers, not demos | RAG · CV · Multi-agent · Swahili AI
 ```
 
 ### About Section (~1,050 words — fits within 2,600 char limit)
@@ -30,7 +30,7 @@ Founder, Busara AI — 50-agent data intelligence platform | Building production
 ```
 I build AI systems that turn raw data into intelligence. Not demos. Not wrappers.
 
-I'm an AI Engineer and Founder based in Nairobi, Kenya. I build production AI — systems that ship, serve real users, and work in Swahili on low-end phones.
+I'm an AI systems engineer based in Nairobi, Kenya. I build production AI — systems that ship, serve real users, and work in Swahili on low-end phones.
 
 WHAT I'VE BUILT:
 
@@ -88,7 +88,7 @@ Let's build something amazing with AI.
 
 **Option A (recommended — 140 chars):**
 ```
-AI Engineer & Founder 🇰🇪 / Busara AI (50 agents) · KilimoPRO · 11K+ learners / Real math, not vibes. Swahili-first AI. / victorndunda.com/services
+AI Systems Engineer 🇰🇪 / Busara AI (50 agents) · KilimoPRO · 11K+ learners / Real math, not vibes. Swahili-first AI. / victorndunda.com/services
 ```
 
 **Option B (136 chars):**
@@ -98,7 +98,7 @@ Building AI in Nairobi for the world 🌍 / 50-agent systems · RAG · Computer 
 
 **Option C (139 chars):**
 ```
-AI Engineer & Founder | Real math, not vibes / Busara AI · KilimoPRO · Tapi Learn / Multi-agent systems in EN·FR·SW / → victorndunda.com/services
+AI Systems Engineer | Real math, not vibes / Busara AI · KilimoPRO · Tapi Learn / Multi-agent systems in EN·FR·SW / → victorndunda.com/services
 ```
 
 ### Pinned Tweet
@@ -197,7 +197,7 @@ Your existing `social-post.yml` workflow auto-posts to LinkedIn + X on blog publ
 
 ## 5. SEO KEYWORDS (embed across all bios)
 
-**Primary:** AI Engineer, Founder, Multi-Agent Systems, RAG, Computer Vision, Swahili AI, Nairobi, Kenya
+**Primary:** AI Systems Engineer, Multi-Agent Systems, RAG, Computer Vision, Swahili AI, Nairobi, Kenya
 
 **Secondary:** Machine Learning, LLMs, Python, TensorFlow, Agricultural AI, Offline-First, Production AI, AI Consulting, AI Strategy, Swahili NLP
 

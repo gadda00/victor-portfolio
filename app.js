@@ -186,7 +186,7 @@
   // ═══════════════════════════════════════════════════════════════════
   const taglines = [
     'I build AI systems that run in production.',
-    'Founder of Busara AI · Creator of AgentReplay · Builder of KilimoPRO.',
+    'Creator of Busara AI & AgentReplay · Builder of Keja AI, Tapi Learn & KilimoPRO.',
     'Multi-agent orchestration. Statistical modeling. On-device ML.',
     'Shipping from Nairobi to the world. 🇰🇪',
     'Open-source: AgentReplay, KilimoPRO, IntelliFlow.',

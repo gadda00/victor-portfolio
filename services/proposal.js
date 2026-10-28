@@ -193,7 +193,7 @@
         '<div><h4>Prepared for</h4><div class="p">' + esc(state.client.name || 'Client name') +
           (state.client.company ? '\n' + esc(state.client.company) : '') +
           (state.client.email ? '\n' + esc(state.client.email) : '') + '</div></div>' +
-        '<div><h4>Prepared by</h4><div class="p">Victor Ndunda\nAI Engineer &amp; Founder\nmututandunda@gmail.com · +254 724 346 971</div></div>' +
+        '<div><h4>Prepared by</h4><div class="p">Victor Ndunda\nAI Systems Engineer\nmututandunda@gmail.com · +254 724 346 971</div></div>' +
       '</div>' +
 
       '<h2 class="pr-sec">1 · The project</h2>' +
