@@ -1537,6 +1537,15 @@ html.light .gh-repo:hover, html.light .now-card:hover {
   }
   body { background: white !important; color: black !important; }
   .work-card, .service-card, .about-card { box-shadow: none !important; border: 1px solid #ccc !important; }
+  /* content-visibility: auto is a scroll-time optimization — when printing
+     (or headless renderers capture the full page) every section must render:
+     without this guard, .cv-auto sections print as empty placeholders
+     in some engines. Force full layout in paged media. */
+  .cv-auto { content-visibility: visible !important; contain-intrinsic-size: auto !important; }
+  .work-card, .about-card, .case-card, .offer-card, .resume-card, .bento-card {
+    break-inside: avoid;
+  }
+  a { text-decoration: none; }
 }
 
 /* ─── Condensed Capabilities (subordinate to main packages) ────── */
