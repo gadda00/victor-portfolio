@@ -86,6 +86,19 @@
   background: var(--glass); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
   font-size: 1.05rem; line-height: 1.65; color: var(--text);
 }
+/* ---------- Client quote (approved testimonial) ---------- */
+.cs-quote {
+  margin: 1.8rem 0 2.2rem; padding: 1.3rem 1.5rem;
+  border: 1px solid var(--border); border-left: 3px solid var(--accent-2);
+  background: var(--glass); border-radius: var(--radius-sm);
+}
+.cs-quote .label {
+  font-size: .72rem; font-weight: 600; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-dim); margin-bottom: .55rem;
+}
+.cs-quote .q { margin: 0; font-size: 1.02rem; line-height: 1.7; font-style: italic; color: var(--text); }
+.cs-quote .who { margin-top: .75rem; font-size: .88rem; font-weight: 600; color: var(--text-muted); }
+.cs-quote .who .org { color: var(--accent); }
 .cs-callout {
   margin: 1.8rem 0; padding: 1.3rem 1.4rem;
   background: linear-gradient(135deg, rgba(0,212,255,.07), rgba(168,85,247,.05));

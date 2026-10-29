@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 8: Social-Launch Support — Approved Client Quotes On-Site, Per-Case OG Cards (2026-10-29)
+
+**Approved client testimonials on the money pages:**
+- **`/projects/keja-ai/` + `/projects/tapi-learn/`** each gained a "What the client says" quote card between the results pull-quote and the transfer section — client-approved wording (confirmed October 2026), org-level attribution (**CHACADOM INVESTMENTS**, **ACLA**), grounded strictly in the same dated metrics the pages already cite (70 listings certified above 80 in public trial; 11,000+ learners · 38 countries · 4.8/5 client-reported). No named-person attribution anywhere on-site — only what the orgs signed off.
+- New shared component **`.cs-quote`** in `projects/case-study.css` (v1.0.0 → **v1.1.0**, cache-busted on both pages): glass card, accent-2 left rule, uppercase label, italic quote, org-highlight attribution — inherits existing design tokens, print- and reduced-motion-safe.
+
+**Per-case OG cards (the social-launch support layer):**
+- **`og-keja-ai.png`** and **`og-tapi-learn.png`** — 1200×630 rendered at 2× (2400×1260) Playwright cards in the site brand: logo mark, client/trial chip, gradient product title, one-line sub, three-stat band (87+ · 12 · 70 / 11,000+ · 38 · 4.8/5), mono footer with the case URL. Every case-study link shared from the LinkedIn/X launch posts now unfurls a case-specific card instead of the site-wide generic.
+- Both case pages' **`og:image` + `twitter:image`** point at their dedicated cards; added `og:site_name`, `og:locale`, `og:image:width/height/alt`, and the previously missing `twitter:title`/`twitter:description`; **Article JSON-LD `image`** updated to match (all three signals now agree).
+
+**Launch copy archive:**
+- **`marketing/oct2026-launch-pack/READY-TO-PASTE-POSTS.md`** — the full launch pack (Keja AI + Tapi Learn case-study posts, FirstLight launch posts, both approved quotes + short variants, posting playbook) in ready-to-paste markdown, generated 1:1 from the same source as the delivered DOCX; all 14 X posts pre-validated ≤ 280 characters (links counted as 23, blank lines counted conservatively), LinkedIn posts ≤ 3,000 characters, client-reported labels preserved everywhere.
+
+**Wiring:** `sw.js` `CACHE_VERSION` → **vnd-v22.0.0** (both precached case pages + case-study.css must refresh for returning visitors).
+
+**QA:** `validate_site.py` 8/8 (687 links); `smoke_test.js` 18/18, zero console errors; `verify_order.js` 53/53; programmatic overflow check on both case pages at **360/390/768/1280px — zero overflow** (added 1280 desktop pass); quote-card + OG-image pixel-content checks; OG card dimensions verified 2400×1260.
+
 ### Cycle 7: Money Surfaces — Long-Form Case Studies, Risk-Reversal Strip, Search Structured Data (2026-10-29)
 
 **Two flagship client engagements now have full written case studies — the highest-leverage conversion assets on the site:**
