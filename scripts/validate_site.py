@@ -139,7 +139,7 @@ else:
 # ---------- 7. homepage count sync ----------
 print("[7/8] homepage project-count wording matches projects.json")
 home = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
-m = re.search(r"The full archive — (\d+) projects", home)
+m = re.search(r"(?:full|rest of the) archive — (\d+) projects", home)
 if not m:
     warnings.append("index.html: archive-count sentence not found — update the validator if wording changed")
 else:

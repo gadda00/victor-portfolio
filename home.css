@@ -1661,3 +1661,22 @@ html.light nav#nav.scrolled { background: rgba(246,248,254,.9); }
 .hero-proof-chip strong { color: var(--text); }
 .hero-proof-text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .hero-proof-arrow { color: var(--v6-green, #10b981); font-weight: 700; flex-shrink: 0; }
+
+/* ============================================================
+   v13: Guarantee / risk-reversal strip (How It Works section)
+   ============================================================ */
+.guarantee-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+  margin-top: 1.8rem;
+}
+.guarantee-item {
+  display: flex; gap: .85rem; align-items: flex-start;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--v6-green, #10b981);
+}
+.guarantee-item .g-icon { font-size: 1.25rem; line-height: 1; flex-shrink: 0; margin-top: .15rem; }
+.guarantee-item strong { display: block; color: var(--v6-text-hi, var(--text)); font-size: .95rem; margin-bottom: .25rem; }
+.guarantee-item span { display: block; color: var(--text-muted); font-size: .82rem; line-height: 1.45; }

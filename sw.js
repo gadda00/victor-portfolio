@@ -15,7 +15,7 @@
  * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v20.0.0';
+const CACHE_VERSION = 'vnd-v21.0.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -58,6 +58,9 @@ const SHELL_URLS = [
   '/services/care.html',
   '/services/faq.html',
   '/services/faq.js',
+  '/projects/keja-ai/',
+  '/projects/tapi-learn/',
+  '/projects/case-study.css',
 ];
 
 // Never cache these (would break OAuth + live job data + dashboard/portal freshness)

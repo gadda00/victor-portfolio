@@ -11,6 +11,7 @@
       "priority": 0,
       "github": null,
       "liveUrl": "https://keja.app",
+      "caseStudy": "/projects/keja-ai/",
       "repo": null,
       "technologies": [
         "Next.js",
@@ -98,6 +99,7 @@
       "priority": 2,
       "github": null,
       "liveUrl": "https://acla.io/tapi-learn",
+      "caseStudy": "/projects/tapi-learn/",
       "repo": null,
       "technologies": [
         "Multilingual NLP",
@@ -752,5 +754,5 @@
       "icon": "📊"
     }
   ],
-  "lastUpdated": "2026-10-28"
+  "lastUpdated": "2026-10-29"
 }

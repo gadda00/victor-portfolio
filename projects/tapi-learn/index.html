@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tapi Learn Case Study — Multilingual AI Learning for 11,000+ Learners | Victor Ndunda</title>
+<meta name="description" content="How I built the AI layer of Tapi Learn for ACLA — a 24/7 AI Career Coach, an English·Français·Kiswahili NLP pipeline, personalized learning recommendations, and an opportunities board — serving 11,000+ learners across 38 countries (4.8/5, client-reported)." />
+<meta name="author" content="Victor Ndunda" />
+<link rel="canonical" href="https://victorndunda.com/projects/tapi-learn/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Tapi Learn Case Study — Multilingual AI Learning for 11,000+ Learners in 38 Countries" />
+<meta property="og:description" content="A 24/7 AI Career Coach, a three-language NLP pipeline, and personalized recommendations for a free Africa-built climate-leadership learning platform." />
+<meta property="og:url" content="https://victorndunda.com/projects/tapi-learn/" />
+<meta property="og:image" content="https://victorndunda.com/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles.css?v=14.0.0" />
+<link rel="stylesheet" href="/projects/case-study.css?v=1.0.0" />
+<meta name="view-transition" content="same-origin" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Tapi Learn Case Study — Multilingual AI Learning for 11,000+ Learners in 38 Countries",
+  "description": "How Victor Ndunda built the AI layer of Tapi Learn for ACLA — an AI Career Coach, EN·FR·SW NLP pipeline, personalized recommendations, and an opportunities board.",
+  "author": { "@type": "Person", "name": "Victor Ndunda", "url": "https://victorndunda.com" },
+  "publisher": { "@type": "Person", "name": "Victor Ndunda", "url": "https://victorndunda.com" },
+  "about": { "@type": "SoftwareApplication", "name": "Tapi Learn", "url": "https://acla.io/tapi-learn" },
+  "mainEntityOfPage": "https://victorndunda.com/projects/tapi-learn/",
+  "image": "https://victorndunda.com/og-image.png",
+  "datePublished": "2026-10-29"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://victorndunda.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Case Studies", "item": "https://victorndunda.com/projects/" },
+    { "@type": "ListItem", "position": 3, "name": "Tapi Learn", "item": "https://victorndunda.com/projects/tapi-learn/" }
+  ]
+}
+</script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<script>try{var l=localStorage.getItem("vn_lang");if(l)document.documentElement.lang=l;}catch(e){}</script>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav id="nav" aria-label="Primary navigation">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="Victor Ndunda — home">
+      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
+        <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
+        <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
+        <line x1="50" y1="50" x2="20" y2="25" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="80" y2="25" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="20" y2="75" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="80" y2="75" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+      </svg>
+      <span>Victor Ndunda</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/projects/" class="nav-link">Case Studies</a>
+      <a href="/blog/" class="nav-link">Insights</a>
+      <a href="/#about" class="nav-link">About</a>
+      <a href="/resume/" class="nav-link">Resume</a>
+      <a href="/book/" class="nav-link nav-link-cta">Book an Assessment</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle dark/light theme">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-toggle" id="mobileToggle" title="Menu" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ================= HERO ================= -->
+<header class="cs-hero">
+  <div class="cs-wrap">
+    <p class="cs-crumbs"><a href="/">Home</a><span class="sep">/</span><a href="/projects/">Case Studies</a><span class="sep">/</span>Tapi Learn</p>
+    <span class="cs-eyebrow"><span class="pulse-dot"></span> Client engagement · ACLA · EdTech · 2026</span>
+    <h1>Multilingual AI learning that reached <span class="grad-text">11,000+ learners in 38 countries.</span></h1>
+    <p class="cs-lede">Tapi Learn — live at <a href="https://acla.io/tapi-learn" target="_blank" rel="noopener noreferrer">acla.io/tapi-learn</a> — is a free, Africa-built, multilingual learning platform for climate leadership. I built its AI layer: a 24/7 AI Career Coach, the English · Français · Kiswahili NLP pipeline, personalized learning recommendations, and the opportunities board that turns learning into actual career moves.</p>
+    <div class="cs-meta-row">
+      <span class="cs-meta-chip"><strong>Role:</strong> AI Systems Engineer — the AI layer</span>
+      <span class="cs-meta-chip"><strong>Status:</strong> live product</span>
+      <span class="cs-meta-chip"><strong>Stack:</strong> multilingual NLP · recommendations · coach · mobile</span>
+      <span class="cs-meta-chip"><strong>Languages:</strong> English · Français · Kiswahili</span>
+    </div>
+    <div class="cs-stats">
+      <div class="cs-stat"><div class="n">11,000+</div><div class="l">learners on the platform (client-reported)</div></div>
+      <div class="cs-stat"><div class="n">38</div><div class="l">countries reached</div></div>
+      <div class="cs-stat"><div class="n">4.8/5</div><div class="l">average rating (client-reported)</div></div>
+      <div class="cs-stat"><div class="n">24/7</div><div class="l">AI career coaching — no queue, no hours</div></div>
+      <p class="cs-stat-note">Reach and satisfaction metrics reported by the client, October 2026.</p>
+    </div>
+  </div>
+</header>
+
+<article class="cs-body">
+  <div class="cs-wrap">
+
+    <h2><span class="sn">01</span> The problem: learning that doesn't become a career</h2>
+    <p>Climate leadership training in Africa faces a gap that no amount of content fixes. A learner finishes a module, feels informed — and then hits the questions that actually decide their future: <strong>how do I turn this into work? What should I learn next? Who is hiring, and how do I present myself to them?</strong> On most learning platforms those questions go unanswered, because answering them at scale, in the learner's own language, at the hour the learner asks them, is an operations problem no teaching team can staff.</p>
+    <p>ACLA built Tapi Learn to close that gap: a free, mobile-first platform for climate-leadership learning that treats the learner's <em>career</em> — not just their coursework — as the product. My mandate was the AI layer that makes that possible: guidance that is always on, speaks three languages, and knows each learner's situation well enough to be useful.</p>
+
+    <h2><span class="sn">02</span> The constraints that shaped the build</h2>
+    <ul>
+      <li><strong>Three languages, real users.</strong> English, Français, and Kiswahili aren't decoration here — they're how thousands of learners across 38 countries actually write. The NLP pipeline had to treat all three as first-class, including Kiswahili, which most global AI tooling treats as an afterthought.</li>
+      <li><strong>Coaching can't keep office hours.</strong> Learners across 38 time zones need answers at 2 a.m. before an interview. A human-coaching model doesn't scale to that; a good AI layer does.</li>
+      <li><strong>One coach, thousands of paths.</strong> Personalization across highly diverse learners — different countries, experience levels, goals — without every recommendation being hand-built.</li>
+      <li><strong>Free platform, real costs.</strong> The product is free to learners, which means every AI interaction has to earn its keep. Response paths were designed to be useful at low cost, not to burn tokens for sport.</li>
+      <li><strong>Mobile-first, low-bandwidth.</strong> Many learners are on mid-range Android phones with intermittent data — the same delivery conditions I design for across all my Africa-facing builds.</li>
+    </ul>
+
+    <h2><span class="sn">03</span> What I built</h2>
+    <div class="cs-build-grid">
+      <div class="cs-build"><div class="icon">🧭</div><h4>The 24/7 AI Career Coach</h4><p>CV reviews, interview preparation, and career advice on demand — the guidance layer that turns "I finished the course" into "I'm ready to apply." It works in the learner's language, at the moment they need it, and it never closes.</p></div>
+      <div class="cs-build"><div class="icon">🗣️</div><h4>The EN·FR·SW NLP pipeline</h4><p>A multilingual pipeline that understands and serves learners in English, Français, and Kiswahili — the language layer that decides whether a learner feels at home on the platform or talks past it.</p></div>
+      <div class="cs-build"><div class="icon">🎯</div><h4>Personalized learning recommendations</h4><p>Recommendations shaped by where a learner is and where they're heading, so "what should I learn next?" has a real answer instead of a generic syllabus order.</p></div>
+      <div class="cs-build"><div class="icon">🚪</div><h4>The opportunities board</h4><p>The bridge from learning to livelihood: real opportunities surfaced to learners, so the platform's last screen is a door — not a dead end.</p></div>
+    </div>
+    <div class="cs-callout">
+      <div class="t">The design decision that mattered most</div>
+      <p>Most learning platforms bolt a chatbot onto a course catalog and call it AI. Tapi Learn's AI layer was designed the other way round: start from the learner's career problem — guidance, language, next steps, opportunities — and work backwards to the features. That's why the coach feels like the product instead of a support widget.</p>
+    </div>
+
+    <h2><span class="sn">04</span> Results: reach, resonance, and a live platform</h2>
+    <div class="cs-table-wrap">
+      <table class="cs-table">
+        <thead><tr><th>Dimension</th><th>Where it stands (Oct 2026)</th><th>Why it matters</th></tr></thead>
+        <tbody>
+          <tr><td class="strong">Reach</td><td>11,000+ learners across 38 countries (client-reported)</td><td>Multilingual, mobile-first AI isn't a nice-to-have — it's what got the product across borders.</td></tr>
+          <tr><td class="strong">Satisfaction</td><td>4.8/5 average rating (client-reported)</td><td>Learners rate the whole experience — the AI layer carries a real share of that.</td></tr>
+          <tr><td class="strong">Always-on guidance</td><td>24/7 career coaching in 3 languages</td><td>The platform answers the career question at the moment it's asked — not in office hours.</td></tr>
+          <tr><td class="strong">Live product</td><td>Public at acla.io/tapi-learn — a free platform with a real operating model</td><td>The system runs in production, serving thousands of real sessions.</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="cs-blockquote">Eleven thousand learners don't care what model is under the hood. They care that at 2 a.m., in Kiswahili, before an interview, the platform had their back. That's the metric I designed for.</div>
+
+    <div class="cs-take">
+      <h3>What this means for your business</h3>
+      <ul>
+        <li><strong>If you run a learning, membership, or community product</strong> — the retention math changes when every user gets guidance, not just content. Tapi Learn shows what an AI guidance layer does to reach and satisfaction in production.</li>
+        <li><strong>If your users are multilingual</strong> — treating their language as first-class isn't localization cost, it's market expansion. Three languages took one product into 38 countries.</li>
+        <li><strong>If you've priced out human coaching/support</strong> — a well-scoped AI layer delivers the always-on version at a fraction of the staffing cost, and this one has the production evidence to prove it.</li>
+      </ul>
+    </div>
+
+    <div class="cs-cta">
+      <h3>Want AI that carries your product experience?</h3>
+      <p>Book a 30-minute AI systems assessment. Bring your product and your users — you'll leave with an honest read on where an AI layer would earn its keep, and where it wouldn't.</p>
+      <div class="actions">
+        <a href="/book/" class="btn btn-primary" data-track="cta-book-case-tapi">Book the free assessment</a>
+        <a href="https://acla.io/tapi-learn" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">See the live product ↗</a>
+      </div>
+      <div class="cs-next">
+        <a href="/projects/keja-ai/"><span class="flag">Next case study</span><span class="name">Keja AI — 7-stage real-estate AI, live at keja.app →</span></a>
+        <a href="/projects/"><span class="flag">All projects</span><span class="name">Back to the case-studies archive →</span></a>
+      </div>
+    </div>
+
+  </div>
+</article>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <defs><linearGradient id="footG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs>
+            <circle cx="50" cy="50" r="14" fill="url(#footG)"/>
+            <circle cx="20" cy="25" r="5" fill="url(#footG)"/><circle cx="80" cy="25" r="5" fill="url(#footG)"/>
+            <circle cx="20" cy="75" r="5" fill="url(#footG)"/><circle cx="80" cy="75" r="5" fill="url(#footG)"/>
+          </svg>
+          <span>Victor Ndunda</span>
+        </div>
+        <p>AI Engineer building multi-agent intelligence systems in Nairobi, Kenya.</p>
+      </div>
+      <div class="footer-links">
+        <div><h5>Navigate</h5><a href="/services/">Services</a><a href="/projects/">Case Studies</a><a href="/blog/">Insights</a><a href="/resume/">Resume</a><a href="/book/">Book an Assessment</a></div>
+        <div><h5>Projects</h5><a href="https://keja.app">Keja AI</a><a href="https://acla.io/tapi-learn">Tapi Learn</a><a href="https://busaraai.com">Busara AI</a><a href="https://github.com/gadda00/agentreplay">AgentReplay</a><a href="https://github.com/gadda00/fraud-detection-system">Fraud Detection</a></div>
+        <div><h5>Legal</h5><a href="/ai-policy.html">AI Policy</a><a href="/terms-of-service.html">Terms of Service</a><a href="/privacy-policy.html">Privacy Policy</a></div>
+        <div><h5>Connect</h5><a href="mailto:mututandunda@gmail.com">Email</a><a href="https://wa.me/254724346971">WhatsApp</a><a href="https://github.com/gadda00">GitHub</a><a href="https://www.linkedin.com/in/victor-ndunda">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
+      <p><a href="https://victorndunda.com" style="color:var(--text-dim)">victorndunda.com</a> · <a href="https://keja.app" style="color:var(--text-dim)">keja.app</a> · <a href="https://github.com/gadda00/agentreplay" style="color:var(--text-dim)">agentreplay</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="/app.js?v=12.0.0" defer></script>
+<script src="/enhancements.js?v=11.0.0" defer></script>
+<script src="/effects.js?v=7.1.0" defer></script>
+<script>
+  // Inline minimal theme+nav for resilience if app.js doesn't load
+  (function(){
+    var t = localStorage.getItem('theme') || (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    document.documentElement.classList.remove('dark','light'); document.documentElement.classList.add(t);
+    var tt = document.getElementById('themeToggle');
+    if (tt) tt.addEventListener('click', function(){
+      var cur = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      var nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.classList.remove(cur); document.documentElement.classList.add(nxt);
+      localStorage.setItem('theme', nxt);
+    });
+    var mt = document.getElementById('mobileToggle');
+    if (mt) mt.addEventListener('click', function(){
+      document.getElementById('navLinks').classList.toggle('open');
+      mt.setAttribute('aria-expanded', mt.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+    });
+  })();
+</script>
+</body>
+</html>

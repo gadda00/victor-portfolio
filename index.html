@@ -120,11 +120,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="styles.css?v=14.0.0" />
-<link rel="stylesheet" href="home.css?v=12.0.0" />
+<link rel="stylesheet" href="home.css?v=13.0.0" />
 <link rel="stylesheet" href="/liquid.css?v=11.0.0" />
 
 <!-- Performance: Preload critical resources -->
-<link rel="preload" href="/home.css?v=12.0.0" as="style" />
+<link rel="preload" href="/home.css?v=13.0.0" as="style" />
 <link rel="preload" href="/app.js?v=11.2.0" as="script" crossorigin />
 <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
 <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
@@ -149,6 +149,59 @@
 <meta property="article:section" content="Technology" />
 <meta property="article:tag" content="AI Engineering" />
 <script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+<!-- Structured data: ProfessionalService -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Victor Ndunda — AI Systems Engineering",
+  "description": "Production AI systems — multi-agent platforms, RAG knowledge tools, fraud detection, forecasting — designed, built, evaluated, and maintained end-to-end. Fixed-scope engagements from $2,500 assessments to $35,000+ programs.",
+  "url": "https://victorndunda.com/",
+  "areaServed": [
+    "Worldwide",
+    "Nairobi",
+    "East Africa"
+  ],
+  "priceRange": "$$$",
+  "currenciesAccepted": "USD, KES",
+  "provider": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Engagement models",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Needs Assessment",
+          "description": "Workflow map, data-readiness review, ROI-ranked opportunity map, build/no-build recommendation — $2,500, 1–2 weeks."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Starter Build",
+          "description": "First real AI tool shipped — WhatsApp or web assistant plus one automation, EN+SW out of the box — $12,000, 2–3 weeks."
+        }
+      },
+      {
+        "@type": "Offer",
+        "itemOffered": {
+          "@type": "Service",
+          "name": "Big Projects",
+          "description": "Production AI programs — RAG platforms, multi-agent orchestration, integrations, SLA-backed — from $35,000, 6–24 weeks."
+        }
+      }
+    ]
+  }
+}
+</script>
+
 </head>
 <body>
 <a href="#main" class="skip-link">Skip to content</a>
@@ -226,7 +279,7 @@
       </a>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="num lg-count" data-count="6">6</span><span class="label">production AI systems shipped</span></div>
+      <div class="hero-stat"><span class="num lg-count" data-count="13">13</span><span class="label">AI systems designed, built &amp; shipped</span></div>
       <div class="hero-stat"><span class="num lg-count" data-count="11" data-suffix="K+">11K+</span><span class="label">learners on a shipped client product</span></div>
       <div class="hero-stat"><span class="num">EN·FR·SW</span><span class="label">multilingual, low-bandwidth delivery</span></div>
     </div>
@@ -311,9 +364,25 @@
     <div class="section-head">
       <span class="label" data-n="02">Case Studies</span>
       <h2>Case studies, <span class="grad-text">with numbers.</span></h2>
-      <p class="section-sub">Three flagship engagements — each with the constraint that made it hard and the evidence that it works. The full archive — 13 projects spanning client builds, platforms, data-science work, and open-source tools — is on the case-studies page. <a href="/projects/">Explore all projects →</a></p>
+      <p class="section-sub">Four flagship engagements — each with the constraint that made it hard and the evidence that it works. Two have full written case studies; the full archive — 13 projects spanning client builds, platforms, data-science work, and open-source tools — is on the case-studies page. <a href="/projects/">Explore all projects →</a></p>
     </div>
     <div class="case-grid">
+      <!-- Case 0: Keja AI — the flagship client platform -->
+      <article class="case-card spot-card">
+        <div class="case-badge case-badge-client">🏢 Client engagement · Real estate</div>
+        <h3 class="case-name">Keja AI <span class="case-org">· CHACADOM INVESTMENTS</span></h3>
+        <p class="case-outcome">A 7-stage real-estate intelligence platform — <strong>live in public trial with 87+ listings across 12 Kenyan counties</strong>.</p>
+        <p class="case-body">Verified titles &amp; documents, investment scoring on every listing, market data, tokenized assets, and the "Ask Keja AI" assistant — across dedicated workspaces for 8 stakeholder types, in English, Kiswahili, and Français. Nominated for an Africa AI Future Award.</p>
+        <div class="case-metrics">
+          <div class="case-metric"><span class="cm-num">87+</span><span class="cm-lbl">Listings (public trial)</span></div>
+          <div class="case-metric"><span class="cm-num">12</span><span class="cm-lbl">Kenyan counties</span></div>
+          <div class="case-metric"><span class="cm-num">70</span><span class="cm-lbl">Trust Score ≥ 80</span></div>
+        </div>
+        <div class="case-links">
+          <a href="/projects/keja-ai/" class="btn btn-primary btn-sm" data-track="cta-case-keja">Read the full case study →</a>
+          <a href="https://keja.app" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">Live Platform ↗</a>
+        </div>
+      </article>
       <!-- Case 1: Tapi Learn — the only third-party-validated engagement -->
       <article class="case-card spot-card">
         <div class="case-badge case-badge-client">🤝 Client engagement · EdTech</div>
@@ -326,8 +395,8 @@
           <div class="case-metric"><span class="cm-num">4.8★</span><span class="cm-lbl">Avg rating (client-reported)</span></div>
         </div>
         <div class="case-links">
-          <a href="https://acla.io/tapi-learn" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Product ↗</a>
-          <a href="/book/" class="btn btn-ghost btn-sm" data-track="cta-book-case-tapi">Discuss a similar build →</a>
+          <a href="/projects/tapi-learn/" class="btn btn-primary btn-sm" data-track="cta-case-tapi">Read the full case study →</a>
+          <a href="https://acla.io/tapi-learn" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-sm">Live Product ↗</a>
         </div>
       </article>
       <!-- Case 2: Verxlite — reliability proven in public -->
@@ -391,6 +460,14 @@
         <p>Harden, document, observe, and hand over a system your team can run — with the dashboards to prove it stays healthy.</p>
       </div>
     </div>
+
+    <!-- Guarantee / risk-reversal strip -->
+    <div class="guarantee-strip" role="list" aria-label="Engagement guarantees">
+      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">📌</span><div><strong>Fixed scope, fixed price.</strong><span>What we signed is what you pay. No surprise invoices, ever.</span></div></div>
+      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">🧾</span><div><strong>You own everything.</strong><span>Code, prompts, data, infrastructure accounts — transferred at handover.</span></div></div>
+      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">🚧</span><div><strong>Milestone delivery.</strong><span>Big builds run 30/40/30 — you see working software at every gate.</span></div></div>
+      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">🔓</span><div><strong>No lock-in.</strong><span>Leave anytime — with a running, documented system. Care is a service, not a hostage.</span></div></div>
+    </div>
   </div>
 </section>
 
@@ -398,7 +475,7 @@
 <section id="about" class="cv-auto section">
   <div class="container">
     <div class="section-head">
-      <span class="label" data-n="05">About</span>
+      <span class="label" data-n="04">About</span>
       <h2>Hi, I'm <span class="grad-text">Victor.</span></h2>
     </div>
     <div class="about-grid">
@@ -448,7 +525,7 @@
 <section id="work" class="cv-auto section">
   <div class="container">
     <div class="section-head">
-      <span class="label" data-n="04">The Work</span>
+      <span class="label" data-n="05">The Work</span>
       <h2>Shipped systems, <span class="grad-text">latest first.</span></h2>
       <p class="section-sub">Live client platforms lead, open-source foundations follow — every system designed, built, evaluated, and maintained end-to-end. The full 13-project archive is on the <a href="/projects/">case-studies page</a>.</p>
     </div>
@@ -465,6 +542,7 @@
             </div>
             <div class="work-links">
               <a href="https://keja.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Platform ↗</a>
+              <a href="/projects/keja-ai/" class="btn btn-ghost btn-sm" data-track="cta-case-keja-work">Read the case study →</a>
               <a href="/book/" class="btn btn-ghost btn-sm" data-track="cta-book-keja">Discuss a similar build →</a>
             </div>
           </div>
@@ -513,6 +591,7 @@
         </div>
         <div class="work-links">
           <a href="https://acla.io/tapi-learn" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Live Product ↗</a>
+          <a href="/projects/tapi-learn/" class="btn btn-ghost btn-sm" data-track="cta-case-tapi-work">Read the case study →</a>
           <a href="/book/" class="btn btn-ghost btn-sm" data-track="cta-book-tapi-work">Discuss a similar build →</a>
         </div>
       </div>

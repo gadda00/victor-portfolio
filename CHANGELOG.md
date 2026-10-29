@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 7: Money Surfaces — Long-Form Case Studies, Risk-Reversal Strip, Search Structured Data (2026-10-29)
+
+**Two flagship client engagements now have full written case studies — the highest-leverage conversion assets on the site:**
+- **`/projects/keja-ai/`** — "Real-estate intelligence & trust infrastructure — a 7-stage platform now in public trial." Problem framing, the five constraints that shaped the build, the 7-stage lifecycle rail (Discover→Verify→Analyse→Finance→Invest→Transact→Manage), what was built (Ask Keja AI assistant, per-listing investment scoring, title & document verification, market data & trust infrastructure), a results table with dated trial metrics (87+ listings, 12 counties, 70 at Trust ≥ 80, EN·SW·FR), a pull-quote, and a "What this means for your business" transfer section that sells the *pattern* to marketplace/data-rich/regulated buyers. Closes with a Book-the-assessment CTA and a next-case link to Tapi Learn.
+- **`/projects/tapi-learn/`** — "Multilingual AI learning that reached 11,000+ learners in 38 countries." Same narrative architecture, EdTech angle: 24/7 AI Career Coach, EN·FR·SW NLP pipeline, personalized recommendations, opportunities board — with client-reported qualifiers preserved on every metric and a transfer section aimed at learning/community/multilingual products.
+- New shared design system **`projects/case-study.css`** (v1.0.0): article typography, stat bands, build grids, lifecycle rails, verdict tables, takeaway callouts, CTA band, print styles, reduced-motion guard — ready for future case studies.
+- **Wiring:** `projects.json` gained a `caseStudy` field (keja-ai, tapi-learn); the bento renderer turns it into a first-class "Read the full case study →" chip (same-tab, styled distinct from external links); noscript fallback lists the case-study links; both pages added to `sitemap.xml` at priority 0.9; **sw.js precaches both pages + the CSS** (offline-readable conversion assets) with `CACHE_VERSION` → **vnd-v21.0.0**.
+
+**Homepage conversion upgrades:**
+- **Keja AI joins the Case Studies section** as the lead card (4 flagships now: Keja, Tapi, Verxlite, FirstLight); both client-platform cards' primary CTAs flip from "Live Product ↗" to **"Read the full case study →"** — internal depth beats external bounce for warm leads. The Work section's Keja and Tapi cards also gained case-study links.
+- **Risk-reversal / guarantee strip** added under How It Works — the four objections that stop consults from signing: *Fixed scope, fixed price · You own everything · Milestone delivery (30/40/30) · No lock-in.* Terms verified 1:1 against rate-card, contract, and FAQ copy.
+- **Hero stat corrected & upgraded:** "6 production AI systems shipped" → **"13 AI systems designed, built & shipped"**, matching the 13-project archive the site has shown since Cycle 3.
+- **Section numbering bug fixed:** About (04) and The Work (05) were numbered out of DOM order — now sequential 01–09.
+- `home.css` cache-busted **v12 → v13** (guarantee strip styles).
+
+**Search-engine money (structured data):**
+- **`ProfessionalService` JSON-LD on the homepage** — provider, areaServed, priceRange, and an OfferCatalog of the three engagement models ($2,500 Assessment · $12,000 Starter · $35,000+ Big Projects) with honest descriptions.
+- **`FAQPage` JSON-LD on `/services/faq.html`** — all 18 rendered Q&As (12 from `data.json` + 6 v18 extras), verified to match the visible accordion 1:1 (Google requires markup parity with on-page content); the deep-link and search-filter behavior is untouched.
+
+**QA:** `validate_site.py` 8/8 (**687** internal links, up from 638 — validator homepage-count regex widened for the new wording); `smoke_test.js` 18/18; `verify_order.js` extended to **53 checks** — new assertions cover the 4-card case section, guarantee strip, hero stat, section numbering, ProfessionalService + FAQPage schemas, both case-study pages' content and cross-links, and the bento case-study chips (two href-in-textContent method bugs fixed with selector-based checks) — **53/53 PASS**; programmatic horizontal-overflow check at 360/390/768px across home/case-studies/projects: zero overflow; VLM visual review of both case studies (desktop + mobile) and homepage sections: PASS after re-verifying two false alarms at native scale.
+
 ### Cycle 6: Resume Claims Trim & Summary Rewrite (2026-10-28)
 
 **Owner-requested removals (resume page + PDF):**

@@ -375,6 +375,16 @@
   border-color: var(--card-accent, var(--accent));
   color: var(--card-accent, var(--accent));
 }
+.card-links a.case-study {
+  background: linear-gradient(135deg, rgba(0,212,255,.14), rgba(168,85,247,.10));
+  border: 1px solid var(--card-accent, var(--accent));
+  color: var(--text);
+  font-weight: 600;
+}
+.card-links a.case-study:hover {
+  background: linear-gradient(135deg, rgba(0,212,255,.24), rgba(168,85,247,.18));
+  color: var(--card-accent, var(--accent));
+}
 .card-links a.discuss {
   background: transparent;
   border: 1px dashed var(--card-accent, var(--accent));
@@ -839,9 +849,9 @@
     <h2 style="font-size:1.1rem;margin:0 0 0.25rem">All systems</h2>
     <p style="color:var(--text-muted);font-size:0.875rem;margin:0 0 1rem">The interactive grid needs JavaScript — these links work without it.</p>
     <ul style="list-style:none;padding:0;margin:0;display:grid;gap:0.6rem;color:var(--text-muted);font-size:0.925rem">
-      <li>🏢 <strong>Keja AI</strong> — real-estate intelligence &amp; trust infrastructure (public trial · Africa AI Future Awards nominee) · <a href="https://keja.app" style="color:var(--accent)">keja.app</a></li>
+      <li>🏢 <strong>Keja AI</strong> — real-estate intelligence &amp; trust infrastructure (public trial · Africa AI Future Awards nominee) · <a href="/projects/keja-ai/" style="color:var(--accent)">Case study</a> · <a href="https://keja.app" style="color:var(--accent)">keja.app</a></li>
       <li>🔦 <strong>FirstLight</strong> — Geo-AI disaster-response decision layer (public demo) · <a href="https://gadda00.github.io/firstlight/" style="color:var(--accent)">Live demo</a> · <a href="https://github.com/gadda00/firstlight" style="color:var(--accent)">GitHub</a></li>
-      <li>🤝 <strong>Tapi Learn (ACLA)</strong> — client engagement · 11K+ learners, 38 countries · <a href="https://acla.io/tapi-learn" style="color:var(--accent)">acla.io/tapi-learn</a></li>
+      <li>🤝 <strong>Tapi Learn (ACLA)</strong> — client engagement · 11K+ learners, 38 countries · <a href="/projects/tapi-learn/" style="color:var(--accent)">Case study</a> · <a href="https://acla.io/tapi-learn" style="color:var(--accent)">acla.io/tapi-learn</a></li>
       <li>🔄 <strong>AgentReplay</strong> — deterministic replay for AI agents · <a href="https://github.com/gadda00/agentreplay" style="color:var(--accent)">GitHub</a></li>
       <li>⚡ <strong>Verxlite</strong> — sales &amp; ops AI workflow agent · <a href="https://github.com/gadda00/verxlite" style="color:var(--accent)">GitHub</a></li>
       <li>🛡️ <strong>Fraud Detection System</strong> — 84% recall · ~33µs/score · <a href="https://github.com/gadda00/fraud-detection-system" style="color:var(--accent)">GitHub</a></li>
@@ -1045,7 +1055,12 @@
       }).join('') + '</div>';
     }
 
-    var linksHTML = (p.links || []).map(function(l) {
+    var linksHTML = '';
+    if (p.caseStudy) {
+      // Internal long-form case study — first-class link, opens in same tab
+      linksHTML += '<a href="' + esc(p.caseStudy) + '" class="case-study">Read the full case study →</a>';
+    }
+    linksHTML += (p.links || []).map(function(l) {
       return '<a href="' + safeUrl(l.url) + '" target="_blank" rel="noopener noreferrer" class="' + esc(l.type) + '">' + esc(l.label) + '</a>';
     }).join('');
 
