@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Agents in Production: Notes from the 2026 Hype Cycle — Victor Ndunda</title>
+<meta name="description" content="A builder’s field report on production AI agents in 2026: the demo-to-production gap (OSWorld 12% to 66%, still failing one in three), the stack beneath the chat (evals, guardrails, human-in-the-loop as practiced on Keja AI and Tapi Learn), why context is the product, non-developer agent adoption, and the playbook that survived the year." />
+<link rel="canonical" href="https://victorndunda.com/blog/articles/agents-in-production-2026.html" />
+<meta name="author" content="Victor Ndunda" />
+<meta name="keywords" content="AI agents, production AI, reliability, evals, AgentReplay, Keja AI" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Agents in Production: Notes from the 2026 Hype Cycle" />
+<meta property="og:description" content="A builder’s field report on production AI agents in 2026: the demo-to-production gap (OSWorld 12% to 66%, still failing one in three), the stack beneath the chat (evals, guardrails, human-in-the-loop as practiced on Keja AI and Tapi Learn), why context is the product, non-developer agent adoption, and the playbook that survived the year." />
+<meta property="og:url" content="https://victorndunda.com/blog/articles/agents-in-production-2026.html" />
+<meta property="og:image" content="https://victorndunda.com/og-agents-in-production-2026.png" />
+<meta property="og:site_name" content="Victor Ndunda" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="Agents in Production: Notes from the 2026 Hype Cycle" />
+<meta property="article:published_time" content="2026-10-30" />
+<meta property="article:modified_time" content="2026-10-30" />
+<meta property="article:author" content="Victor Ndunda" />
+<meta property="article:section" content="Engineering" />
+<meta property="article:tag" content="AI agents" />
+<meta property="article:tag" content="production AI" />
+<meta property="article:tag" content="reliability" />
+<meta property="article:tag" content="evals" />
+<meta property="article:tag" content="AgentReplay" />
+<meta property="article:tag" content="Keja AI" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Agents in Production: Notes from the 2026 Hype Cycle" />
+<meta name="twitter:description" content="A builder’s field report on production AI agents in 2026: the demo-to-production gap (OSWorld 12% to 66%, still failing one in three), the stack beneath the chat (evals, guardrails, human-in-the-loop as practiced on Keja AI and Tapi Learn), why context is the product, non-developer agent adoption, and the playbook that survived the year." />
+<meta name="twitter:image" content="https://victorndunda.com/og-agents-in-production-2026.png" />
+<meta name="twitter:creator" content="@victor_ndunda" />
+
+<!-- Security Headers -->
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+
+<!-- Structured Data: Article -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Agents in Production: Notes from the 2026 Hype Cycle",
+  "description": "A builder’s field report on production AI agents in 2026: the demo-to-production gap (OSWorld 12% to 66%, still failing one in three), the stack beneath the chat (evals, guardrails, human-in-the-loop as practiced on Keja AI and Tapi Learn), why context is the product, non-developer agent adoption, and the playbook that survived the year.",
+  "image": "https://victorndunda.com/og-agents-in-production-2026.png",
+  "url": "https://victorndunda.com/blog/articles/agents-in-production-2026.html",
+  "datePublished": "2026-10-30",
+  "dateModified": "2026-10-30",
+  "author": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com",
+    "email": "mututandunda@gmail.com",
+    "jobTitle": "AI Systems Engineer",
+    "sameAs": [
+      "https://github.com/gadda00",
+      "https://www.linkedin.com/in/victor-ndunda",
+      "https://busara.ai",
+      "https://kilimo.pro"
+    ]
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "Victor Ndunda",
+    "url": "https://victorndunda.com"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://victorndunda.com/blog/articles/agents-in-production-2026.html"
+  },
+  "keywords": "AI agents, production AI, reliability, evals, AgentReplay, Keja AI",
+  "articleSection": "Engineering",
+  "wordCount": 1251,
+  "timeRequired": "PT6M"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://victorndunda.com/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Blog",
+      "item": "https://victorndunda.com/blog/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Agents in Production: Notes from the 2026 Hype Cycle",
+      "item": "https://victorndunda.com/blog/articles/agents-in-production-2026.html"
+    }
+  ]
+}
+</script>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="icon" href="/favicon-16.png" sizes="16x16" type="image/png" />
+<link rel="apple-touch-icon" href="/apple-touch-icon.png" sizes="180x180" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="Victor Ndunda" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="mobile-web-app-capable" content="yes" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<meta name="view-transition" content="same-origin" />
+<link rel="stylesheet" href="/styles.css?v=14.0.0" />
+<style>
+.article { max-width: 780px; margin: 0 auto; padding: 8rem 2rem 4rem; }
+.article-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; padding: 0.25rem 0.625rem; border-radius: 4px; margin-bottom: 1rem; }
+.article h1 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); line-height: 1.2; margin-bottom: 1rem; text-wrap: balance; }
+.article-meta { color: var(--text-muted); font-size: 0.875rem; margin-bottom: 3rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+.vn-pdf-chip { display: inline-flex; align-items: center; gap: .4rem; padding: .42rem .85rem; border-radius: 999px; border: 1px solid var(--border,rgba(148,163,184,.2)); background: var(--glass,rgba(148,163,184,.06)); color: var(--text-muted,#94a3b8); font: 500 .76rem/1 'JetBrains Mono',ui-monospace,monospace; text-decoration: none; transition: color .2s,border-color .2s; margin-left: .6rem; vertical-align: middle; white-space: nowrap; }
+.vn-pdf-chip:hover { color: var(--accent,#22d3ee); border-color: var(--accent,#22d3ee); }
+.article-body { font-size: 1.0625rem; line-height: 1.8; color: var(--text); }
+.article-body h2 { font-size: 1.5rem; margin-top: 2.5rem; margin-bottom: 1rem; color: var(--accent); text-wrap: balance; }
+.article-body h3 { font-size: 1.125rem; margin-top: 2rem; margin-bottom: 0.75rem; }
+.article-body p { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body strong { color: var(--text); }
+.article-body code { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--glass); border: 1px solid var(--border); color: var(--accent); }
+.article-body ul, .article-body ol { margin-bottom: 1.5rem; color: var(--text-muted); }
+.article-body li { margin-bottom: 0.5rem; }
+.article-back { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border); }
+.reading-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent, #00d4ff), var(--accent-2, #a855f7), var(--accent-3, #10b981));
+  z-index: 9998;
+  transition: width 0.1s ease-out;
+  pointer-events: none;
+}
+</style>
+<script>try{var l=localStorage.getItem("vn_lang");if(l)document.documentElement.lang=l;}catch(e){}</script>
+<script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to content</a>
+<div class="noise-overlay" aria-hidden="true"></div>
+<nav id="nav" aria-label="Main navigation">
+  <div class="nav-inner">
+    <a href="/" class="logo" aria-label="Victor Ndunda home">
+      <svg width="32" height="32" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent-2)"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
+        <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
+        <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
+      </svg>
+      <span>Victor Ndunda</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/projects/" class="nav-link">Case Studies</a>
+      <a href="/blog/" class="nav-link active" aria-current="page">Insights</a>
+      <a href="/#about" class="nav-link">About</a>
+      <a href="/resume/" class="nav-link">Resume</a>
+      <a href="/book/" class="nav-link" style="background:linear-gradient(135deg,var(--accent),var(--accent-2));color:white;padding:0.5rem 1rem;border-radius:10px;font-weight:700">Book an Assessment</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme"><svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg><svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Open menu" aria-expanded="false"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+<article class="article">
+  <span class="article-tag" style="background:rgba(245,158,11,0.1);color:#f59e0b">Engineering</span>
+  <h1>Agents in Production: Notes from the 2026 Hype Cycle</h1>
+  <div class="article-meta">By Victor Ndunda · October 30, 2026 · 6 min read <a class="vn-pdf-chip" href="/blog/articles/agents-in-production-2026.pdf" download>Download shareable PDF</a></div>
+  <div class="article-body">
+
+<div style="margin:0 0 2.25rem;padding:1.1rem 1.35rem;border:1px solid var(--border);border-radius:12px;background:var(--glass,rgba(148,163,184,.05));font-size:.9rem;color:var(--text-muted);line-height:1.7"><div style="font-size:.66rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:.45rem">The October 2026 AI Briefing · Essay 02 of 3</div>Three field notes on where AI actually stands: <a href="/blog/articles/state-of-ai-october-2026.html" style="color:var(--accent)">The State of AI, October 2026</a> · <strong style="color:var(--text)">Agents in Production</strong> · <a href="/blog/articles/africa-ai-view-from-nairobi.html" style="color:var(--accent)">The View from Nairobi</a></div>
+    <p>This is the year “AI agent” stopped being a demo genre and became a job description. OpenAI’s own adoption study found the fastest growth in agent usage not among developers, but among people in legal, sales, recruiting, and marketing. When your procurement team has agents, the technology is no longer early.</p>
+    <p>I spent the same year shipping agent systems for paying clients: Keja AI, the real-estate intelligence platform built for CHACADOM INVESTMENTS, now in public trial; Tapi Learn, the multilingual learning platform behind ACLA’s reach to 11,000+ learners in 38 countries; and AgentReplay, my open-source deterministic-replay layer for debugging agents. The view from production is very different from the view from the launch events. Here is what the 2026 hype cycle looks like when it meets real users.</p>
+    <h2>The demo is the easy ten percent</h2>
+    <p>The topline agent number of 2026 sounds like a victory lap: on OSWorld, the benchmark for real tasks across operating systems, agent task success jumped from 12% to roughly 66% in a single year, per Stanford’s 2026 AI Index. The same dataset carries the caveat that decides your architecture: agents still fail about one structured task in three. A demo survives that. A production system does not.</p>
+    <p>The reason is the asymmetry of consequences. In production, a task done confidently wrong is worse than a task not done at all. On Keja AI, an assistant that mis-states a title-verification status is not a “hallucination” — it is a wrong statement about the largest purchase of someone’s life, wrapped in our interface’s credibility. Every design decision downstream follows from taking that seriously.</p>
+    <p>So the operating principle I landed on is simple: autonomy is earned per task, per workflow — never granted wholesale. Each function starts sandboxed and supervised; it earns independence by accumulating a measured record on real cases. That is slower to ship and almost impossible to market on a slide. It is also the only pattern I have seen survive contact with month three.</p>
+    <h2>The stack beneath the chat</h2>
+    <p>What actually ships in an agent product is mostly not the chat. It is the unglamorous ninety percent: evaluation harnesses, guardrails, human-in-the-loop review queues, audit trails, and the plumbing to replay incidents. On Keja AI, every listing that enters the 7-stage lifecycle passes document and title verification steps that feed the KEJA Trust Score — 70 listings are already certified at Trust Score ≥ 80 in public trial, across 12 Kenyan counties, with the assistant answering in English, Swahili, and French. The assistant is the visible tip; the trust pipeline is the product.</p>
+    <p>Tapi Learn taught the same lesson on a different axis. Its 24/7 AI Career Coach supports learners across 38 countries — 11,000+ of them, rating the platform 4.8/5 (client-reported) — which it can only do because the model is fenced into a coaching scope, with escalation paths for what it must not handle. The coach is bounded, and because it is bounded, it is dependable.</p>
+    <p>Even my open-source work is really about the ninety percent. AgentReplay records and deterministically replays agent runs with 0.67% overhead and 100% reproduction fidelity, so that when an agent does something bizarre at 2 a.m., you replay it bit-for-bit instead of shrugging. Reliability infrastructure is a product category now — and 2026 is the year that became obvious.</p>
+    <div style="display:flex;gap:1rem;flex-wrap:wrap;margin:2.25rem 0"><div style="flex:1;min-width:160px;border:1px solid var(--border);border-radius:12px;background:var(--bg-elev,var(--bg-card));padding:1.1rem 1.3rem"><div style="font-size:1.7rem;font-weight:800;letter-spacing:-.01em;color:var(--accent)">12 → 66%</div><div style="margin-top:.3rem;font-size:.85rem;color:var(--text-muted)">OSWorld agent task success, one year</div></div><div style="flex:1;min-width:160px;border:1px solid var(--border);border-radius:12px;background:var(--bg-elev,var(--bg-card));padding:1.1rem 1.3rem"><div style="font-size:1.7rem;font-weight:800;letter-spacing:-.01em;color:var(--accent)">1 in 3</div><div style="margin-top:.3rem;font-size:.85rem;color:var(--text-muted)">structured tasks still fails</div></div><div style="flex:1;min-width:160px;border:1px solid var(--border);border-radius:12px;background:var(--bg-elev,var(--bg-card));padding:1.1rem 1.3rem"><div style="font-size:1.7rem;font-weight:800;letter-spacing:-.01em;color:var(--accent)">0.67%</div><div style="margin-top:.3rem;font-size:.85rem;color:var(--text-muted)">AgentReplay replay overhead, full fidelity</div></div></div>
+    <blockquote style="margin:2.5rem 0;padding:1.3rem 1.55rem;border-left:3px solid var(--accent);background:var(--glass,rgba(148,163,184,.06));border-radius:0 12px 12px 0;font-size:1.12rem;line-height:1.65;color:var(--text);">The chat is ten percent of the system. The boring ninety percent decides whether it survives month three.</blockquote>
+    <h2>Context is the product</h2>
+    <p>The most under-reported result of the year comes from the State of AI Report: in a controlled coding study, changing only the tools, context, and feedback available to a model lifted its SWE-bench Verified success from 52.5% to 65.5%. No new weights, no fine-tune — thirteen points of real performance from scaffolding alone. Model selection is a lever; the environment you build around the model is a bigger one.</p>
+    <p>In practice this is what “context engineering” means, and it is where I spend most of my working hours now. On Keja AI, the assistant is only as good as the listing data, verification outputs, and county market context it is grounded in; retrieval is not a garnish, it is the load-bearing wall. The industry is converging on the same insight from the research side: benchmarks saturate in months, but a well-instrumented context pipeline compounds.</p>
+    <p>The practical consequence for any team: invest in context infrastructure before you invest in another model subscription. A cheaper model with the right data, tools, and feedback loop beats a frontier model guessing in the dark — and the gap is only widening as tooling standards mature.</p>
+    <h2>Agents quietly went mainstream outside engineering</h2>
+    <p>The adoption story of 2026 is not developers vibing with coding agents; it is paralegals, recruiters, and sales teams delegating real work. OpenAI’s study found the fastest agent-adoption growth among non-developers. That changes what “good” means in product terms: your users will not read stack traces, so the error surface, the review queue, and the undo button are the experience.</p>
+    <p>It also changes evaluation. When the user is a hiring manager or a sales lead, “the output looks good” is not a metric — the outcome is. Did the candidate get scheduled? Did the invoice get filed? Task-outcome evals, measured against golden cases from real workflows, are the only acceptance criteria that transfer to this population. Chat-quality benchmarks are nearly irrelevant to them.</p>
+    <p>There is a second-order effect worth naming: once non-technical teams run agents, the constraint moves to setup — and the State of AI Report locates the whole value gap there (“a human skill issue, not an AI technology issue”). The report’s half-joking call for a “Genius Bar for AI” is, more seriously, the biggest consulting opportunity of the decade.</p>
+    <h2>The economics flipped underneath us</h2>
+    <p>Two opposite things are true at once, and both showed up on my invoices this year. Per-token inference prices keep collapsing while total AI bills keep exploding — because agents make many more calls, carry much more context, and never sleep. Unit costs fall; system costs rise. The teams that win instrument cost per task from day one.</p>
+    <p>The response is routing discipline: cheap, fast models for routine steps; frontier escalation reserved for genuinely hard hops; hard budgets per workflow. That discipline is now also a defensive requirement, because the release cadence itself is accelerating — Anthropic reported that Claude led 26% of its measured model R&D work by August 2026, up from under 1% in February. When AI is materially building AI, your harness — evals, replay, golden cases — is the only stable ground under the product.</p>
+    <h2>The playbook that survived 2026</h2>
+    <ol style="margin-bottom:1.5rem;color:var(--text-muted);padding-left:1.4rem"><li style="margin-bottom:.7rem">Define the task and the cost of failure before you pick a model. Most “AI strategy” is really this sentence, unfinished.</li><li style="margin-bottom:.7rem">Build the eval set before the agent — golden cases pulled from real data, not imagined ones.</li><li style="margin-bottom:.7rem">Ship human-in-the-loop first; earn autonomy per workflow as the measured record accumulates.</li><li style="margin-bottom:.7rem">Instrument everything from day one: traces, replays, cost per task. AgentReplay exists because I needed this and nothing did it.</li><li style="margin-bottom:.7rem">Separate interface from policy — you should be able to swap models without rewriting the product.</li><li style="margin-bottom:.7rem">Review unit economics weekly. In a market where prices collapse and bills explode, the drift is silent until it isn’t.</li></ol>
+    <p>The hype cycle of 2026 will be remembered for benchmark fireworks and bubble debates. From the deployment side, it will be remembered as the year reliability engineering and context infrastructure became the actual product — the year the boring ninety percent got its revenge.</p>
+    <div style="margin-top:2.75rem;padding-top:1.6rem;border-top:1px solid var(--border)"><div style="font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:.85rem">Sources &amp; further reading</div><ul style="list-style:none;padding:0;margin:0"><li style="font-size:.85rem;margin-bottom:.5rem;color:var(--text-muted)">1. <a href="https://www.stateof.ai" style="color:var(--accent)" target="_blank" rel="noopener noreferrer">Nathan Benaich — State of AI Report 2026</a> <span style="color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:.72rem">www.stateof.ai</span></li><li style="font-size:.85rem;margin-bottom:.5rem;color:var(--text-muted)">2. <a href="https://hai.stanford.edu/ai-index/2026-ai-index-report" style="color:var(--accent)" target="_blank" rel="noopener noreferrer">Stanford HAI — 2026 AI Index Report</a> <span style="color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:.72rem">hai.stanford.edu/ai-index/2026-ai-index-report</span></li><li style="font-size:.85rem;margin-bottom:.5rem;color:var(--text-muted)">3. <a href="https://victorndunda.com/projects/keja-ai/" style="color:var(--accent)" target="_blank" rel="noopener noreferrer">Keja AI — case study (CHACADOM INVESTMENTS)</a> <span style="color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:.72rem">victorndunda.com/projects/keja-ai/</span></li><li style="font-size:.85rem;margin-bottom:.5rem;color:var(--text-muted)">4. <a href="https://victorndunda.com/projects/tapi-learn/" style="color:var(--accent)" target="_blank" rel="noopener noreferrer">Tapi Learn — case study (ACLA)</a> <span style="color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:.72rem">victorndunda.com/projects/tapi-learn/</span></li><li style="font-size:.85rem;margin-bottom:.5rem;color:var(--text-muted)">5. <a href="https://github.com/gadda00/agentreplay" style="color:var(--accent)" target="_blank" rel="noopener noreferrer">AgentReplay — open source</a> <span style="color:var(--text-dim);font-family:'JetBrains Mono',monospace;font-size:.72rem">github.com/gadda00/agentreplay</span></li></ul></div>
+    <div style="margin:3rem 0 0;padding:1.75rem;border:1px solid var(--border);border-radius:14px;background:var(--bg-elev,var(--bg-card));text-align:center">  <p style="color:var(--text);font-weight:600;margin:0 0 .5rem;font-size:1.02rem">Shipping an agent system in 2026?</p>
+  <p style="color:var(--text-muted);margin:0 0 1.25rem;font-size:.95rem">Evals, guardrails, replay, routing — the ninety percent beneath the chat is the part I build. Bring the workflow; leave with a system that survives month three.</p>
+  <div style="display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap">    <a href="/services/#paths" class="btn btn-primary btn-sm" style="text-decoration:none">Production AI Sprint →</a>
+    <a href="/book/" class="btn btn-ghost btn-sm" style="text-decoration:none">Book a free 30-minute assessment</a>
+  </div>
+</div>
+
+  <div class="article-back"><a href="/blog/" class="btn btn-ghost btn-sm">← Back to Blog</a></div>
+  </div>
+</article>
+<footer><div class="container"><div class="footer-bottom"><p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p><p><a href="/" style="color:var(--accent);">← Home</a></p></div></div></footer>
+<script>
+const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');});document.getElementById('mobileToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
+</script>
+</main>
+
+<!-- Reading progress bar -->
+<div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+<script>
+(function() {
+  'use strict';
+  var bar = document.getElementById('readingProgress');
+  if (!bar) return;
+  var ticking = false;
+  function update() {
+    var scrollTop = window.scrollY || document.documentElement.scrollTop;
+    var scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+    bar.style.width = pct + '%';
+    ticking = false;
+  }
+  window.addEventListener('scroll', function() {
+    if (!ticking) { requestAnimationFrame(update); ticking = true; }
+  }, { passive: true });
+  update();
+})();
+</script>
+<script src="/palette.js?v=12.0.0" defer></script>
+<script src="/article-enhance.js?v=12.0.0" defer></script>
+</body>
+</html>

@@ -1,6 +1,69 @@
 {
   "posts": [
     {
+      "tag": "AI",
+      "tagClass": "ai",
+      "title": "The State of AI, October 2026: Capability Stopped Being the Bottleneck",
+      "excerpt": "The frontier is a three-lab race decided by 2.7%, benchmarks built for years are saturating in months, and the bottleneck has moved from “can AI do it?” to “can we trust, power and govern it?”",
+      "description": "A field report on the state of AI as October 2026 ends: the three-lab frontier race, the jagged capability frontier (IMO gold vs 50.1% clock-reading), 88% organizational adoption vs rare profit, the ~$700B compute buildout and its physical limits, and the EU/US regulatory dates that finally landed.",
+      "date": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "readTime": "8 min",
+      "wordCount": 1636,
+      "slug": "state-of-ai-october-2026",
+      "url": "/blog/articles/state-of-ai-october-2026.html",
+      "tags": [
+        "state of AI",
+        "AI Index 2026",
+        "frontier models",
+        "AI agents",
+        "AI regulation",
+        "EU AI Act"
+      ]
+    },
+    {
+      "tag": "Engineering",
+      "tagClass": "engineering",
+      "title": "Agents in Production: Notes from the 2026 Hype Cycle",
+      "excerpt": "OSWorld says agents complete two-thirds of computer tasks now — and still fail one in three. What a year of shipping Keja AI, Tapi Learn and AgentReplay taught me about reliability, context and the economics of the agent era.",
+      "description": "A builder’s field report on production AI agents in 2026: the demo-to-production gap (OSWorld 12% to 66%, still failing one in three), the stack beneath the chat (evals, guardrails, human-in-the-loop as practiced on Keja AI and Tapi Learn), why context is the product, non-developer agent adoption, and the playbook that survived the year.",
+      "date": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "readTime": "6 min",
+      "wordCount": 1251,
+      "slug": "agents-in-production-2026",
+      "url": "/blog/articles/agents-in-production-2026.html",
+      "tags": [
+        "AI agents",
+        "production AI",
+        "reliability",
+        "evals",
+        "AgentReplay",
+        "Keja AI"
+      ]
+    },
+    {
+      "tag": "Research",
+      "tagClass": "research",
+      "title": "The View from Nairobi: Africa Is Not Waiting for AI",
+      "excerpt": "Talent pipelines with 63,000+ applications, a national AI strategy with real dates, and products shipping in Swahili and French — the AI story the global discourse keeps missing, from where I sit.",
+      "description": "The African AI story the global discourse keeps missing: Kenya’s National AI Strategy 2025–2030, the Talent Nation push to train a million African AI engineers, language as a competitive moat (Keja AI in EN·SW·FR), the honest infrastructure constraints, and leapfrog logic from M-Pesa to the agent era.",
+      "date": "2026-10-30",
+      "dateModified": "2026-10-30",
+      "readTime": "6 min",
+      "wordCount": 1268,
+      "slug": "africa-ai-view-from-nairobi",
+      "url": "/blog/articles/africa-ai-view-from-nairobi.html",
+      "tags": [
+        "Kenya",
+        "Africa",
+        "AI talent",
+        "multilingual AI",
+        "AI policy",
+        "Nairobi"
+      ]
+    },
+    {
       "tag": "Research",
       "tagClass": "research",
       "title": "AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agent Reliability",

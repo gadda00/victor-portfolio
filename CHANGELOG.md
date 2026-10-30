@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 9: The October 2026 AI Briefing — 3 Researched Essays + Shareable Branded PDFs (2026-10-30)
+
+**Three new long-form essays, written as a branded series ("The October 2026 AI Briefing"), grounded in dated primary sources:**
+- **`/blog/articles/state-of-ai-october-2026`** — "The State of AI, October 2026: Capability Stopped Being the Bottleneck." The three-lab frontier race (2.7% top-model margin), the jagged capability frontier (IMO gold vs 50.1% analog-clock reading; OSWorld agents 12%→66%, still failing 1-in-3), 88% org adoption vs rare profit, the ~$700B/5-company compute buildout with its physical limits, and the EU/US regulatory calendar (AI Act enforcement powers from 2 Aug 2026; Annex III high-risk moved to 2 Dec 2027 by the Digital Omnibus).
+- **`/blog/articles/agents-in-production-2026`** — "Agents in Production: Notes from the 2026 Hype Cycle." A builder field report: the demo-to-production gap, the stack beneath the chat as practiced on Keja AI (Trust Score pipeline, 70 listings ≥80 in public trial) and Tapi Learn (24/7 Career Coach, 11,000+ learners, 38 countries, 4.8/5 client-reported), context engineering (52.5%→65.5% with tools/context alone), non-developer agent adoption, and the year's surviving playbook.
+- **`/blog/articles/africa-ai-view-from-nairobi`** — "The View from Nairobi: Africa Is Not Waiting for AI." Kenya's National AI Strategy 2025–2030, the Talent Nation million-engineer story (63,000+ applications), language as moat (EN·SW·FR products with local trust infrastructure), the honest infrastructure constraints, and M-Pesa-style leapfrog logic into the agent era.
+- All external facts are sourced and dated — Stanford HAI 2026 AI Index, the State of AI Report 2026 (8 Oct 2026), The Verge late-October reporting, the EU AI Act application timeline, Reuters/Bloomberg bubble reporting, Tech In Africa — each page closes with a sources block; client metrics keep their public-trial/client-reported qualifiers everywhere.
+
+**Social-share PDFs (the requested X/LinkedIn share format):**
+- **`blog/articles/<slug>.pdf`** ×3 — dark-editorial brand design (720×1020, vector text via Playwright + Paged.js): gradient-title cover, flowing chapters with stat bands and pull-quotes, and a back cover carrying the series index, sources + method note, author card and share CTA. ~438–528 KB each; every article page carries a "Download shareable PDF" chip; copies delivered in `download/` with HTML sources in `download/article-pdf-sources/`.
+
+**Per-essay OG cards + wiring:**
+- **`og-<slug>.png`** ×3 (2400×1260 @2x, site brand) — links shared to any essay unfurl an essay-specific card; `og:image`/`twitter:image`/Article JSON-LD `image` aligned 1:1 on all three pages.
+- `posts.json` 10 → **13 posts** (new essays first); blog `<noscript>` list extended; `sitemap.xml` +3 URLs (0.7); **`sw.js` vnd-v23.0.0** with `/blog/`, `posts.json` and all three articles pre-cached.
+- **Blog index 360px fix** (pre-existing, surfaced by the new overflow pass): `.blog-grid` columns use `minmax(min(350px, 100%), 1fr)` — cards no longer overflow the 360px viewport.
+
+**Launch pack archive:** `marketing/oct2026-ai-briefing/READY-TO-PASTE-POSTS.md` — per essay: X single + 4-post thread (all 15 X posts pre-validated ≤280 chars, links=23/newlines=2) + LinkedIn document-post caption + posting mechanics.
+
+**QA:** `validate_site.py` 8/8 (744 links, +57); `smoke_test.js` PASS, zero console errors; `verify_order.js` 53/53; horizontal overflow 360/390/768/1280px = zero on all three articles + blog index (after fix); PDF pipeline: `poster_validate` PASS ×3, `pdf_qa` no content/fill/metadata failures (line-wrap punctuation warnings only), programmatic content+pixel checks PASS (key strings, per-page word counts, no blank pages, cover lit-fraction, clipping sentinel), VLM review PASS on covers, body pages, source blocks and back covers.
+
 ### Cycle 8: Social-Launch Support — Approved Client Quotes On-Site, Per-Case OG Cards (2026-10-29)
 
 **Approved client testimonials on the money pages:**
