@@ -7,13 +7,55 @@
     <atom:link href="https://victorndunda.com/feed.xml" rel="self" type="application/rss+xml" />
     <description>AI Engineer building multi-agent intelligence systems and agricultural AI in Nairobi, Kenya.</description>
     <language>en-us</language>
-    <lastBuildDate>Thu, 29 Oct 2026 04:19:08 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 30 Oct 2026 05:35:46 +0000</lastBuildDate>
     <managingEditor>mututandunda@gmail.com (Victor Ndunda)</managingEditor>
     <image>
       <url>https://victorndunda.com/og-image.png</url>
       <title>Victor Ndunda — Blog</title>
       <link>https://victorndunda.com/blog/</link>
     </image>
+    <item>
+    <title>The State of AI, October 2026: Capability Stopped Being the Bottleneck</title>
+    <link>https://victorndunda.com/blog/articles/state-of-ai-october-2026.html</link>
+    <guid isPermaLink="true">https://victorndunda.com/blog/articles/state-of-ai-october-2026.html</guid>
+    <pubDate>Fri, 30 Oct 2026 00:00:00 +0000</pubDate>
+    <description>The frontier is a three-lab race decided by 2.7%, benchmarks built for years are saturating in months, and the bottleneck has moved from “can AI do it?” to “can we trust, power and govern it?”</description>
+    <content:encoded><![CDATA[<p>The frontier is a three-lab race decided by 2.7%, benchmarks built for years are saturating in months, and the bottleneck has moved from “can AI do it?” to “can we trust, power and govern it?”</p><p>Read time: 8 min · Word count: 1636</p><p><a href="https://victorndunda.com/blog/articles/state-of-ai-october-2026.html">Read full article →</a></p>]]></content:encoded>
+    <author>mututandunda@gmail.com (Victor Ndunda)</author>      <category>state of AI</category>
+      <category>AI Index 2026</category>
+      <category>frontier models</category>
+      <category>AI agents</category>
+      <category>AI regulation</category>
+      <category>EU AI Act</category>
+  </item>
+    <item>
+    <title>Agents in Production: Notes from the 2026 Hype Cycle</title>
+    <link>https://victorndunda.com/blog/articles/agents-in-production-2026.html</link>
+    <guid isPermaLink="true">https://victorndunda.com/blog/articles/agents-in-production-2026.html</guid>
+    <pubDate>Fri, 30 Oct 2026 00:00:00 +0000</pubDate>
+    <description>OSWorld says agents complete two-thirds of computer tasks now — and still fail one in three. What a year of shipping Keja AI, Tapi Learn and AgentReplay taught me about reliability, context and the economics of the agent era.</description>
+    <content:encoded><![CDATA[<p>OSWorld says agents complete two-thirds of computer tasks now — and still fail one in three. What a year of shipping Keja AI, Tapi Learn and AgentReplay taught me about reliability, context and the economics of the agent era.</p><p>Read time: 6 min · Word count: 1251</p><p><a href="https://victorndunda.com/blog/articles/agents-in-production-2026.html">Read full article →</a></p>]]></content:encoded>
+    <author>mututandunda@gmail.com (Victor Ndunda)</author>      <category>AI agents</category>
+      <category>production AI</category>
+      <category>reliability</category>
+      <category>evals</category>
+      <category>AgentReplay</category>
+      <category>Keja AI</category>
+  </item>
+    <item>
+    <title>The View from Nairobi: Africa Is Not Waiting for AI</title>
+    <link>https://victorndunda.com/blog/articles/africa-ai-view-from-nairobi.html</link>
+    <guid isPermaLink="true">https://victorndunda.com/blog/articles/africa-ai-view-from-nairobi.html</guid>
+    <pubDate>Fri, 30 Oct 2026 00:00:00 +0000</pubDate>
+    <description>Talent pipelines with 63,000+ applications, a national AI strategy with real dates, and products shipping in Swahili and French — the AI story the global discourse keeps missing, from where I sit.</description>
+    <content:encoded><![CDATA[<p>Talent pipelines with 63,000+ applications, a national AI strategy with real dates, and products shipping in Swahili and French — the AI story the global discourse keeps missing, from where I sit.</p><p>Read time: 6 min · Word count: 1268</p><p><a href="https://victorndunda.com/blog/articles/africa-ai-view-from-nairobi.html">Read full article →</a></p>]]></content:encoded>
+    <author>mututandunda@gmail.com (Victor Ndunda)</author>      <category>Kenya</category>
+      <category>Africa</category>
+      <category>AI talent</category>
+      <category>multilingual AI</category>
+      <category>AI policy</category>
+      <category>Nairobi</category>
+  </item>
     <item>
     <title>AgentReplay: Deterministic Replay and Counterfactual Debugging for AI Agent Reliability</title>
     <link>https://victorndunda.com/blog/articles/agentreplay-deterministic-replay.html</link>
