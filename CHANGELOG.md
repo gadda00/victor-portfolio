@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 10: UI v7 "SIGNAL" — Site-Wide Design System Upgrade (2026-10-31)
+
+**The problem:** the homepage carried a premium v6 layer while every subpage ran on the flat base stylesheet — users clicked from an atmospheric homepage into pages that felt like a different, older site. VLM design audit (before screenshots) scored the site 6.5/10: "well-executed template clone," flat cards "floating in a void," dated animated gradient text, low-contrast contact section, zero visual AI-engineer personality.
+
+**The fix — one unified design layer on every page (`v7.css` + `v7.js`, ~1,000 lines CSS / ~200 lines JS):**
+- **Atmosphere everywhere** — the aurora field (cyan/violet/emerald + a warm amber source), engineering grid and edge-faded mask now render on all 44 pages, not just the homepage.
+- **Homepage hero redesigned** — asymmetric two-column stage (copy left, signature piece right): a **live production console** (`victor --status --production`) with typing animation, CRT scanlines, LIVE pill and blinking caret, streaming only facts already on the page (keja.app 87+ listings · 12 counties; tapi 11K+ learners · 38 countries; EN·FR·SW; 13 systems). Calmer accent-phrase gradient (single 9s drift replaces the 4s rainbow loop).
+- **Unified elevated card system** — one recipe for all 14 card types (work/case/offer/blog/bento/contact/about/svc/pkg/resume/jobs/guide/newsletter/booking): two-tone surface, inner top highlight, layered shadow, cursor-tracked spotlight glow (delegated pointer listener — works on async-rendered bento + blog cards), lift + hairline on hover.
+- **Typography** — Space Grotesk display headers site-wide (font link upgraded on every page), tighter/larger H1 scale, JetBrains Mono for kickers/metadata/labels, gradient-ruled article H2s.
+- **Navigation** — deeper frost + saturate, gradient hairline (brighter after VLM pass), active-page squircle pill, glowing logo mark, frosted mobile panel.
+- **Buttons** — brighter primary with inner highlights + crisp two-layer shadow; ghost buttons gain an animated gradient border on hover and now read as buttons at rest on cards.
+- **Motion system** — staggered `v7-reveal` entrances (gated on `html.v7js` so no-JS/crawlers always see content), self-drawing section rules, cascade-in bento cards, all `prefers-reduced-motion`-safe with a never-stuck safety net.
+- **Legibility fixes from the VLM audit** — contact values/labels lifted from "looks disabled" grey to readable, metric labels enlarged, hero subhead brightened, booking-CTA contrast raised, "Most popular" badge re-anchored inside its card.
+- **Contact grid rebuilt** — deliberate 2+3 hierarchy (email + WhatsApp get roomy cards, socials form an equal compact row), email renders on one line at every viewport (was breaking mid-word on live).
+- **Pre-existing mobile overflow bugs fixed** — resume cert grid (inline `1fr 1fr` couldn't shrink below min-content, 498px > 390px on live) collapses to one column ≤640px; `html, body { overflow-x: clip }` (no scroll container — sticky TOCs unaffected) ends the liquid-bg bleed on `/book/`.
+- **Footer** — gradient top hairline, mono column headers, version stamp (`ui v7 "signal" · sw vnd-v24`).
+
+**Scope of wiring:** `v7.css` + `v7.js` injected into 46 HTML pages (all user-facing pages; redirect stubs excluded, admin/dashboard intentionally untouched), Space Grotesk added to every Google Fonts URL, **`sw.js` vnd-v23.0.0 → vnd-v24.0.0** with `/v7.css` + `/v7.js` pre-cached.
+
+**QA:** `validate_site.py` 8/8 (744 links); `smoke_test.js` PASS, zero console errors; `verify_order.js` 53/53 (metric-chip accent border, DAG stages, hex visual, ordering all intact); **overflow + JS-error sweep 80 combos (17 pages × 5 viewports 360–1440px) CLEAN**; mobile (390px) + light mode VLM-reviewed PASS; final VLM before/after verdict: **6.5 → 8.5/10, "bespoke product, not a template"** — defects found and fixed along the way: hero grid-area overlap (P0), email mid-word break (P0), orphan contact card, faint card strokes, weak nav hairline.
+
 ### Cycle 9: The October 2026 AI Briefing — 3 Researched Essays + Shareable Branded PDFs (2026-10-30)
 
 **Three new long-form essays, written as a branded series ("The October 2026 AI Briefing"), grounded in dated primary sources:**

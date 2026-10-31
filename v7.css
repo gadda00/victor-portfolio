@@ -1,0 +1,978 @@
+/* ═══════════════════════════════════════════════════════════════════
+   VICTOR NDUNDA — UI LAYER v7 "SIGNAL"
+   Site-wide unified design system. Loads LAST on every page:
+   after styles.css, page CSS and (on the homepage) home.css.
+
+   What this layer does:
+   00. Design tokens (dark + light) — adds warmth + elevation scale
+   01. Atmosphere — aurora + engineering grid + noise on EVERY page
+   02. Scroll progress polish
+   03. Navigation — deeper frost, gradient hairline, active pill
+   04. Typography — Space Grotesk display, tighter scale, mono metadata
+   05. Buttons — brighter primary, shimmer-border ghost
+   06. Unified elevated card surfaces + cursor spotlight
+   07. Homepage hero — asymmetric layout + live production console
+   08. Subpage heroes — one shared "page hero" pattern
+   09. Blog + article reading experience
+   10. Projects bento elevation + entrance motion
+   11. Resume, case studies, services
+   12. Footer, FAB, back-to-top, forms
+   13. Motion system — v7 reveals (progressive, reduced-motion safe)
+   14. Print + reduced-motion + legacy fallbacks
+
+   Rules honored:
+   - additive only: no content or class removal, .metric-chip keeps its
+     accent border, .dag-stage/.stage-name/.visual-hex untouched
+   - everything degrades gracefully without JS (html.v7js gate)
+   - prefers-reduced-motion respected throughout
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── 00. Tokens ─────────────────────────────────────────────────── */
+:root {
+  --v7-bg-0: #05070f;
+  --v7-bg-1: #0a0e1c;
+  --v7-surface-1: linear-gradient(180deg, rgba(148,163,216,.062), rgba(148,163,216,.024));
+  --v7-surface-hi: linear-gradient(180deg, rgba(148,163,216,.10), rgba(148,163,216,.04));
+  --v7-stroke: rgba(148,163,216,.14);
+  --v7-stroke-hi: rgba(148,163,216,.32);
+  --v7-text-hi: #f5f8ff;
+  --v7-text-mid: #adb9d6;
+  --v7-text-dim: #7d88a8;
+  --v7-cyan: #22d3ee;
+  --v7-violet: #818cf8;
+  --v7-emerald: #34d399;
+  --v7-amber: #fbbf24;
+  --v7-grad: linear-gradient(120deg, #22d3ee 0%, #818cf8 52%, #34d399 100%);
+  --v7-grad-line: linear-gradient(90deg, transparent, rgba(34,211,238,.55), rgba(129,140,248,.55), transparent);
+  --v7-radius: 20px;
+  --v7-radius-sm: 12px;
+  --v7-shadow-1: 0 1px 0 rgba(255,255,255,.04) inset, 0 10px 30px -14px rgba(2,6,20,.7);
+  --v7-shadow-2: 0 1px 0 rgba(255,255,255,.06) inset, 0 24px 60px -20px rgba(2,6,20,.85);
+  --v7-ease: cubic-bezier(.22,1,.36,1);
+  --v7-font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
+  --v7-font-body: 'Inter', -apple-system, sans-serif;
+  --v7-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+html.light {
+  --v7-bg-0: #f5f7fe;
+  --v7-bg-1: #edf0fb;
+  --v7-surface-1: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.66));
+  --v7-surface-hi: linear-gradient(180deg, #ffffff, rgba(255,255,255,.8));
+  --v7-stroke: rgba(30,41,82,.13);
+  --v7-stroke-hi: rgba(30,41,82,.28);
+  --v7-text-hi: #0c1230;
+  --v7-text-mid: #3f4968;
+  --v7-text-dim: #5d6684;
+  --v7-cyan: #0e7490;
+  --v7-violet: #4f46e5;
+  --v7-emerald: #047857;
+  --v7-amber: #b45309;
+  --v7-grad: linear-gradient(120deg, #0e7490 0%, #4f46e5 52%, #047857 100%);
+  --v7-grad-line: linear-gradient(90deg, transparent, rgba(14,116,144,.5), rgba(79,70,229,.5), transparent);
+  --v7-shadow-1: 0 1px 0 rgba(255,255,255,.8) inset, 0 10px 30px -14px rgba(30,41,82,.25);
+  --v7-shadow-2: 0 1px 0 rgba(255,255,255,.9) inset, 0 24px 60px -20px rgba(30,41,82,.32);
+}
+
+/* ─── 01. Atmosphere — every page gets the aurora field ──────────── */
+body {
+  background: var(--v7-bg-0);
+  color: var(--v7-text-mid);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+/* Aurora: three breathing light sources + vignette (fixed = no repaint on scroll) */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background:
+    radial-gradient(58rem 36rem at 10% -6%, rgba(34,211,238,.14), transparent 62%),
+    radial-gradient(52rem 34rem at 92% 2%, rgba(129,140,248,.15), transparent 62%),
+    radial-gradient(46rem 32rem at 55% 108%, rgba(52,211,153,.11), transparent 62%),
+    radial-gradient(30rem 22rem at 78% 88%, rgba(251,191,36,.05), transparent 60%),
+    var(--v7-bg-0);
+}
+html.light body::before {
+  background:
+    radial-gradient(58rem 36rem at 10% -6%, rgba(14,116,144,.10), transparent 62%),
+    radial-gradient(52rem 34rem at 92% 2%, rgba(79,70,229,.11), transparent 62%),
+    radial-gradient(46rem 32rem at 55% 108%, rgba(4,120,87,.08), transparent 62%),
+    radial-gradient(30rem 22rem at 78% 88%, rgba(180,83,9,.05), transparent 60%),
+    var(--v7-bg-0);
+}
+/* Engineering grid, faded at the edges — "systems" texture */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image:
+    linear-gradient(var(--v7-stroke) 1px, transparent 1px),
+    linear-gradient(90deg, var(--v7-stroke) 1px, transparent 1px);
+  background-size: 76px 76px;
+  opacity: .16;
+  -webkit-mask-image: radial-gradient(ellipse 95% 62% at 50% 0%, black 25%, transparent 78%);
+  mask-image: radial-gradient(ellipse 95% 62% at 50% 0%, black 25%, transparent 78%);
+  pointer-events: none;
+}
+/* Selection + scrollbar */
+::selection { background: rgba(34,211,238,.32); color: #fff; }
+html.light ::selection { background: rgba(14,116,144,.22); color: #0c1230; }
+/* True horizontal-overflow guard: `clip` (unlike `hidden`) creates no
+   scroll container, so position:sticky TOCs keep working. Fixes the
+   pre-existing liquid-bg + cert-card mobile overflow for good.      */
+html, body { overflow-x: clip; }
+@supports not (overflow: clip) { html, body { overflow-x: hidden; } }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--v7-bg-0); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--v7-cyan), var(--v7-violet));
+  border-radius: 6px;
+  border: 2px solid var(--v7-bg-0);
+}
+
+/* ─── 02. Scroll progress — from utility line to brand signal ────── */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, var(--v7-cyan), var(--v7-violet), var(--v7-emerald));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  z-index: 1002;
+  box-shadow: 0 0 12px rgba(34,211,238,.5);
+}
+html.light .scroll-progress { box-shadow: 0 0 10px rgba(14,116,144,.3); }
+
+/* ─── 03. Navigation ─────────────────────────────────────────────── */
+nav {
+  background: rgba(6,9,18,.62);
+  backdrop-filter: blur(20px) saturate(170%);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+  border-bottom: 1px solid transparent;
+}
+html.light nav { background: rgba(247,249,254,.68); }
+/* gradient hairline replaces the flat border */
+nav::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -1px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 4%, rgba(34,211,238,.5) 30%, rgba(129,140,248,.55) 55%, rgba(52,211,153,.45) 75%, transparent 96%);
+  pointer-events: none;
+}
+html.light nav::after {
+  background: linear-gradient(90deg, transparent 4%, rgba(14,116,144,.42) 30%, rgba(79,70,229,.42) 55%, rgba(4,120,87,.36) 75%, transparent 96%);
+}
+nav.scrolled {
+  background: rgba(6,9,18,.82);
+  box-shadow: 0 12px 40px -18px rgba(2,6,20,.8);
+}
+html.light nav.scrolled { background: rgba(247,249,254,.9); }
+/* logo mark gets a soft brand glow */
+nav .logo svg { filter: drop-shadow(0 0 10px rgba(34,211,238,.35)); transition: filter .5s var(--v7-ease); }
+nav .logo:hover svg { filter: drop-shadow(0 0 18px rgba(129,140,248,.55)); }
+.nav-link { font-size: .875rem; font-weight: 550; color: var(--v7-text-mid); border-radius: 10px; }
+.nav-link:hover { color: var(--v7-text-hi); }
+.nav-link.active { color: var(--v7-text-hi); }
+.nav-link.active::after { display: none; }
+/* active page = filled squircle pill with gradient hairline */
+.nav-link.active {
+  background: linear-gradient(180deg, rgba(34,211,238,.13), rgba(129,140,248,.08));
+  box-shadow: 0 0 0 1px rgba(34,211,238,.28) inset;
+}
+html.light .nav-link.active {
+  background: linear-gradient(180deg, rgba(14,116,144,.10), rgba(79,70,229,.06));
+  box-shadow: 0 0 0 1px rgba(14,116,144,.22) inset;
+}
+/* nav booking CTA — brighter, better shadow */
+.nav-links .nav-link[style*="linear-gradient"] {
+  border-radius: 12px !important;
+  box-shadow: 0 6px 20px -8px rgba(34,211,238,.55), 0 1px 0 rgba(255,255,255,.18) inset;
+  transition: transform .25s var(--v7-ease), box-shadow .25s var(--v7-ease), filter .25s var(--v7-ease);
+}
+.nav-links .nav-link[style*="linear-gradient"]:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+  box-shadow: 0 10px 28px -8px rgba(34,211,238,.65), 0 1px 0 rgba(255,255,255,.22) inset;
+}
+.cmd-trigger, .theme-toggle { border-radius: 12px; }
+/* mobile menu — frosted panel */
+@media (max-width: 900px) {
+  .nav-links {
+    background: rgba(6,9,18,.92);
+    backdrop-filter: blur(24px) saturate(170%);
+    -webkit-backdrop-filter: blur(24px) saturate(170%);
+    border: 1px solid var(--v7-stroke);
+    border-radius: 18px;
+    box-shadow: var(--v7-shadow-2);
+  }
+  html.light .nav-links { background: rgba(247,249,254,.96); }
+}
+
+/* ─── 04. Typography ─────────────────────────────────────────────── */
+h1, h2, h3, h4 {
+  font-family: var(--v7-font-display);
+  color: var(--v7-text-hi);
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+main h1 { font-weight: 600; line-height: 1.06; }
+.grad-text {
+  background: linear-gradient(115deg, var(--v7-cyan) 0%, var(--v7-violet) 55%, var(--v7-emerald) 105%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 2px 22px rgba(34,211,238,.18));
+}
+/* section eyebrows — squircle, mono, numbered (home) or plain (subpages) */
+.section-head .label,
+.eyebrow {
+  font-family: var(--v7-font-mono);
+  border-radius: 11px;
+  background: rgba(34,211,238,.07);
+  border: 1px solid rgba(34,211,238,.2);
+  box-shadow: 0 0 24px -10px rgba(34,211,238,.35);
+}
+html.light .section-head .label,
+html.light .eyebrow {
+  background: rgba(14,116,144,.07);
+  border-color: rgba(14,116,144,.22);
+  box-shadow: none;
+}
+/* body copy contrast floor */
+.section-sub, .about-text, .case-body { color: var(--v7-text-mid); }
+
+/* ─── 05. Buttons ────────────────────────────────────────────────── */
+.btn { border-radius: 13px; font-weight: 650; letter-spacing: .01em; }
+.btn-primary {
+  background: linear-gradient(135deg, #26d9f5 0%, #7c8cf8 100%);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.25) inset,
+    0 -1px 0 rgba(10,20,50,.25) inset,
+    0 8px 24px -10px rgba(34,211,238,.55);
+}
+.btn-primary:hover {
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.3) inset,
+    0 -1px 0 rgba(10,20,50,.25) inset,
+    0 14px 36px -10px rgba(34,211,238,.65);
+}
+html.light .btn-primary {
+  background: linear-gradient(135deg, #0891b2 0%, #4f46e5 100%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.4) inset, 0 8px 24px -10px rgba(79,70,229,.45);
+}
+/* ghost button — animated gradient border on hover */
+.btn-ghost {
+  position: relative;
+  background: rgba(148,163,216,.055);
+  border: 1px solid var(--v7-stroke);
+  overflow: hidden;
+}
+.btn-ghost::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(115deg, var(--v7-cyan), var(--v7-violet), var(--v7-emerald));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .35s var(--v7-ease);
+  pointer-events: none;
+}
+.btn-ghost:hover::before { opacity: .9; }
+.btn-ghost:hover { border-color: transparent; transform: translateY(-2px); }
+html.light .btn-ghost { background: rgba(255,255,255,.75); }
+/* services page CTA shares the treatment */
+.svc-cta-btn.primary {
+  border-radius: 13px;
+  background: linear-gradient(135deg, #26d9f5 0%, #7c8cf8 100%);
+  box-shadow: 0 1px 0 rgba(255,255,255,.25) inset, 0 8px 24px -10px rgba(34,211,238,.55);
+}
+
+/* ─── 06. Unified elevated card surfaces ────────────────────────────
+   One recipe for every card on the site: two-tone surface, inner top
+   highlight, layered shadow, cursor spotlight (set by v7.js via
+   --mx/--my), lift + accent hairline on hover.                          */
+.spot-card, .work-card, .blog-card, .bento-card, .contact-card,
+.offer-card, .case-card, .about-card, .svc-quick-card, .newsletter-band,
+.booking-cta-band, .jobs-card, .guide-card {
+  position: relative;
+  border-radius: var(--v7-radius);
+  border: 1px solid var(--v7-stroke);
+  background-image:
+    radial-gradient(460px circle at var(--mx, 50%) var(--my, -30%), rgba(34,211,238,.09), transparent 55%),
+    var(--v7-surface-1);
+  box-shadow: var(--v7-shadow-1);
+  transition:
+    transform .45s var(--v7-ease),
+    border-color .45s var(--v7-ease),
+    box-shadow .45s var(--v7-ease),
+    background-position .45s var(--v7-ease);
+}
+html.light .spot-card, html.light .work-card, html.light .blog-card,
+html.light .bento-card, html.light .contact-card, html.light .offer-card,
+html.light .case-card, html.light .about-card, html.light .svc-quick-card,
+html.light .newsletter-band, html.light .booking-cta-band,
+html.light .jobs-card, html.light .guide-card {
+  background-image:
+    radial-gradient(460px circle at var(--mx, 50%) var(--my, -30%), rgba(14,116,144,.07), transparent 55%),
+    var(--v7-surface-1);
+}
+@media (hover: hover) {
+  .spot-card:hover, .work-card:hover, .blog-card:hover, .bento-card:hover,
+  .contact-card:hover, .offer-card:hover, .case-card:hover, .about-card:hover,
+  .svc-quick-card:hover, .newsletter-band:hover, .booking-cta-band:hover,
+  .jobs-card:hover, .guide-card:hover {
+    border-color: var(--v7-stroke-hi);
+    box-shadow: var(--v7-shadow-2);
+    transform: translateY(-4px);
+    background-image:
+      radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(34,211,238,.14), transparent 60%),
+      var(--v7-surface-hi);
+  }
+  html.light .spot-card:hover, html.light .work-card:hover, html.light .blog-card:hover,
+  html.light .bento-card:hover, html.light .contact-card:hover, html.light .offer-card:hover,
+  html.light .case-card:hover, html.light .about-card:hover, html.light .svc-quick-card:hover,
+  html.light .newsletter-band:hover, html.light .booking-cta-band:hover,
+  html.light .jobs-card:hover, html.light .guide-card:hover {
+    background-image:
+      radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(14,116,144,.10), transparent 60%),
+      var(--v7-surface-hi);
+  }
+}
+/* keep the QA-checked accent border on metric chips */
+.metric-chip { border-left: 3px solid rgba(34,211,238,.75) !important; }
+/* case-study metric labels — legibility floor */
+.cm-lbl { font-size: .78rem !important; letter-spacing: .07em; color: #97a3c2 !important; }
+html.light .cm-lbl { color: #4a5473 !important; }
+/* contact cards — fix the low-contrast "looks disabled" problem */
+.contact-card .contact-label {
+  font-family: var(--v7-font-mono);
+  font-size: .68rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: var(--v7-text-dim);
+}
+.contact-card .contact-value { color: var(--v7-text-hi); font-weight: 600; font-size: .9rem; }
+.contact-icon { color: var(--v7-cyan); }
+/* balanced contact layout — primary channels (email, phone) get roomy
+   cards on row 1; social/save cards form an equal compact row 2      */
+.contact-grid { grid-template-columns: repeat(6, 1fr) !important; max-width: 1020px !important; }
+.contact-grid .contact-card:nth-child(1) { grid-column: span 3; }  /* email    */
+.contact-grid .contact-card:nth-child(2) { grid-column: span 3; }  /* whatsapp */
+.contact-grid .contact-card:nth-child(3) { grid-column: span 2; }  /* github   */
+.contact-grid .contact-card:nth-child(4) { grid-column: span 2; }  /* linkedin */
+.contact-grid .contact-card:nth-child(5) { grid-column: span 2; }  /* vcard    */
+.contact-grid .contact-card:nth-child(1) .contact-value { white-space: nowrap; } /* email never breaks */
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  .contact-grid .contact-card:nth-child(1) { grid-column: span 2 !important; } /* email keeps a full row */
+  .contact-grid .contact-card:not(:nth-child(1)) { grid-column: span 1 !important; }
+}
+@media (max-width: 560px) {
+  .contact-grid { grid-template-columns: 1fr !important; }
+  .contact-grid .contact-card { grid-column: span 1 !important; }
+}
+
+/* ghost buttons on cards — must read as buttons at rest, not fade away */
+.case-links .btn-ghost, .work-links .btn-ghost, .card-ghost-btn {
+  border-color: rgba(148,163,216,.3);
+  color: var(--v7-text-hi);
+  background: rgba(148,163,216,.08);
+}
+.case-links .btn-ghost:hover, .work-links .btn-ghost:hover {
+  border-color: rgba(34,211,238,.55);
+  color: var(--v7-cyan);
+}
+/* offer pricing block — breathing room */
+.offer-price { line-height: 1.65 !important; }
+.offer-price small { display: inline-block; margin-top: .2rem; }
+/* "most popular" tab — anchored inside the card, no longer taped on */
+.offer-badge {
+  top: 14px !important;
+  right: 14px !important;
+  border-radius: 9px !important;
+  box-shadow: 0 8px 20px -6px rgba(16,185,129,.55), 0 1px 0 rgba(255,255,255,.25) inset !important;
+}
+/* booking CTA band — lift the inner contrast */
+.booking-cta-title { color: var(--v7-text-hi) !important; }
+.booking-cta-body { color: #c2cee9 !important; }
+html.light .booking-cta-body { color: #37415f !important; }
+.booking-cta-eyebrow { color: var(--v7-text-mid) !important; }
+
+/* ─── 07. Homepage hero — asymmetric split + live console ─────────── */
+.hero { padding: 7rem 2rem 4.5rem; }
+.hero-badge {
+  border-radius: 12px;
+  font-family: var(--v7-font-mono);
+  font-size: .78rem;
+  letter-spacing: .02em;
+  color: var(--v7-text-mid);
+  background: rgba(148,163,216,.07);
+  border: 1px solid var(--v7-stroke);
+  box-shadow: 0 0 30px -12px rgba(34,211,238,.4);
+}
+.hero-badge .pulse-dot { background: var(--v7-emerald); box-shadow: 0 0 12px var(--v7-emerald); }
+.hero-kicker {
+  font-family: var(--v7-font-mono);
+  font-size: .8rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--v7-text-dim);
+  margin-bottom: 1.1rem;
+  animation: fadeInUp .8s ease both;
+}
+.hero-title {
+  font-size: clamp(2.6rem, 5.6vw, 4.6rem);
+  line-height: 1.04;
+  letter-spacing: -.035em;
+  color: var(--v7-text-hi);
+  margin-bottom: 1.6rem;
+}
+/* the accent phrase: calmer than the old infinite-rainbow — one hue pair + glow */
+.hero-title .gradient-animated {
+  background: linear-gradient(112deg, #2ee6ff 5%, #93a0ff 60%, #6ee7b7 110%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 6px 30px rgba(34,211,238,.22));
+  animation: gradShift 9s ease-in-out infinite;
+}
+html.light .hero-title .gradient-animated {
+  background: linear-gradient(112deg, #0e7490 5%, #4f46e5 60%, #047857 110%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-sub { color: #c2cee9; font-size: clamp(1rem, 1.9vw, 1.2rem); line-height: 1.75; }
+html.light .hero-sub { color: #37415f; }
+/* stats become tactile tiles */
+.hero-stats { gap: 1rem; }
+.hero-stat {
+  min-width: 168px;
+  padding: 1.05rem 1.35rem;
+  border-radius: 16px;
+  background-image: var(--v7-surface-1);
+  border: 1px solid var(--v7-stroke);
+  box-shadow: var(--v7-shadow-1);
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+.hero-stat::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 1.35rem; right: 1.35rem;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(34,211,238,.5), transparent);
+}
+.hero-stat .num {
+  font-family: var(--v7-font-display);
+  font-size: 1.9rem;
+  font-weight: 700;
+  background: linear-gradient(120deg, var(--v7-cyan), var(--v7-violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+html.light .hero-stat .num {
+  background: linear-gradient(120deg, #0e7490, #4f46e5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-stat .label {
+  font-size: .72rem;
+  color: var(--v7-text-dim);
+  line-height: 1.45;
+  letter-spacing: .01em;
+}
+.hero-proof-chip {
+  border-radius: 13px;
+  font-family: var(--v7-font-mono);
+  font-size: .78rem;
+  background: rgba(52,211,153,.06);
+  border: 1px solid rgba(52,211,153,.25);
+  box-shadow: 0 0 28px -12px rgba(52,211,153,.5);
+}
+.hero-proof-chip .pulse-dot { background: var(--v7-emerald); box-shadow: 0 0 10px var(--v7-emerald); }
+
+/* ── desktop: hero becomes a two-column stage (text ⇄ console) ──
+   Column-1 children AUTO-FLOW into successive rows (never share a
+   cell → no overlap); the console spans the full column 2.        */
+@media (min-width: 1120px) {
+  .hero-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+    align-items: center;
+    column-gap: 4rem;
+    max-width: 1160px;
+    text-align: left;
+  }
+  .hero-content > *:not(.v7-console) { grid-column: 1; }
+  .hero-content > .v7-console { grid-column: 2; grid-row: 1 / span 40; align-self: center; }
+  .hero-cta { justify-content: flex-start; }
+  .hero-stats { justify-content: flex-start; }
+  .hero-cta .btn { padding: .85rem 1.6rem; font-size: .95rem; }
+}
+
+/* ── the signature piece: live production console ── */
+.v7-console {
+  grid-area: console;
+  width: 100%;
+  max-width: 520px;
+  justify-self: end;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(10,16,32,.88), rgba(7,11,24,.92));
+  border: 1px solid var(--v7-stroke-hi);
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.07) inset,
+    0 40px 80px -30px rgba(2,8,26,.9),
+    0 0 60px -22px rgba(34,211,238,.35);
+  overflow: hidden;
+  font-family: var(--v7-font-mono);
+  font-size: .78rem;
+  line-height: 1.9;
+  color: #b9c5e4;
+  position: relative;
+  animation: fadeInUp 1s ease .55s both;
+}
+html.light .v7-console {
+  background: linear-gradient(180deg, #ffffff, #f2f5fd);
+  color: #3f4968;
+  box-shadow: 0 1px 0 #fff inset, 0 30px 60px -28px rgba(30,41,82,.4), 0 0 50px -22px rgba(14,116,144,.25);
+}
+/* faint scanlines — CRT memory, 3% so it never fights the text */
+.v7-console::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(0deg, rgba(255,255,255,.028) 0 1px, transparent 1px 3px);
+  pointer-events: none;
+}
+.v7-console-bar {
+  display: flex;
+  align-items: center;
+  gap: .45rem;
+  padding: .68rem 1rem;
+  border-bottom: 1px solid var(--v7-stroke);
+  background: rgba(148,163,216,.05);
+}
+.v7-dot { width: 10px; height: 10px; border-radius: 50%; }
+.v7-dot.r { background: #ff5f57; } .v7-dot.y { background: #febc2e; } .v7-dot.g { background: #28c840; }
+.v7-console-title {
+  margin-left: .5rem;
+  font-size: .68rem;
+  letter-spacing: .08em;
+  color: var(--v7-text-dim);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.v7-live-pill {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  font-size: .62rem;
+  font-weight: 700;
+  letter-spacing: .18em;
+  color: var(--v7-emerald);
+  border: 1px solid rgba(52,211,153,.35);
+  background: rgba(52,211,153,.08);
+  border-radius: 7px;
+  padding: .16rem .5rem;
+}
+.v7-live-pill .pulse-dot {
+  width: 6px; height: 6px;
+  background: var(--v7-emerald);
+  box-shadow: 0 0 8px var(--v7-emerald);
+  animation: pulse 2s infinite;
+}
+.v7-console-body {
+  padding: 1.05rem 1.15rem 1.15rem;
+  min-height: 172px;
+  display: flex;
+  flex-direction: column;
+  gap: .15rem;
+}
+.v7-cl { white-space: pre-wrap; word-break: break-word; }
+.v7-cl .v7-p { color: var(--v7-cyan); }            /* prompt */
+.v7-cl .v7-ok { color: var(--v7-emerald); }         /* ok marker */
+.v7-cl .v7-hl { color: #eaf0ff; font-weight: 600; } /* highlight */
+html.light .v7-cl .v7-hl { color: #0c1230; }
+.v7-cl .v7-am { color: var(--v7-amber); }           /* amber accent */
+.v7-caret {
+  display: inline-block;
+  width: .55em;
+  color: var(--v7-cyan);
+  animation: v7blink 1.05s steps(1) infinite;
+}
+@keyframes v7blink { 50% { opacity: 0; } }
+/* mobile: console sits under the stats, centered */
+@media (max-width: 1119.5px) {
+  .v7-console { margin: 2.4rem auto 0; }
+}
+
+/* ─── 08. Subpage heroes — one shared pattern ────────────────────── */
+.blog-hero, .svc-hero, .projects-hero, .resume-hero, .case-hero,
+.book-hero, .guide-hero, .jobs-hero, .articles-hero, .dashboard-hero {
+  position: relative;
+  padding: 8.5rem 0 4.25rem !important;
+}
+.blog-hero::before, .svc-hero::before, .projects-hero::before, .resume-hero::before,
+.case-hero::before, .book-hero::before, .guide-hero::before, .jobs-hero::before {
+  content: '';
+  position: absolute;
+  inset: 55% -10% -22%;
+  background:
+    radial-gradient(60% 90% at 20% 0%, rgba(34,211,238,.14), transparent 70%),
+    radial-gradient(50% 80% at 80% 10%, rgba(129,140,248,.16), transparent 70%);
+  pointer-events: none;
+}
+html.light .blog-hero::before, html.light .svc-hero::before, html.light .projects-hero::before,
+html.light .resume-hero::before, html.light .case-hero::before, html.light .book-hero::before,
+html.light .guide-hero::before, html.light .jobs-hero::before {
+  background:
+    radial-gradient(60% 90% at 20% 0%, rgba(14,116,144,.10), transparent 70%),
+    radial-gradient(50% 80% at 80% 10%, rgba(79,70,229,.10), transparent 70%);
+}
+/* the inline-styled subpage kickers become proper mono chips */
+.blog-hero .label, .svc-hero .label, .projects-hero .label,
+.resume-eyebrow, .jobs-hero .label, .guide-hero .label, .book-hero .label {
+  display: inline-flex !important;
+  align-items: center;
+  gap: .55rem;
+  font-family: var(--v7-font-mono) !important;
+  font-size: .72rem !important;
+  font-weight: 500 !important;
+  letter-spacing: .22em !important;
+  text-transform: uppercase !important;
+  color: var(--v7-cyan) !important;
+  background: rgba(34,211,238,.08) !important;
+  border: 1px solid rgba(34,211,238,.24) !important;
+  border-radius: 11px !important;
+  padding: .45rem 1rem !important;
+  margin-bottom: 1.5rem !important;
+  box-shadow: 0 0 26px -10px rgba(34,211,238,.4);
+}
+html.light .blog-hero .label, html.light .svc-hero .label, html.light .projects-hero .label,
+html.light .resume-eyebrow, html.light .jobs-hero .label, html.light .guide-hero .label,
+html.light .book-hero .label {
+  color: var(--v7-cyan) !important;
+  background: rgba(14,116,144,.08) !important;
+  border-color: rgba(14,116,144,.25) !important;
+  box-shadow: none;
+}
+/* big display headers on subpages (beats the inline styles) */
+.blog-hero h1, .svc-hero h1, .projects-hero h1, .resume-title,
+.case-hero h1, .jobs-hero h1, .guide-hero h1, .book-hero h1 {
+  font-family: var(--v7-font-display) !important;
+  font-size: clamp(2.3rem, 5vw, 3.7rem) !important;
+  font-weight: 600 !important;
+  line-height: 1.06 !important;
+  letter-spacing: -.03em !important;
+  margin-bottom: 1.35rem !important;
+  color: var(--v7-text-hi) !important;
+  text-wrap: balance;
+}
+.blog-hero p, .svc-hero > .container > p, .projects-hero p,
+.resume-tagline, .case-hero p, .jobs-hero p, .guide-hero p {
+  color: var(--v7-text-mid);
+  font-size: 1.06rem;
+  line-height: 1.75;
+}
+
+/* ─── 09. Blog + article reading experience ──────────────────────── */
+.blog-grid { gap: 1.6rem; }
+.blog-card {
+  padding: 1.9rem;
+  display: flex;
+  flex-direction: column;
+  border-color: rgba(148,163,216,.2); /* edge must read on low-contrast screens */
+}
+.blog-card h2, .blog-card h3 { color: var(--v7-text-hi); }
+.blog-card:hover h2, .blog-card:hover h3 { color: var(--v7-cyan); }
+.blog-card p { color: var(--v7-text-mid); }
+/* article meta + tags → mono squircle chips */
+.article-meta {
+  font-family: var(--v7-font-mono);
+  font-size: .74rem;
+  letter-spacing: .06em;
+  color: var(--v7-text-dim);
+}
+.article-tag {
+  font-family: var(--v7-font-mono) !important;
+  font-size: .68rem !important;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  border-radius: 9px !important;
+  padding: .34rem .75rem !important;
+}
+.vn-pdf-chip {
+  font-family: var(--v7-font-mono);
+  font-size: .7rem;
+  border-radius: 9px;
+  border: 1px solid rgba(251,191,36,.35);
+  background: rgba(251,191,36,.08);
+  color: var(--v7-amber);
+  padding: .3rem .7rem;
+  white-space: nowrap;
+}
+/* article body — editorial measure + gradient-ruled headings */
+.article-body { font-size: 1.06rem; line-height: 1.85; color: var(--v7-text-mid); }
+.article-body h2 {
+  font-size: 1.75rem;
+  margin: 2.8rem 0 1.1rem;
+  padding-bottom: .7rem;
+  position: relative;
+}
+.article-body h2::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 84px; height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--v7-cyan), var(--v7-violet), transparent);
+}
+.article-body h3 { font-size: 1.3rem; margin: 2.2rem 0 .8rem; }
+.article-body strong { color: var(--v7-text-hi); }
+.article-body a { color: var(--v7-cyan); text-decoration-color: rgba(34,211,238,.35); text-underline-offset: 3px; }
+.article-body a:hover { text-decoration-color: var(--v7-cyan); }
+.article-body blockquote {
+  border-left: 2px solid transparent;
+  border-image: linear-gradient(180deg, var(--v7-cyan), var(--v7-violet)) 1;
+  background: linear-gradient(90deg, rgba(34,211,238,.05), transparent 70%);
+  border-radius: 0 14px 14px 0;
+  padding: 1.1rem 1.4rem;
+  color: var(--v7-text-hi);
+}
+.article-body code {
+  font-family: var(--v7-font-mono);
+  font-size: .86em;
+  background: rgba(148,163,216,.1);
+  border: 1px solid var(--v7-stroke);
+  border-radius: 6px;
+  padding: .1em .4em;
+}
+.article-body pre {
+  border-radius: 16px;
+  border: 1px solid var(--v7-stroke);
+  background: linear-gradient(180deg, rgba(10,16,32,.9), rgba(7,11,24,.94)) !important;
+  box-shadow: var(--v7-shadow-1);
+}
+.article-body pre code { background: none; border: none; padding: 0; }
+/* article TOC card (built by article-enhance.js) */
+.toc-card, .article-toc, .on-this-page {
+  border-radius: 16px;
+  border: 1px solid var(--v7-stroke);
+  background-image: var(--v7-surface-1);
+  box-shadow: var(--v7-shadow-1);
+}
+.toc-card a:hover, .article-toc a:hover, .on-this-page a:hover { color: var(--v7-cyan); }
+
+/* ─── 10. Projects bento ─────────────────────────────────────────── */
+.proj-filter {
+  border-radius: 12px;
+  font-family: var(--v7-font-mono);
+  font-size: .78rem;
+  letter-spacing: .04em;
+  background-image: var(--v7-surface-1);
+  border: 1px solid var(--v7-stroke);
+}
+.proj-filter.active {
+  background: linear-gradient(135deg, #26d9f5, #7c8cf8);
+  box-shadow: 0 8px 22px -10px rgba(34,211,238,.6), 0 1px 0 rgba(255,255,255,.25) inset;
+}
+.bento-card {
+  background-image:
+    radial-gradient(460px circle at var(--mx, 50%) var(--my, -30%), rgba(34,211,238,.08), transparent 55%),
+    var(--v7-surface-1);
+}
+html.light .bento-card {
+  background-image:
+    radial-gradient(460px circle at var(--mx, 50%) var(--my, -30%), rgba(14,116,144,.07), transparent 55%),
+    var(--v7-surface-1);
+}
+.bento-card:hover {
+  border-color: var(--v7-stroke-hi);
+  box-shadow: var(--v7-shadow-2), 0 0 0 1px var(--card-accent, var(--v7-cyan));
+}
+/* entrance: cards cascade in as they render (plays on insert, no JS needed) */
+@keyframes v7cardIn {
+  from { opacity: 0; transform: translateY(26px) scale(.985); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+html.v7js .bento-card { animation: v7cardIn .7s var(--v7-ease) both; }
+html.v7js .bento-card:nth-child(2) { animation-delay: .07s; }
+html.v7js .bento-card:nth-child(3) { animation-delay: .14s; }
+html.v7js .bento-card:nth-child(4) { animation-delay: .21s; }
+html.v7js .bento-card:nth-child(5) { animation-delay: .28s; }
+html.v7js .bento-card:nth-child(6) { animation-delay: .35s; }
+.card-badge.award {
+  background: linear-gradient(135deg, rgba(251,191,36,.18), rgba(251,191,36,.08));
+  border: 1px solid rgba(251,191,36,.4);
+  color: var(--v7-amber);
+  border-radius: 9px;
+}
+
+/* resume: the inline 1fr 1fr cert grid can't shrink on small screens
+   (long skill chips force min-content wider than the viewport)        */
+@media (max-width: 640px) {
+  .resume-card div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+.resume-section {
+  border-radius: var(--v7-radius);
+  border: 1px solid var(--v7-stroke);
+  background-image: var(--v7-surface-1);
+  box-shadow: var(--v7-shadow-1);
+}
+.resume-section-title { font-family: var(--v7-font-display); letter-spacing: -.02em; }
+/* resume: the inline 1fr 1fr cert grid can't shrink on small screens
+   (long skill chips force min-content wider than the viewport)        */
+@media (max-width: 640px) {
+  .resume-card div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+.case-study section, .cs-section {
+  scroll-margin-top: 90px;
+}
+.svc-quick-card, .pkg-card, .svc-card {
+  border-radius: var(--v7-radius);
+  border: 1px solid var(--v7-stroke);
+  background-image: var(--v7-surface-1);
+  box-shadow: var(--v7-shadow-1);
+}
+.services-faq details, .faq-item {
+  border-radius: 14px;
+  border: 1px solid var(--v7-stroke);
+  background-image: var(--v7-surface-1);
+}
+
+/* ─── 12. Footer, FAB, back-to-top, forms ────────────────────────── */
+footer {
+  position: relative;
+  border-top: 1px solid transparent;
+  background:
+    radial-gradient(50rem 18rem at 50% 120%, rgba(129,140,248,.09), transparent 70%),
+    rgba(5,7,15,.55);
+}
+html.light footer { background: radial-gradient(50rem 18rem at 50% 120%, rgba(79,70,229,.07), transparent 70%), rgba(245,247,254,.7); }
+footer::before {
+  content: '';
+  position: absolute;
+  top: -1px; left: 10%; right: 10%;
+  height: 1px;
+  background: var(--v7-grad-line);
+}
+footer h5 {
+  font-family: var(--v7-font-mono);
+  font-size: .68rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--v7-text-dim);
+}
+footer a { color: var(--v7-text-mid); transition: color .2s var(--v7-ease); }
+footer a:hover { color: var(--v7-cyan); }
+.footer-bottom p { color: var(--v7-text-dim); }
+.v7-foot-stamp {
+  font-family: var(--v7-font-mono);
+  font-size: .66rem;
+  letter-spacing: .1em;
+  color: var(--v7-text-dim);
+  opacity: .8;
+}
+/* FAB + back-to-top — glass with brand glow */
+.fab, .back-to-top {
+  border-radius: 16px;
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+}
+.fab-book {
+  box-shadow: 0 14px 38px -12px rgba(34,211,238,.6), 0 1px 0 rgba(255,255,255,.2) inset;
+}
+.back-to-top {
+  border: 1px solid var(--v7-stroke);
+  background: rgba(10,16,32,.72);
+  color: var(--v7-text-mid);
+}
+html.light .back-to-top { background: rgba(255,255,255,.8); }
+/* form controls */
+.newsletter-input, input[type="email"], input[type="text"], textarea, select {
+  border-radius: 13px;
+  border: 1px solid var(--v7-stroke);
+  background: rgba(148,163,216,.05);
+  color: var(--v7-text-hi);
+  transition: border-color .25s var(--v7-ease), box-shadow .25s var(--v7-ease), background .25s var(--v7-ease);
+}
+.newsletter-input:focus, input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: rgba(34,211,238,.55);
+  box-shadow: 0 0 0 3px rgba(34,211,238,.14), 0 0 24px -8px rgba(34,211,238,.35);
+}
+.newsletter-input::placeholder, input::placeholder { color: var(--v7-text-dim); }
+
+/* ─── 13. Motion system ──────────────────────────────────────────── */
+/* Reveal: hidden ONLY when JS is present (html.v7js), so no-JS users
+   and crawlers always see full content. Stagger via --v7d.           */
+html.v7js .v7-reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity .8s var(--v7-ease),
+    transform .8s var(--v7-ease);
+  transition-delay: var(--v7d, 0s);
+  will-change: opacity, transform;
+}
+html.v7js .v7-reveal.v7-in {
+  opacity: 1;
+  transform: translateY(0);
+  will-change: auto;
+}
+/* section rule that draws itself in */
+html.v7js .section-head { position: relative; }
+html.v7js .section-head::after {
+  content: '';
+  position: absolute;
+  left: 50%; bottom: -1.4rem;
+  width: 0; height: 1px;
+  background: var(--v7-grad-line);
+  transform: translateX(-50%);
+  transition: width 1.1s var(--v7-ease) .25s;
+}
+html.v7js .section-head.v7-in::after { width: min(320px, 60%); }
+html.v7js .section-head.text-left::after { left: 0; transform: none; }
+
+/* ─── 14. Safety nets ────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  html.v7js .v7-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  html.v7js .bento-card { animation: none !important; }
+  .hero-title .gradient-animated { animation: none !important; }
+  .v7-caret { animation: none !important; }
+  html.v7js .section-head::after { transition: none !important; width: min(320px, 60%); }
+}
+/* keep print clean: no aurora, no shadows, black on white */
+@media print {
+  body::before, body::after, nav, .scroll-progress, .back-to-top, .fab-stack, .v7-console { display: none !important; }
+  body { background: #fff !important; color: #111 !important; }
+  .spot-card, .work-card, .blog-card, .bento-card, .contact-card, .offer-card,
+  .case-card, .about-card, .resume-section { box-shadow: none !important; background: #fff !important; border-color: #ddd !important; }
+}
+/* very old browsers: v7 needs custom properties; degrade to v6/base */
+@supports not (background: linear-gradient(180deg, red, blue)) {
+  .v7-console { display: none; }
+}
