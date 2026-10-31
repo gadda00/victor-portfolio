@@ -32,33 +32,66 @@
     ctx.scale(dpr, dpr);
   }
 
-  class Particle {
+  /* ── v9: ROUTING CONSTELLATION ────────────────────────────────
+     Replaces the generic drifting particle web (a template cliché)
+     with a system topology that mirrors the logo: a few bright nodes
+     (cyan / violet / emerald) on stable nearest-neighbour edges, with
+     PACKETS routing node-to-node along the edges — data flowing
+     through production systems. Arrival makes the node pulse.
+     Same public API as the old particle system (particles array,
+     initParticles, connectParticles, animate) so the visibility
+     observer, resize debounce and mouse hooks keep working.       */
+
+  const PALETTE_DARK  = [[34,211,238],[34,211,238],[34,211,238],[129,140,248],[52,211,153]];
+  const PALETTE_LIGHT = [[8,145,178],[8,145,178],[8,145,178],[79,70,229],[4,120,87]];
+  let edges = [];   /* [{a,b,dist}] node index pairs */
+  let packets = []; /* [{a,b,t,speed}] travelling along an edge */
+
+  class Particle { /* a node in the constellation */
     constructor(w, h) {
       this.x = Math.random() * w;
       this.y = Math.random() * h;
-      this.vx = (Math.random() - 0.5) * 0.4;
-      this.vy = (Math.random() - 0.5) * 0.4;
-      this.size = Math.random() * 2 + 0.5;
-      this.opacity = Math.random() * 0.4 + 0.1;
+      this.vx = (Math.random() - 0.5) * 0.12;
+      this.vy = (Math.random() - 0.5) * 0.12;
+      this.size = Math.random() * 1.3 + 1.1;
+      this.opacity = Math.random() * 0.25 + 0.4;
+      this.phase = Math.random() * Math.PI * 2;
+      this.flash = 0;
+      const pal = document.documentElement.classList.contains('light') ? PALETTE_LIGHT : PALETTE_DARK;
+      this.rgb = pal[Math.floor(Math.random() * pal.length)];
     }
     update(w, h) {
       this.x += this.vx; this.y += this.vy;
-      if (this.x < 0 || this.x > w) this.vx *= -1;
-      if (this.y < 0 || this.y > h) this.vy *= -1;
+      this.phase += 0.02;
+      if (this.flash > 0.01) this.flash *= 0.94; else this.flash = 0;
+      if (this.x < 0 || this.x > w) { this.vx *= -1; this.x = Math.max(0, Math.min(w, this.x)); }
+      if (this.y < 0 || this.y > h) { this.vy *= -1; this.y = Math.max(0, Math.min(h, this.y)); }
       if (mouse.x !== null) {
         const dx = mouse.x - this.x, dy = mouse.y - this.y;
         const distSq = dx * dx + dy * dy;
-        if (distSq < 22500) { // 150²
-          this.x -= dx * 0.015; this.y -= dy * 0.015;
-        }
+        if (distSq < 22500) { this.x -= dx * 0.006; this.y -= dy * 0.006; }
       }
     }
     draw(isDark) {
-      ctx.fillStyle = isDark
-        ? `rgba(0, 212, 255, ${this.opacity})`
-        : `rgba(8, 145, 178, ${this.opacity * 0.4})`;
+      const pulse = 0.5 + 0.5 * Math.sin(this.phase);
+      let a = this.opacity + pulse * 0.18 + this.flash * 0.5;
+      if (a > 1) a = 1;
+      if (mouse.x !== null) {
+        const dx = mouse.x - this.x, dy = mouse.y - this.y;
+        if (dx * dx + dy * dy < 32400) a = Math.min(1, a + 0.3); /* brighten near cursor */
+      }
+      const [r, g, b] = this.rgb;
+      /* arrival pulse ring */
+      if (this.flash > 0.05) {
+        ctx.strokeStyle = `rgba(${r},${g},${b},${(this.flash * 0.35).toFixed(3)})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size + 2 + (1 - this.flash) * 7, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.fillStyle = `rgba(${r},${g},${b},${a.toFixed(3)})`;
       ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.arc(this.x, this.y, this.size + this.flash * 1.5, 0, Math.PI * 2);
       ctx.fill();
     }
   }
@@ -66,75 +99,98 @@
   function initParticles() {
     particles = [];
     const w = canvas.clientWidth, h = canvas.clientHeight;
-    const count = REDUCED_MOTION ? 20 : Math.min(70, Math.floor(w * h / 18000));
+    const count = REDUCED_MOTION ? 10 : Math.max(6, Math.min(16, Math.floor(w * h / 60000)));
     for (let i = 0; i < count; i++) particles.push(new Particle(w, h));
-  }
 
-  // Spatial grid for O(n) neighbor lookup instead of O(n²)
-  function buildGrid(w, h) {
-    const cols = Math.ceil(w / CELL_SIZE) + 1;
-    const rows = Math.ceil(h / CELL_SIZE) + 1;
-    const grid = new Array(cols * rows);
-    for (let i = 0; i < grid.length; i++) grid[i] = [];
+    /* topology: each node links to its 2 nearest neighbours (dedup) */
+    edges = [];
+    const seen = new Set();
     for (let i = 0; i < particles.length; i++) {
-      const p = particles[i];
-      const cx = Math.max(0, Math.min(cols - 1, Math.floor(p.x / CELL_SIZE)));
-      const cy = Math.max(0, Math.min(rows - 1, Math.floor(p.y / CELL_SIZE)));
-      grid[cy * cols + cx].push(i);
+      const near = [];
+      for (let j = 0; j < particles.length; j++) {
+        if (i === j) continue;
+        const dx = particles[i].x - particles[j].x, dy = particles[i].y - particles[j].y;
+        near.push([dx * dx + dy * dy, j]);
+      }
+      near.sort((a, b) => a[0] - b[0]);
+      for (let k = 0; k < Math.min(2, near.length); k++) {
+        const j = near[k][1];
+        const key = i < j ? i + ':' + j : j + ':' + i;
+        if (seen.has(key)) continue;
+        if (near[k][0] > 300 * 300) continue; /* no hair-spanning edges */
+        seen.add(key);
+        edges.push({ a: Math.min(i, j), b: Math.max(i, j), dist: Math.sqrt(near[k][0]) });
+      }
     }
-    return { grid, cols, rows };
+    /* packets: bright signals routing through the mesh */
+    packets = [];
+    const pc = REDUCED_MOTION ? 0 : Math.min(9, edges.length);
+    for (let p = 0; p < pc; p++) {
+      const e = edges[Math.floor(Math.random() * edges.length)];
+      packets.push({ a: e.a, b: e.b, t: Math.random(), speed: 0.005 + Math.random() * 0.006 });
+    }
   }
 
   function connectParticles(w, h) {
-    const isDark = document.documentElement.classList.contains('dark');
-    const { grid, cols, rows } = buildGrid(w, h);
-    const checked = new Set();
-
-    for (let cy = 0; cy < rows; cy++) {
-      for (let cx = 0; cx < cols; cx++) {
-        const cell = grid[cy * cols + cx];
-        if (!cell.length) continue;
-        // Check this cell + 4 neighbors (right, down-right, down, down-left) to avoid dupes
-        const neighbors = [
-          [cx, cy], [cx + 1, cy], [cx - 1, cy + 1],
-          [cx, cy + 1], [cx + 1, cy + 1]
-        ];
-        for (const [nx, ny] of neighbors) {
-          if (nx < 0 || nx >= cols || ny < 0 || ny >= rows) continue;
-          const ncell = grid[ny * cols + nx];
-          if (!ncell.length) continue;
-          for (let i = 0; i < cell.length; i++) {
-            for (let j = 0; j < ncell.length; j++) {
-              const a = cell[i], b = ncell[j];
-              if (a >= b) continue;
-              const key = a * 1000 + b;
-              if (checked.has(key)) continue;
-              checked.add(key);
-              const pa = particles[a], pb = particles[b];
-              const dx = pa.x - pb.x, dy = pa.y - pb.y;
-              const distSq = dx * dx + dy * dy;
-              if (distSq < CONNECT_DIST * CONNECT_DIST) {
-                const dist = Math.sqrt(distSq);
-                ctx.strokeStyle = isDark
-                  ? `rgba(0, 212, 255, ${(1 - dist / CONNECT_DIST) * 0.12})`
-                  : `rgba(8, 145, 178, ${(1 - dist / CONNECT_DIST) * 0.06})`;
-                ctx.lineWidth = 0.5;
-                ctx.beginPath();
-                ctx.moveTo(pa.x, pa.y);
-                ctx.lineTo(pb.x, pb.y);
-                ctx.stroke();
-              }
-            }
-          }
-        }
+    const isDark = !document.documentElement.classList.contains('light');
+    /* edges */
+    for (const e of edges) {
+      const pa = particles[e.a], pb = particles[e.b];
+      if (!pa || !pb) continue;
+      const alpha = Math.max(0, 1 - e.dist / 300) * (isDark ? 0.14 : 0.07);
+      ctx.strokeStyle = isDark
+        ? `rgba(100,190,255,${alpha.toFixed(3)})`
+        : `rgba(8,145,178,${alpha.toFixed(3)})`;
+      ctx.lineWidth = 0.6;
+      ctx.beginPath();
+      ctx.moveTo(pa.x, pa.y);
+      ctx.lineTo(pb.x, pb.y);
+      ctx.stroke();
+    }
+    /* packets */
+    for (const p of packets) {
+      const A = particles[p.a], B = particles[p.b];
+      if (!A || !B) continue;
+      p.t += p.speed;
+      if (p.t >= 1) {
+        /* arrived: pulse the node, route onward from here */
+        B.flash = 1;
+        const next = edges.filter(e => e.a === p.b || e.b === p.b);
+        const e = next.length ? next[Math.floor(Math.random() * next.length)]
+                              : edges[Math.floor(Math.random() * edges.length)];
+        if (e) { p.a = p.b; p.b = (e.a === p.b) ? e.b : e.a; }
+        p.t = 0;
+        continue;
       }
+      const x = A.x + (B.x - A.x) * p.t;
+      const y = A.y + (B.y - A.y) * p.t;
+      const [r, g, b] = B.rgb;
+      /* trail */
+      const t0 = Math.max(0, p.t - 0.09);
+      ctx.strokeStyle = isDark
+        ? `rgba(34,211,238,${(0.30 * (1 - p.t * 0.4)).toFixed(3)})`
+        : `rgba(8,145,178,0.22)`;
+      ctx.lineWidth = 1.1;
+      ctx.beginPath();
+      ctx.moveTo(A.x + (B.x - A.x) * t0, A.y + (B.y - A.y) * t0);
+      ctx.lineTo(x, y);
+      ctx.stroke();
+      /* head */
+      ctx.fillStyle = isDark ? 'rgba(160,240,255,0.95)' : 'rgba(8,145,178,0.85)';
+      ctx.beginPath();
+      ctx.arc(x, y, 1.7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = isDark ? 'rgba(34,211,238,0.16)' : 'rgba(8,145,178,0.12)';
+      ctx.beginPath();
+      ctx.arc(x, y, 4.5, 0, Math.PI * 2);
+      ctx.fill();
     }
   }
 
   function animate() {
     const w = canvas.clientWidth, h = canvas.clientHeight;
     ctx.clearRect(0, 0, w, h);
-    const isDark = document.documentElement.classList.contains('dark');
+    const isDark = !document.documentElement.classList.contains('light');
     particles.forEach(p => { p.update(w, h); p.draw(isDark); });
     connectParticles(w, h);
     if (!REDUCED_MOTION) animationId = requestAnimationFrame(animate);

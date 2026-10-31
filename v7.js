@@ -90,8 +90,14 @@
     }, 900);
   }
 
-  /* ── 4. Hero console typing (v8: richer production readout) ─── */
-  var CONSOLE_LINES = [
+  /* ── 4. Interactive production shell (v9 hero signature) ───
+     The console is now TYPEABLE: a boot sequence streams in, then a
+     real prompt accepts commands — help, whoami, projects, stack,
+     metrics, contact, book, theme, neofetch, sudo hire-me, clear —
+     with suggestion chips so mobile users can tap instead of type.
+     Reduced motion: boot renders instantly (user-typed input is the
+     user's own motion, so the shell stays fully functional).      */
+  var BOOT_LINES = [
     [{ t: '$ ', c: 'v7-p' }, { t: 'victor', c: 'v7-hl' }, { t: ' --status --production' }],
     [{ t: '\u25CF ', c: 'v7-ok' }, { t: 'keja.app', c: 'v7-hl' },
       { t: ' \u00B7 87+ listings \u00B7 12 counties' }],
@@ -101,12 +107,114 @@
       { t: 'EN \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 ', c: 'v7-spark' },
       { t: 'SW \u2588\u2588\u2588\u2588\u2588 ', c: 'v7-spark' },
       { t: 'FR \u2588\u2588\u2588\u2588\u2588\u2586', c: 'v7-spark' }],
-    [{ t: '\u2713 ', c: 'v7-ok' }, { t: '13 systems designed, built & shipped', c: 'v7-hl' }],
-    [{ t: '$ ', c: 'v7-p' }, { t: 'victor', c: 'v7-hl' }, { t: ' --audit --risk', c: 'v7-am' }],
-    [{ t: '\u26A0 ', c: 'v7-am' }, { t: '0 critical', c: 'v7-hl' },
-      { t: ' \u00B7 evals wired \u00B7 observability live' }],
-    [{ t: '\u2713 ', c: 'v7-ok' }, { t: 'ready for the next hard problem', c: 'v7-hl' }]
+    [{ t: '\u2713 ', c: 'v7-ok' }, { t: '13 systems designed, built & shipped', c: 'v7-hl' }]
   ];
+  var SHELL_HINT = [
+    { t: '\u2014 interactive \u00B7 type ', c: 'v7-d' },
+    { t: 'help', c: 'v7-hl' },
+    { t: ' and press Enter', c: 'v7-d' }
+  ];
+
+  function mkLine(segs) {
+    var div = document.createElement('div');
+    div.className = 'v7-cl';
+    (segs || []).forEach(function (s) {
+      var sp = document.createElement('span');
+      if (s.c) sp.className = s.c;
+      sp.textContent = s.t;
+      div.appendChild(sp);
+    });
+    return div;
+  }
+
+  var SHELL = null; /* set by initConsole, used by chips */
+
+  function buildShellCommands(shell) {
+    function pad(n) {
+      var s = n; while (s.length < 14) s += ' '; return s;
+    }
+    return {
+      'help': function () {
+        return [
+          { t: 'available commands:', c: 'v7-d' },
+          { t: pad('help') + 'this list', c: 'v7-d' },
+          { t: pad('whoami') + 'who is victor', c: 'v7-d' },
+          { t: pad('projects') + 'flagship systems (alias: ls)', c: 'v7-d' },
+          { t: pad('stack') + 'tools I ship with', c: 'v7-d' },
+          { t: pad('metrics') + 'numbers from production', c: 'v7-d' },
+          { t: pad('contact') + 'reach me', c: 'v7-d' },
+          { t: pad('book') + 'open the scheduler', c: 'v7-d' },
+          { t: pad('theme') + 'toggle dark / light', c: 'v7-d' },
+          { t: pad('neofetch') + 'system card', c: 'v7-d' },
+          { t: pad('clear') + 'wipe the screen', c: 'v7-d' },
+          { t: pad('sudo hire-me') + 'you know what this does', c: 'v7-d' }
+        ].map(function (l) { return [l]; });
+      },
+      'whoami': function () {
+        return [
+          [{ t: 'Victor Ndunda', c: 'v7-hl' }, { t: ' — production AI systems engineer.' }],
+          [{ t: 'Nairobi, Kenya · worldwide. I turn high-value workflows', c: 'v7-d' }],
+          [{ t: 'into reliable AI systems: RAG, agents, forecasting, fraud.', c: 'v7-d' }]
+        ];
+      },
+      'projects': function () {
+        return [
+          [{ t: '\u25CF ', c: 'v7-ok' }, { t: 'keja.app', c: 'v7-hl' }, { t: ' — AI real-estate platform \u00B7 87+ listings \u00B7 12 counties' }],
+          [{ t: '\u25CF ', c: 'v7-ok' }, { t: 'tapi learn', c: 'v7-hl' }, { t: ' — AI learning product \u00B7 11K+ learners \u00B7 38 countries' }],
+          [{ t: '\u25CF ', c: 'v7-ok' }, { t: 'firstlight', c: 'v7-hl' }, { t: ' — geo-AI decision layer for disaster response' }],
+          [{ t: '\u25CF ', c: 'v7-ok' }, { t: 'agentreplay', c: 'v7-hl' }, { t: ' — deterministic replay for agent QA (open source)' }],
+          [{ t: '\u25CF ', c: 'v7-ok' }, { t: 'kilimopro', c: 'v7-hl' }, { t: ' — AI crop intelligence for Kenyan farmers' }],
+          [{ t: '+ 8 more → /projects/', c: 'v7-d' }]
+        ];
+      },
+      'ls': null, /* alias, wired below */
+      'stack': function () {
+        return [
+          [{ t: 'python · typescript · langgraph · pgvector · fastapi' }],
+          [{ t: 'next.js · flutter · postgres · redis · docker · gcp' }],
+          [{ t: 'evals · observability · human-in-the-loop', c: 'v7-hl' }, { t: ' — built in', c: 'v7-d' }]
+        ];
+      },
+      'metrics': function () {
+        return [
+          [{ t: '13', c: 'v7-hl' }, { t: ' systems designed, built & shipped' }],
+          [{ t: '11K+', c: 'v7-hl' }, { t: ' learners on a shipped client product' }],
+          [{ t: '87+', c: 'v7-hl' }, { t: ' live listings · ' }, { t: '12', c: 'v7-hl' }, { t: ' counties' }],
+          [{ t: 'EN · FR · SW', c: 'v7-hl' }, { t: ' multilingual delivery' }]
+        ];
+      },
+      'contact': function () {
+        return [
+          [{ t: 'email    ', c: 'v7-d' }, { t: 'mututandunda@gmail.com', c: 'v7-hl' }],
+          [{ t: 'github  ', c: 'v7-d' }, { t: 'github.com/gadda00', c: 'v7-hl' }],
+          [{ t: 'linkedin ', c: 'v7-d' }, { t: '/in/victor-ndunda', c: 'v7-hl' }],
+          [{ t: 'whatsapp ', c: 'v7-d' }, { t: '+254 724 346 971', c: 'v7-hl' }]
+        ];
+      },
+      'book': function () {
+        setTimeout(function () { window.location.href = '/book/'; }, 650);
+        return [[{ t: 'opening scheduler → ', c: 'v7-d' }, { t: '/book/', c: 'v7-hl' }]];
+      },
+      'theme': function () {
+        var t = document.getElementById('themeToggle');
+        if (t) t.click();
+        return [[{ t: '[theme toggled]', c: 'v7-d' }]];
+      },
+      'history': function () {
+        return shell.history.length
+          ? shell.history.map(function (h) { return [{ t: '  ' + h, c: 'v7-d' }]; })
+          : [[{ t: '(empty)', c: 'v7-d' }]];
+      },
+      'sudo hire-me': function () {
+        setTimeout(function () { window.location.href = '/book/'; }, 950);
+        return [
+          [{ t: '[sudo] password for visitor: ••••••••', c: 'v7-d' }],
+          [{ t: 'permission granted ', c: 'v7-d' }, { t: '\u2713', c: 'v7-ok' }],
+          [{ t: 'initializing engagement protocol → ', c: 'v7-d' }, { t: '/book/', c: 'v7-hl' }]
+        ];
+      }
+    };
+  }
 
   function initConsole() {
     var box = document.getElementById('v7Console');
@@ -114,66 +222,189 @@
     var body = box.querySelector('.v7-console-body');
     if (!body) return;
 
-    if (REDUCED) {
-      renderAll(body);
-      return;
+    /* system readout foot (v8 module below defines this) */
+    try { buildConsoleFoot(box); } catch (e) { /* decorative */ }
+
+    /* shell skeleton */
+    body.textContent = '';
+    var log = document.createElement('div');
+    log.className = 'v7-shell-log';
+    log.setAttribute('role', 'log');
+    log.setAttribute('aria-label', 'Console output');
+    var row = document.createElement('div');
+    row.className = 'v7-shell-input-row';
+    var prompt = document.createElement('span');
+    prompt.className = 'v7-p';
+    prompt.setAttribute('aria-hidden', 'true');
+    prompt.textContent = 'victor@production:~$';
+    var input = document.createElement('input');
+    input.className = 'v7-shell-input';
+    input.type = 'text';
+    input.setAttribute('autocomplete', 'off');
+    input.setAttribute('autocapitalize', 'off');
+    input.setAttribute('autocorrect', 'off');
+    input.setAttribute('spellcheck', 'false');
+    input.setAttribute('aria-label', 'Console command input — type help and press Enter');
+    input.placeholder = "type 'help' + Enter";
+    row.appendChild(prompt); row.appendChild(input);
+    body.appendChild(log); body.appendChild(row);
+
+    var shell = {
+      log: log, input: input, box: box,
+      history: [], hIdx: -1,
+      cmds: null,
+      print: function (lines, animate) {
+        lines.forEach(function (segs) {
+          log.appendChild(mkLine(segs));
+        });
+        while (log.children.length > 60) log.removeChild(log.firstChild);
+        log.scrollTop = log.scrollHeight;
+      }
+    };
+    shell.cmds = buildShellCommands(shell);
+    shell.cmds['ls'] = shell.cmds['projects'];
+    SHELL = shell;
+
+    function run(raw) {
+      var cmd = String(raw || '').trim();
+      if (!cmd) return;
+      shell.print([[{ t: '$ ', c: 'v7-p' }, { t: cmd, c: 'v7-hl' }]]);
+      /* every attempted command lands in history — like a real shell */
+      shell.history.push(cmd);
+      if (shell.history.length > 20) shell.history.shift();
+      shell.hIdx = -1;
+      if (cmd === 'clear') { log.textContent = ''; return; }
+      if (cmd === 'neofetch') { neofetch(); return; }
+      var fn = shell.cmds[cmd.toLowerCase()];
+      if (!fn) {
+        shell.print([[
+          { t: 'command not found: ', c: 'v7-am' },
+          { t: cmd.slice(0, 24), c: 'v7-hl' },
+          { t: ' — try ', c: 'v7-d' },
+          { t: 'help', c: 'v7-hl' }
+        ]]);
+        return;
+      }
+      shell.print(fn());
     }
 
+    function neofetch() {
+      var art = ['   *   ', '  /|\  ', ' *-o-* ', '  \|/  ', '   *   '];
+      var light = document.documentElement.classList.contains('light');
+      var info = [
+        ['victor@production', ''],
+        ['OS:      ', 'Production AI'],
+        ['Host:    ', 'Nairobi, KE'],
+        ['Uptime:  ', '13 systems shipped'],
+        ['Shell:   ', 'vnd-sh v9'],
+        ['Lang:    ', 'EN / SW / FR'],
+        ['Stack:   ', 'RAG · agents · evals'],
+        ['Theme:   ', light ? 'light' : 'dark']
+      ];
+      var wrap = document.createElement('div');
+      wrap.className = 'v7-cl v7-nf';
+      var left = document.createElement('div');
+      left.className = 'v7-nf-art';
+      art.forEach(function (a) {
+        var d = document.createElement('div');
+        d.textContent = a;
+        left.appendChild(d);
+      });
+      var right = document.createElement('div');
+      info.forEach(function (kv, i) {
+        var d = document.createElement('div');
+        if (i === 0) { d.className = 'v7-hl'; d.textContent = kv[0]; }
+        else {
+          var k = document.createElement('span'); k.className = 'v7-d'; k.textContent = kv[0];
+          var v = document.createElement('span'); v.textContent = kv[1];
+          d.appendChild(k); d.appendChild(v);
+        }
+        right.appendChild(d);
+      });
+      wrap.appendChild(left); wrap.appendChild(right);
+      log.appendChild(wrap);
+      while (log.children.length > 60) log.removeChild(log.firstChild);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    /* input wiring */
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') { run(input.value); input.value = ''; }
+      else if (e.key === 'ArrowUp') {
+        if (!shell.history.length) return;
+        e.preventDefault();
+        shell.hIdx = shell.hIdx < 0 ? shell.history.length - 1 : Math.max(0, shell.hIdx - 1);
+        input.value = shell.history[shell.hIdx];
+      } else if (e.key === 'ArrowDown') {
+        if (shell.hIdx < 0) return;
+        e.preventDefault();
+        shell.hIdx++;
+        if (shell.hIdx >= shell.history.length) { shell.hIdx = -1; input.value = ''; }
+        else input.value = shell.history[shell.hIdx];
+      } else if (e.key === 'Escape') { input.blur(); }
+    });
+    /* tap the console to type (but never steal a text selection) */
+    box.addEventListener('click', function () {
+      var sel = window.getSelection && window.getSelection();
+      if (sel && String(sel).length) return;
+      if (document.activeElement !== input) input.focus({ preventScroll: true });
+    });
+
+    /* suggestion chips — tap-to-run, mobile friendly */
+    var chips = document.createElement('div');
+    chips.className = 'v7-shell-chips';
+    ['help', 'projects', 'neofetch', 'book'].forEach(function (c) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'v7-shell-chip';
+      b.textContent = c;
+      b.setAttribute('aria-label', 'Run console command: ' + c);
+      b.addEventListener('click', function (e) {
+        e.stopPropagation();
+        run(c);
+        if (FINE_POINTER) input.focus({ preventScroll: true });
+      });
+      chips.appendChild(b);
+    });
+    body.parentNode.insertBefore(chips, body.nextSibling);
+
+    /* boot: typed (or instant for reduced motion), then hint */
+    function bootDone() {
+      shell.print([SHELL_HINT]);
+      log.setAttribute('aria-live', 'polite');
+    }
+    if (REDUCED) {
+      shell.print(BOOT_LINES);
+      bootDone();
+      return;
+    }
     var caret = document.createElement('span');
     caret.className = 'v7-caret';
     caret.textContent = '\u2588';
-
-    function renderAll(container) {
-      container.textContent = '';
-      CONSOLE_LINES.forEach(function (line) {
-        var div = document.createElement('div');
-        div.className = 'v7-cl';
-        line.forEach(function (seg) {
-          var s = document.createElement('span');
-          if (seg.c) s.className = seg.c;
-          s.textContent = seg.t;
-          div.appendChild(s);
-        });
-        container.appendChild(div);
-      });
-      container.appendChild(caret);
-    }
-
-    var running = false;
-    function typeCycle() {
-      if (running) return;
-      running = true;
-      body.textContent = '';
-      var li = 0;
-      function nextLine() {
-        if (li >= CONSOLE_LINES.length) {
-          body.appendChild(caret);
-          setTimeout(function () { running = false; typeCycle(); }, 5200);
-          return;
+    var li = 0;
+    function nextLine() {
+      if (li >= BOOT_LINES.length) { bootDone(); return; }
+      var line = BOOT_LINES[li++];
+      var div = mkLine([]);
+      log.appendChild(div);
+      div.appendChild(caret);
+      var si = 0, ci = 0, span = null;
+      function typeChar() {
+        if (si >= line.length) { setTimeout(nextLine, 150); return; }
+        if (!span) {
+          span = document.createElement('span');
+          if (line[si].c) span.className = line[si].c;
+          div.insertBefore(span, caret);
+          ci = 0;
         }
-        var line = CONSOLE_LINES[li++];
-        var div = document.createElement('div');
-        div.className = 'v7-cl';
-        body.appendChild(div);
-        div.appendChild(caret);
-        var si = 0, ci = 0, span = null;
-        function typeChar() {
-          if (si >= line.length) { setTimeout(nextLine, 260); return; }
-          if (!span) {
-            span = document.createElement('span');
-            if (line[si].c) span.className = line[si].c;
-            div.insertBefore(span, caret);
-            ci = 0;
-          }
-          span.textContent += line[si].t.charAt(ci++);
-          if (ci >= line[si].t.length) { si++; span = null; }
-          setTimeout(typeChar, 16 + Math.random() * 26);
-        }
-        typeChar();
+        span.textContent += line[si].t.charAt(ci++);
+        if (ci >= line[si].t.length) { si++; span = null; }
+        log.scrollTop = log.scrollHeight;
+        setTimeout(typeChar, 11 + Math.random() * 14);
       }
-      nextLine();
+      typeChar();
     }
-    typeCycle();
+    nextLine();
   }
 
   /* ── Boot ────────────────────────────────────────────────────── */
@@ -313,11 +544,3 @@ function buildConsoleFoot(box) {
   });
   box.appendChild(foot);
 }
-
-/* the static no-JS console body stays as the accessible baseline;
-   when JS boots we enrich the markup and add the readout foot.  */
-(function patchConsoleForV8() {
-  var box = document.getElementById('v7Console');
-  if (!box) return;
-  buildConsoleFoot(box);
-})();
