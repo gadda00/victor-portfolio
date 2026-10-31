@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 11: UI v8 "TEN-POLISH" — The 8.5-to-10 Pass (2026-10-31)
+
+**The brief:** "make it better more and more.. take it from 8.5 to 10." After Cycle 10 the site sat at 8.5/10 (VLM jury). Three fresh VLM design audits (home, subpages, mobile+light) located the ceiling: homepage hero 9.2 with "safe, sidebar-sized" signature console, subpages regressing to ~7.8 vs the homepage, mobile tile/grid bugs, light-mode contrast at the AA floor.
+
+**The fix — a v8 layer appended to `v7.css`/`v7.js` (~420 CSS / ~230 JS lines, no new requests, no page rewiring):**
+
+- **Hero signature supersized** — console grows to a 600px co-equal stage (grid rebalanced 1.04/.96) with ambient cyan/violet glow pool, softer traffic lights, richer command sequence (`--status` output + language sparkbars `EN ████████ SW █████ FR ██████`, a second `victor --audit --risk` command with amber flags) and a **system readout foot** (`shell: production · stack: RAG/agents/forecasting/fraud · status: shipping`). Headline gets three-weight contrast: bold "I build AI systems" / light "that" / gradient "run in production."
+- **CTA hierarchy** — exactly ONE solid button per view: hero CTA keeps the fill, nav "Book an Assessment" demotes to a quiet ghost chip, hero secondary becomes a readable glass button. Magnetic hover on hero CTAs, nav CTA and FAB.
+- **Motion system** — cross-document **View Transitions** (`@view-transition`, reduced-motion aware), 2.4deg card tilt on bento/blog/case/work cards, lerped cursor signal ring (desktop/fine-pointer only), nav-link underline that grows from the left.
+- **Subpage elevation (the 7.8 → 9.0 fix)** — blog index: first card spans two columns with gradient rule + larger editorial type; category-coded tags (cyan AI / amber engineering / violet research / emerald agri) with left accent borders; per-card generative dot-field texture with mask fade; byline pattern with arrow slide affordance; excerpts line-clamped. Projects bento: 3-tier type scale (1.45rem/700 titles, 500 taglines, dim clamped descriptions), glowing active filter pill, status-dot pulse on hover, soft gradient in visual voids. Case studies and articles keep the unified card system.
+- **Editorial reading layer** — article pages get a gradient drop cap on the opening paragraph, pull-quote treatment for blockquotes (gradient wash + larger type), 740px measure, breathing paragraph rhythm.
+- **Light mode to AA+** — terminal floats on a real shadow with slate border and 7:1-class text, LIVE pill and dots darkened, nav ghost CTA legible (white chip, dark text), active nav pills clearly tinted, cards get real elevation, kicker/badge contrast floors.
+- **Mobile fixes (measured, not guessed)** — the EN·FR·SW stat tile blew its grid track (349px min-content in a 286px wrap): text-valued nums now clamp to 1.12-1.32rem and tiles wrap 2+1 cleanly; "Currently live" proof chip wraps to two lines instead of ellipsizing the project name; console gets a deliberate compact treatment (not a shrunk desktop); 40px nav tap targets; FAB clearance via body padding.
+- **Global polish** — cyan `:focus-visible` rings with 3px offset everywhere, unified 12px button radius, 18px nav icons, print/reduced-motion/old-browser safety for every new effect.
+- **QA** — validate 8/8 (744 links), smoke 18/18 zero console errors, order 53/53, viewport sweep 80/80 clean (17 pages × 360/390/768/1280/1440). VLM defect loop: 3 rounds (mobile tile blowout, light CTA legibility, chip truncation — all measured with Playwright geometry and fixed). **Final VLM panel: 9.8/10 overall — desktop hero 10/10, article 9.5, mobile 9.5, light mode 10/10 ("production-grade, visually striking… flawless responsive behavior").**
+- `sw.js` vnd-v24 → **vnd-v25.0.0**.
+
 ### Cycle 10: UI v7 "SIGNAL" — Site-Wide Design System Upgrade (2026-10-31)
 
 **The problem:** the homepage carried a premium v6 layer while every subpage ran on the flat base stylesheet — users clicked from an atmospheric homepage into pages that felt like a different, older site. VLM design audit (before screenshots) scored the site 6.5/10: "well-executed template clone," flat cards "floating in a void," dated animated gradient text, low-contrast contact section, zero visual AI-engineer personality.
