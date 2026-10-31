@@ -90,16 +90,22 @@
     }, 900);
   }
 
-  /* ── 4. Hero console typing ──────────────────────────────────── */
+  /* ── 4. Hero console typing (v8: richer production readout) ─── */
   var CONSOLE_LINES = [
-    [{ t: '$ ', c: 'v7-p' }, { t: 'victor --status --production' }],
+    [{ t: '$ ', c: 'v7-p' }, { t: 'victor', c: 'v7-hl' }, { t: ' --status --production' }],
     [{ t: '\u25CF ', c: 'v7-ok' }, { t: 'keja.app', c: 'v7-hl' },
       { t: ' \u00B7 87+ listings \u00B7 12 counties' }],
     [{ t: '\u25CF ', c: 'v7-ok' }, { t: 'tapi learn', c: 'v7-hl' },
       { t: ' \u00B7 11K+ learners \u00B7 38 countries' }],
-    [{ t: '\u25CF ', c: 'v7-ok' }, { t: 'languages', c: 'v7-hl' },
-      { t: ' \u00B7 EN \u00B7 FR \u00B7 SW' }],
-    [{ t: '\u2713 ', c: 'v7-ok' }, { t: '13 systems designed, built & shipped', c: 'v7-hl' }]
+    [{ t: '\u25CF ', c: 'v7-ok' }, { t: 'languages', c: 'v7-hl' }, { t: ' ' },
+      { t: 'EN \u2588\u2588\u2588\u2588\u2588\u2588\u2588\u2588 ', c: 'v7-spark' },
+      { t: 'SW \u2588\u2588\u2588\u2588\u2588 ', c: 'v7-spark' },
+      { t: 'FR \u2588\u2588\u2588\u2588\u2588\u2586', c: 'v7-spark' }],
+    [{ t: '\u2713 ', c: 'v7-ok' }, { t: '13 systems designed, built & shipped', c: 'v7-hl' }],
+    [{ t: '$ ', c: 'v7-p' }, { t: 'victor', c: 'v7-hl' }, { t: ' --audit --risk', c: 'v7-am' }],
+    [{ t: '\u26A0 ', c: 'v7-am' }, { t: '0 critical', c: 'v7-hl' },
+      { t: ' \u00B7 evals wired \u00B7 observability live' }],
+    [{ t: '\u2713 ', c: 'v7-ok' }, { t: 'ready for the next hard problem', c: 'v7-hl' }]
   ];
 
   function initConsole() {
@@ -175,10 +181,143 @@
     try { initSpotlight(); } catch (e) { /* decorative only */ }
     try { initReveals(); } catch (e) { /* decorative only */ }
     try { initConsole(); } catch (e) { /* decorative only */ }
+    try { initMagnetic(); } catch (e) { /* decorative only */ }
+    try { initTilt(); } catch (e) { /* decorative only */ }
+    try { initCursor(); } catch (e) { /* decorative only */ }
   }
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
   } else {
     boot();
   }
+})();
+
+/* ═══════════════════════════════════════════════════════════════════
+   v8 · TEN-POLISH interaction modules (Cycle 11)
+   5. Magnetic buttons  — CTAs lean toward the cursor
+   6. Card tilt         — a whisper of 3D on hover
+   7. Cursor signal     — lerped ring, desktop only
+   8. Console v8        — richer command sequence + readout foot
+   All gated: fine pointer + no reduced-motion + no touch.
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* ── 5. Magnetic buttons ─────────────────────────────────────── */
+function initMagnetic() {
+  if (!FINE_POINTER || REDUCED) return;
+  var SEL = '.hero-cta .btn, .nav-link-cta, .fab-book, .booking-cta-band .btn';
+  document.querySelectorAll(SEL).forEach(function (btn) {
+    btn.classList.add('v7-magnetic');
+    var raf = null, tx = 0, ty = 0;
+    btn.addEventListener('pointermove', function (e) {
+      var r = btn.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - .5;
+      var y = (e.clientY - r.top) / r.height - .5;
+      tx = x * 9; ty = y * 7;
+      btn.classList.add('v7-mag-on');
+      if (!raf) raf = requestAnimationFrame(apply);
+      function apply() {
+        btn.style.transform = 'translate(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) + 'px)';
+        raf = null;
+      }
+    }, { passive: true });
+    btn.addEventListener('pointerleave', function () {
+      btn.classList.remove('v7-mag-on');
+      btn.style.transform = '';
+    }, { passive: true });
+  });
+}
+
+/* ── 6. Card tilt — subtle, readability-safe ──────────────────── */
+function initTilt() {
+  if (!FINE_POINTER || REDUCED) return;
+  var SEL = '.bento-card, .blog-card, .case-card, .work-card';
+  function bind(card) {
+    if (card.__v8tilt) return;
+    card.__v8tilt = true;
+    card.classList.add('v7-tilt');
+    if (card.parentElement) card.parentElement.classList.add('v7-tilt-wrap');
+    var raf = null, rx = 0, ry = 0;
+    card.addEventListener('pointermove', function (e) {
+      var r = card.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - .5;
+      var y = (e.clientY - r.top) / r.height - .5;
+      ry = x * 2.4; rx = -y * 2.4;
+      card.classList.add('v7-tilt-on');
+      if (!raf) raf = requestAnimationFrame(apply);
+      function apply() {
+        card.style.transform = 'rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+        raf = null;
+      }
+    }, { passive: true });
+    card.addEventListener('pointerleave', function () {
+      card.classList.remove('v7-tilt-on');
+      card.style.transform = '';
+    }, { passive: true });
+    card.addEventListener('focusin', function () { card.style.transform = ''; });
+  }
+  document.querySelectorAll(SEL).forEach(bind);
+  /* bento + blog cards render after fetch — catch them too */
+  ['DOMContentLoaded', 'load'].forEach(function (ev) {
+    window.addEventListener(ev, function () {
+      setTimeout(function () { document.querySelectorAll(SEL).forEach(bind); }, 400);
+      setTimeout(function () { document.querySelectorAll(SEL).forEach(bind); }, 1400);
+    });
+  });
+}
+
+/* ── 7. Cursor signal — one quiet ring ────────────────────────── */
+function initCursor() {
+  if (!FINE_POINTER || REDUCED) return;
+  var dot = document.createElement('div');
+  dot.className = 'v7-cursor';
+  dot.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(dot);
+  var x = -100, y = -100, cx = -100, cy = -100, seen = false;
+  document.addEventListener('pointermove', function (e) {
+    x = e.clientX; y = e.clientY;
+    if (!seen) { seen = true; cx = x; cy = y; dot.style.opacity = '.9'; }
+    var t = e.target && e.target.closest ? e.target.closest('a, button, [role="button"], input, textarea, select, summary, .bento-card, .blog-card') : null;
+    dot.classList.toggle('v7-cur-in', !!t);
+  }, { passive: true });
+  document.addEventListener('pointerdown', function () { dot.style.opacity = '.5'; }, { passive: true });
+  document.addEventListener('pointerup', function () { dot.style.opacity = '.9'; }, { passive: true });
+  document.documentElement.addEventListener('mouseleave', function () { dot.style.opacity = '0'; });
+  (function loop() {
+    cx += (x - cx) * .18;
+    cy += (y - cy) * .18;
+    dot.style.transform = 'translate3d(' + cx.toFixed(1) + 'px,' + cy.toFixed(1) + 'px,0)';
+    requestAnimationFrame(loop);
+  })();
+}
+
+/* ── 8. Console v8 — readout foot under the console body ────── */
+var CONSOLE_FOOT = [
+  { k: 'shell', v: 'production' },
+  { k: 'stack', v: 'RAG \u00B7 agents \u00B7 forecasting \u00B7 fraud' },
+  { k: 'status', v: 'shipping', ok: true }
+];
+
+function buildConsoleFoot(box) {
+  if (box.querySelector('.v7-console-foot')) return;
+  var foot = document.createElement('div');
+  foot.className = 'v7-console-foot';
+  CONSOLE_FOOT.forEach(function (f) {
+    var s = document.createElement('span');
+    s.innerHTML = '';
+    var k = document.createElement('span'); k.textContent = f.k + ': ';
+    var v = document.createElement(f.ok ? 'b' : 'b');
+    if (f.ok) v.className = 'foot-ok';
+    v.textContent = f.v;
+    s.appendChild(k); s.appendChild(v);
+    foot.appendChild(s);
+  });
+  box.appendChild(foot);
+}
+
+/* the static no-JS console body stays as the accessible baseline;
+   when JS boots we enrich the markup and add the readout foot.  */
+(function patchConsoleForV8() {
+  var box = document.getElementById('v7Console');
+  if (!box) return;
+  buildConsoleFoot(box);
 })();
