@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [Unreleased]
+
+### Cycle 12: UI v9 "LIVING SHELL" — the typeable hero (2026-10-31)
+
+**The brief:** "choose and make a more unique and better hero… also make other discoverable improvements you discover." The v8 console was scored 10/10 for execution but the design audit's #1 unmet recommendation was personality: "the terminal must feel like a living shell… the terminal should accept typed input." A static terminal is now a common dev-portfolio trope; the particle-web background was outright template cliché.
+
+**The fix — the console becomes a REAL shell, and the canvas becomes a system map:**
+
+- **Typeable production shell (`v7.js` §4 rewritten):** a boot sequence streams in, then a genuine prompt accepts commands — `help`, `whoami`, `projects`/`ls`, `stack`, `metrics`, `contact`, `book` (opens the scheduler), `theme` (toggles light/dark), `history`, `neofetch` (ASCII constellation art + key/value system card — the dev-culture easter egg), `sudo hire-me` ("permission granted ✓ → /book/"), `clear`. Unknown commands get terminal-authentic `command not found` feedback. Full command history with ArrowUp/Down, log pruned at 60 lines, Escape blurs.
+- **Tap-friendly:** suggestion chips (help · projects · neofetch · book) under the body — mobile users run the shell without typing a character; console click focuses the input (never steals text selections); input is 16px on mobile so iOS doesn't zoom on focus.
+- **a11y:** console drops `aria-hidden`; log is `role=log` with `aria-live=polite` attached only AFTER boot (no screen-reader spam during typing); labelled input; reduced-motion users get the boot instantly and keep a fully working shell — user-typed input is the user's own motion.
+- **Routing constellation canvas (`app.js` §1 rewritten):** the drifting particle web (particles.js cliché) is replaced by a stable nearest-neighbour topology of glowing brand-colored nodes mirroring the logo mark, with bright packets that ROUTE node-to-node along edges and pulse each node on arrival — data flowing through production systems. Same public API as the old system, so the offscreen-pause observer, resize debounce and mouse hooks kept working; reduced-motion draws the static topology once.
+- **Proof chip cycles (`proof-chip.js` v19):** instead of one static "Currently live" project, it now crossfades through every live project every 5.2s (paused when the tab is hidden; static under reduced motion).
+- **Mobile fold optimization (measured):** at 390×844 the CTA bottom sat at 895px — 51px below the fold. Trimmed hero vertical overhead → primary CTA now visible without scrolling on all mobile widths (813px @390, 762px @414).
+- **Polish:** console `:focus-within` glow (the whole terminal wakes when you type), neofetch grid styling, dim output class, print + reduced-motion safety for every new surface.
+- **QA:** validate 8/8, smoke 18/18 zero console errors, order 53/53, viewport sweep 80/80; NEW `scripts/shell_test.js` — 18/18 functional checks (boot, every command class, chips, history recall, book navigation, theme toggle, log pruning, canvas painting, zero JS errors). VLM jury: **hero 10/10 ("flawless execution across all viewports and themes"), concept uniqueness 10/10 ("best-in-class for AI/engineer portfolios… moves beyond the VS Code-screenshot cliché into experiential design").**
+- `sw.js` vnd-v25 → **vnd-v26.0.0**.
+
 ### Cycle 11: UI v8 "TEN-POLISH" — The 8.5-to-10 Pass (2026-10-31)
 
 **The brief:** "make it better more and more.. take it from 8.5 to 10." After Cycle 10 the site sat at 8.5/10 (VLM jury). Three fresh VLM design audits (home, subpages, mobile+light) located the ceiling: homepage hero 9.2 with "safe, sidebar-sized" signature console, subpages regressing to ~7.8 vs the homepage, mobile tile/grid bugs, light-mode contrast at the AA floor.
