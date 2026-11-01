@@ -1550,6 +1550,7 @@ html.light .article-body blockquote {
   overscroll-behavior: contain;
 }
 .v7-shell-log::-webkit-scrollbar { width: 5px; }
+.v7-shell-log:focus-visible { outline: 2px solid rgba(34,211,238,.6); outline-offset: -2px; border-radius: 6px; }
 .v7-shell-log::-webkit-scrollbar-thumb { background: rgba(148,163,216,.22); border-radius: 4px; }
 .v7-shell-log .v7-cl { white-space: pre-wrap; word-break: break-word; min-height: 1em; }
 .v7-cl .v7-d { color: var(--v7-text-dim); }

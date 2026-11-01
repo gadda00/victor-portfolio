@@ -231,6 +231,10 @@
     log.className = 'v7-shell-log';
     log.setAttribute('role', 'log');
     log.setAttribute('aria-label', 'Console output');
+    // the log scrolls once content exceeds its max-height — keyboard users
+    // must be able to focus and scroll it (WCAG 2.1.1 / axe
+    // scrollable-region-focusable)
+    log.setAttribute('tabindex', '0');
     var row = document.createElement('div');
     row.className = 'v7-shell-input-row';
     var prompt = document.createElement('span');
