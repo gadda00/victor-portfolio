@@ -15,7 +15,7 @@
   --v6-stroke-hi: rgba(148, 163, 216, 0.28);
   --v6-text-hi: #f4f7ff;
   --v6-text-mid: #a5b0cc;
-  --v6-text-dim: #6c7796;
+  --v6-text-dim: #8292b1; /* v21: axe contrast */
   --v6-cyan: #22d3ee;
   --v6-violet: #818cf8;
   --v6-emerald: #34d399;
@@ -40,7 +40,7 @@ html.light {
   --v6-stroke-hi: rgba(30,41,82,0.24);
   --v6-text-hi: #0c1230;
   --v6-text-mid: #3d4768;
-  --v6-text-dim: #5b6480;
+  --v6-text-dim: #54637b; /* v21: axe contrast */
   --v6-cyan: #0e7490;
   --v6-violet: #4f46e5;
   --v6-emerald: #047857;

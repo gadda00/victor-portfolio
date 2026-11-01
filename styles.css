@@ -4,7 +4,7 @@
 /* ─── Root Variables ─────────────────────────────────────────────── */
 :root {
   --bg: #0a0a0f; --bg-elev: #12121a; --bg-card: rgba(255,255,255,0.03);
-  --text: #e2e8f0; --text-muted: #8892b0; --text-dim: #64748b;
+  --text: #e2e8f0; --text-muted: #8892b0; --text-dim: #8292b1; /* v21: >=4.5:1 incl. tinted stat panels (axe-verified) */
   --accent: #00d4ff; --accent-2: #a855f7; --accent-3: #10b981;
   --border: rgba(255,255,255,0.08); --glass: rgba(255,255,255,0.05);
   --glow: rgba(0,212,255,0.15); --glow-2: rgba(168,85,247,0.15);
@@ -13,7 +13,7 @@
 }
 html.light {
   --bg: #f8fafc; --bg-elev: #ffffff; --bg-card: rgba(0,0,0,0.025);
-  --text: #0f172a; --text-muted: #475569; --text-dim: #64748b;
+  --text: #0f172a; --text-muted: #475569; --text-dim: #4f5e75; /* v21: >=4.5:1 incl. glass backgrounds (axe-verified) */
   --accent: #0e7490; --accent-2: #7c3aed; --accent-3: #059669;
   --border: rgba(0,0,0,0.08); --glass: rgba(0,0,0,0.025);
   --glow: rgba(14,116,144,0.12); --glow-2: rgba(124,58,237,0.12);
