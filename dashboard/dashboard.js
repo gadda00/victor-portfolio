@@ -32,6 +32,26 @@
   }
   window.__toast = toast;
 
+  // ─── Single audited HTML escape (v21) ────────────────────────────
+  // EVERY user-controlled value rendered through a template string in
+  // this file must pass through esc2(). New code should prefer the DOM
+  // helpers below (el/text) so escaping cannot be forgotten.
+  function esc2(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+  // For hrefs built from user data: allow only [A-Za-z0-9_.-] fragments.
+  function safePath(s) {
+    return String(s == null ? '' : s).replace(/[^A-Za-z0-9_.\-]/g, '');
+  }
+
   // ─── Elements ─────────────────────────────────────────────────────
   var authOverlay = document.getElementById('authOverlay');
   var dashApp = document.getElementById('dashApp');
@@ -286,7 +306,7 @@
       '</div>' +
       '<div class="card"><h3>Recent Activity</h3>' +
       (activity.length ? activity.map(function (a) {
-        return '<div class="activity"><div class="icon">📋</div><div class="txt">' + a.message + '</div><div class="time">' + timeAgo(a.timestamp) + '</div></div>';
+        return '<div class="activity"><div class="icon">📋</div><div class="txt">' + esc2(a.message) + '</div><div class="time">' + esc2(timeAgo(a.timestamp)) + '</div></div>';
       }).join('') : '<div class="empty"><div class="icon">📭</div>No activity yet.</div>') +
       '</div>';
   };
@@ -363,7 +383,7 @@
               '</ol>Until then, the WhatsApp and Cal.com hand-offs keep working — only email delivery is down.</div></div>';
             toast('Web3Forms key is invalid — see instructions', 'warn');
           } else {
-            out.innerHTML = '<div class="check-item"><div class="check warn">!</div><div><strong>Web3Forms rejected the request.</strong> ' + (j && j.message ? esc(j.message) : 'Unknown error') + '</div></div>';
+            out.innerHTML = '<div class="check-item"><div class="check warn">!</div><div><strong>Web3Forms rejected the request.</strong> ' + (j && j.message ? esc2(j.message) : 'Unknown error') + '</div></div>';
           }
         })
         .catch(function (err) {
@@ -375,7 +395,7 @@
       out.innerHTML = '<div class="check-item"><div class="check warn">!</div><div><strong>Could not read /book/.</strong> ' + String(err) + '</div></div>';
     });
   }
-  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function esc(s) { return esc2(s); } // legacy local alias
 
   sections.notifications = function () {
     return '<div class="page-head"><h1>Notifications</h1><p>Assistant activity is emailed to you via Web3Forms — verify the pipeline here.</p></div>' +
@@ -462,10 +482,10 @@
       all.map(function(p, i) {
         var isCustom = i >= jsonProjects.length;
         return '<tr>' +
-          '<td><strong>' + (p.icon || '') + ' ' + p.name + '</strong>' + (isCustom ? ' <span class="badge b-green">custom</span>' : '') + '</td>' +
-          '<td>' + (p.category || '—') + '</td>' +
-          '<td><span class="badge ' + (p.status === 'production' ? 'b-green' : p.status === 'active' ? 'b-blue' : 'b-gray') + '">' + (p.status || '—') + '</span></td>' +
-          '<td>' + (p.github ? '<a href="https://github.com/' + p.github + '" target="_blank" style="color:var(--acc)">' + p.github + '</a>' : '—') + '</td>' +
+          '<td><strong>' + (p.icon ? esc2(p.icon) + ' ' : '') + esc2(p.name) + '</strong>' + (isCustom ? ' <span class="badge b-green">custom</span>' : '') + '</td>' +
+          '<td>' + esc2(p.category || '—') + '</td>' +
+          '<td><span class="badge ' + (p.status === 'production' ? 'b-green' : p.status === 'active' ? 'b-blue' : 'b-gray') + '">' + esc2(p.status || '—') + '</span></td>' +
+          '<td>' + (p.github ? '<a href="https://github.com/' + encodeURIComponent(safePath(p.github)) + '" target="_blank" style="color:var(--acc)">' + esc2(p.github) + '</a>' : '—') + '</td>' +
           '<td>' + (p.featured ? '⭐' : '—') + '</td>' +
           '<td>' + (isCustom ? '<button class="btn btn-sm btn-ghost" data-del-project="' + (i - jsonProjects.length) + '">Delete</button>' : '<span style="color:var(--txt3);font-size:0.75rem">json</span>') + '</td>' +
         '</tr>';
@@ -591,7 +611,7 @@
       '</div>' +
       '<div class="card"><table class="tbl"><thead><tr><th>Title</th><th>Tag</th><th>Date</th><th>Read</th></tr></thead><tbody>' +
       blogPosts.map(function (p) {
-        return '<tr><td><strong>' + p.title + '</strong></td><td><span class="badge b-blue">' + p.tag + '</span></td><td>' + p.date + '</td><td>' + p.readTime + '</td></tr>';
+        return '<tr><td><strong>' + esc2(p.title) + '</strong></td><td><span class="badge b-blue">' + esc2(p.tag) + '</span></td><td>' + esc2(p.date) + '</td><td>' + esc2(p.readTime) + '</td></tr>';
       }).join('') +
       '</tbody></table></div>';
   };
@@ -616,62 +636,130 @@
     try { localStorage.setItem('vn_portal_clients', JSON.stringify(arr)); } catch {}
   }
 
+  /* v21: owner-side payment transitions on IMPORTED client records.
+     Same event shape as portal-core's ledger. In demo mode this is an
+     explicit, browser-local owner action — never a provider webhook. */
+  function payActionAllowed(from, to) {
+    if (from === 'reported') return ['submitted', 'verified', 'rejected'].indexOf(to) !== -1;
+    if (from === 'submitted') return ['verified', 'rejected'].indexOf(to) !== -1;
+    if (from === 'verified') return to === 'refunded';
+    return false;
+  }
+
+  function transitionImportedPayment(idx, n, to) {
+    var clients = getPortalClients();
+    var c = clients[idx];
+    if (!c || !c.project) return false;
+    var pay = (c.project.payments || []).find(function (x) { return Number(x.n) === Number(n); });
+    if (!pay) return false;
+    var from = pay.status || 'due';
+    if (from === to || !payActionAllowed(from, to)) { toast('Cannot move a payment from ' + from + ' to ' + to + '.', 'warn'); return false; }
+    pay.status = to;
+    pay.events = Array.isArray(pay.events) ? pay.events : [];
+    pay.events.push({
+      id: 'PE' + Date.now().toString(36).toUpperCase(),
+      at: new Date().toISOString(),
+      actor: 'owner', source: 'owner-action',
+      from: from, to: to,
+      currency: 'USD', amountMinor: Math.round((pay.usd || 0) * 100),
+      provider: pay.method || null, providerRef: pay.ref || null,
+      idempotencyKey: (c.project.id || 'P') + ':' + n + ':' + to + ':' + Date.now().toString(36),
+      note: 'Owner ' + to + ' in dashboard (demo: browser-local owner action — no provider webhook).'
+    });
+    if (to === 'verified') pay.verifiedAt = new Date().toISOString();
+    if (to === 'rejected') pay.rejectedAt = new Date().toISOString();
+    if (to === 'refunded') pay.refundedAt = new Date().toISOString();
+    savePortalClients(clients);
+    toast('Payment ' + to + ' — owner-action event recorded');
+    switchSection('clients');
+    return true;
+  }
+
+  var IMPORT_PAY_BADGES = {
+    verified:  ['b-green', 'verified'],
+    reported:  ['b-yellow', 'reported'],
+    submitted: ['b-blue', 'submitted'],
+    rejected:  ['b-red', 'rejected'],
+    refunded:  ['b-gray', 'refunded'],
+    due:       ['b-gray', 'due'],
+    sent:      ['b-blue', 'sent']
+  };
+
   sections.clients = function () {
     var events = getPortalEvents();
     var clients = getPortalClients();
     var briefs = getBriefs();
-    var paidTotal = clients.reduce(function (a, c) {
-      return a + ((c.project && c.project.payments || []).filter(function (p) { return p.status === 'paid'; }).reduce(function (s, p) { return s + (p.usd || 0); }, 0));
+    // v21: only VERIFIED payments count as received; reported tracked separately
+    var verifiedTotal = clients.reduce(function (a, c) {
+      return a + ((c.project && c.project.payments || []).filter(function (p) { return p.status === 'verified'; }).reduce(function (s, p) { return s + (p.usd || 0); }, 0));
+    }, 0);
+    var reportedTotal = clients.reduce(function (a, c) {
+      return a + ((c.project && c.project.payments || []).filter(function (p) { return p.status === 'reported' || p.status === 'submitted'; }).reduce(function (s, p) { return s + (p.usd || 0); }, 0));
     }, 0);
     var mrr = clients.reduce(function (a, c) {
       return a + (c.project && c.project.retainer && c.project.retainer.active ? (c.project.retainer.monthlyUsd || 0) : 0);
     }, 0);
 
-    return '<div class="page-head"><h1>Client Portal Command Center</h1><p>Everything your clients do in their encrypted portals — activity, imports, and revenue.</p></div>' +
+    return '<div class="page-head"><h1>Client Portal Command Center</h1><p>Imported client snapshots — client-reported data you verify explicitly.</p></div>' +
       '<div class="stat-grid">' +
       '<div class="stat"><div class="stat-label">Portal Clients</div><div class="stat-val">' + clients.length + '</div></div>' +
-      '<div class="stat"><div class="stat-label">Paid (tracked)</div><div class="stat-val">' + usd(paidTotal) + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Verified (tracked)</div><div class="stat-val">' + usd(verifiedTotal) + '</div></div>' +
+      '<div class="stat"><div class="stat-label">Reported · unverified</div><div class="stat-val" style="color:#fbbf24">' + usd(reportedTotal) + '</div></div>' +
       '<div class="stat"><div class="stat-label">Retainer MRR</div><div class="stat-val">' + usd(mrr) + '</div></div>' +
-      '<div class="stat"><div class="stat-label">Events (this device)</div><div class="stat-val">' + events.length + '</div></div>' +
       '</div>' +
 
-      '<div class="card"><h3>📥 Import a client share code</h3>' +
-      '<p style="color:var(--txt2);font-size:0.85rem;line-height:1.6;margin:0 0 0.75rem">When a client clicks "Generate share code" in their portal, they get a <code>VN1.…</code> string. Paste it here to import their project snapshot — payments, pipeline stage, retainer and contact details — into this dashboard.</p>' +
+      '<div class="card"><h3>📥 Import a client snapshot code</h3>' +
+      '<p style="color:var(--txt2);font-size:0.85rem;line-height:1.6;margin:0 0 0.75rem">When a client clicks "Generate snapshot code" in their portal, they get a <code>VN2.…</code> string (versioned, expiring, checksummed). Paste it here to import their project snapshot. Imports are always <strong>client-reported and unverified</strong> — payments arrive as "reported" no matter what the code claims, and only your explicit action below produces "verified".</p>' +
       '<div style="display:flex;gap:0.5rem;flex-wrap:wrap">' +
-      '<input type="text" id="portalImportInput" placeholder="VN1.eyJ2IjoxLCJraW5kIjoidm4tcG9ydGFs…" style="flex:1;min-width:220px" class="input" />' +
+      '<input type="text" id="portalImportInput" placeholder="VN2.eyJ2IjoyLCJraW5kIjoidm4tcG9ydGFs…" style="flex:1;min-width:220px" class="input" />' +
       '<button class="btn" id="portalImportBtn">Import client</button>' +
       '</div>' +
       '<div id="portalImportOut" style="margin-top:0.6rem"></div>' +
       '</div>' +
 
-      (clients.length ? '<div class="card"><h3>💼 Imported clients</h3><table class="tbl"><thead><tr><th>Client</th><th>Project</th><th>Pipeline</th><th>Paid / Value</th><th>Retainer</th><th>Imported</th></tr></thead><tbody>' +
+      (clients.length ? '<div class="card"><h3>💼 Imported clients</h3>' +
+      '<div class="check-item" style="margin-bottom:0.75rem"><div class="check warn">!</div><div><strong>Unverified imports.</strong> Snapshot data is client-provided. "Reported" payments still need reconciliation against your M-Pesa / bank statement before you mark them verified.</div></div>' +
+      '<table class="tbl"><thead><tr><th>Client</th><th>Project</th><th>Payments (owner actions)</th><th>Retainer</th><th>Imported</th></tr></thead><tbody>' +
       clients.slice().reverse().map(function (c) {
         var p = c.project || {};
-        var pays = p.payments || [];
-        var paid = pays.filter(function (x) { return x.status === 'paid'; }).reduce(function (s, x) { return s + (x.usd || 0); }, 0);
-        var value = pays.reduce(function (s, x) { return s + (x.usd || 0); }, 0) || (p.estimate && p.estimate.totalUsd) || 0;
         var prog = p.progress != null ? p.progress : 0;
         var ret = p.retainer;
+        var idx = clients.indexOf(c); // stable index into the un-reversed array
+        var paysHtml = (p.payments || []).map(function (x) {
+          var b = IMPORT_PAY_BADGES[x.status] || IMPORT_PAY_BADGES.due;
+          var out = '<div style="display:flex;align-items:center;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.3rem">' +
+            '<span class="badge ' + b[0] + '">' + b[1] + '</span>' +
+            '<span style="font-size:0.75rem;color:var(--txt2)">' + esc2(x.label) + ' · ' + usd(x.usd || 0) + (x.ref ? ' · ref ' + esc2(x.ref) : '') + (x.claimedStatus && x.claimedStatus !== 'reported' ? ' · client claimed "' + esc2(x.claimedStatus) + '"' : '') + '</span>';
+          if (x.status === 'reported') {
+            out += '<button class="btn btn-sm" data-pay-client="' + idx + '" data-pay-n="' + esc2(x.n) + '" data-pay-to="verified">✓ Verify</button>' +
+                   '<button class="btn btn-sm btn-ghost" data-pay-client="' + idx + '" data-pay-n="' + esc2(x.n) + '" data-pay-to="rejected">✗ Reject</button>';
+          } else if (x.status === 'submitted') {
+            out += '<button class="btn btn-sm" data-pay-client="' + idx + '" data-pay-n="' + esc2(x.n) + '" data-pay-to="verified">✓ Verify</button>';
+          } else if (x.status === 'verified') {
+            out += '<button class="btn btn-sm btn-ghost" data-pay-client="' + idx + '" data-pay-n="' + esc2(x.n) + '" data-pay-to="refunded">↩ Refund</button>';
+          }
+          out += '</div>';
+          return out;
+        }).join('') || '<span style="color:var(--txt3);font-size:0.8rem">No payment plan yet</span>';
         return '<tr><td><strong>' + (c.client ? esc2(c.client.name || c.client.email) : '—') + '</strong><div style="font-size:0.7rem;color:var(--txt3)">' + (c.client ? esc2(c.client.email || '') : '') + '</div></td>' +
-          '<td>' + esc2(p.name || p.packageName || '—') + '</td>' +
-          '<td><span class="badge ' + (prog >= 100 ? 'b-green' : prog > 0 ? 'b-blue' : 'b-gray') + '">' + prog + '%</span> <span style="font-size:0.7rem;color:var(--txt3)">' + esc2(p.status || '') + '</span></td>' +
-          '<td>' + usd(paid) + ' / ' + usd(value) + '</td>' +
+          '<td>' + esc2(p.name || p.packageName || '—') + '<div style="font-size:0.7rem;color:var(--txt3)">' + esc2(p.status || '') + ' · ' + prog + '%</div></td>' +
+          '<td>' + paysHtml + '</td>' +
           '<td>' + (ret ? (ret.active ? '<span class="badge b-green">' + usd(ret.monthlyUsd) + '/mo</span>' : '<span class="badge b-gray">ended</span>') : '—') + '</td>' +
           '<td>' + (c.importedAt ? new Date(c.importedAt).toLocaleDateString() : '—') + '</td></tr>';
       }).join('') + '</tbody></table></div>' : '') +
 
       '<div class="card"><h3>⚡ How the portal pipeline reaches you</h3>' +
       '<div class="set-row"><span class="set-label">Client signs up</span><span class="set-val">Instant email (Web3Forms) → mututandunda@gmail.com</span></div>' +
-      '<div class="set-row"><span class="set-label">Plan chosen / payment marked</span><span class="set-val">Instant email with M-Pesa ref for verification</span></div>' +
+      '<div class="set-row"><span class="set-label">Payment reported by client</span><span class="set-val">Instant email with the client\'s M-Pesa ref — client-reported, not verified</span></div>' +
+      '<div class="set-row"><span class="set-label">Verification</span><span class="set-val">You reconcile against your statement, then press ✓ Verify above (owner action)</span></div>' +
       '<div class="set-row"><span class="set-label">Client message / support request</span><span class="set-val">Instant email — reply within 4 business hours</span></div>' +
-      '<div class="set-row"><span class="set-label">Retainer cancellation</span><span class="set-val">Instant email with reason — 30-day notice applies</span></div>' +
-      '<div class="set-row"><span class="set-label">Full project detail</span><span class="set-val">Client share code → import above</span></div>' +
+      '<div class="set-row"><span class="set-label">Full project detail</span><span class="set-val">Client snapshot code → validated import above (unverified)</span></div>' +
       '</div>' +
 
       (events.length ? '<div class="card"><h3>📡 Recent portal events (this device)</h3>' +
       events.slice(0, 15).map(function (e) {
         var ic = { auth: '🔐', project: '📁', payment: '💳', retainer: '🛡️', message: '💬' }[e.type] || '•';
-        return '<div class="activity"><div class="icon">' + ic + '</div><div class="txt">' + esc2(e.text) + (e.email ? ' <span style="color:var(--txt3);font-size:0.75rem">(' + esc2(e.email) + ')</span>' : '') + '</div><div class="time">' + timeAgo(e.at) + '</div></div>';
+        return '<div class="activity"><div class="icon">' + ic + '</div><div class="txt">' + esc2(e.text) + (e.email ? ' <span style="color:var(--txt3);font-size:0.75rem">(' + esc2(e.email) + ')</span>' : '') + '</div><div class="time">' + esc2(timeAgo(e.at)) + '</div></div>';
       }).join('') + '</div>' : '') +
 
       (briefs.length ? '<div class="card"><h3>📋 Legacy briefs (pre-portal)</h3><table class="tbl"><thead><tr><th>Client</th><th>Package</th><th>Status</th><th>Date</th></tr></thead><tbody>' +
@@ -679,46 +767,85 @@
         var pkg = b.recommendation ? b.recommendation.packageName : (b.estimate ? b.estimate.packageName : '—');
         var st = b.status || 'draft';
         var bc = { draft: 'b-gray', contracted: 'b-blue', 'in-progress': 'b-yellow', delivered: 'b-green' }[st] || 'b-gray';
-        return '<tr><td><strong>' + (b.details ? esc2(b.details.name) : 'Unknown') + '</strong></td><td>' + esc2(pkg) + '</td><td><span class="badge ' + bc + '">' + st + '</span></td><td>' + (b.createdAt ? new Date(b.createdAt).toLocaleDateString() : '—') + '</td></tr>';
+        return '<tr><td><strong>' + (b.details ? esc2(b.details.name) : 'Unknown') + '</strong></td><td>' + esc2(pkg) + '</td><td><span class="badge ' + bc + '">' + esc2(st) + '</span></td><td>' + (b.createdAt ? new Date(b.createdAt).toLocaleDateString() : '—') + '</td></tr>';
       }).join('') + '</tbody></table></div>' : '');
   };
-
-  function esc2(s) {
-    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
-    });
-  }
 
   listeners.clients = function () {
     var btn = document.getElementById('portalImportBtn');
     var input = document.getElementById('portalImportInput');
     var out = document.getElementById('portalImportOut');
     if (!btn || !input) return;
-    btn.addEventListener('click', function () {
+    btn.addEventListener('click', async function () {
       var code = input.value.trim();
       out.innerHTML = '';
-      if (!code) { out.innerHTML = '<span style="color:#f87171;font-size:0.8rem">Paste a share code first.</span>'; return; }
-      var snap = null;
-      try {
-        // decode VN1.<base64url> share codes produced by the client portal
-        var b = code.slice(4).replace(/-/g, '+').replace(/_/g, '/');
-        while (b.length % 4) b += '=';
-        snap = JSON.parse(decodeURIComponent(escape(atob(b))));
-      } catch (e) { snap = null; }
-      if (!snap || snap.kind !== 'vn-portal-project' || !snap.project) {
-        out.innerHTML = '<span style="color:#f87171;font-size:0.8rem">That is not a valid portal share code. Ask the client to re-copy it (starts with VN1.).</span>';
+      if (!code) {
+        out.innerHTML = '<div class="check-item"><div class="check warn">!</div><div>Paste a snapshot code first.</div></div>';
         return;
       }
+      if (!window.VNPortalCore || typeof window.VNPortalCore.decodeShareCode !== 'function') {
+        out.innerHTML = '<div class="check-item"><div class="check warn">!</div><div>Snapshot validator unavailable (portal-core.js did not load).</div></div>';
+        return;
+      }
+      btn.disabled = true; btn.textContent = 'Validating…';
+      var res;
+      try { res = await window.VNPortalCore.decodeShareCode(code); }
+      catch (e) { res = { ok: false, error: 'Validation failed: ' + (e && e.message ? e.message : 'unknown error') }; }
+      btn.disabled = false; btn.textContent = 'Import client';
+
+      if (!res || !res.ok) {
+        out.innerHTML = '<div class="check-item"><div class="check warn">!</div><div><strong>Import rejected.</strong> ' + esc2(res && res.error ? res.error : 'Unknown error') + '</div></div>';
+        return;
+      }
+
+      var snap = res.snapshot;
       var clients = getPortalClients().filter(function (c) { return c.project && c.project.id !== snap.project.id; });
-      clients.push({ client: snap.client, project: snap.project, importedAt: new Date().toISOString() });
+      clients.push({
+        client: snap.client,
+        project: snap.project,
+        importedAt: new Date().toISOString(),
+        unverified: true,                       // imports are client-reported, always
+        importMeta: {
+          version: res.meta && res.meta.version,
+          legacy: !!(res.meta && res.meta.legacy),
+          replay: res.meta && res.meta.replay,
+          importedAt: new Date().toISOString()
+        }
+      });
       if (clients.length > 50) clients = clients.slice(-50);
       savePortalClients(clients);
-      var p = snap.project;
-      var paid = (p.payments || []).filter(function (x) { return x.status === 'paid'; }).reduce(function (s, x) { return s + (x.usd || 0); },0);
-      out.innerHTML = '<div class="check-item"><div class="check ok">✓</div><div><strong>Imported ' + esc2(p.name || p.packageName) + '</strong> — ' + esc2(snap.client ? snap.client.name : '') + ' · ' + usd(paid) + ' received · ' + (p.progress || 0) + '% through the pipeline.</div></div>';
+
+      var reportedUsd = (snap.project.payments || []).reduce(function (s, x) { return s + (x.usd || 0); }, 0);
+      var notes = [];
+      if (res.warning) notes.push(esc2(res.warning));
+      if (res.meta && res.meta.replay === 'duplicate') notes.push('Duplicate import: this exact snapshot was already imported on this device (nonce replay flagged).');
+      if (snap._meta && snap._meta.claimedPaid) notes.push('The client\'s code claimed paid/verified status — imported as <em>reported</em> (unverified) regardless.');
+      notes.push('Payments show as "reported" — reconcile against your statement, then use ✓ Verify.');
+
+      out.innerHTML = '<div class="check-item"><div class="check ok">✓</div><div><strong>Imported ' + esc2(snap.project.name || snap.project.packageName) + '</strong> — ' +
+        esc2(snap.client ? snap.client.name : '') + ' · ' + usd(reportedUsd) + ' reported (unverified) · ' + (snap.project.progress || 0) + '% through the pipeline.' +
+        '<div style="font-size:0.78rem;color:var(--txt2);margin-top:0.4rem;line-height:1.6">· ' + notes.join('<br>· ') + '</div></div></div>';
       input.value = '';
-      toast('Client imported into command center');
-      setTimeout(function () { switchSection('clients'); }, 900);
+      toast('Client snapshot imported — unverified, client-reported');
+      setTimeout(function () { switchSection('clients'); }, 1200);
+    });
+
+    // Owner payment actions on imported records (verify / reject / refund)
+    document.querySelectorAll('[data-pay-client]').forEach(function (b) {
+      b.addEventListener('click', function () {
+        var idx = parseInt(b.getAttribute('data-pay-client'), 10);
+        var n = parseInt(b.getAttribute('data-pay-n'), 10);
+        var to = b.getAttribute('data-pay-to');
+        var clients = getPortalClients();
+        var c = clients[idx];
+        var pay = c && c.project && (c.project.payments || []).find(function (x) { return Number(x.n) === n; });
+        if (!pay) return;
+        var label = (pay.label || 'installment ' + n) + ' (' + usd(pay.usd || 0) + ')';
+        if (to === 'verified' && !confirm('Verify ' + label + ' for ' + (c.client ? (c.client.name || c.client.email) : 'this client') + '?\n\nOnly do this after reconciling the client\'s reference against your M-Pesa / bank statement. This records an owner-action event in the payment ledger (demo: browser-local).')) return;
+        if (to === 'rejected' && !confirm('Reject ' + label + '? The client will need to re-report or follow up manually.')) return;
+        if (to === 'refunded' && !confirm('Mark ' + label + ' as refunded? This records an owner-action refund event.')) return;
+        transitionImportedPayment(idx, n, to);
+      });
     });
   };
 
@@ -756,6 +883,10 @@
       else if (st === 'overdue') rev.overdue += t.balanceUsd;
       else rev.pending += t.balanceUsd || t.totalUsd;
     });
+
+    // v21: the invoice table is DOM-built in listeners.invoicing —
+    // invoice numbers, client names and dates come from browser storage
+    // (user-controlled) and must never be interpolated into HTML strings.
     return '<div class="page-head"><h1>Invoicing</h1><p>First-party invoices — draft, send, track payment.</p></div>' +
       '<div class="stat-grid">' +
       '<div class="stat"><div class="stat-label">Paid</div><div class="stat-val">' + usd(rev.paid) + '</div></div>' +
@@ -771,18 +902,52 @@
       '<div class="card"><h3>Pipeline</h3>' +
       '<p style="color:var(--txt2);font-size:0.9rem;line-height:1.7">Enquiry (assistant) → Estimate → Call booked (scheduler) → Proposal → <strong>Invoice</strong> → Payment → Delivery. ' +
       'The assistant estimate and wizard brief both import into the invoice tool as line items — one continuous, first-party chain.</p></div>' +
-      (invoices.length ? '<div class="card"><table class="tbl"><thead><tr><th>Number</th><th>Client</th><th>Total</th><th>Balance</th><th>Status</th><th>Due</th></tr></thead><tbody>' +
-      invoices.slice().reverse().map(function (inv) {
-        var t = invTotalsOf(inv);
-        var st = invStatus(inv);
-        var bc = { draft: 'badge-gray', sent: 'badge-blue', paid: 'badge-green', overdue: 'badge-red' }[st] || 'badge-gray';
-        return '<tr><td><strong>' + inv.number + '</strong></td><td>' + (inv.client.name || inv.client.company || '—') + '</td><td>' + usd(t.totalUsd) + '</td><td>' + (t.paidUsd > 0 ? usd(t.balanceUsd) : '—') + '</td><td><span class="badge ' + bc + '">' + st + '</span></td><td>' + (inv.due || '—') + '</td></tr>';
-      }).join('') + '</tbody></table></div>' : '<div class="empty"><div class="icon">🧾</div>No invoices yet — open the invoice tool to draft your first.</div>') +
+      '<div class="card" id="invTableMount"></div>' +
       '<div class="card"><h3>Payment methods on invoices</h3>' +
-      '<div class="set-row"><span class="set-label">M-Pesa Paybill</span><span class="set-val">4071186 — Account = invoice number</span></div>' +
-      '<div class="set-row"><span class="set-label">Card / international</span><span class="set-val">Secure link on request (email)</span></div>' +
-      '<div class="set-row"><span class="set-label">Storage</span><span class="set-val">This browser (localStorage) — export JSON backups from the invoice tool</span></div>' +
+      '<div class="set-row"><span class="set-label">M-Pesa Paybill</span><span class="set-val">4071186 — Account = invoice number · reconciled manually</span></div>' +
+      '<div class="set-row"><span class="set-label">Card / international</span><span class="set-val">Placeholder — no card provider connected; link on request (email)</span></div>' +
+      '<div class="set-row"><span class="set-label">Storage</span><span class="set-val">This browser (localStorage) — export JSON backups from the invoice tool. Browser-local demo, not verified accounting.</span></div>' +
       '</div>';
+  };
+
+  listeners.invoicing = function () {
+    // Mount the DOM-built invoice table (XSS-safe rendering) at the marker.
+    var sections0 = document.querySelectorAll('#content .card');
+    // The table card is the first .card containing the marker-free DOM table;
+    // simplest: rebuild inside the marker element.
+    var marker = document.getElementById('invTableMount');
+    if (marker) {
+      var invoices = getInvoices();
+      var card = el('div', null);
+      if (invoices.length) {
+        var tbl = el('table', 'tbl');
+        var thead = el('thead'); var hrow = el('tr');
+        ['Number', 'Client', 'Total', 'Balance', 'Status', 'Due'].forEach(function (h) { hrow.appendChild(el('th', null, h)); });
+        thead.appendChild(hrow); tbl.appendChild(thead);
+        var tbody = el('tbody');
+        invoices.slice().reverse().forEach(function (inv) {
+          var t = invTotalsOf(inv);
+          var st = invStatus(inv);
+          var bc = { draft: 'badge-gray', sent: 'badge-blue', paid: 'badge-green', overdue: 'badge-red' }[st] || 'badge-gray';
+          var row = el('tr');
+          var numTd = el('td'); numTd.appendChild(el('strong', null, String(inv.number || '—'))); row.appendChild(numTd);
+          row.appendChild(el('td', null, String((inv.client && (inv.client.name || inv.client.company)) || '—')));
+          row.appendChild(el('td', null, usd(t.totalUsd)));
+          row.appendChild(el('td', null, t.paidUsd > 0 ? usd(t.balanceUsd) : '—'));
+          var std = el('td'); std.appendChild(el('span', 'badge ' + bc, st)); row.appendChild(std);
+          row.appendChild(el('td', null, String(inv.due || '—')));
+          tbody.appendChild(row);
+        });
+        tbl.appendChild(tbody); card.appendChild(tbl);
+      } else {
+        var empty = el('div', 'empty');
+        empty.appendChild(el('div', 'icon', '🧾'));
+        empty.appendChild(document.createTextNode('No invoices yet — open the invoice tool to draft your first.'));
+        card.appendChild(empty);
+      }
+      while (marker.firstChild) marker.removeChild(marker.firstChild);
+      marker.appendChild(card);
+    }
   };
 
   sections.findclients = function () {
@@ -833,11 +998,37 @@
     var list = document.getElementById('leadsList');
     if (!list) return;
     var leads = getLeads();
-    if (!leads.length) { list.innerHTML = '<div class="empty" style="padding:1.5rem">No leads yet.</div>'; return; }
+    list.textContent = '';
+    if (!leads.length) {
+      var empty = el('div', 'empty');
+      empty.style.padding = '1.5rem';
+      empty.textContent = 'No leads yet.';
+      list.appendChild(empty);
+      return;
+    }
     var sc = { contacted: 'b-blue', replied: 'b-purple', meeting: 'b-yellow', won: 'b-green', lost: 'b-red' };
-    list.innerHTML = leads.map(function (l, i) {
-      return '<div class="set-row"><span style="font-weight:500">' + l.name + '</span><span style="color:var(--txt3);font-size:0.75rem">' + l.source + '</span><span class="badge ' + (sc[l.status] || 'b-gray') + '">' + l.status + '</span><span style="color:var(--txt3);font-size:0.7rem">' + timeAgo(l.date) + '</span><button onclick="(function(){var l=JSON.parse(localStorage.getItem(\'vn_leads\')||\'[]\');l.splice(' + i + ',1);localStorage.setItem(\'vn_leads\',JSON.stringify(l));window.__dash_renderLeads&&window.__dash_renderLeads();})()" style="background:none;border:none;color:var(--txt3);cursor:pointer">×</button></div>';
-    }).join('');
+    leads.forEach(function (l, i) {
+      var row = el('div', 'set-row');
+      row.appendChild(el('span', null, l.name || '—')).style.fontWeight = '500';
+      var srcSpan = el('span', null, l.source || '—');
+      srcSpan.style.cssText = 'color:var(--txt3);font-size:0.75rem';
+      row.appendChild(srcSpan);
+      row.appendChild(el('span', 'badge ' + (sc[l.status] || 'b-gray'), l.status || 'contacted'));
+      var t = el('span', null, timeAgo(l.date));
+      t.style.cssText = 'color:var(--txt3);font-size:0.7rem';
+      row.appendChild(t);
+      var del = el('button', null, '×');
+      del.setAttribute('aria-label', 'Delete lead ' + (l.name || ''));
+      del.style.cssText = 'background:none;border:none;color:var(--txt3);cursor:pointer';
+      del.addEventListener('click', function () {
+        var arr = getLeads();
+        arr.splice(i, 1);
+        localStorage.setItem('vn_leads', JSON.stringify(arr));
+        renderLeads();
+      });
+      row.appendChild(del);
+      list.appendChild(row);
+    });
   }
   window.__dash_renderLeads = renderLeads;
 
@@ -877,7 +1068,7 @@
       '<a href="https://gtag.dev" target="_blank" class="action"><span class="icon">🛠️</span>GA4 gtag</a>' +
       '</div></div>' +
       '<div class="card"><h3>Article Performance</h3><table class="tbl"><thead><tr><th>Title</th><th>Read Time</th><th>Words</th></tr></thead><tbody>' +
-      blogPosts.map(function (p) { return '<tr><td>' + p.title + '</td><td>' + p.readTime + '</td><td>' + p.wordCount + '</td></tr>'; }).join('') +
+      blogPosts.map(function (p) { return '<tr><td>' + esc2(p.title) + '</td><td>' + esc2(p.readTime) + '</td><td>' + esc2(p.wordCount) + '</td></tr>'; }).join('') +
       '</tbody></table></div>';
   };
 
@@ -893,7 +1084,7 @@
       (apps.length ? '<div class="card"><table class="tbl"><thead><tr><th>Title</th><th>Company</th><th>Status</th><th>Date</th></tr></thead><tbody>' +
       apps.map(function (a) {
         var sc = { saved: 'b-gray', applied: 'b-blue', interview: 'b-purple', offer: 'b-green', rejected: 'b-red' };
-        return '<tr><td><strong>' + (a.title || '—') + '</strong></td><td>' + (a.company || '—') + '</td><td><span class="badge ' + (sc[a.status] || 'b-gray') + '">' + (a.status || 'saved') + '</span></td><td>' + (a.appliedAt ? new Date(a.appliedAt).toLocaleDateString() : '—') + '</td></tr>';
+        return '<tr><td><strong>' + esc2(a.title || '—') + '</strong></td><td>' + esc2(a.company || '—') + '</td><td><span class="badge ' + (sc[a.status] || 'b-gray') + '">' + esc2(a.status || 'saved') + '</span></td><td>' + (a.appliedAt ? new Date(a.appliedAt).toLocaleDateString() : '—') + '</td></tr>';
       }).join('') + '</tbody></table></div>' : '<div class="empty"><div class="icon">🔍</div>No applications tracked yet.</div>');
   };
 
@@ -912,6 +1103,8 @@
       var tone = document.getElementById('socialTone').value;
       var url = document.getElementById('socialUrl').value.trim();
       if (!topic) { toast('Enter a topic', 'warn'); return; }
+      // v21: URL is user input — only accept http(s) URLs for the share links.
+      if (url && !/^https?:\/\/[^\s]+$/.test(url)) { toast('Link must be an http(s) URL', 'warn'); return; }
       var platforms = { linkedin: 'LinkedIn', x: 'X (Twitter)', facebook: 'Facebook', whatsapp: 'WhatsApp' };
       var tones = {
         professional: { linkedin: 'New article: "' + topic + '".\n\nI break down the technical details and share what I learned.\n\n' + (url || '') + '\n\n#AI #Engineering', x: 'New: "' + topic + '"\n\n' + (url || '') + '\n\n#AI', facebook: 'Just published: "' + topic + '" — a deep dive.\n\n' + (url || ''), whatsapp: 'New article: "' + topic + '"\n\n' + (url || '') },
@@ -921,10 +1114,37 @@
       };
       var selected = tones[tone];
       var results = document.getElementById('socialResults');
-      results.innerHTML = Object.keys(platforms).map(function (key) {
+      results.textContent = '';
+      Object.keys(platforms).forEach(function (key) {
         var text = selected[key];
-        return '<div class="post-card"><div class="post-head"><span class="post-name">' + platforms[key] + '</span><span class="post-count">' + text.length + ' chars</span></div><div class="post-body">' + text.replace(/\n/g, '<br>') + '</div><div class="post-actions"><button onclick="navigator.clipboard.writeText(' + JSON.stringify(text) + ').then(function(){window.__toast(\'Copied!\')})">Copy</button>' + (key === 'x' ? '<a href="https://twitter.com/intent/tweet?text=' + encodeURIComponent(text) + '" target="_blank"><button>Post</button></a>' : '') + (key === 'whatsapp' ? '<a href="https://wa.me/?text=' + encodeURIComponent(text) + '" target="_blank"><button>Share</button></a>' : '') + '</div></div>';
-      }).join('');
+        var cardEl = el('div', 'post-card');
+        var headEl = el('div', 'post-head');
+        headEl.appendChild(el('span', 'post-name', platforms[key]));
+        headEl.appendChild(el('span', 'post-count', text.length + ' chars'));
+        cardEl.appendChild(headEl);
+        var bodyEl = el('div', 'post-body', text);
+        cardEl.appendChild(bodyEl);
+        var actEl = el('div', 'post-actions');
+        var copyBtn = el('button', null, 'Copy');
+        copyBtn.addEventListener('click', function () {
+          navigator.clipboard.writeText(text).then(function () { window.__toast('Copied!'); }).catch(function () {});
+        });
+        actEl.appendChild(copyBtn);
+        if (key === 'x') {
+          var xA = el('a', null); xA.target = '_blank'; xA.rel = 'noopener';
+          xA.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
+          xA.appendChild(el('button', null, 'Post'));
+          actEl.appendChild(xA);
+        }
+        if (key === 'whatsapp') {
+          var wA = el('a', null); wA.target = '_blank'; wA.rel = 'noopener';
+          wA.href = 'https://wa.me/?text=' + encodeURIComponent(text);
+          wA.appendChild(el('button', null, 'Share'));
+          actEl.appendChild(wA);
+        }
+        cardEl.appendChild(actEl);
+        results.appendChild(cardEl);
+      });
     });
   };
 
@@ -954,26 +1174,28 @@
 
   sections.security = function () {
     var logins = getLogins();
-    return '<div class="page-head"><h1>Security</h1><p>Access logs and security status.</p></div>' +
+    return '<div class="page-head"><h1>Security</h1><p>What this dashboard actually is — and its limits.</p></div>' +
+      '<div class="card"><h3>Trust boundary (read this first)</h3>' +
+      '<div class="check-item"><div class="check warn">!</div><div><strong>This is a client-side gate, not server-enforced authorization.</strong> All sign-in code (email allowlist, PBKDF2 verifier, TOTP derivation) ships to the browser. A visitor who modifies the page or storage can bypass the gate — so this dashboard holds no confidential records. See <a href="/trust-boundaries.html" target="_blank" style="color:var(--acc)">Trust Boundaries</a>.</div></div>' +
+      '<div class="check-item"><div class="check warn">!</div><div><strong>TOTP is client-side too.</strong> The second factor derives from a seed in the deployed JavaScript — it deters casual access, it is not a second factor against a code-reading attacker.</div></div>' +
+      '<div class="check-item"><div class="check warn">!</div><div><strong>Security headers are meta-tag only.</strong> GitHub Pages cannot set response headers; the CSP/nosniff/Referrer-Policy metas are best-effort, not equivalent.</div></div>' +
+      '</div>' +
       '<div class="stat-grid">' +
-      '<div class="stat"><div class="stat-label">Grade</div><div class="stat-val">A+</div></div>' +
+      '<div class="stat"><div class="stat-label">Mode</div><div class="stat-val" style="font-size:1.1rem">' + (window.VNTrust ? window.VNTrust.mode : 'demo') + '</div></div>' +
       '<div class="stat"><div class="stat-label">Logins</div><div class="stat-val">' + logins.length + '</div></div>' +
       '<div class="stat"><div class="stat-label">Failed</div><div class="stat-val">' + logins.filter(function (l) { return !l.success; }).length + '</div></div>' +
       '<div class="stat"><div class="stat-label">Timeout</div><div class="stat-val">30m</div></div>' +
       '</div>' +
-      '<div class="card"><h3>Security Headers</h3>' +
-      '<div class="check-item"><div class="check ok">✓</div>Content-Security-Policy</div>' +
-      '<div class="check-item"><div class="check ok">✓</div>X-Content-Type-Options: nosniff</div>' +
-      '<div class="check-item"><div class="check ok">✓</div>Referrer-Policy</div>' +
-      '<div class="check-item"><div class="check ok">✓</div>noindex on private pages</div>' +
-      '<div class="check-item"><div class="check ok">✓</div>30-min idle timeout</div>' +
-      '<div class="check-item"><div class="check ok">✓</div>PBKDF2 password hashing</div>' +
-      '<div class="check-item"><div class="check ok">✓</div>Google ID token signature verification (JWKS)</div>' +
-      '<div class="check-item"><div class="check ok">✓</div>TOTP two-factor (Google Authenticator)</div>' +
+      '<div class="card"><h3>What does work</h3>' +
+      '<div class="check-item"><div class="check ok">✓</div>Google ID tokens verified against Google\'s JWKS (signature, iss/aud/exp) — fails closed</div>' +
+      '<div class="check-item"><div class="check ok">✓</div>PBKDF2 password fallback (100k iters, constant-time compare)</div>' +
+      '<div class="check-item"><div class="check ok">✓</div>30-min idle timeout + noindex on private pages</div>' +
+      '<div class="check-item"><div class="check ok">✓</div>Client workspace vault key held in memory only (never persisted)</div>' +
+      '<div class="check-item"><div class="check ok">✓</div>Payment verification is an explicit owner action with an event ledger</div>' +
       '</div>' +
-      '<div class="card"><h3>Login Log</h3>' +
+      '<div class="card"><h3>Login Log (this browser)</h3>' +
       (logins.length ? '<table class="tbl"><thead><tr><th>Email</th><th>Status</th><th>Time</th></tr></thead><tbody>' +
-      logins.map(function (l) { return '<tr><td>' + l.email + '</td><td><span class="badge ' + (l.success ? 'b-green' : 'b-red') + '">' + (l.success ? 'Success' : 'Failed') + '</span></td><td>' + new Date(l.timestamp).toLocaleString() + '</td></tr>'; }).join('') +
+      logins.map(function (l) { return '<tr><td>' + esc2(l.email) + '</td><td><span class="badge ' + (l.success ? 'b-green' : 'b-red') + '">' + (l.success ? 'Success' : 'Failed') + '</span></td><td>' + esc2(new Date(l.timestamp).toLocaleString()) + '</td></tr>'; }).join('') +
       '</tbody></table>' : '<div class="empty">No logins logged.</div>') +
       '<button class="btn btn-ghost btn-sm" id="clearLogs" style="margin-top:0.75rem">Clear Logs</button></div>';
   };
@@ -989,8 +1211,8 @@
     var totpOn = !!(window.VNTotp && user && VNTotp.isEnrolled(user.email));
     return '<div class="page-head"><h1>Settings</h1><p>Account and configuration.</p></div>' +
       '<div class="card"><h3>Account</h3>' +
-      '<div class="set-row"><span class="set-label">Name</span><span class="set-val">' + (user ? user.name : '—') + '</span></div>' +
-      '<div class="set-row"><span class="set-label">Email</span><span class="set-val">' + (user ? user.email : '—') + '</span></div>' +
+      '<div class="set-row"><span class="set-label">Name</span><span class="set-val">' + esc2(user ? user.name : '—') + '</span></div>' +
+      '<div class="set-row"><span class="set-label">Email</span><span class="set-val">' + esc2(user ? user.email : '—') + '</span></div>' +
       '<div class="set-row"><span class="set-label">Two-factor (TOTP)</span><span class="set-val">' + (totpOn ? '✅ Enabled (Google Authenticator)' : 'Not enrolled on this browser') + ' <button class="btn btn-ghost btn-sm" id="resetTotp" style="margin-left:0.5rem">Reset</button></span></div>' +
       '</div>' +
       '<div class="card"><h3>Quick Links</h3><div class="actions">' +
@@ -1027,8 +1249,13 @@
     document.getElementById('signOut2').addEventListener('click', function () { VNAuth.logout(); });
   };
 
-  // Session restore (deferred — see note above; runs only after all renderers exist)
-  if (window.VNAuth && VNAuth.checkSession()) showDashboard();
+  // v21: fail closed in production mode when the backend is not configured.
+  if (window.VNTrust && !window.VNTrust.assertReady()) {
+    // assertReady() has already replaced the page with a configuration error.
+  } else {
+    // Session restore (deferred — see note above; runs only after all renderers exist)
+    if (window.VNAuth && VNAuth.checkSession()) showDashboard();
+  }
 
   // Log access
   if (window.VNAuth) VNAuth.logActivity('dashboard', 'Accessed dashboard');

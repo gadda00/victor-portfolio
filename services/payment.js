@@ -1,8 +1,12 @@
-/* Victor Ndunda — Payment page JS
+/* Victor Ndunda — Payment page JS (v21 trust hardening)
    - Reads brief from localStorage
    - Renders payment plan options (50/50, milestone, monthly)
-   - Renders payment methods (M-Pesa, Flutterwave, Stripe)
-   - Marks brief with payment status when a plan is selected
+   - Renders payment methods with HONEST labels: M-Pesa is a manual
+     Paybill instruction; Flutterwave/Stripe are placeholders (no
+     provider is connected — see /trust-boundaries.html)
+   - DOM-safe rendering: every user-controlled value (package name,
+     client name, timeline, brief id) goes through textContent, never
+     string-concatenated HTML. Links are built with sanitized ids only.
 */
 (function () {
   'use strict';
@@ -48,19 +52,30 @@
   function fmtMoney(usd, kes) {
     return '$' + (usd || 0).toLocaleString() + ' · KES ' + (kes || 0).toLocaleString();
   }
+  /* The contract id is derived from the brief id, which is user-controlled
+     data — strip it to [A-Za-z0-9-] before it touches any URL. */
+  function safeContractId(brief) {
+    var raw = String((brief && brief.id) || Date.now()).replace(/[^A-Za-z0-9-]/g, '');
+    return 'VND-' + raw.slice(-8).toUpperCase();
+  }
+  function el(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
 
-  // ── Payment methods ───────────────────────────────────────────────
-  // Real M-Pesa Paybill / Till and Flutterwave/Stripe payment link placeholders.
-  // Victor should replace these with his actual merchant details.
+  // ── Payment methods (labels are honest about what is connected) ──
   var METHODS = [
     {
       id: 'mpesa',
       icon: '📱',
       name: 'M-Pesa (Kenya)',
-      desc: 'Pay via M-Pesa Paybill. Fast, free, instant. Best for Kenyan clients.',
+      mode: 'manual',
+      desc: 'Pay via M-Pesa Paybill, then report the code in your client workspace. Reconciled manually by Victor.',
       details: [
         { label: 'Paybill', value: '4071186' },
-        { label: 'Account', value: 'VND-{contractId}' },
+        { label: 'Account', value: '{contractId}' },
         { label: 'Name', value: 'Victor Ndunda' }
       ],
       cta: 'Send money via M-Pesa'
@@ -69,27 +84,31 @@
       id: 'flutterwave',
       icon: '💳',
       name: 'Flutterwave',
-      desc: 'Card, bank transfer, M-Pesa, mobile money across Africa. Multi-currency.',
+      mode: 'placeholder',
+      desc: 'Card, bank transfer and mobile money across Africa. Placeholder — no Flutterwave integration is connected yet.',
       details: [
-        { label: 'Link', value: 'mailto:mututandunda@gmail.com?subject=Payment%20for%20AI%20Services' },
-        { label: 'Currencies', value: 'USD, KES, NGN, GHS, ZAR' }
+        { label: 'Status', value: 'Not connected — request a link by email' }
       ],
-      cta: 'Pay with Flutterwave ↗'
+      cta: 'Request a payment link'
     },
     {
       id: 'stripe',
       icon: '🌍',
       name: 'Stripe (International)',
-      desc: 'For international clients — Visa, Mastercard, Amex, Apple Pay, Google Pay.',
+      mode: 'placeholder',
+      desc: 'For international clients — cards and wallets. Placeholder — no Stripe integration is connected yet.',
       details: [
-        { label: 'Link', value: 'mailto:mututandunda@gmail.com?subject=Payment%20for%20AI%20Services' },
-        { label: 'Currencies', value: 'USD, EUR, GBP, +135' }
+        { label: 'Status', value: 'Not connected — request a link by email' }
       ],
-      cta: 'Pay with Stripe ↗'
+      cta: 'Request a payment link'
     }
   ];
+  var MODE_BADGE = {
+    manual: { cls: 'pm-mode pm-mode-manual', text: 'manual' },
+    placeholder: { cls: 'pm-mode pm-mode-placeholder', text: 'not connected' }
+  };
 
-  // ── Render ────────────────────────────────────────────────────────
+  // ── Render (DOM-built, no innerHTML with user data) ───────────────
   function render() {
     var briefId = new URLSearchParams(location.search).get('brief');
     var brief = briefId ? getBrief(briefId) : null;
@@ -98,118 +117,172 @@
       if (briefs.length > 0) brief = briefs[briefs.length - 1];
     }
 
+    var root = $('#paymentContent');
+    root.textContent = '';
+
     if (!brief) {
-      $('#paymentContent').innerHTML =
-        '<div class="portal-empty">' +
-          '<h3>No brief selected</h3>' +
-          '<p>Start by scoping your project with the wizard, then come back here to see payment options.</p>' +
-          '<a href="/services/wizard.html" class="btn btn-primary">Start the Wizard →</a>' +
-        '</div>';
+      var empty = el('div', 'portal-empty');
+      empty.appendChild(el('h3', null, 'No brief selected'));
+      empty.appendChild(el('p', null, 'Start by scoping your project with the wizard, then come back here to see payment options.'));
+      var a0 = el('a', 'btn btn-primary', 'Start the Wizard →');
+      a0.href = '/services/wizard.html';
+      empty.appendChild(a0);
+      root.appendChild(empty);
       return;
     }
 
     var est = brief.estimate || {};
     var details = brief.details || {};
-    var contractId = 'VND-' + (brief.id || Date.now()).slice(-8).toUpperCase();
+    var contractId = safeContractId(brief);
     var totalUsd = est.totalUsd || 0;
     var totalKes = est.totalKes || 0;
     var monthlyUsd = est.monthlyUsd || 0;
     var monthlyKes = est.monthlyKes || 0;
     var isCustom = est.packageId === 'custom' || est.packageId === 'enterprise'; // 'enterprise' kept for legacy briefs
 
-    // Plan calculations
+    /* ── Summary ── */
+    var summary = el('div', 'payment-summary');
+    var head = el('div', 'payment-summary-head');
+    head.appendChild(el('div', 'payment-summary-pkg', est.packageName || 'Package'));
+    head.appendChild(el('div', 'payment-summary-amount', isCustom ? 'Custom' : fmtMoney(totalUsd, totalKes)));
+    summary.appendChild(head);
+    var grid = el('div', 'payment-summary-grid');
+    [
+      ['Contract ID', contractId],
+      ['Client', details.name || '—'],
+      ['Timeline', est.timeline || '—'],
+      ['Monthly', monthlyUsd ? '$' + monthlyUsd + '/mo' : '—']
+    ].forEach(function (cell) {
+      var c = el('div', 'payment-summary-cell');
+      c.appendChild(el('div', 'payment-summary-label', cell[0]));
+      c.appendChild(el('div', 'payment-summary-value', cell[1]));
+      grid.appendChild(c);
+    });
+    summary.appendChild(grid);
+    root.appendChild(summary);
+
+    /* ── Plans (numbers only — schedule lines are computed, not user text) ── */
+    function money(n) { return '$' + Math.round(n).toLocaleString(); }
     var plans = [
       {
-        id: 'fifty-fifty',
-        name: '50 / 50',
-        badge: 'Most popular',
+        id: 'fifty-fifty', name: '50 / 50', badge: 'Most popular',
         desc: 'Half now, half on delivery. Simple and predictable.',
-        schedule: isCustom
-          ? '<div>Deposit: Custom</div><div>On delivery: Custom</div>'
-          : '<div>Deposit: $' + Math.round(totalUsd * 0.5).toLocaleString() + ' (KES ' + Math.round(totalKes * 0.5).toLocaleString() + ')</div><div>On delivery: $' + Math.round(totalUsd * 0.5).toLocaleString() + ' (KES ' + Math.round(totalKes * 0.5).toLocaleString() + ')</div>'
+        schedule: isCustom ? ['Deposit: Custom', 'On delivery: Custom']
+          : ['Deposit: ' + money(totalUsd * 0.5) + ' (KES ' + Math.round(totalKes * 0.5).toLocaleString() + ')',
+             'On delivery: ' + money(totalUsd * 0.5) + ' (KES ' + Math.round(totalKes * 0.5).toLocaleString() + ')']
       },
       {
-        id: 'instalments',
-        name: 'Instalments',
-        badge: 'No fees',
+        id: 'instalments', name: 'Instalments', badge: 'No fees',
         desc: 'Three equal payments — kickoff, mid-build, delivery. Built for SMB cashflow.',
-        schedule: isCustom
-          ? '<div>Each instalment: Custom</div><div>No fees, no interest</div>'
-          : '<div>Instalment 1 (kickoff): $' + Math.round(totalUsd / 3).toLocaleString() + '</div><div>Instalment 2 (mid-build): $' + Math.round(totalUsd / 3).toLocaleString() + '</div><div>Instalment 3 (delivery): $' + (totalUsd - 2 * Math.round(totalUsd / 3)).toLocaleString() + '</div>'
+        schedule: isCustom ? ['Each instalment: Custom', 'No fees, no interest']
+          : ['Instalment 1 (kickoff): ' + money(totalUsd / 3),
+             'Instalment 2 (mid-build): ' + money(totalUsd / 3),
+             'Instalment 3 (delivery): ' + money(totalUsd - 2 * Math.round(totalUsd / 3))]
       },
       {
-        id: 'milestone',
-        name: 'Milestone-based',
+        id: 'milestone', name: 'Milestone-based',
         desc: '30% kickoff, 40% midpoint, 30% delivery. Pay as you see progress.',
-        schedule: isCustom
-          ? '<div>Kickoff: Custom</div><div>Midpoint: Custom</div><div>Delivery: Custom</div>'
-          : '<div>Kickoff (30%): $' + Math.round(totalUsd * 0.3).toLocaleString() + '</div><div>Midpoint (40%): $' + Math.round(totalUsd * 0.4).toLocaleString() + '</div><div>Delivery (30%): $' + Math.round(totalUsd * 0.3).toLocaleString() + '</div>'
+        schedule: isCustom ? ['Kickoff: Custom', 'Midpoint: Custom', 'Delivery: Custom']
+          : ['Kickoff (30%): ' + money(totalUsd * 0.3),
+             'Midpoint (40%): ' + money(totalUsd * 0.4),
+             'Delivery (30%): ' + money(totalUsd * 0.3)]
       },
       {
-        id: 'monthly',
-        name: 'Monthly retainer',
+        id: 'monthly', name: 'Monthly retainer',
         desc: 'One-time build + monthly support. Cancel with 30 days notice.',
-        schedule: isCustom
-          ? '<div>Build: Custom</div><div>Monthly: Custom support plan (scoped with your SLA tier)</div>'
-          : '<div>Build: $' + totalUsd.toLocaleString() + '</div><div>Monthly: $' + monthlyUsd + '/mo (KES ' + monthlyKes.toLocaleString() + ')</div>'
+        schedule: isCustom ? ['Build: Custom', 'Monthly: Custom support plan (scoped with your SLA tier)']
+          : ['Build: ' + money(totalUsd), 'Monthly: $' + monthlyUsd + '/mo (KES ' + monthlyKes.toLocaleString() + ')']
       }
     ];
 
-    var planHtml = plans.map(function (p, i) {
-      return '<button class="payment-plan' + (i === 0 ? ' selected' : '') + '" data-plan="' + p.id + '">' +
-        (p.badge ? '<span class="payment-plan-badge">' + p.badge + '</span>' : '') +
-        '<div class="payment-plan-name">' + p.name + '</div>' +
-        '<div class="payment-plan-desc">' + p.desc + '</div>' +
-        '<div class="payment-plan-schedule">' + p.schedule + '</div>' +
-      '</button>';
-    }).join('');
+    root.appendChild(el('h2', 'payment-section-title', '1. Choose your payment plan'));
+    var planWrap = el('div', 'payment-plans');
+    plans.forEach(function (p, i) {
+      var btn = el('button', 'payment-plan' + (i === 0 ? ' selected' : ''));
+      btn.type = 'button';
+      btn.dataset.plan = p.id;
+      if (p.badge) btn.appendChild(el('span', 'payment-plan-badge', p.badge));
+      btn.appendChild(el('div', 'payment-plan-name', p.name));
+      btn.appendChild(el('div', 'payment-plan-desc', p.desc));
+      var sched = el('div', 'payment-plan-schedule');
+      p.schedule.forEach(function (line) { sched.appendChild(el('div', null, line)); });
+      btn.appendChild(sched);
+      planWrap.appendChild(btn);
+    });
+    root.appendChild(planWrap);
 
-    var methodsHtml = METHODS.map(function (m) {
-      var detailsHtml = m.details.map(function (d) {
-        var val = d.value.replace('{contractId}', contractId);
-        return '<div class="payment-method-detail"><strong>' + d.label + ':</strong> ' + val + '</div>';
-      }).join('');
-      var href = m.id === 'mpesa' ? 'mailto:mututandunda@gmail.com?subject=Payment%20via%20M-Pesa%20for%20' + contractId + '&body=Hi%20Victor%2C%0A%0AI%27d%20like%20to%20pay%20via%20M-Pesa%20for%20contract%20' + contractId + '.%0A%0APlan%3A%20%0AAmount%3A%20' + fmtMoney(totalUsd, totalKes) + '%0A%0AThanks!' : m.details[0].value.replace('{contractId}', contractId);
-      return '<a href="' + href + '" target="_blank" rel="noopener" class="payment-method">' +
-        '<div class="payment-method-icon">' + m.icon + '</div>' +
-        '<div class="payment-method-name">' + m.name + '</div>' +
-        '<div class="payment-method-desc">' + m.desc + '</div>' +
-        detailsHtml +
-        '<div class="payment-method-cta">' + m.cta + '</div>' +
-      '</a>';
-    }).join('');
+    /* ── Methods ── */
+    root.appendChild(el('h2', 'payment-section-title', '2. Choose your payment method'));
+    var methodWrap = el('div', 'payment-methods');
+    METHODS.forEach(function (m) {
+      var card = el('a', 'payment-method');
+      card.target = '_blank';
+      card.rel = 'noopener';
+      if (m.id === 'mpesa') {
+        card.href = 'mailto:mututandunda@gmail.com?subject=' +
+          encodeURIComponent('Payment via M-Pesa for ' + contractId) +
+          '&body=' + encodeURIComponent('Hi Victor,\n\nI\'d like to pay via M-Pesa for contract ' + contractId + '.\n\nPlan:\nAmount: ' + fmtMoney(totalUsd, totalKes) + '\n\nThanks!');
+      } else {
+        card.href = 'mailto:mututandunda@gmail.com?subject=' +
+          encodeURIComponent('Payment link request for ' + contractId) +
+          '&body=' + encodeURIComponent('Hi Victor,\n\nPlease send me a payment link for contract ' + contractId + ' (' + m.name + ').\n\nAmount: ' + fmtMoney(totalUsd, totalKes) + '\n\nThanks!');
+      }
+      card.appendChild(el('div', 'payment-method-icon', m.icon));
+      var nameRow = el('div', 'payment-method-name');
+      nameRow.textContent = m.name;
+      var badge = MODE_BADGE[m.mode];
+      if (badge) {
+        var chip = el('span', badge.cls, badge.text);
+        nameRow.appendChild(document.createTextNode(' '));
+        nameRow.appendChild(chip);
+      }
+      card.appendChild(nameRow);
+      card.appendChild(el('div', 'payment-method-desc', m.desc));
+      m.details.forEach(function (d) {
+        var row = el('div', 'payment-method-detail');
+        var strong = el('strong', null, d.label + ': ');
+        row.appendChild(strong);
+        row.appendChild(document.createTextNode(String(d.value).replace('{contractId}', contractId)));
+        card.appendChild(row);
+      });
+      card.appendChild(el('div', 'payment-method-cta', m.cta));
+      methodWrap.appendChild(card);
+    });
+    root.appendChild(methodWrap);
 
-    $('#paymentContent').innerHTML =
-      '<!-- Summary -->' +
-      '<div class="payment-summary">' +
-        '<div class="payment-summary-head">' +
-          '<div class="payment-summary-pkg">' + (est.packageName || 'Package') + '</div>' +
-          '<div class="payment-summary-amount">' + (isCustom ? 'Custom' : fmtMoney(totalUsd, totalKes)) + '</div>' +
-        '</div>' +
-        '<div class="payment-summary-grid">' +
-          '<div class="payment-summary-cell"><div class="payment-summary-label">Contract ID</div><div class="payment-summary-value">' + contractId + '</div></div>' +
-          '<div class="payment-summary-cell"><div class="payment-summary-label">Client</div><div class="payment-summary-value">' + (details.name || '—') + '</div></div>' +
-          '<div class="payment-summary-cell"><div class="payment-summary-label">Timeline</div><div class="payment-summary-value">' + (est.timeline || '—') + '</div></div>' +
-          '<div class="payment-summary-cell"><div class="payment-summary-label">Monthly</div><div class="payment-summary-value">' + (monthlyUsd ? '$' + monthlyUsd + '/mo' : '—') + '</div></div>' +
-        '</div>' +
-      '</div>' +
+    /* ── Confirm ── */
+    var confirmBox = el('div', 'payment-confirm');
+    confirmBox.appendChild(el('h3', null, 'Confirm with Victor'));
+    confirmBox.appendChild(el('p', null, 'Once you\'ve picked a plan and method, send Victor a note to lock it in. He\'ll confirm the deposit, schedule the kickoff call, and send a finalized invoice.'));
+    var actions = el('div', 'payment-confirm-actions');
+    var mail = el('a', 'btn btn-primary', 'Email Victor to confirm');
+    mail.href = 'mailto:mututandunda@gmail.com?subject=' +
+      encodeURIComponent('Payment plan for ' + contractId) +
+      '&body=' + encodeURIComponent('Hi Victor,\n\nI\'d like to confirm my payment plan for contract ' + contractId + '.\n\nPlan:\nMethod:\nAmount: ' + fmtMoney(totalUsd, totalKes) + '\n\nThanks!');
+    actions.appendChild(mail);
+    var wa = el('a', 'btn btn-ghost', 'WhatsApp Victor');
+    wa.target = '_blank';
+    wa.rel = 'noopener';
+    wa.href = 'https://wa.me/254724346971?text=' +
+      encodeURIComponent('Hi Victor, I\'d like to confirm payment for ' + contractId);
+    actions.appendChild(wa);
+    confirmBox.appendChild(actions);
+    root.appendChild(confirmBox);
 
-      '<h2 class="payment-section-title">1. Choose your payment plan</h2>' +
-      '<div class="payment-plans">' + planHtml + '</div>' +
+    root.appendChild(el('p', 'payment-note',
+      'Honest labels: M-Pesa Paybill is a manual instruction reconciled by Victor; the Flutterwave and Stripe entries are placeholders — no card payment provider is connected to this demo. Payments you report in the client workspace stay client-reported until Victor verifies them. Invoices are due within 7 days. Deposits are non-refundable once work begins.'));
 
-      '<h2 class="payment-section-title">2. Choose your payment method</h2>' +
-      '<div class="payment-methods">' + methodsHtml + '</div>' +
-
-      '<div class="payment-confirm">' +
-        '<h3>Confirm with Victor</h3>' +
-        '<p>Once you\'ve picked a plan and method, send Victor a note to lock it in. He\'ll confirm the deposit, schedule the kickoff call, and send a finalized invoice.</p>' +
-        '<div class="payment-confirm-actions">' +
-          '<a href="mailto:mututandunda@gmail.com?subject=Payment%20plan%20for%20' + contractId + '&body=Hi%20Victor%2C%0A%0AI%27d%20like%20to%20confirm%20my%20payment%20plan%20for%20contract%20' + contractId + '.%0A%0APlan%3A%20%0AMethod%3A%20%0AAmount%3A%20' + fmtMoney(totalUsd, totalKes) + '%0A%0AThanks!" class="btn btn-primary">Email Victor to confirm</a>' +
-          '<a href="https://wa.me/254724346971?text=Hi%20Victor%2C%20I%27d%20like%20to%20confirm%20payment%20for%20' + contractId + '" target="_blank" rel="noopener" class="btn btn-ghost">WhatsApp Victor</a>' +
-        '</div>' +
-      '</div>' +
-
-      '<p class="payment-note">Payment methods above are Victor\'s merchant details. M-Pesa Paybill is live; Flutterwave and Stripe links should be set up by Victor in his merchant dashboards. Invoices are due within 7 days. Deposits are non-refundable once work begins.</p>';
+    /* ── Mode badge styles (injected once) ── */
+    if (!document.getElementById('pm-mode-style')) {
+      var st = document.createElement('style');
+      st.id = 'pm-mode-style';
+      st.textContent =
+        '.pm-mode{display:inline-block;font-size:0.62rem;font-weight:700;letter-spacing:0.05em;' +
+        'text-transform:uppercase;padding:0.12rem 0.45rem;border-radius:99px;vertical-align:middle;margin-left:0.35rem}' +
+        '.pm-mode-manual{background:rgba(139,92,246,0.16);color:#a78bfa}' +
+        '.pm-mode-placeholder{background:rgba(239,68,68,0.14);color:#ef4444}';
+      document.head.appendChild(st);
+    }
 
     // Wire plan selection
     $$('.payment-plan').forEach(function (btn) {
@@ -221,7 +294,7 @@
         brief.paymentStatus = 'plan-selected';
         brief.status = brief.status || 'contracted';
         saveBrief(brief);
-        // v13: sync into the encrypted Client Portal when signed in
+        // v13: sync into the encrypted Client Portal when unlocked
         try {
           if (window.VNPortalCore && window.VNPortalCore.isAuthed()) {
             var proj = window.VNPortalCore.findProjectByBrief(brief.id);

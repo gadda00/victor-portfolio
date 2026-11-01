@@ -460,7 +460,15 @@
         var method = prompt('Method (M-Pesa / Bank / Card / Other):', 'M-Pesa') || 'Other';
         var ref = prompt('Reference code (e.g. M-Pesa confirmation code) — optional:', '') || '';
         inv3.payments = inv3.payments || [];
-        inv3.payments.push({ usd: val, method: method, ref: ref, date: todayISO() });
+        // v21: payments recorded here are OWNER actions in a browser-local
+        // tool — labelled as such, never provider-confirmed. Amounts are
+        // normalized to integer minor units in the event record.
+        inv3.payments.push({
+          usd: val, method: method, ref: ref, date: todayISO(),
+          actor: 'owner', source: 'owner-recorded',
+          currency: 'USD', amountMinor: Math.round((Number(val) || 0) * 100),
+          recordedAt: new Date().toISOString()
+        });
         if (invTotals(inv3).balanceUsd <= 0.005) inv3.status = 'paid';
         save(list); renderSaved();
         if (state.editingId === inv3.id) { syncFromSaved(inv3.id); renderAll(); }
