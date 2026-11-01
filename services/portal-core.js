@@ -1,25 +1,41 @@
 /* ═══════════════════════════════════════════════════════════════════
-   Victor Ndunda — Client Portal CORE v2.0 (v13 "Client Workspace")
+   Victor Ndunda — Client Portal CORE v3.0 (v21 trust hardening)
    ═══════════════════════════════════════════════════════════════════
-   Zero-backend, zero-knowledge client workspace for a static site:
+   Browser-local encrypted client workspace (DEMO MODE — see
+   /trust-boundaries.html and TRUST_BOUNDARIES.md):
 
    AUTH     PBKDF2-SHA256 (210,000 iters) with SPLIT SALTS —
             saltAuth derives the stored verifier (login check),
-            saltKey derives the AES vault key (never stored).
-            Stealing localStorage yields ciphertext + a hash that
-            cannot decrypt anything.
+            saltKey derives the AES vault key. **The vault key is
+            held in memory only** (v21): it is never written to
+            localStorage or sessionStorage. Reloading always
+            requires the password again; "remember me" remembers
+            only the email + expiry. Stealing browser storage yields
+            ciphertext + a hash that cannot decrypt anything.
 
    VAULT    AES-GCM-256, fresh 96-bit IV on every save. All project,
             payment, retainer and message data is encrypted at rest
-            in the client's browser. Nothing readable leaves the
-            device except what the client explicitly shares.
+            in the client's browser. One browser = one account;
+            there is no server and no multi-device sync.
 
-   ENGINE   7-stage project pipeline, payment schedules (50/50,
-            milestone, monthly), retainer lifecycle, receipts.
+   PAYMENTS Explicit state machine (v21):
+            due → sent → reported → submitted → verified | rejected
+                       (verified → refunded)
+            "reported" is the highest state a CLIENT can set.
+            verified/rejected/refunded are owner-side actions with
+            an immutable per-payment event ledger (minor units,
+            provider ref, idempotency key). See TRUST_BOUNDARIES.md.
 
-   EVENTS   Every meaningful client action notifies the owner via
-            Web3Forms (email) + logs locally for the owner dashboard.
-            Share codes (VN1.<b64>) bridge client → owner dashboard.
+   SNAPSHOT Snapshot codes (v21, "VN2.<b64url>") bridge client →
+           owner dashboard: versioned schema, 7-day expiry, nonce,
+           SHA-256 checksum over a canonical payload. UNSIGNED by
+           design (no server) — checksums catch corruption, not
+           forgery, so imports are ALWAYS marked unverified /
+           client-reported. Legacy VN1 codes still import with a
+           loud warning.
+
+   EVENTS   Meaningful client actions notify the owner via Web3Forms
+            (email; demo-* workspaces never email) and log locally.
 
    Modules: window.VNPortalCore (auth + vault + engine + notify)
    UI:      services/portal.js (renders everything)
@@ -38,6 +54,15 @@
   var PBKDF2_ITERS = 210000;
   var SESSION_IDLE_MS = 30 * 60 * 1000;      // 30 minutes
   var REMEMBER_DAYS = 7;
+
+  /* Snapshot-code (v2) hardening limits */
+  var SNAPSHOT_TTL_DAYS = 7;
+  var SNAPSHOT_MAX_BYTES = 262144;           // 256 KB encoded
+  var NONCES_KEY = 'vn_snapshot_nonces';     // owner-side replay registry
+
+  /* Payment lifecycle — see header. 'due'/'sent' precede a report. */
+  var PAYMENT_STATES = ['due', 'sent', 'reported', 'submitted', 'verified', 'rejected', 'refunded'];
+  var OWNER_ONLY_STATES = ['submitted', 'verified', 'rejected', 'refunded'];
 
   var STORAGE = (function () {
     try { localStorage.setItem('__vn_t', '1'); localStorage.removeItem('__vn_t'); return localStorage; }
@@ -236,47 +261,96 @@
     session.name = vault ? vault.profile.name : rec.email;
     session.lastActivity = Date.now();
 
+    /* v21 trust hardening: the AES vault key is NEVER written to any
+       persistent store. sessionStorage keeps a KEYLESS session marker
+       (email + activity time) so the UI can greet a returning tab;
+       remember-me keeps only email + expiry so the login form can be
+       pre-filled. Unlocking always requires the password again. */
     try { sessionStorage.setItem(SESSION_KEY, JSON.stringify({
-      email: session.email, vaultKey: session.vaultKey, lastActivity: session.lastActivity
+      v: 3, email: session.email, lastActivity: session.lastActivity
     })); } catch (e) {}
 
     if (remember) {
       storeSet(REMEMBER_KEY, JSON.stringify({
-        email: session.email, vaultKey: session.vaultKey,
+        v: 3, email: session.email,
         expiresAt: Date.now() + REMEMBER_DAYS * 24 * 60 * 60 * 1000
       }));
     }
   }
 
-  /* Restores a session if it is still valid. Returns true when the
-     vault is unlocked and ready. */
+  /* v21: a page load can never auto-unlock the vault (the key is not
+     persisted anywhere). restoreSession() therefore always returns
+     false; use getRememberedSession() to pre-fill the login form and
+     login() to re-derive the key from the stored salt. */
   async function restoreSession() {
-    // 1) live tab session
-    try {
-      var s = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
-      if (s && Date.now() - s.lastActivity < SESSION_IDLE_MS) {
-        session.email = s.email; session.vaultKey = s.vaultKey; session.lastActivity = s.lastActivity;
-        await unlockVault(s.vaultKey);
-        return true;
-      }
-      if (s) sessionStorage.removeItem(SESSION_KEY);
-    } catch (e) { /* fallthrough */ }
+    purgeLegacyKeyMaterial();
+    return false;
+  }
 
-    // 2) remember-me (7 days)
+  /* Returns { email, expiresAt } when a remember-me record is still
+     valid, or { email, tab: true } for a live keyless tab session. */
+  function getRememberedSession() {
     try {
       var r = JSON.parse(storeGet(REMEMBER_KEY) || 'null');
-      if (r && Date.now() < r.expiresAt) {
-        session.email = r.email; session.vaultKey = r.vaultKey; session.lastActivity = Date.now();
-        await unlockVault(r.vaultKey);
-        try { sessionStorage.setItem(SESSION_KEY, JSON.stringify({
-          email: r.email, vaultKey: r.vaultKey, lastActivity: Date.now()
-        })); } catch (e) {}
-        return true;
+      if (r && r.email && Date.now() < (r.expiresAt || 0)) {
+        return { email: r.email, expiresAt: r.expiresAt };
       }
       if (r) storeDel(REMEMBER_KEY);
     } catch (e) { /* fallthrough */ }
+    try {
+      var s = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
+      if (s && s.email && Date.now() - (s.lastActivity || 0) < SESSION_IDLE_MS) {
+        return { email: s.email, tab: true };
+      }
+      if (s) sessionStorage.removeItem(SESSION_KEY);
+    } catch (e) { /* fallthrough */ }
+    return null;
+  }
 
-    return false;
+  function hasAccount() {
+    var rec = getAuthRecord();
+    return !!(rec && rec.email);
+  }
+
+  /* Wipes the in-memory key + decrypted vault (idle while hidden,
+     explicit lock, or pre-logout). The keyless remember-me record is
+     kept so the client can unlock again with their password. */
+  function lockSession() {
+    var wasAuthed = !!session.vaultKey;
+    session.vaultKey = null;
+    session.name = null;
+    vault = null;
+    try { sessionStorage.removeItem(SESSION_KEY); } catch (e) {}
+    if (wasAuthed) {
+      logEvent('auth', 'Workspace locked (key wiped from memory)');
+      try { window.dispatchEvent(new CustomEvent('vnportal:locked')); } catch (e) {}
+    }
+  }
+
+  document.addEventListener('visibilitychange', function () {
+    if (!document.hidden) return;
+    if (session.vaultKey && Date.now() - (session.lastActivity || 0) > SESSION_IDLE_MS) {
+      lockSession();
+    }
+  });
+
+  /* v2 records stored the raw vault key in remember-me (localStorage)
+     and the tab session (sessionStorage). v3 never persists it. On
+     boot, strip any legacy key material and force a fresh password
+     unlock — the email/expiry are preserved for the login form. */
+  function purgeLegacyKeyMaterial() {
+    try {
+      var r = JSON.parse(storeGet(REMEMBER_KEY) || 'null');
+      if (r && (r.vaultKey || !r.v)) {
+        storeSet(REMEMBER_KEY, JSON.stringify({
+          v: 3, email: r.email, expiresAt: r.expiresAt
+        }));
+      }
+    } catch (e) { storeDel(REMEMBER_KEY); }
+    try {
+      var s = JSON.parse(sessionStorage.getItem(SESSION_KEY) || 'null');
+      if (s && s.vaultKey) sessionStorage.removeItem(SESSION_KEY);
+    } catch (e) {}
   }
 
   function touchSession() {
@@ -292,7 +366,7 @@
     storeDel(REMEMBER_KEY);
     session.email = null; session.name = null; session.vaultKey = null;
     vault = null;
-    logEvent('auth', 'Signed out');
+    logEvent('auth', 'Signed out (in-memory key wiped)');
   }
 
   /* ── Legacy brief migration (pre-v13 plaintext) ────────────────── */
@@ -459,8 +533,9 @@
         usd: Math.round(usd * i.share),
         kes: Math.round(kes * i.share),
         dueDate: dayISO(i.dueOffset),
-        status: 'due',        // due | sent | paid
-        paidAt: null, method: null, ref: null
+        status: 'due',        // due | sent | reported | submitted | verified | rejected | refunded
+        events: [],           // immutable transition ledger (v21)
+        reportedAt: null, verifiedAt: null, method: null, ref: null
       };
     });
     p.activity.push({ at: new Date().toISOString(), text: 'Payment plan selected: ' + type });
@@ -478,49 +553,116 @@
     return p.payments;
   }
 
-  function markPaymentPaid(p, n, method, ref) {
+  /* ── Payment state machine (v21) ────────────────────────────────
+     due → sent → reported → submitted → verified | rejected
+                          (verified → refunded)
+
+     'reported' is the highest state a CLIENT can set: it means "I
+     believe I paid this" and is never treated as received money.
+     submitted/verified/rejected/refunded are owner-side actions
+     (dashboard / demo seeding) and each appends an immutable event
+     with currency, integer minor units, provider reference and an
+     idempotency key. There is no payment provider connected in demo
+     mode — see TRUST_BOUNDARIES.md. */
+
+  function paymentEvent(p, pay, from, to, opts) {
+    opts = opts || {};
+    pay.events = Array.isArray(pay.events) ? pay.events : [];
+    pay.events.push({
+      id: 'PE' + Date.now().toString(36).toUpperCase() + Math.floor(Math.random() * 90 + 10),
+      at: new Date().toISOString(),
+      actor: opts.actor || 'client',
+      source: opts.source || 'client-reported',
+      from: from, to: to,
+      currency: 'USD',
+      amountMinor: Math.round((pay.usd || 0) * 100),
+      kesMinor: Math.round((pay.kes || 0) * 100),
+      provider: opts.provider || pay.method || null,
+      providerRef: opts.providerRef || pay.ref || null,
+      idempotencyKey: (p.id || 'P') + ':' + (pay.n || 0) + ':' + to + ':' + Date.now().toString(36),
+      note: opts.note || ''
+    });
+    return pay;
+  }
+
+  /* Client action: "I've paid this installment" → reported. */
+  function reportPayment(p, n, method, ref) {
     var pay = (p.payments || []).find(function (x) { return x.n === n; });
-    if (!pay || pay.status === 'paid') return null;
-    pay.status = 'paid';
-    pay.paidAt = new Date().toISOString();
+    if (!pay) return null;
+    if (['reported', 'submitted', 'verified', 'rejected', 'refunded'].indexOf(pay.status) !== -1) return null;
+    var from = pay.status || 'due';
+    pay.status = 'reported';
+    pay.reportedAt = new Date().toISOString();
     pay.method = method || '';
     pay.ref = (ref || '').trim();
+    paymentEvent(p, pay, from, 'reported', {
+      actor: 'client', source: 'client-reported',
+      note: 'Client reported this payment. Awaiting owner verification.'
+    });
+    p.activity.push({ at: pay.reportedAt, text: 'Payment reported by client: ' + pay.label + ' ($' + (pay.usd || 0).toLocaleString() + ')' + (pay.ref ? ' ref ' + pay.ref : '') + ' — awaiting verification' });
+    persistVault();
+    notifyOwner('PAYMENT reported by client — verify before issuing a receipt', {
+      'Client': vault.profile.email,
+      'Project': p.name,
+      'Installment': pay.label,
+      'Amount': '$' + (pay.usd || 0).toLocaleString() + ' / KES ' + (pay.kes || 0).toLocaleString(),
+      'Method': method || '—',
+      'Client ref / M-Pesa code': pay.ref || '—',
+      'Reported at': pay.reportedAt,
+      'Status': 'CLIENT-REPORTED (not verified) — reconcile against your M-Pesa / bank statement before marking verified.'
+    });
+    logEvent('payment', 'Installment reported (' + pay.label + ') — awaiting verification');
+    return pay;
+  }
 
-    p.activity.push({ at: pay.paidAt, text: 'Payment marked paid: ' + pay.label + ' ($' + pay.usd.toLocaleString() + ')' + (pay.ref ? ' ref ' + pay.ref : '') });
-
-    if (n === 1) {
-      completeStage(p, 'build', 'Deposit received' + (pay.ref ? ' — ref ' + pay.ref : ''));
+  /* Owner-side transition (dashboard verify tooling / demo seeding).
+     In demo mode this is an explicit, honest owner action recorded in
+     the browser — NOT a provider-confirmed webhook. */
+  function ownerTransitionPayment(p, n, to, note) {
+    var pay = (p.payments || []).find(function (x) { return x.n === n; });
+    if (!pay) return null;
+    if (OWNER_ONLY_STATES.indexOf(to) === -1) return null;
+    var from = pay.status || 'due';
+    if (from === to) return null;
+    if (from === 'due' && to !== 'submitted') return null; // verify from reported/submitted
+    pay.status = to;
+    if (to === 'verified') pay.verifiedAt = new Date().toISOString();
+    if (to === 'rejected') pay.rejectedAt = new Date().toISOString();
+    if (to === 'refunded') pay.refundedAt = new Date().toISOString();
+    paymentEvent(p, pay, from, to, { actor: 'owner', source: 'owner-action', note: note || '' });
+    p.activity.push({ at: new Date().toISOString(), text: 'Payment ' + to + ' by owner: ' + pay.label + (note ? ' — ' + note : '') });
+    if (to === 'verified' && pay.n === 1) {
+      completeStage(p, 'build', 'Deposit verified' + (pay.ref ? ' — ref ' + pay.ref : ''));
     }
     var all = p.payments || [];
-    if (all.length && all.every(function (x) { return x.status === 'paid'; })) {
+    if (to === 'verified' && all.length && all.every(function (x) { return x.status === 'verified' || x.status === 'refunded'; })) {
       completeStage(p, 'review');
       completeStage(p, 'launch');
     }
     persistVault();
-
-    notifyOwner('PAYMENT marked paid — please verify & issue receipt', {
-      'Client': vault.profile.email,
-      'Project': p.name,
-      'Installment': pay.label,
-      'Amount': '$' + pay.usd.toLocaleString() + ' / KES ' + pay.kes.toLocaleString(),
-      'Method': method || '—',
-      'Client ref / M-Pesa code': pay.ref || '—',
-      'Paid at': pay.paidAt
-    });
-    logEvent('payment', 'Installment marked paid (' + pay.label + ')');
     return pay;
   }
 
+  /* v13 compat alias — old callers meant "the client says this is paid". */
+  function markPaymentPaid(p, n, method, ref) { return reportPayment(p, n, method, ref); }
+
   function totals(p) {
     var pays = p.payments || [];
-    var paidUsd = pays.filter(function (x) { return x.status === 'paid'; }).reduce(function (a, x) { return a + (x.usd || 0); }, 0);
+    var verifiedUsd = pays.filter(function (x) { return x.status === 'verified'; }).reduce(function (a, x) { return a + (x.usd || 0); }, 0);
+    var reportedUsd = pays.filter(function (x) { return x.status === 'reported' || x.status === 'submitted'; }).reduce(function (a, x) { return a + (x.usd || 0); }, 0);
+    var refundedUsd = pays.filter(function (x) { return x.status === 'refunded'; }).reduce(function (a, x) { return a + (x.usd || 0); }, 0);
     var totalUsd = pays.reduce(function (a, x) { return a + (x.usd || 0); }, 0) || (p.estimate.totalUsd || 0);
-    var dueUsd = Math.max(0, totalUsd - paidUsd);
-    return { paidUsd: paidUsd, totalUsd: totalUsd, dueUsd: dueUsd, pct: totalUsd ? Math.round((paidUsd / totalUsd) * 100) : 0 };
+    var dueUsd = Math.max(0, totalUsd - verifiedUsd - reportedUsd);
+    return {
+      paidUsd: verifiedUsd, verifiedUsd: verifiedUsd,   // paid == verified, always
+      reportedUsd: reportedUsd, refundedUsd: refundedUsd,
+      totalUsd: totalUsd, dueUsd: dueUsd,
+      pct: totalUsd ? Math.round((verifiedUsd / totalUsd) * 100) : 0
+    };
   }
 
   function nextPayment(p) {
-    var pays = (p.payments || []).filter(function (x) { return x.status !== 'paid'; });
+    var pays = (p.payments || []).filter(function (x) { return x.status !== 'verified' && x.status !== 'refunded'; });
     if (!pays.length) return null;
     return pays.slice().sort(function (a, b) { return a.dueDate < b.dueDate ? -1 : 1; })[0];
   }
@@ -644,7 +786,18 @@
     } catch (e) {}
   }
 
-  /* ── Share codes: client → owner dashboard bridge ──────────────── */
+  /* ── Snapshot codes: client → owner dashboard bridge (v21) ──────
+     VN2.<base64url(json)>
+       { v: 2, kind: 'vn-portal-project', issuedAt, expiresAt,
+         nonce, payload: { project, client }, checksum }
+     checksum = SHA-256 hex of canonicalJSON(payload).
+
+     HONEST LIMIT: the code is UNSIGNED (there is no server to sign
+     it). The checksum detects truncation/corruption and accidental
+     edits; a motivated client can recompute it after tampering.
+     Imports are therefore ALWAYS marked unverified / client-reported
+     and payments are downgraded to 'reported' regardless of what the
+     payload claims. Legacy VN1 codes import with a louder warning. */
   function b64urlEncode(str) {
     return btoa(unescape(encodeURIComponent(str)))
       .replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
@@ -655,38 +808,213 @@
     return decodeURIComponent(escape(atob(s)));
   }
 
-  function makeShareCode(projectId) {
+  function canonicalJSON(v) {
+    if (v === null || typeof v !== 'object') return JSON.stringify(v);
+    if (Array.isArray(v)) return '[' + v.map(canonicalJSON).join(',') + ']';
+    return '{' + Object.keys(v).sort().map(function (k) {
+      return JSON.stringify(k) + ':' + canonicalJSON(v[k]);
+    }).join(',') + '}';
+  }
+
+  async function sha256Hex(str) {
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(buf)).map(function (b) {
+      return b.toString(16).padStart(2, '0');
+    }).join('');
+  }
+
+  function hexRandom(nBytes) {
+    return Array.from(crypto.getRandomValues(new Uint8Array(nBytes))).map(function (b) {
+      return b.toString(16).padStart(2, '0');
+    }).join('');
+  }
+
+  function clampStr(s, n) {
+    s = String(s == null ? '' : s);
+    return s.length > n ? s.slice(0, n) : s;
+  }
+
+  /* Owner-side replay registry: records nonces of imported snapshots
+     so a re-pasted code is visibly flagged as a duplicate. */
+  function registerSnapshotNonce(nonce) {
+    if (!nonce) return 'fresh';
+    try {
+      var arr = JSON.parse(storeGet(NONCES_KEY) || '[]');
+      var dup = arr.some(function (e) { return e && e.n === nonce; });
+      if (!dup) {
+        arr.push({ n: String(nonce), at: new Date().toISOString() });
+        if (arr.length > 200) arr = arr.slice(-200);
+        storeSet(NONCES_KEY, JSON.stringify(arr));
+      }
+      return dup ? 'duplicate' : 'fresh';
+    } catch (e) { return 'fresh'; }
+  }
+
+  /* Whitelists + clamps an imported payload. Every payment arrives as
+     'reported' (client-reported) no matter what the code claimed; the
+     claim is preserved as claimedStatus for the audit trail. */
+  function normalizeSnapshot(snap) {
+    var p = snap && snap.project;
+    if (!p || typeof p !== 'object') return null;
+    var est = (p.estimate && typeof p.estimate === 'object') ? p.estimate : {};
+    var proj = {
+      id: clampStr(p.id, 64),
+      name: clampStr(p.name || p.packageName, 200),
+      packageId: clampStr(p.packageId, 64),
+      packageName: clampStr(p.packageName, 200),
+      status: clampStr(p.status, 40),
+      progress: Math.max(0, Math.min(100, Number(p.progress) || 0)),
+      estimate: {
+        totalUsd: Number(est.totalUsd) || 0, totalKes: Number(est.totalKes) || 0,
+        monthlyUsd: Number(est.monthlyUsd) || 0, monthlyKes: Number(est.monthlyKes) || 0,
+        timeline: clampStr(est.timeline, 120)
+      },
+      paymentPlanType: clampStr(p.paymentPlanType, 40),
+      payments: Array.isArray(p.payments) ? p.payments.slice(0, 24).map(function (x) {
+        x = (x && typeof x === 'object') ? x : {};
+        return {
+          n: Number(x.n) || 0, label: clampStr(x.label, 120),
+          usd: Number(x.usd) || 0, kes: Number(x.kes) || 0,
+          dueDate: clampStr(x.dueDate, 10),
+          status: 'reported',
+          claimedStatus: clampStr(x.status, 20) || 'paid',
+          reportedAt: clampStr(x.reportedAt || x.paidAt, 40) || null,
+          method: clampStr(x.method, 40), ref: clampStr(x.ref, 80),
+          events: Array.isArray(x.events) ? x.events.slice(0, 40) : []
+        };
+      }) : [],
+      retainer: (p.retainer && typeof p.retainer === 'object') ? {
+        active: !!p.retainer.active, monthlyUsd: Number(p.retainer.monthlyUsd) || 0,
+        nextRenewal: clampStr(p.retainer.nextRenewal, 10)
+      } : null,
+      stages: Array.isArray(p.stages) ? p.stages.slice(0, 12) : [],
+      activity: Array.isArray(p.activity) ? p.activity.slice(-10) : [],
+      documents: Array.isArray(p.documents) ? p.documents.slice(0, 20) : []
+    };
+    var c = (snap.client && typeof snap.client === 'object') ? snap.client : {};
+    return {
+      v: 2, kind: 'vn-portal-project',
+      project: proj,
+      client: {
+        name: clampStr(c.name, 200), email: clampStr(c.email, 200),
+        company: clampStr(c.company, 200), phone: clampStr(c.phone, 40)
+      },
+      _meta: {
+        unverified: true,
+        legacy: snap.v === 1,
+        importedFrom: 'snapshot-code',
+        claimedPaid: Array.isArray(p.payments) && p.payments.some(function (x) {
+          return x && (x.status === 'paid' || x.status === 'verified');
+        })
+      }
+    };
+  }
+
+  async function makeShareCode(projectId) {
     var p = getProject(projectId);
     if (!p) return null;
-    var snap = {
-      v: 1,
-      kind: 'vn-portal-project',
-      exportedAt: new Date().toISOString(),
+    if (!window.crypto || !crypto.subtle || !crypto.getRandomValues) {
+      throw new Error('Snapshot codes need a secure (https) context.');
+    }
+    var payload = {
       project: {
         id: p.id, name: p.name, packageId: p.packageId, packageName: p.packageName,
         status: p.status, progress: progress(p),
         estimate: p.estimate,
         paymentPlanType: p.paymentPlanType,
         payments: (p.payments || []).map(function (x) {
-          return { label: x.label, usd: x.usd, kes: x.kes, status: x.status, paidAt: x.paidAt, ref: x.ref, method: x.method };
+          return {
+            label: x.label, usd: x.usd, kes: x.kes, status: x.status,
+            reportedAt: x.reportedAt || x.paidAt || null, ref: x.ref, method: x.method,
+            events: (x.events || []).slice(-20)
+          };
         }),
         retainer: p.retainer ? { active: p.retainer.active, monthlyUsd: p.retainer.monthlyUsd, nextRenewal: p.retainer.nextRenewal } : null,
         stages: p.stages, activity: (p.activity || []).slice(-10),
         documents: p.documents
       },
-      client: vault.profile
+      client: {
+        name: vault.profile.name, email: vault.profile.email,
+        company: vault.profile.company || ''
+      }
     };
-    return 'VN1.' + b64urlEncode(JSON.stringify(snap));
+    var snap = {
+      v: 2,
+      kind: 'vn-portal-project',
+      issuedAt: new Date().toISOString(),
+      expiresAt: new Date(Date.now() + SNAPSHOT_TTL_DAYS * 24 * 60 * 60 * 1000).toISOString(),
+      nonce: hexRandom(12),
+      payload: payload
+    };
+    snap.checksum = await sha256Hex(canonicalJSON(payload));
+    if (!snap.checksum) throw new Error('Checksum could not be computed.');
+    return 'VN2.' + b64urlEncode(JSON.stringify(snap));
   }
 
-  function decodeShareCode(code) {
-    try {
-      var s = String(code || '').trim();
-      if (s.indexOf('VN1.') !== 0) throw new Error('Not a portal share code');
-      var obj = JSON.parse(b64urlDecode(s.slice(4)));
-      if (obj.kind !== 'vn-portal-project') throw new Error('Wrong code type');
-      return obj;
-    } catch (e) { return null; }
+  /* Validates + normalizes a snapshot code. Returns:
+     { ok: true, snapshot, meta, warning? } | { ok: false, error } */
+  async function decodeShareCode(code) {
+    var s = String(code || '').trim();
+    function fail(error) { return { ok: false, error: error }; }
+
+    if (s.indexOf('VN2.') === 0) {
+      if (s.length > SNAPSHOT_MAX_BYTES) {
+        return fail('Snapshot code is too large (over ' + (SNAPSHOT_MAX_BYTES / 1024) + ' KB).');
+      }
+      var snap;
+      try { snap = JSON.parse(b64urlDecode(s.slice(4))); }
+      catch (e) { return fail('Snapshot code is not valid base64url JSON.'); }
+      if (!snap || snap.kind !== 'vn-portal-project') return fail('Wrong code type.');
+      if (snap.v !== 2) return fail('Unsupported snapshot version (' + snap.v + ').');
+      if (!snap.payload || typeof snap.payload !== 'object') return fail('Missing payload.');
+      if (!/^\d{4}-\d{2}-\d{2}T/.test(String(snap.issuedAt || '')) ||
+          !/^\d{4}-\d{2}-\d{2}T/.test(String(snap.expiresAt || ''))) {
+        return fail('Missing issue/expiry timestamps.');
+      }
+      var now = Date.now();
+      if (new Date(snap.expiresAt).getTime() < now) {
+        return fail('Snapshot code expired on ' + String(snap.expiresAt).slice(0, 10) + '. Ask the client for a fresh one.');
+      }
+      if (new Date(snap.issuedAt).getTime() > now + 5 * 60 * 1000) {
+        return fail('Snapshot issue time is in the future — check this device\u2019s clock.');
+      }
+      if (!snap.nonce || String(snap.nonce).length < 8) return fail('Missing nonce.');
+      if (!/^[0-9a-f]{64}$/.test(String(snap.checksum || ''))) return fail('Missing or malformed checksum.');
+      var actual;
+      try { actual = await sha256Hex(canonicalJSON(snap.payload)); }
+      catch (e) { return fail('Checksum could not be computed (needs HTTPS).'); }
+      if (actual !== snap.checksum) {
+        return fail('Checksum mismatch — the code was truncated or edited in transit. Ask the client to re-copy it.');
+      }
+      var norm = normalizeSnapshot({ v: 2, project: snap.payload.project, client: snap.payload.client });
+      if (!norm) return fail('Snapshot payload has no project.');
+      return {
+        ok: true, snapshot: norm,
+        meta: {
+          version: 2, nonce: snap.nonce,
+          issuedAt: snap.issuedAt, expiresAt: snap.expiresAt,
+          replay: registerSnapshotNonce(snap.nonce)
+        }
+      };
+    }
+
+    if (s.indexOf('VN1.') === 0) {
+      var obj;
+      try { obj = JSON.parse(b64urlDecode(s.slice(4))); }
+      catch (e) { return fail('Not a valid legacy share code.'); }
+      if (!obj || obj.kind !== 'vn-portal-project' || !obj.project) {
+        return fail('That is not a valid portal share code.');
+      }
+      var norm1 = normalizeSnapshot(obj);
+      if (!norm1) return fail('Snapshot payload has no project.');
+      return {
+        ok: true, snapshot: norm1,
+        meta: { version: 1, legacy: true, replay: 'fresh' },
+        warning: 'Legacy v1 code: no expiry, size limit, or integrity check. Treated as unverified client-reported data.'
+      };
+    }
+
+    return fail('Not a portal snapshot code (expected VN2. or legacy VN1.).');
   }
 
   /* ── Settings / data control ───────────────────────────────────── */
@@ -759,7 +1087,10 @@
 
     // payments
     buildPaymentPlan: buildPaymentPlan,
-    markPaymentPaid: markPaymentPaid,
+    reportPayment: reportPayment,
+    markPaymentPaid: markPaymentPaid,        // v13 compat alias → reportPayment
+    ownerTransitionPayment: ownerTransitionPayment,
+    PAYMENT_STATES: PAYMENT_STATES,
     totals: totals,
     nextPayment: nextPayment,
 
@@ -776,21 +1107,62 @@
     // notifications & share
     notifyOwner: notifyOwner,
     logEvent: logEvent,
-    makeShareCode: makeShareCode,
-    decodeShareCode: decodeShareCode,
+    makeShareCode: makeShareCode,          // async → 'VN2.…' (or throws)
+    decodeShareCode: decodeShareCode,      // async → { ok, snapshot|error }
+    registerSnapshotNonce: registerSnapshotNonce,
+    SNAPSHOT_TTL_DAYS: SNAPSHOT_TTL_DAYS,
+    SNAPSHOT_MAX_BYTES: SNAPSHOT_MAX_BYTES,
     getEvents: function () { try { return JSON.parse(storeGet(EVENTS_KEY) || '[]'); } catch (e) { return []; } },
 
     // settings
     changePassword: changePassword,
     exportBackup: exportBackup,
     deleteAccount: deleteAccount,
-    getAuthEmail: function () { var r = getAuthRecord(); return r ? r.email : null; }
+    getAuthEmail: function () { var r = getAuthRecord(); return r ? r.email : null; },
+
+    // session / trust (v21)
+    getRememberedSession: getRememberedSession,
+    hasAccount: hasAccount,
+    lockSession: lockSession
   };
 
   /* ── Self-boot ─────────────────────────────────────────────────────
-     Restore any saved session on every page that loads this module, so
-     contract / payment / invoice / wizard pages can silently sync into
-     the vault. The portal page's own boot() is idempotent — a second
-     restore just re-reads the same stored session. */
-  try { restoreSession().catch(function () {}); } catch (e) { /* non-fatal */ }
+     v21: the vault key is never persisted, so a page load can never
+     auto-unlock the vault. On every load we (1) purge legacy key
+     material, (2) surface a "workspace locked" hint on funnel pages
+     that sync into the vault (data-vn-portal-sync), and (3) leave the
+     remembered email available for login pre-fill. Unlocking always
+     requires the password again. */
+  function mountPortalSyncHint() {
+    var body = document.body;
+    if (!body || !body.hasAttribute('data-vn-portal-sync')) return;
+    if ((vault && session.vaultKey) || !hasAccount()) return;
+    try {
+      if (document.getElementById('vn-portal-hint')) return;
+      var st = document.createElement('style');
+      st.id = 'vn-portal-hint-style';
+      st.textContent = '.vn-portal-hint{display:flex;gap:0.6rem;align-items:flex-start;margin:0.75rem auto;max-width:1080px;padding:0.6rem 0.9rem;' +
+        'border:1px solid rgba(0,212,255,0.35);border-radius:10px;background:rgba(0,212,255,0.08);font-size:0.8rem;line-height:1.5}' +
+        '.vn-portal-hint a{color:inherit;font-weight:600;text-decoration:underline;white-space:nowrap}';
+      document.head.appendChild(st);
+      var div = document.createElement('div');
+      div.id = 'vn-portal-hint';
+      div.className = 'vn-portal-hint';
+      div.setAttribute('role', 'note');
+      var tx = document.createElement('span');
+      tx.textContent = 'Your encrypted client workspace is on this device but locked — re-enter your password on the portal to sync this into it. (Keys are never stored: reloading always asks for your password.)';
+      var a = document.createElement('a');
+      a.href = '/services/client-dashboard.html';
+      a.textContent = 'Unlock →';
+      div.appendChild(tx); div.appendChild(a);
+      var main = document.querySelector('main') || body;
+      main.insertBefore(div, main.firstChild);
+    } catch (e) { /* non-fatal */ }
+  }
+
+  try {
+    purgeLegacyKeyMaterial();
+    restoreSession().catch(function () {});
+    mountPortalSyncHint();
+  } catch (e) { /* non-fatal */ }
 })();

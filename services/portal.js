@@ -41,6 +41,22 @@
   function daysUntil(dateStr) {
     try { return Math.ceil((new Date(dateStr + 'T00:00:00') - Date.now()) / 86400000); } catch (e) { return 0; }
   }
+
+  /* v21 payment-state rendering — see portal-core state machine. */
+  var PAY_BADGES = {
+    verified:  ['b-green', 'Verified'],
+    reported:  ['b-yellow', 'Reported · awaiting verification'],
+    submitted: ['b-blue', 'Submitted'],
+    rejected:  ['b-red', 'Rejected'],
+    refunded:  ['b-gray', 'Refunded'],
+    sent:      ['b-blue', 'Sent'],
+    due:       ['b-yellow', 'Due']
+  };
+  function payBadge(x) {
+    var m = PAY_BADGES[x && x.status] || PAY_BADGES.due;
+    return '<span class="badge ' + m[0] + '">' + m[1] + '</span>';
+  }
+  function payReportable(x) { return ['due', 'sent'].indexOf(x && x.status) !== -1; }
   function toast(msg, type) {
     try { window.vnToast(msg, 3400); } catch (e) { /* palette not loaded */ }
   }
@@ -72,7 +88,7 @@
     function paint() {
       $('#authTitle').textContent = mode === 'login' ? 'Welcome back' : 'Create your workspace';
       $('#authSub').textContent = mode === 'login'
-        ? 'Sign in to your encrypted project workspace.'
+        ? 'Re-enter your password to unlock your encrypted workspace — keys are never stored, so every visit asks for it once.'
         : 'Your projects, contracts, payments and retainers — encrypted in your browser.';
       // hide signup-only fields AND drop their `required` flag — otherwise
       // invisible required inputs block constraint validation in login mode.
@@ -164,7 +180,12 @@
     p.name = 'Starter Build — WhatsApp FAQ Assistant (demo)';
     C.completeStage(p, 'design', 'Solution design demo note');
     C.buildPaymentPlan(p, 'instalments');
-    C.markPaymentPaid(p, 1, 'MPESA-DEMO-1');
+    // Demonstrate the full payment state machine in the demo:
+    // installment 1 reported by the client, then owner-verified;
+    // installment 2 reported and still awaiting verification.
+    C.reportPayment(p, 1, 'mpesa', 'MPESA-DEMO-1');
+    C.ownerTransitionPayment(p, 1, 'verified', 'Seeded demo: deposit reconciled against M-Pesa statement');
+    C.reportPayment(p, 2, 'mpesa', 'QGH7X2LM9P');
     // a couple of activity lines + one message thread
     p.activity = p.activity || [];
     p.activity.push({ at: new Date().toISOString(), text: 'Demo seeded — this project shows the 7-stage pipeline, instalment payments and messaging.' });
@@ -288,7 +309,7 @@
         '<div class="ov-cards">' +
           '<div class="kpi-card"><div class="kpi-icon">🚀</div><div class="kpi-body"><div class="kpi-value">' + projects.length + '</div><div class="kpi-label">Projects</div></div></div>' +
           '<div class="kpi-card"><div class="kpi-icon">⚡</div><div class="kpi-body"><div class="kpi-value">' + active.length + '</div><div class="kpi-label">Active</div></div></div>' +
-          '<div class="kpi-card"><div class="kpi-icon">💳</div><div class="kpi-body"><div class="kpi-value">' + fmtUSD(paid) + '</div><div class="kpi-label">Paid to date</div></div></div>' +
+          '<div class="kpi-card"><div class="kpi-icon">💳</div><div class="kpi-body"><div class="kpi-value">' + fmtUSD(paid) + '</div><div class="kpi-label">Verified payments</div></div></div>' +
           '<div class="kpi-card"><div class="kpi-icon">🛡️</div><div class="kpi-body"><div class="kpi-value">' + ret.length + '</div><div class="kpi-label">Retainers</div></div></div>' +
         '</div>' +
         (acts.length
@@ -392,10 +413,10 @@
     }).join('');
 
     var paysHtml = (p.payments || []).map(function (x) {
-      return '<div class="pay-row' + (x.status === 'paid' ? ' paid' : '') + '">' +
+      return '<div class="pay-row' + (x.status === 'verified' ? ' paid' : '') + '">' +
         '<div class="pay-l"><div class="pay-label">' + esc(x.label) + '</div><div class="pay-due">Due ' + fmtDate(x.dueDate) + (x.ref ? ' · ref ' + esc(x.ref) : '') + '</div></div>' +
         '<div class="pay-amt">' + fmtUSD(x.usd) + '<span class="pay-kes">KES ' + (x.kes || 0).toLocaleString() + '</span></div>' +
-        '<span class="badge ' + (x.status === 'paid' ? 'b-green' : x.status === 'sent' ? 'b-blue' : 'b-yellow') + '">' + (x.status === 'paid' ? 'Paid' : 'Due') + '</span>' +
+        payBadge(x) +
       '</div>';
     }).join('') || '<p class="mut">No payment plan yet — choose one to activate the contract stage.</p>';
 
@@ -431,13 +452,14 @@
       '</div>' +
       '<aside class="ov-side">' +
         '<div class="panel panel-tint"><h3 class="panel-title">Share with Victor</h3>' +
-          '<p class="mut">Send Victor a live snapshot of this project — payments, stages and documents — so he can import it into his dashboard.</p>' +
-          '<button class="btn btn-primary btn-sm full" id="shareBtn">Generate share code</button>' +
-          '<textarea id="shareOut" class="share-out" readonly style="display:none" aria-label="Share code"></textarea>' +
+          '<p class="mut">Send Victor a snapshot of this project — payments, stages and documents — as a <strong>client-reported, unverified</strong> code he imports into his dashboard. It expires in ' + C.SNAPSHOT_TTL_DAYS + ' days and never contains your password.</p>' +
+          '<button class="btn btn-primary btn-sm full" id="shareBtn">Generate snapshot code</button>' +
+          '<textarea id="shareOut" class="share-out" readonly style="display:none" aria-label="Snapshot code"></textarea>' +
         '</div>' +
         '<div class="panel"><h3 class="panel-title">📈 Financial summary</h3>' +
           '<ul class="side-list">' +
-            '<li><strong>Paid:</strong> ' + fmtUSD(t.paidUsd) + ' (' + t.pct + '%)</li>' +
+            '<li><strong>Verified:</strong> ' + fmtUSD(t.verifiedUsd) + ' (' + t.pct + '%)</li>' +
+            (t.reportedUsd > 0 ? '<li><strong>Reported (awaiting verification):</strong> ' + fmtUSD(t.reportedUsd) + '</li>' : '') +
             '<li><strong>Outstanding:</strong> ' + fmtUSD(t.dueUsd) + '</li>' +
             '<li><strong>Contract value:</strong> ' + fmtUSD(t.totalUsd) + '</li>' +
             (p.retainer ? '<li><strong>Retainer:</strong> ' + (p.retainer.active ? fmtUSD(p.retainer.monthlyUsd) + '/mo — renews ' + fmtDate(p.retainer.nextRenewal) : 'cancelled') + '</li>' : '') +
@@ -450,15 +472,20 @@
     $('#projBack').onclick = function () { go('projects'); };
     var cp = $('#choosePlanBtn');
     if (cp) cp.onclick = function () { go('payments'); };
-    $('#shareBtn').onclick = function () {
-      var code = C.makeShareCode(p.id);
+    $('#shareBtn').onclick = async function () {
       var out = $('#shareOut');
-      out.style.display = 'block';
-      out.value = code;
-      out.select();
-      try { document.execCommand('copy'); } catch (e) {}
-      if (navigator.clipboard) navigator.clipboard.writeText(code).catch(function () {});
-      toast('Share code copied — paste it to Victor on WhatsApp or email');
+      try {
+        var code = await C.makeShareCode(p.id);
+        if (!code) { toast('Could not generate a snapshot code.'); return; }
+        out.style.display = 'block';
+        out.value = code;
+        out.select();
+        try { document.execCommand('copy'); } catch (e) {}
+        if (navigator.clipboard) navigator.clipboard.writeText(code).catch(function () {});
+        toast('Snapshot code copied — paste it to Victor on WhatsApp or email');
+      } catch (e) {
+        toast('Snapshot codes need a secure (https) connection.');
+      }
     };
     $$('a[href*="brief="]', el).forEach(function (a) {
       a.addEventListener('click', function () {
@@ -479,7 +506,8 @@
     var withPlans = projects.filter(function (p) { return p.payments && p.payments.length; });
     var without = projects.filter(function (p) { return !p.payments || !p.payments.length; });
 
-    var totalPaid = projects.reduce(function (a, p) { return a + C.totals(p).paidUsd; }, 0);
+    var totalVerified = projects.reduce(function (a, p) { return a + C.totals(p).verifiedUsd; }, 0);
+    var totalReported = projects.reduce(function (a, p) { return a + C.totals(p).reportedUsd; }, 0);
     var totalDue = projects.reduce(function (a, p) { return a + C.totals(p).dueUsd; }, 0);
 
     var plansHtml = '';
@@ -499,35 +527,37 @@
 
     var scheduleHtml = withPlans.map(function (p) {
       var t = C.totals(p);
-      return '<div class="panel"><div class="panel-title-row"><h3 class="panel-title">' + esc(p.name) + '</h3><span class="tag">' + t.pct + '% paid</span></div>' +
+      return '<div class="panel"><div class="panel-title-row"><h3 class="panel-title">' + esc(p.name) + '</h3><span class="tag">' + t.pct + '% verified</span></div>' +
         '<div class="prog-bar"><i style="width:' + t.pct + '%"></i></div>' +
+        (t.reportedUsd > 0 ? '<p class="mut" style="margin:0.4rem 0 0.2rem">' + fmtUSD(t.reportedUsd) + ' reported by you — awaiting Victor\u2019s verification against his statement.</p>' : '') +
         (p.payments || []).map(function (x) {
           var d = daysUntil(x.dueDate);
-          var overdue = x.status !== 'paid' && d < 0;
-          return '<div class="pay-row' + (x.status === 'paid' ? ' paid' : overdue ? ' overdue' : '') + '">' +
+          var overdue = payReportable(x) && d < 0;
+          return '<div class="pay-row' + (x.status === 'verified' ? ' paid' : overdue ? ' overdue' : '') + '">' +
             '<div class="pay-l"><div class="pay-label">' + esc(x.label) + (overdue ? ' <span class="tag tag-red">overdue ' + Math.abs(d) + 'd</span>' : '') + '</div>' +
             '<div class="pay-due">Due ' + fmtDate(x.dueDate) + (x.ref ? ' · ref ' + esc(x.ref) : '') + '</div></div>' +
             '<div class="pay-amt">' + fmtUSD(x.usd) + '<span class="pay-kes">KES ' + (x.kes || 0).toLocaleString() + '</span></div>' +
-            (x.status === 'paid'
-              ? '<span class="badge b-green">Paid</span>'
-              : '<button class="btn btn-primary btn-sm" data-pay-proj="' + p.id + '" data-pay-n="' + x.n + '">Mark paid</button>') +
+            (payReportable(x)
+              ? '<button class="btn btn-primary btn-sm" data-pay-proj="' + p.id + '" data-pay-n="' + x.n + '">Report payment</button>'
+              : payBadge(x)) +
           '</div>';
         }).join('') + '</div>';
     }).join('');
 
     el.innerHTML =
-      '<div class="page-head"><h2>Payments</h2><p>Plans, installments and receipts — with M-Pesa, card and bank options.</p></div>' +
+      '<div class="page-head"><h2>Payments</h2><p>Plans and installments — report what you\u2019ve paid; Victor verifies it against his statement.</p></div>' +
       '<div class="ov-cards">' +
-        '<div class="kpi-card"><div class="kpi-icon">✅</div><div class="kpi-body"><div class="kpi-value">' + fmtUSD(totalPaid) + '</div><div class="kpi-label">Paid to date</div></div></div>' +
-        '<div class="kpi-card"><div class="kpi-icon">⏳</div><div class="kpi-body"><div class="kpi-value">' + fmtUSD(totalDue) + '</div><div class="kpi-label">Outstanding</div></div></div>' +
+        '<div class="kpi-card"><div class="kpi-icon">✅</div><div class="kpi-body"><div class="kpi-value">' + fmtUSD(totalVerified) + '</div><div class="kpi-label">Verified to date</div></div></div>' +
+        '<div class="kpi-card"><div class="kpi-icon">⏳</div><div class="kpi-body"><div class="kpi-value">' + fmtUSD(totalReported) + '</div><div class="kpi-label">Reported · awaiting verification</div></div></div>' +
+        '<div class="kpi-card"><div class="kpi-icon">📮</div><div class="kpi-body"><div class="kpi-value">' + fmtUSD(totalDue) + '</div><div class="kpi-label">Outstanding</div></div></div>' +
       '</div>' +
       plansHtml +
       (scheduleHtml ? '<h3 class="section-title">Your payment schedule</h3>' + scheduleHtml : '') +
       '<div class="panel"><h3 class="panel-title">💳 How to pay</h3>' +
         '<div class="pay-methods">' +
-          '<div class="pay-method"><div class="pm-ic">📱</div><div><strong>M-Pesa (Kenya)</strong><div class="mut">Paybill <code class="copyable" data-copy="4071186">4071186</code> · Account <code>VND-' + esc((currentProject || 'X').slice(-4)) + '</code></div></div></div>' +
-          '<div class="pay-method"><div class="pm-ic">🌍</div><div><strong>Card / International</strong><div class="mut">Stripe or Flutterwave payment link — request one below and Victor sends it within 4 business hours.</div></div></div>' +
-          '<div class="pay-method"><div class="pm-ic">🏦</div><div><strong>Bank transfer</strong><div class="mut">USD & KES accounts available on request.</div></div></div>' +
+          '<div class="pay-method"><div class="pm-ic">📱</div><div><strong>M-Pesa (Kenya)</strong><div class="mut">Paybill <code class="copyable" data-copy="4071186">4071186</code> · Account <code>VND-' + esc((currentProject || 'X').slice(-4)) + '</code> — reconciled manually by Victor.</div></div></div>' +
+          '<div class="pay-method"><div class="pm-ic">🌍</div><div><strong>Card / International</strong><div class="mut">Payment link on request (placeholder — no card provider is connected to this demo).</div></div></div>' +
+          '<div class="pay-method"><div class="pm-ic">🏦</div><div><strong>Bank transfer</strong><div class="mut">USD &amp; KES account details on request.</div></div></div>' +
         '</div>' +
       '</div>';
 
@@ -569,24 +599,24 @@
     var overlay = document.createElement('div');
     overlay.className = 'pm-modal';
     overlay.innerHTML =
-      '<div class="pm-box" role="dialog" aria-modal="true" aria-label="Confirm payment">' +
-        '<h3>Confirm payment — ' + esc(pay.label) + '</h3>' +
+      '<div class="pm-box" role="dialog" aria-modal="true" aria-label="Report payment">' +
+        '<h3>Report payment — ' + esc(pay.label) + '</h3>' +
         '<p class="mut">' + esc(p.name) + ' · ' + fmtUSD(pay.usd) + ' / KES ' + (pay.kes || 0).toLocaleString() + '</p>' +
         '<label class="fld"><span>Payment method</span>' +
-          '<select id="pmMethod"><option value="mpesa">M-Pesa</option><option value="card">Card / Stripe</option><option value="flutterwave">Flutterwave</option><option value="bank">Bank transfer</option></select></label>' +
+          '<select id="pmMethod"><option value="mpesa">M-Pesa</option><option value="bank">Bank transfer</option><option value="card">Card (link on request)</option><option value="flutterwave">Flutterwave (link on request)</option></select></label>' +
         '<label class="fld"><span>Transaction reference (M-Pesa code / receipt #)</span>' +
           '<input id="pmRef" placeholder="e.g. QGH7X2LM9P" autocomplete="off" /></label>' +
-        '<p class="mut small">Victor is notified instantly to verify and issue your receipt.</p>' +
+        '<p class="mut small">This records a <strong>client-reported</strong> payment. Victor verifies it against his M-Pesa / bank statement before it counts as received — no payment provider is connected to this demo.</p>' +
         '<div class="pm-actions"><button class="btn btn-ghost btn-sm" id="pmCancel">Cancel</button>' +
-        '<button class="btn btn-primary btn-sm" id="pmConfirm">Confirm payment</button></div>' +
+        '<button class="btn btn-primary btn-sm" id="pmConfirm">Report payment</button></div>' +
       '</div>';
     document.body.appendChild(overlay);
     $('#pmCancel').onclick = function () { overlay.remove(); };
     overlay.addEventListener('click', function (e) { if (e.target === overlay) overlay.remove(); });
     $('#pmConfirm').onclick = function () {
-      C.markPaymentPaid(p, pay.n, $('#pmMethod').value, $('#pmRef').value);
+      C.reportPayment(p, pay.n, $('#pmMethod').value, $('#pmRef').value);
       overlay.remove();
-      toast('Payment recorded — receipt request sent to Victor');
+      toast('Payment reported — Victor will verify it against his statement');
       if (onDone) onDone();
     };
     setTimeout(function () { $('#pmRef').focus(); }, 50);
@@ -795,4 +825,15 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
   else boot();
+
+  // v21: the core wipes the in-memory key when the tab idles while
+  // hidden — catch the event and fall back to the auth gate (no reload).
+  window.addEventListener('vnportal:locked', function () {
+    try {
+      if ($('#portalApp').style.display !== 'none') {
+        renderAuthGate();
+        toast('Workspace locked — encryption key wiped from memory');
+      }
+    } catch (e) { /* non-fatal */ }
+  });
 })();
