@@ -1,0 +1,421 @@
+{
+  "$schema": "https://victorndunda.com/data-inventory.schema.json",
+  "version": 3,
+  "updated": "2026-11-01",
+  "maintainer": "Victor Ndunda <mututandunda@gmail.com>",
+  "description": "Machine-readable inventory of every browser-storage key and outbound processor used by victorndunda.com (public site + browser-local demo tools). The privacy policy is generated from this file's content. scripts/test_data_inventory.js fails CI when a new key or endpoint appears without an entry here.",
+  "modes": {
+    "demo": "Default. All private tooling is browser-local; no server-side identity, storage, or verified payments exist.",
+    "production": "Not deployed. Requires VN_TRUST_CONFIG (see trust-mode.js + .env.example); fails closed when incomplete."
+  },
+  "storageKeys": [
+    {
+      "key": "theme",
+      "store": "localStorage",
+      "purpose": "Dark/light theme preference.",
+      "pii": "none",
+      "retention": "Until cleared by the visitor.",
+      "encryption": "none (not sensitive)",
+      "visibility": "visitor",
+      "deletion": "Clear site data, or toggle theme and clear."
+    },
+    {
+      "key": "vn_lang",
+      "store": "localStorage",
+      "purpose": "Chosen UI language (EN/FR/SW) for i18n.",
+      "pii": "none",
+      "retention": "Until cleared.",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "victor_session",
+      "store": "sessionStorage",
+      "purpose": "Owner dashboard sign-in marker (email, name, avatar URL, activity time). 30-minute idle timeout.",
+      "pii": "email, name, profile image URL",
+      "retention": "Current tab session; removed on logout/timeout.",
+      "encryption": "none",
+      "visibility": "owner (client-side gate only — not server-enforced)",
+      "deletion": "Logout, timeout, or closing the tab."
+    },
+    {
+      "key": "victor_activity_log",
+      "store": "localStorage",
+      "purpose": "Owner dashboard activity feed (last 50 events).",
+      "pii": "email, action descriptions",
+      "retention": "Until cleared via Settings → Clear activity log.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Dashboard Settings → Danger Zone → Clear activity log."
+    },
+    {
+      "key": "victor_login_log",
+      "store": "localStorage",
+      "purpose": "Owner dashboard login attempts (last 20).",
+      "pii": "email attempted",
+      "retention": "Until cleared.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Dashboard Security → Clear Logs."
+    },
+    {
+      "key": "victor_totp_enrolled",
+      "store": "localStorage",
+      "purpose": "Marks TOTP second-factor enrollment per allowlisted email (client-side demo gate).",
+      "pii": "email",
+      "retention": "Until reset from Settings.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Settings → Reset two-factor."
+    },
+    {
+      "key": "vn_client_briefs",
+      "store": "localStorage",
+      "purpose": "Scope-wizard briefs (package, estimate, contact details). Also the pre-portal legacy store migrated into the encrypted vault.",
+      "pii": "name, email, company, phone, project description",
+      "retention": "Until the brief is deleted or migrated into the encrypted portal vault.",
+      "encryption": "none in this key (plaintext); migrated copies are AES-GCM encrypted inside vn_portal_auth",
+      "visibility": "visitor (their own browser)",
+      "deletion": "Wizard UI or clearing site data."
+    },
+    {
+      "key": "vn_portal_auth",
+      "store": "localStorage",
+      "purpose": "Client workspace account record: email, PBKDF2 salts + verifier, and the AES-GCM encrypted vault blob.",
+      "pii": "email; all project/payment/message data inside the encrypted vault",
+      "retention": "Until account deletion.",
+      "encryption": "vault AES-GCM-256 (key derived from password, held in memory only); salts/verifier are PBKDF2-SHA256 210k iterations",
+      "visibility": "client (their own browser)",
+      "deletion": "Portal Settings → Delete account."
+    },
+    {
+      "key": "vn_portal_session",
+      "store": "sessionStorage",
+      "purpose": "Keyless tab-session marker (email + activity time) for the client workspace. v3: NEVER contains the vault key.",
+      "pii": "email",
+      "retention": "Current tab session.",
+      "encryption": "n/a (no secret material)",
+      "visibility": "client",
+      "deletion": "Logout, lock, or closing the tab."
+    },
+    {
+      "key": "vn_portal_remember",
+      "store": "localStorage",
+      "purpose": "Remember-me record for the client workspace: email + expiry ONLY (v3). Never a key.",
+      "pii": "email",
+      "retention": "7 days, or until logout.",
+      "encryption": "n/a (no secret material)",
+      "visibility": "client",
+      "deletion": "Logout or clearing site data."
+    },
+    {
+      "key": "vn_portal_events",
+      "store": "localStorage",
+      "purpose": "Client workspace event log (last 100) mirrored for the owner dashboard on shared devices.",
+      "pii": "email, event text",
+      "retention": "Rolling last 100 events.",
+      "encryption": "none",
+      "visibility": "client + owner (same browser)",
+      "deletion": "Portal account deletion."
+    },
+    {
+      "key": "vn_portal_clients",
+      "store": "localStorage",
+      "purpose": "Owner dashboard: client snapshots imported from VN2/VN1 codes — always marked unverified/client-reported; includes payment ledgers.",
+      "pii": "client name, email, company, payment refs",
+      "retention": "Last 50 imports.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Clear site data (no per-record UI yet)."
+    },
+    {
+      "key": "vn_snapshot_nonces",
+      "store": "localStorage",
+      "purpose": "Owner dashboard: nonces of imported snapshot codes for replay detection (last 200).",
+      "pii": "none",
+      "retention": "Last 200 nonces.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "vn_demo_account",
+      "store": "localStorage",
+      "purpose": "Email of the seeded demo workspace on this device (demo accounts never email the owner).",
+      "pii": "synthetic demo email only",
+      "retention": "Until demo reset.",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Portal account deletion."
+    },
+    {
+      "key": "vn_invoices",
+      "store": "localStorage",
+      "purpose": "Invoice tool: invoice records with line items and owner-recorded payment events.",
+      "pii": "client name, company, email, address",
+      "retention": "Until deleted in the invoice tool.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Invoice tool delete button / JSON export."
+    },
+    {
+      "key": "vn_leads",
+      "store": "localStorage",
+      "purpose": "Owner dashboard outreach tracker (last 50).",
+      "pii": "company/lead name, source",
+      "retention": "Last 50 leads.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Per-lead delete button."
+    },
+    {
+      "key": "vn_projects",
+      "store": "localStorage",
+      "purpose": "Custom projects added from GitHub via the owner dashboard.",
+      "pii": "none (public repo metadata)",
+      "retention": "Until deleted.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Dashboard Projects → Delete."
+    },
+    {
+      "key": "vn_jobs_applications",
+      "store": "localStorage",
+      "purpose": "Owner job-application pipeline.",
+      "pii": "none (job titles/companies)",
+      "retention": "Until cleared.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "vn_resume_downloads",
+      "store": "localStorage",
+      "purpose": "Resume download counter (this browser).",
+      "pii": "none",
+      "retention": "Persistent counter.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "vn_visits",
+      "store": "localStorage",
+      "purpose": "Visit counter (this browser).",
+      "pii": "none",
+      "retention": "Persistent counter.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "vn_subscribers",
+      "store": "localStorage",
+      "purpose": "Local record of newsletter signups captured on this browser.",
+      "pii": "email",
+      "retention": "Until cleared.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "vn_recent",
+      "store": "localStorage",
+      "purpose": "Command palette recent-pages memory (last 8).",
+      "pii": "none",
+      "retention": "Last 8 entries.",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "vn_cp_index",
+      "store": "localStorage",
+      "purpose": "Command palette search index cache (12h TTL).",
+      "pii": "none",
+      "retention": "12 hours.",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "vn_proposals",
+      "store": "localStorage",
+      "purpose": "Proposal tool: saved proposals (client, scope, pricing) — owner device, same model as invoices.",
+      "pii": "client name, company, email",
+      "retention": "Until deleted in the proposal tool.",
+      "encryption": "none",
+      "visibility": "owner",
+      "deletion": "Proposal tool delete / clear site data."
+    },
+    {
+      "key": "vn_roi_inputs",
+      "store": "localStorage",
+      "purpose": "ROI calculator: the visitor's saved inputs so returning visitors see their last scenario.",
+      "pii": "none (calculator configuration)",
+      "retention": "Until cleared.",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "vn_read:<path>",
+      "store": "localStorage",
+      "purpose": "Per-article read marker (dynamic key prefix vn_read:).",
+      "pii": "none",
+      "retention": "Until cleared.",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "vn_last_estimate",
+      "store": "localStorage",
+      "purpose": "Booking assistant: last estimate configuration for hand-off context.",
+      "pii": "none (service/volume/pricing config)",
+      "retention": "Until replaced.",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "vn_assessment_ctx",
+      "store": "localStorage",
+      "purpose": "Assessment flow context.",
+      "pii": "none (flow state)",
+      "retention": "Until flow completes.",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "vn_ping_<kind>",
+      "store": "sessionStorage",
+      "purpose": "Booking assistant rate-limit markers (one ping per event type per 4 minutes).",
+      "pii": "none",
+      "retention": "4 minutes.",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Closing the tab."
+    },
+    {
+      "key": "gh_<user>",
+      "store": "localStorage",
+      "purpose": "GitHub API response cache for repo cards (dynamic prefix gh_).",
+      "pii": "none (public data)",
+      "retention": "Cache TTL.",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "gh_backoff",
+      "store": "localStorage",
+      "purpose": "GitHub API rate-limit backoff marker.",
+      "pii": "none",
+      "retention": "Until backoff window passes.",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Clear site data."
+    },
+    {
+      "key": "__vn_t",
+      "store": "localStorage",
+      "purpose": "Transient storage-availability probe written and removed immediately by portal-core.",
+      "pii": "none",
+      "retention": "Milliseconds (write + remove).",
+      "encryption": "none",
+      "visibility": "visitor",
+      "deletion": "Removed immediately after the probe."
+    }
+  ],
+  "outboundProcessors": [
+    {
+      "name": "Web3Forms",
+      "endpoint": "https://api.web3forms.com/submit",
+      "purpose": "Contact/booking/portal notification email relay to the site owner. Demo portal workspaces (demo-*) never send.",
+      "data": "Form fields the visitor types; booking estimates carry configuration only (no chat text).",
+      "usedBy": ["/book/", "contact forms", "client portal notifications"],
+      "privacyPolicy": "https://web3forms.com/privacy-policy"
+    },
+    {
+      "name": "Google Identity Services",
+      "endpoint": "https://accounts.google.com",
+      "purpose": "Owner dashboard Google sign-in (ID token, signature verified against JWKS).",
+      "data": "Email, name, profile picture of the signing-in user.",
+      "usedBy": ["/dashboard/"],
+      "privacyPolicy": "https://policies.google.com/privacy"
+    },
+    {
+      "name": "Google JWKS endpoint",
+      "endpoint": "https://www.googleapis.com/oauth2/v3/certs",
+      "purpose": "Public signing keys to verify Google ID token signatures (read-only).",
+      "data": "None (public keys fetched; no user data sent).",
+      "usedBy": ["/dashboard/"],
+      "privacyPolicy": "https://policies.google.com/privacy"
+    },
+    {
+      "name": "Google Fonts",
+      "endpoint": "https://fonts.googleapis.com, https://fonts.gstatic.com",
+      "purpose": "Typography.",
+      "data": "Font requests (IP visible to Google as with any CDN).",
+      "usedBy": ["all pages"],
+      "privacyPolicy": "https://policies.google.com/privacy"
+    },
+    {
+      "name": "GitHub API",
+      "endpoint": "https://api.github.com",
+      "purpose": "Repo metadata for project cards and the owner's add-from-GitHub tool. Sequential, cached (gh_*), with backoff.",
+      "data": "Public repository metadata.",
+      "usedBy": ["projects pages", "/dashboard/"],
+      "privacyPolicy": "https://docs.github.com/en/site-policy/privacy-policies"
+    },
+    {
+      "name": "Arbeitnow API",
+      "endpoint": "https://www.arbeitnow.com/api/job-board-api",
+      "purpose": "Job listings for the jobs tool.",
+      "data": "Search queries (no identity).",
+      "usedBy": ["/jobs/ (redirect stub + dashboard)"],
+      "privacyPolicy": "https://www.arbeitnow.com/privacy-policy"
+    },
+    {
+      "name": "RemoteOK API",
+      "endpoint": "https://remoteok.com/api",
+      "purpose": "Job listings for the jobs tool.",
+      "data": "Search queries (no identity).",
+      "usedBy": ["/jobs/ (redirect stub + dashboard)"],
+      "privacyPolicy": "https://remoteok.com/privacy"
+    },
+    {
+      "name": "cdnjs (jsPDF)",
+      "endpoint": "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/",
+      "purpose": "PDF export library on the contract page.",
+      "data": "Library fetch only.",
+      "usedBy": ["/services/contract.html"],
+      "privacyPolicy": "https://www.cloudflare.com/privacypolicy/"
+    },
+    {
+      "name": "GitHub Pages",
+      "endpoint": "https://victorndunda.com (hosting)",
+      "purpose": "Static hosting. Receives standard HTTP logs only; no site-side analytics or tracking cookies.",
+      "data": "HTTP request logs (IP, user agent) held by GitHub.",
+      "usedBy": ["all pages"],
+      "privacyPolicy": "https://docs.github.com/en/site-policy/privacy-policies"
+    },
+    {
+      "name": "WhatsApp / X deep links",
+      "endpoint": "https://wa.me, https://twitter.com/intent/tweet",
+      "purpose": "Navigation-only hand-off links the visitor explicitly clicks.",
+      "data": "Pre-filled message text chosen by the visitor.",
+      "usedBy": ["booking/payment pages", "dashboard social composer"],
+      "privacyPolicy": "https://www.whatsapp.com/legal/privacy-policy-wwa"
+    }
+  ],
+  "invariants": [
+    "No AES/decryption key is ever written to localStorage or sessionStorage (vn_portal_session and vn_portal_remember are keyless by design; enforced by test_trust_boundaries.js).",
+    "Snapshot imports are always stored unverified with payments downgraded to 'reported'.",
+    "Demo workspaces (email prefix demo-) never trigger owner notifications.",
+    "Adding a storage key or outbound endpoint without registering it here fails CI (test_data_inventory.js)."
+  ]
+}

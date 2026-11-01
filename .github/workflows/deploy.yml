@@ -16,8 +16,17 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # v21: the full quality suite (quality.yml) must pass on the pushed
+  # commit before anything is deployed — deploy no longer gates on the
+  # static validator alone.
+  quality:
+    name: Quality gates (see quality.yml)
+    uses: ./.github/workflows/quality.yml
+    permissions:
+      contents: read
+
   validate:
-    name: Validate site (JSON, a11y, links, content sync)
+    name: Validate site (fast pre-check)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -27,7 +36,7 @@ jobs:
         run: python3 scripts/validate_site.py
 
   build:
-    needs: validate
+    needs: [quality, validate]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout

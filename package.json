@@ -1,0 +1,24 @@
+{
+  "name": "victor-portfolio",
+  "version": "21.0.0",
+  "private": true,
+  "description": "victorndunda.com — public portfolio + browser-local demo tooling. Quality gates are reproducible from a clean checkout: npm ci && npm test.",
+  "engines": {
+    "node": ">=20 <25"
+  },
+  "scripts": {
+    "validate": "python3 scripts/validate_site.py",
+    "test": "npm run validate && npm run test:syntax && npm run test:inventory && npm run test:sw && npm run test:smoke && npm run test:xss && npm run test:trust",
+    "test:syntax": "node scripts/test_syntax.js",
+    "test:inventory": "node scripts/test_data_inventory.js",
+    "test:sw": "node scripts/test_sw_precache.js",
+    "test:smoke": "node scripts/smoke_test.js",
+    "test:xss": "node scripts/test_xss_fixtures.js",
+    "test:trust": "node scripts/test_trust_boundaries.js",
+    "serve": "python3 -m http.server 8099"
+  },
+  "devDependencies": {
+    "playwright": "1.57.0",
+    "axe-core": "4.10.2"
+  }
+}

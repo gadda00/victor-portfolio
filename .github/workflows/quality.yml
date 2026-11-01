@@ -1,0 +1,75 @@
+name: Quality Gates
+
+# v21: every push to main runs the FULL reproducible quality suite from a
+# clean checkout before the Pages deploy (deploy.yml depends on this job).
+# One documented command locally: npm ci && npm test.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: Validate · syntax · smoke · a11y · SW · XSS · trust · inventory
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node (pinned)
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies (npm ci — reproducible via lockfile)
+        run: npm ci
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
+
+      - name: 1. Static site validator (JSON, links, a11y metadata, content sync)
+        run: python3 scripts/validate_site.py
+
+      - name: 2. JavaScript syntax gate (node --check, first-party files)
+        run: node scripts/test_syntax.js
+
+      - name: 3. Data inventory registration (storage keys + outbound endpoints)
+        run: node scripts/test_data_inventory.js
+
+      - name: 4. Service worker precache + private-route exclusion
+        run: node scripts/test_sw_precache.js
+
+      - name: 5. Browser smoke suite (public pages, zero console errors)
+        run: node scripts/smoke_test.js
+
+      - name: 6. DOM-XSS fixture tests (dashboard, payment, imported data)
+        run: node scripts/test_xss_fixtures.js
+
+      - name: 7. Trust-boundary proofs (vault key, snapshots, payment states)
+        run: node scripts/test_trust_boundaries.js
+
+      - name: 8. Accessibility audit (axe-core, desktop + mobile)
+        run: node scripts/test_a11y.js
+
+      - name: Upload traces and screenshots on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: quality-failure-artifacts
+          path: |
+            test-results/
+            playwright-report/
+          if-no-files-found: ignore
+          retention-days: 7

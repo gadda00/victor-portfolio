@@ -6,11 +6,18 @@
  * Run: node scripts/smoke_test.js  (expects `python3 -m http.server 8099` on the repo root)
  */
 const { chromium } = require('playwright');
+const { startServer } = require('./lib/static_server');
 
-const BASE = process.env.BASE || 'http://localhost:8099';
 const EXPECTED = 13;
 
 (async () => {
+  // v21: self-contained run — starts its own static server unless BASE is set.
+  let BASE = process.env.BASE;
+  let srv = null;
+  if (!BASE) {
+    srv = await startServer();
+    BASE = srv.url;
+  }
   const browser = await chromium.launch();
   const page = await browser.newPage();
   const errors = [];
@@ -107,6 +114,7 @@ const EXPECTED = 13;
   check('all GitHub API URLs well-formed (' + apiRequests.length + ' requests)', malformedApi.length === 0);
 
   await browser.close();
+  if (srv) await srv.close();
   console.log(failures === 0 ? '\nSMOKE TEST PASSED' : '\nSMOKE TEST FAILED (' + failures + ')');
   process.exit(failures === 0 ? 0 : 1);
 })();
