@@ -5,9 +5,9 @@
 
 # Dependencies
 node_modules/
-package-lock.json
 yarn.lock
 pnpm-lock.yaml
+# NOTE: package-lock.json IS committed (v21) — npm ci reproducibility is a CI requirement
 
 # IDE
 .vscode/

@@ -171,7 +171,7 @@ button{font-family:inherit;cursor:pointer}
 }
 </style>
 </head>
-<body>
+<body data-vn-trust="dashboard" data-vn-trust-fixed="true">
 
 <!-- AUTH OVERLAY -->
 <div id="authOverlay">
@@ -265,10 +265,12 @@ button{font-family:inherit;cursor:pointer}
 <div id="toastContainer"></div>
 
 <!-- Google Identity -->
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="/trust-mode.js?v=1.0.0" defer></script>
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 <script src="/qr-lib.js?v=8.0.1" defer></script>
 <script src="/totp.js?v=11.0.0" defer></script>
 <script src="/auth.js?v=11.0.0" defer></script>
-<script src="/dashboard/dashboard.js?v=13.0.0" defer></script>
+<script src="/services/portal-core.js?v=21.0.0" defer></script>
+<script src="/dashboard/dashboard.js?v=21.0.0" defer></script>
 </body>
 </html>

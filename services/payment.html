@@ -42,7 +42,7 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.web3forms.com; frame-src https://js.stripe.com; object-src 'none'; base-uri 'self'; form-action 'self' https://api.web3forms.com" />
 <script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 </head>
-<body>
+<body data-vn-trust="payment" data-vn-portal-sync="true">
 
 <a href="#main" class="skip-link">Skip to content</a>
 <div class="noise-overlay" aria-hidden="true"></div>
@@ -112,7 +112,8 @@
   </div>
 </footer>
 
-<script src="/palette.js?v=13.0.0" defer></script>
+<script src="/trust-mode.js?v=1.0.0" defer></script>
+  <script src="/palette.js?v=13.0.0" defer></script>
 <script src="/services/portal-core.js?v=13.0.0" defer></script>
 <script src="/services/payment.js?v=13.0.0" defer></script>
 <script src="/enhancements.js?v=13.0.0" defer></script>

@@ -27,7 +27,7 @@
 <meta name="theme-color" content="#f8fafc" media="(prefers-color-scheme: light)">
 <script type="speculationrules">{"prefetch":[{"source":"document","where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
 </head>
-<body>
+<body data-vn-trust="proposal" data-vn-portal-sync="true">
 
 <a href="#main" class="skip-link">Skip to content</a>
 <div class="noise-overlay" aria-hidden="true"></div>
@@ -234,7 +234,8 @@ window.addEventListener('scroll', () => {
   document.getElementById('nav')?.classList.toggle('scrolled', window.scrollY > 50);
 }, { passive: true });
 </script>
-<script src="/liquid.js?v=13.0.0" defer></script>
+<script src="/trust-mode.js?v=1.0.0" defer></script>
+  <script src="/liquid.js?v=13.0.0" defer></script>
 <script src="/palette.js?v=13.0.0" defer></script>
 <script src="/services/portal-core.js?v=13.0.0" defer></script>
 <script src="/services/proposal.js?v=13.0.0" defer></script>
