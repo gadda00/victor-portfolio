@@ -7,7 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [Unreleased]
+### Cycle 13: v21 "TRUTH & CONTAINMENT" — security/honesty hardening (2026-11-01)
+
+**The brief:** the 2026-11-01 deep technical re-review found the public portfolio strong (validator/smoke/structure all passing) but the private tooling overstated its protections: a browser-only dashboard described as authenticated/private, an AES vault key persisted in remember-me storage, unsigned forgeable share codes feeding a client-set `paid` state, unescaped innerHTML surfaces, an unreproducible test command, and compliance claims (OWASP/GDPR/WCAG) without evidence. This cycle implements the review's Phase 0–2 core: label the truth, enforce the truth in code, make every gate reproducible.
+
+**P0 — trust boundaries made explicit and honest:**
+
+- **`TRUST_BOUNDARIES.md` + public `/trust-boundaries.html`:** the capability matrix (live / demo / browser-local / manual / client-reported / provider-confirmed / not implemented), the two-mode model (demo default; production designed, not deployed), per-page truth table, and the production upgrade path. Every overstated claim in SECURITY.md, README, IMPROVEMENTS.md, the privacy policy and the dashboard Security section was rewritten to match implementation.
+- **`trust-mode.js` (new):** the mode boundary. Demo is the default; production mode requires `VN_TRUST_CONFIG` (backendUrl, ownerApiToken, sessionVerifyEndpoint) and **fails closed** with a blocking configuration error listing exactly what's missing. Ships the reusable visible banner injected on all 7 private/funnel pages (dashboard/portal/payment/invoice/contract/proposal/wizard) — fixed-top over the dashboard's auth overlay, fixed-bottom on site pages (the global nav is fixed, so a body-first bar slid under it; found and fixed during visual QA).
+- **Vault key never persisted (`portal-core.js` v3):** the AES-GCM key lives in memory only. Remember-me remembers email + expiry, nothing else; reloading always asks for the password once (login re-derives from the stored salt). A visibilitychange idle check (>30 min hidden) wipes the key and drops the portal to its auth gate without a reload. Legacy v2 records that stored the key are stripped automatically on boot. Funnel pages that sync into the vault show a "workspace locked — unlock to sync" hint instead of silently skipping.
+- **Payment state machine:** `due → sent → reported → submitted → verified | rejected → refunded`. A client can only ever `reportPayment` (the old `markPaymentPaid` is now an alias); verified/rejected/refunded are confirm-guarded owner actions in the dashboard with an immutable event ledger per payment (actor, source, from/to, currency, integer minor units, provider ref, idempotency key, note). `totals()` counts **only verified** as paid — reported amounts display separately as awaiting verification. The invoice tool labels its payments `owner-recorded`. M-Pesa stays labelled manual; Flutterwave/Stripe are labelled not-connected placeholders in both UI and copy.
+- **Snapshot codes v2 (`VN2.…`):** versioned schema with issuedAt/expiresAt (7 days), nonce, SHA-256 checksum over a canonical payload, and a 256 KB size cap. Import validates everything, flags duplicate nonces (replay), and **always stores the snapshot unverified with every payment downgraded to `reported`** — the client's claim is preserved as `claimedStatus` for the audit trail. Legacy VN1 codes still import, with a louder warning.
+
+**P1 — correctness under hostile input, and gates that reproduce:**
+
+- **DOM-XSS elimination:** one audited escape function for the dashboard; the invoice table, leads list, social composer and the entire payment page were rewritten with DOM APIs/textContent (package name, client name, timeline, brief ids, imported-snapshot fields never touch string HTML); GitHub links and mailto/WhatsApp hrefs sanitize user data. Proven by `test_xss_fixtures.js` — the review's full payload set (img-onerror, script-close, javascript:, quote/backslash/newline, 10k strings, invalid Unicode) across six surfaces.
+- **`data-inventory.json` + `test_data_inventory.js`:** every storage key (32) and outbound endpoint registered with purpose/PII/retention/encryption/deletion; CI fails on unregistered additions (it caught two missed keys in development). The privacy policy was rewritten from this inventory — the old "theme preference only" storage claim is gone.
+- **Reproducible quality suite:** `package.json` + lockfile (playwright 1.57.0, axe-core 4.10.2) and a shared self-hosting static server — `npm ci && npm test` runs validator → syntax → inventory → SW → smoke → XSS → trust from a clean checkout. `.github/workflows/quality.yml` runs the same chain in CI and **deploy.yml is gated on it** (previously only the static validator ran before deploy).
+
+**P2 — service worker, accessibility, deployment hygiene:**
+
+- **SW vnd-v27.0.0:** install now fails on missing precache assets (the swallow-and-warn catch is gone); the never-cache list covers the entire private funnel; `test_sw_precache.js` validates all 45 URLs + private-route exclusion in CI.
+- **Accessibility gate + real fixes:** new axe-core audit at desktop and mobile widths (measuring the final rendered state — animations frozen, reveals forced). Fixed: muted-text contrast below 4.5:1 on tinted panels (`--text-dim`/`--v6-text-dim` bumped in both themes), the booking day picker's `role="grid"`-without-rows (critical), underlined accent links in text blocks. 14/14 page-viewport combinations now pass with zero serious/critical violations; VLM panel confirms the muted-text redesign still reads as intentional design (9/10 both themes).
+- **`.env.example`** documenting the production-mode configuration surface; **`IMPLEMENTATION_NOTES.md`** (architecture decisions, migrations, rollback, known limitations); **`QA_REPORT.md`** (gate evidence + acceptance-criteria mapping).
+
+**Numbers:** 8/8 gates green · 761 internal links validated · 38 JS files parse · 32 storage keys inventoried · 45 SW precache URLs verified · 13/13 XSS fixtures clean · 20/20 trust-boundary proofs · 14/14 a11y combos clean · 7 pages banner-labelled · sw vnd-v26 → **vnd-v27**.
 
 ### Cycle 12: UI v9 "LIVING SHELL" — the typeable hero (2026-10-31)
 

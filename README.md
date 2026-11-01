@@ -74,13 +74,16 @@ A multi-page static site (no build step) deployed on GitHub Pages with a custom 
 - Tagged (AI / Agriculture / Research / Engineering) with color coding
 - Reading time + word count per article
 
-### Admin Dashboard (`/admin/`)
+### Admin Dashboard (`/dashboard/`)
 - **Google OAuth 2.0** with account selection (forces Google account picker so user can choose which account)
+- **ID-token signature verification** against Google's JWKS (iss/aud/exp/email_verified; fails closed)
 - **Email allowlist**: `mututandunda@gmail.com`, `torv54@gmail.com`
+- **Client-side TOTP second factor** (Google Authenticator-compatible; honest limits documented in SECURITY.md)
+- **PBKDF2 password fallback** (constant-time comparison)
 - **30-minute idle timeout** with 5-min warning
-- **8 sections**: Overview, Content, Analytics, Social, SEO, Security, Jobs, Settings
+- **Visible trust banner** — the dashboard labels itself a browser-local demo (client-side gate, not server-enforced authorization)
 - **Activity feed** + login attempt log (stored in localStorage)
-- **Strict CSP** with `frame-ancestors 'none'`, `noindex/noarchive/nosnippet`
+- **CSP via meta tags** (best-effort on GitHub Pages — see TRUST_BOUNDARIES.md), `noindex/noarchive/nosnippet`
 - **Privacy-friendly analytics** — no third-party tracking; simulated data with disclaimer (integrate Plausible/Umami for production)
 
 ### Job Portal (`/jobs/`)
@@ -92,13 +95,15 @@ A multi-page static site (no build step) deployed on GitHub Pages with a custom 
 - Same Google OAuth as admin
 
 ### Security
-- **Content-Security-Policy** on all pages (strict, scoped per page)
-- **X-Content-Type-Options: nosniff**, **Referrer-Policy**, **Permissions-Policy**
-- **`rel="noopener noreferrer"`** on all `target="_blank"` links
-- **`noindex, nofollow, noarchive, nosnippet, noimageindex`** on private pages
-- **robots.txt** disallows `/admin/` and `/jobs/`
-- **sessionStorage** (not localStorage) for auth — cleared on browser close
-- **Idle timeout** — auto-logout after 30 minutes inactivity
+Read [`TRUST_BOUNDARIES.md`](TRUST_BOUNDARIES.md) first — it is the honest capability matrix. Highlights:
+- **Demo / browser-local by design**: the dashboard and client tools run entirely in the browser; sign-in is a client-side gate, not server-enforced authorization, and holds no confidential records
+- **Client workspace**: AES-GCM-256 vault; **the decryption key is held in memory only** — never in localStorage/sessionStorage (CI-proven), reload always asks for the password
+- **Payments**: explicit state machine (`reported → submitted → verified | rejected → refunded`); `verified` only via an explicit owner action with an immutable event ledger; M-Pesa is manual, card providers are labelled placeholders
+- **Snapshot codes** (`VN2.…`): versioned, 7-day expiry, nonce, SHA-256 checksum, size limits — unsigned by design, so imports are always unverified/client-reported
+- **DOM-XSS hardening**: single audited escape function + DOM-API rendering on high-risk surfaces, proven by an injection fixture suite in CI
+- **Content-Security-Policy** via meta tags (best-effort on GitHub Pages — no HTTP headers possible; documented)
+- **`rel="noopener noreferrer"`** on all `target="_blank"` links; `noindex` on private pages; robots.txt disallows private paths
+- **Data inventory**: every storage key + outbound endpoint registered in `data-inventory.json`; CI fails on unregistered additions
 - **No third-party tracking** — privacy-friendly
 
 ### Notifications & analytics (v8.1)
@@ -158,22 +163,37 @@ victor-portfolio/
     └── social-post.yml     # Auto-post to LinkedIn + X + TikTok on new articles
 ```
 
-## Local Development
+## Local Development & Quality Gates
 
 No build step required. To preview locally:
 
 ```bash
-# Option 1: Python
-python3 -m http.server 8000
-# Open http://localhost:8000
-
-# Option 2: Node
-npx serve .
-
-# Option 3: VS Code Live Server extension
+python3 -m http.server 8000   # or: npx serve .
 ```
 
-> **Note on Google OAuth locally**: For `/admin/` and `/jobs/` to work locally, add `http://localhost:8000` (or your port) to **Authorized JavaScript origins** in Google Cloud Console → APIs & Services → Credentials → OAuth 2.0 Client ID.
+The full quality suite is reproducible from a clean checkout with one command (this is exactly what CI runs on every push — see `.github/workflows/quality.yml`):
+
+```bash
+npm ci                       # installs pinned Playwright + axe-core from the lockfile
+npx playwright install chromium
+npm test                     # validator → syntax → inventory → SW → smoke → XSS → trust
+npm run test:a11y            # axe-core audit at desktop + mobile widths
+```
+
+What each gate covers:
+
+| Command | Proves |
+|---|---|
+| `npm run validate` | 13 projects, 744 internal links, no duplicate IDs, no-JS fallback sync, metadata |
+| `npm run test:syntax` | every first-party JS file parses (`node --check`) |
+| `npm run test:inventory` | every storage key + outbound endpoint is registered in `data-inventory.json` |
+| `npm run test:sw` | all 45 service-worker precache URLs exist; private routes never cached |
+| `npm run test:smoke` | public pages render, filters/search work, zero console errors |
+| `npm run test:xss` | hostile payloads in briefs/invoices/leads/imports render as text, never execute |
+| `npm run test:trust` | vault key never persisted; snapshots validate/tamper-reject; payment states + owner verify |
+| `npm run test:a11y` | axe-core: zero serious/critical violations at 1280px and 390px |
+
+> **Note on Google OAuth locally**: for the dashboard sign-in to work locally, add `http://localhost:8000` (or your port) to **Authorized JavaScript origins** in Google Cloud Console → APIs & Services → Credentials → OAuth 2.0 Client ID.
 
 ## Adding a New Blog Article
 

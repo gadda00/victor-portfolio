@@ -71,7 +71,7 @@
 <main id="main">
 <div class="legal">
   <h1>Privacy Policy</h1>
-  <div class="updated">Last updated: July 3, 2026</div>
+  <div class="updated">Last updated: November 1, 2026</div>
 
   <h2>1. Introduction</h2>
   <p>This Privacy Policy describes how Victor Ndunda ("we", "us", or "our") collects, uses, and protects information when you visit victorndunda.com (the "Site"). We are committed to protecting your privacy and complying with the Kenya Data Protection Act 2019 and international privacy standards including GDPR.</p>
@@ -81,26 +81,27 @@
   <h3>2.1 Public Pages (Home, Blog, Services)</h3>
   <p>The public pages of this Site do not collect personal information. We do not use cookies for tracking on public pages. We do not collect analytics data on public visitors.</p>
 
-  <h3>2.2 Private Portal (Job Search)</h3>
-  <p>The private job search portal at /jobs/ uses Google Sign-In for authentication. When you sign in:</p>
+  <h3>2.2 Owner Dashboard (browser-local)</h3>
+  <p>The owner dashboard at /dashboard/ is protected by a client-side sign-in gate (Google sign-in with signature-verified ID tokens, plus a password fallback and a second-factor prompt). It is a personal console for the site owner — not a server-side account system:</p>
   <ul>
-    <li><strong>Google provides</strong> your email address and a verification token to our Site</li>
-    <li><strong>We store</strong> only your email address in your browser's session storage (cleared when you close your browser)</li>
-    <li><strong>We do not store</strong> your email on any server — authentication is client-side only</li>
-    <li><strong>We do not share</strong> your email with any third party</li>
+    <li><strong>Google provides</strong> the email address, name and profile image of the signing-in user; the ID token's signature is verified against Google's published keys before it is accepted</li>
+    <li><strong>Only your email address</strong> and activity timestamps are kept, in your browser's session storage (cleared when the tab closes or after 30 minutes of inactivity)</li>
+    <li><strong>We do not store</strong> sign-in data on any server — authentication is client-side for this static site, which is why the dashboard deliberately holds no confidential records</li>
   </ul>
 
-  <h3>2.3 Job Search Data</h3>
+  <h3>2.3 Client Workspace (encrypted, browser-local)</h3>
+  <p>If you create a client workspace at /services/client-dashboard.html, your projects, payment reports and messages are <strong>encrypted with AES-GCM-256 inside your own browser</strong>. The decryption key is derived from your password and held in memory only — it is never written to browser storage, so every visit asks for your password once. There is no server copy: one browser holds one account, and clearing the browser deletes the data.</p>
+
+  <h3>2.4 Job Listings</h3>
   <p>Job listings are fetched in real-time from third-party APIs (Arbeitnow, RemoteOK). Your search queries and filter preferences are processed in your browser only and are not sent to or stored on any server.</p>
 
   <h2>3. Google Authentication</h2>
-  <p>The private portal uses Google Identity Services (GIS) for authentication. When you click "Sign in with Google":</p>
+  <p>The owner dashboard uses Google Identity Services (GIS) for sign-in. When you click "Sign in with Google":</p>
   <ul>
-    <li>You are redirected to Google's secure login page</li>
-    <li>Google authenticates you and sends a JSON Web Token (JWT) back to our Site</li>
-    <li>We decode the JWT to verify your email address</li>
-    <li>Only the email addresses <strong>mututandunda@gmail.com</strong> and <strong>torv54@gmail.com</strong> are authorized</li>
-    <li>All other email addresses are rejected with an "Access denied" message</li>
+    <li>You authenticate with Google, which returns a signed ID token to the Site</li>
+    <li>The token's <strong>cryptographic signature is verified</strong> against Google's published signing keys, along with issuer, audience, expiry and email-verification checks</li>
+    <li>Only the email addresses <strong>mututandunda@gmail.com</strong> and <strong>torv54@gmail.com</strong> are accepted</li>
+    <li>All other email addresses are rejected</li>
   </ul>
   <p>Google's Privacy Policy is available at <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">policies.google.com/privacy</a>.</p>
 
@@ -115,34 +116,32 @@
     <li><strong>RemoteOK API</strong> — Job listings (<a href="https://remoteok.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>)</li>
   </ul>
 
-  <h2>5. Cookies</h2>
-  <p>This Site does not use cookies for tracking, advertising, or analytics. The only client-side storage used is:</p>
+  <h2>5. Browser Storage — the complete inventory</h2>
+  <p>This Site does not use cookies for tracking, advertising, or analytics. Every piece of browser storage we use is summarized below; the machine-readable version with purposes, retention, encryption status and deletion paths is <a href="https://github.com/gadda00/victor-portfolio/blob/main/data-inventory.json" target="_blank" rel="noopener noreferrer">data-inventory.json</a> in the public repository, and our CI fails if a new key is ever introduced without being registered there.</p>
   <ul>
-    <li><code>localStorage</code> — stores your theme preference (dark/light) only</li>
-    <li><code>sessionStorage</code> — stores your authentication status for the current browser session only</li>
+    <li><strong>Preferences (not personal):</strong> <code>theme</code> (dark/light), <code>vn_lang</code> (language), <code>vn_recent</code> (command-palette history), <code>vn_read:…</code> (article read markers), <code>vn_cp_index</code> (palette cache)</li>
+    <li><strong>Client workspace (encrypted):</strong> <code>vn_portal_auth</code> — your AES-GCM-256 encrypted vault (projects, payment reports, messages) plus PBKDF2 password salts; <code>vn_portal_session</code> / <code>vn_portal_remember</code> — keyless session markers (email + expiry only; <strong>never</strong> the decryption key); <code>vn_portal_events</code> — workspace activity log; <code>vn_demo_account</code> — seeded demo marker</li>
+    <li><strong>Scope wizard / briefs:</strong> <code>vn_client_briefs</code> — briefs you create (name, email, company, project description), migrated into the encrypted vault when you use the workspace</li>
+    <li><strong>Owner tooling (this browser):</strong> <code>vn_invoices</code>, <code>vn_proposals</code>, <code>vn_leads</code>, <code>vn_jobs_applications</code>, <code>vn_projects</code>, <code>vn_portal_clients</code> (imported client snapshots — always marked unverified), <code>vn_snapshot_nonces</code>, <code>victor_activity_log</code>, <code>victor_login_log</code>, <code>victor_totp_enrolled</code>, <code>victor_session</code> (session storage, 30-minute idle timeout), <code>vn_visits</code> / <code>vn_resume_downloads</code> (counters)</li>
+    <li><strong>Assistants:</strong> <code>vn_last_estimate</code> (booking estimate configuration), <code>vn_assessment_ctx</code>, <code>vn_roi_inputs</code> (calculator inputs), <code>vn_subscribers</code> (emails captured by the newsletter form on this browser), <code>vn_ping_…</code> (session-storage rate limiters, 4 minutes), <code>gh_…</code> / <code>gh_backoff</code> (GitHub API caches)</li>
   </ul>
+  <p><strong>No decryption key is ever stored.</strong> Since November 2026 the workspace key exists only in memory during an unlocked session; reloading always requires your password again. See <a href="/trust-boundaries.html">Trust Boundaries</a> for what each tool is and is not.</p>
 
   <h2>6. Data Security</h2>
-  <p>We implement appropriate technical measures to protect your information:</p>
+  <p>We implement appropriate technical measures for a static, browser-local system:</p>
   <ul>
     <li>HTTPS encryption enforced via GitHub Pages</li>
-    <li>Client-side authentication (no server-side data storage)</li>
-    <li>Session-based auth (cleared on browser close)</li>
-    <li>Email whitelist (only authorized email can access private portal)</li>
-    <li><code>noindex, nofollow</code> on private pages</li>
-    <li><code>robots.txt</code> disallowing /jobs/ path</li>
+    <li>AES-GCM-256 encryption of workspace data inside your browser, with the key held in memory only</li>
+    <li>Google ID-token signature verification (JWKS) before any sign-in is accepted</li>
+    <li>Session-based sign-in with a 30-minute idle timeout</li>
+    <li>Payments recorded by clients are <em>client-reported</em> and never treated as received until the owner explicitly verifies them</li>
+    <li><code>noindex, nofollow</code> on private pages and <code>robots.txt</code> disallowing private paths</li>
+    <li>Content-Security-Policy delivered via meta tags (best-effort on GitHub Pages — see our <a href="/trust-boundaries.html">trust boundaries</a> page for the honest limits of a static host)</li>
   </ul>
 
   <h2>7. Your Rights</h2>
-  <p>Under the Kenya Data Protection Act 2019 and GDPR, you have the right to:</p>
-  <ul>
-    <li>Be informed about how your data is used</li>
-    <li>Access your personal data</li>
-    <li>Rectify inaccurate data</li>
-    <li>Erasure ("right to be forgotten")</li>
-    <li>Object to processing</li>
-  </ul>
-  <p>Since we do not store any personal data on servers (all data is client-side only), these rights are automatically satisfied — simply closing your browser clears all session data.</p>
+  <p>Under the Kenya Data Protection Act 2019 (and, where applicable to you, the GDPR), you have the right to be informed, to access your personal data, to rectification, to erasure, and to object to processing.</p>
+  <p>Because this Site stores your personal data only in your own browser (never on a server we control), these rights are directly exercisable by you: <strong>clearing your browser's site data erases everything</strong>, and the client workspace additionally offers in-app account deletion (Settings → Delete account). For anything held by a third party (for example an email you sent us via Web3Forms), contact <a href="mailto:mututandunda@gmail.com">mututandunda@gmail.com</a> and we will forward or delete it.</p>
 
   <h2>8. Children's Privacy</h2>
   <p>This Site is not directed to children under 18. We do not knowingly collect information from children.</p>

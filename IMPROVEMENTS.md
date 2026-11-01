@@ -82,10 +82,10 @@ Added complete Swahili translations for:
 - Proper file permissions set (755 for executable, 644 for readable)
 - Clear comments and documentation added
 
-### 2. Standards Compliance
-- **OWASP Top 10:** Addressed XSS, injection, and other common vulnerabilities
-- **GDPR:** Privacy policy and terms of service in place
-- **WCAG 2.2:** Accessibility standards maintained throughout
+### 2. Standards Alignment (honest)
+- **OWASP-informed practices:** XSS surfaces use a single audited escape function or DOM APIs, with an injection fixture suite in CI — no "OWASP compliant" claim (no audit has been performed)
+- **Privacy:** privacy policy generated from the machine-readable storage/processor inventory (`data-inventory.json`), CI-enforced
+- **Accessibility:** axe-core gate at desktop + mobile widths in CI; reduced-motion support; no "WCAG certified" claim
 - **Schema.org:** Structured data properly implemented with JSON-LD
 
 ## Files Modified/Created
