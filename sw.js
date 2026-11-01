@@ -15,7 +15,7 @@
  * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v26.0.0';
+const CACHE_VERSION = 'vnd-v27.0.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -70,7 +70,11 @@ const SHELL_URLS = [
   '/blog/articles/africa-ai-view-from-nairobi.html',
 ];
 
-// Never cache these (would break OAuth + live job data + dashboard/portal freshness)
+// Never cache these (would break OAuth + live job data + freshness of
+// private/funnel surfaces). v21: the full private funnel — dashboard,
+// portal, payment, invoice, contract, proposal, assessment, wizard and
+// the trust/mode scripts — is excluded from SW caching entirely so a
+// stale offline copy can never serve private tooling.
 const NEVER_CACHE = [
   '/admin/',
   '/dashboard/',
@@ -78,6 +82,14 @@ const NEVER_CACHE = [
   '/book/',
   '/services/client-dashboard',
   '/services/portal-core.js',
+  '/services/portal.js',
+  '/services/payment',
+  '/services/invoice',
+  '/services/contract',
+  '/services/proposal',
+  '/services/assessment',
+  '/services/wizard',
+  '/trust-mode.js',
   'accounts.google.com',
   'api.linkedin.com',
   'api.twitter.com',
@@ -87,12 +99,14 @@ const NEVER_CACHE = [
 ];
 
 // ─── Install: pre-cache the shell ──────────────────────────────
+// v21: install FAILS if any precache asset is missing — a partially
+// cached shell used to deploy green while offline behavior silently
+// broke. CI (scripts/test_sw_precache.js) validates every URL too.
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(SHELL_CACHE)
       .then(cache => cache.addAll(SHELL_URLS.map(u => new Request(u, { cache: 'reload' }))))
       .then(() => self.skipWaiting())
-      .catch(err => console.warn('[SW] install failed:', err))
   );
 });
 
