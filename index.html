@@ -258,47 +258,120 @@
 
 <!-- Command palette now lives in /palette.js (v12) — site-wide -->
 
-<!-- Hero -->
+<!-- Hero — v12 "FIELD DRAFT": asymmetric sheet with the production-line schematic -->
 <main id="main">
 <section id="hero" class="hero">
-  <canvas id="bgCanvas"></canvas>
   <div class="hero-content">
-    <div class="hero-badge"><span class="pulse-dot"></span> <span data-i18n-key="hero.badge">Available for select engagements · Nairobi 🇰🇪 &amp; remote</span></div>
-    <p class="hero-kicker">Victor Ndunda · Production AI systems engineer</p>
-    <h1 class="hero-title hero-title-single">
-      <span class="ht-strong">I build AI systems</span> <span class="ht-soft">that</span> <span class="gradient-animated">run in production.</span>
-    </h1>
-    <p class="hero-sub">I help founders and product teams turn high-value workflows into reliable AI systems — RAG knowledge tools, agents, automation, forecasting, and fraud detection — with real evaluation, observability, and a clear path from pilot to production.</p>
-    <div class="hero-cta">
-      <a href="/book/" class="btn btn-primary btn-accent-2 lg-shimmer" data-track="cta-book-hero">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Book a 30-Minute AI Systems Assessment
-      </a>
-      <a href="#case-studies" class="btn btn-ghost" data-track="cta-proof-hero">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
-        See the systems I've shipped
-      </a>
+    <div class="hero-left">
+      <div class="hero-badge"><span class="pulse-dot"></span> <span data-i18n-key="hero.badge">Available for select engagements · Nairobi 🇰🇪 &amp; remote</span></div>
+      <p class="hero-kicker"><span class="v6-name">Victor Ndunda</span><span class="hk-sep" aria-hidden="true">·</span>Production AI systems engineer<span class="hk-sep" aria-hidden="true">·</span>Nairobi, KE</p>
+      <h1 class="hero-title">AI systems that <em>survive</em> production.</h1>
+      <p class="hero-sub">I design, build, and run RAG knowledge tools, agents, forecasting, and fraud-detection systems — with the evaluation and observability to prove they work. Pilot to production, in English, Français, and Kiswahili.</p>
+      <div class="hero-cta">
+        <a href="/book/" class="btn btn-primary" data-track="cta-book-hero">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Book a 30-Minute AI Systems Assessment
+        </a>
+        <a href="#case-studies" class="btn btn-ghost" data-track="cta-proof-hero">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          See the systems I've shipped
+        </a>
+      </div>
     </div>
+
+    <div class="hero-right">
+      <div class="pl-frame" id="plFrame">
+        <div class="pl-head">
+          <span class="pl-dwg">DWG № VND-28 · PRODUCTION LINE</span>
+          <span class="pl-rev">REV 12 — 2026</span>
+        </div>
+        <div class="pl-scroll">
+          <svg id="prodLine" viewBox="0 0 620 400" role="img" aria-label="Production-line schematic: property listings, documents and transactions flow through ingest, embed, retrieve, generate and eval stages to users. An eval loop catches failures before they ship. Every number is from a system Victor Ndunda built.">
+            <!-- source feeds -->
+            <g class="pl-node" data-node="src-listings" tabindex="0" aria-label="Source: property listings, 87+ live on Keja AI across 12 Kenyan counties">
+              <rect class="pl-src-rect" x="49" y="89" width="14" height="14" rx="1"/>
+              <text class="pl-src-label" x="56" y="80">LISTINGS</text>
+              <text class="pl-src-label pl-src-sub" x="56" y="118">87+ LIVE</text>
+            </g>
+            <g class="pl-node" data-node="src-docs" tabindex="0" aria-label="Source: verified documents and title deeds">
+              <rect class="pl-src-rect" x="49" y="169" width="14" height="14" rx="1"/>
+              <text class="pl-src-label" x="56" y="160">DOCS</text>
+              <text class="pl-src-label pl-src-sub" x="56" y="198">TITLES</text>
+            </g>
+            <g class="pl-node" data-node="src-txns" tabindex="0" aria-label="Source: 1,000 labelled transactions from the fraud-detection system">
+              <rect class="pl-src-rect" x="49" y="249" width="14" height="14" rx="1"/>
+              <text class="pl-src-label" x="56" y="240">TXNS</text>
+              <text class="pl-src-label pl-src-sub" x="56" y="278">1K LABELLED</text>
+            </g>
+
+            <!-- wiring (drawn under the boxes) -->
+            <line class="pl-line" x1="63" y1="96" x2="104" y2="96"/>
+            <line class="pl-line" x1="63" y1="176" x2="104" y2="176"/>
+            <line class="pl-line" x1="63" y1="256" x2="104" y2="256"/>
+            <line class="pl-line" x1="104" y1="96" x2="104" y2="256"/>
+            <line class="pl-line" x1="104" y1="176" x2="544" y2="176"/>
+            <line class="pl-line" x1="544" y1="196" x2="544" y2="276"/>
+            <line class="pl-line" x1="570" y1="296" x2="596" y2="296"/>
+            <!-- direction chevrons -->
+            <path class="pl-arrow" d="M246 172 L254 176 L246 180 Z"/>
+            <path class="pl-arrow" d="M374 172 L382 176 L374 180 Z"/>
+            <path class="pl-arrow" d="M502 172 L510 176 L502 180 Z"/>
+            <path class="pl-arrow" d="M540 240 L544 248 L548 240 Z"/>
+            <path class="pl-arrow" d="M586 292 L594 296 L586 300 Z"/>
+
+            <!-- eval feedback loop -->
+            <polyline class="pl-loop" points="544,316 544,356 416,356 416,236"/>
+            <path class="pl-arrow" d="M412 244 L416 236 L420 244 Z" style="fill: var(--v6-violet);"/>
+            <text class="pl-loop-label" x="480" y="350">EVAL LOOP — 281 DEFECTS CAUGHT IN PUBLIC REVIEW</text>
+
+            <!-- stages -->
+            <g class="pl-node" data-node="ingest" tabindex="0" aria-label="Ingest stage: 87+ verified listings across 12 Kenyan counties, 8 stakeholder workspaces">
+              <rect class="pl-box" x="134" y="156" width="52" height="40" rx="2"/>
+              <text class="pl-node-name" x="160" y="146">INGEST</text>
+              <text class="pl-node-metric" x="160" y="216">87+ LISTINGS · 12 COUNTIES</text>
+            </g>
+            <g class="pl-node" data-node="embed" tabindex="0" aria-label="Embed stage: multilingual pipeline — English, Français, Kiswahili">
+              <rect class="pl-box" x="262" y="156" width="52" height="40" rx="2"/>
+              <text class="pl-node-name" x="288" y="146">EMBED</text>
+              <text class="pl-node-metric" x="288" y="216">EN · FR · SW</text>
+            </g>
+            <g class="pl-node" data-node="retrieve" tabindex="0" aria-label="Retrieve stage: hybrid search with reranking and citations, tuned for low-bandwidth clients">
+              <rect class="pl-box" x="390" y="156" width="52" height="40" rx="2"/>
+              <text class="pl-node-name" x="416" y="146">RETRIEVE</text>
+              <text class="pl-node-metric" x="416" y="216">HYBRID + RERANK</text>
+            </g>
+            <g class="pl-node" data-node="generate" tabindex="0" aria-label="Generate stage: cited answers; the fraud engine scores in about 33 microseconds per decision">
+              <rect class="pl-box" x="518" y="156" width="52" height="40" rx="2"/>
+              <text class="pl-node-name" x="544" y="146">GENERATE</text>
+              <text class="pl-node-metric" x="544" y="216">CITED · ~33µs/SCORE</text>
+            </g>
+            <g class="pl-node" data-node="eval" tabindex="0" aria-label="Eval gate: 84% recall, 1.37% false positives on 1,000 labelled transactions">
+              <rect class="pl-box" x="518" y="276" width="52" height="40" rx="2"/>
+              <text class="pl-node-name" x="544" y="266">EVAL</text>
+              <text class="pl-node-metric" x="544" y="336">84% RECALL · 1.37% FPR</text>
+            </g>
+
+            <!-- users wall -->
+            <g class="pl-node" data-node="users" tabindex="0" aria-label="Users: 11,000+ learners across 38 countries, 4.8 out of 5 client-reported rating">
+              <rect class="pl-wall" x="596" y="96" width="6" height="234" rx="1"/>
+              <text class="pl-wall-label" x="582" y="213">USERS</text>
+              <text class="pl-wall-metric" x="602" y="88">11K+ LEARNERS · 38 COUNTRIES</text>
+            </g>
+
+            <!-- packets get injected here by schematic.js -->
+            <g id="plPackets"></g>
+          </svg>
+        </div>
+        <div class="pl-pan-hint" aria-hidden="true">← drag to pan the drawing →</div>
+        <div class="pl-readout" id="plReadout" aria-live="polite">13 SYSTEMS DESIGNED, BUILT &amp; SHIPPED · TAP A STAGE FOR ITS EVIDENCE</div>
+      </div>
+    </div>
+
     <div class="hero-stats">
       <div class="hero-stat"><span class="num lg-count" data-count="13">13</span><span class="label">AI systems designed, built &amp; shipped</span></div>
       <div class="hero-stat"><span class="num lg-count" data-count="11" data-suffix="K+">11K+</span><span class="label">learners on a shipped client product</span></div>
-      <div class="hero-stat"><span class="num">EN·FR·SW</span><span class="label">multilingual, low-bandwidth delivery</span></div>
+      <div class="hero-stat"><span class="num num-enfrsw">EN·FR·SW</span><span class="label">multilingual, low-bandwidth delivery</span></div>
     </div>
-      <!-- v7: live production console (decorative, facts duplicated on page) -->
-      <div class="v7-console" id="v7Console">
-        <div class="v7-console-bar">
-          <span class="v7-dot r"></span><span class="v7-dot y"></span><span class="v7-dot g"></span>
-          <span class="v7-console-title">victor@production:~ status</span>
-          <span class="v7-live-pill"><span class="pulse-dot"></span>LIVE</span>
-        </div>
-        <div class="v7-console-body">
-          <div class="v7-cl"><span class="v7-p">$ </span><span class="v7-hl">victor</span> --status --production</div>
-          <div class="v7-cl"><span class="v7-ok">&#9679; </span><span class="v7-hl">keja.app</span> &#183; 87+ listings &#183; 12 counties</div>
-          <div class="v7-cl"><span class="v7-ok">&#9679; </span><span class="v7-hl">tapi learn</span> &#183; 11K+ learners &#183; 38 countries</div>
-          <div class="v7-cl"><span class="v7-ok">&#9679; </span><span class="v7-hl">languages</span> <span class="v7-spark">EN &#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608;&#9608; SW &#9608;&#9608;&#9608;&#9608;&#9608; FR &#9608;&#9608;&#9608;&#9608;&#9608;&#9606;</span></div>
-          <div class="v7-cl"><span class="v7-ok">&#10003; </span><span class="v7-hl">13 systems designed, built &amp; shipped</span></div>
-        </div>
-      </div>
     <!-- v18: live proof chip — pulls the newest live project from projects.json -->
     <a href="/projects/" class="hero-proof-chip" id="heroProofChip" data-track="hero-proof-chip" hidden>
       <span class="pulse-dot" aria-hidden="true"></span>
@@ -319,49 +392,63 @@
       <p class="section-sub">Every engagement begins with a diagnosis — never with a stack recommendation. Full service detail with USD &amp; KES pricing lives on the <a href="/services/">services page</a>.</p>
     </div>
 
-    <div class="offer-grid">
-      <a href="/services/#packages-section" class="offer-card spot-card" data-track="offer-assessment">
-        <div class="offer-icon" aria-hidden="true">🔍</div>
-        <h3 class="offer-name">Needs Assessment</h3>
-        <p class="offer-tagline">Know exactly what to build — and what to leave alone.</p>
-        <p class="offer-fit"><strong>Best for:</strong> teams with little or no AI in production — or shipped AI that breaks, drifts, or burns money.</p>
-        <ul class="offer-list">
-          <li>Workflow map &amp; data-readiness review</li>
-          <li>ROI-ranked opportunity map (5–10 use cases)</li>
-          <li>Build / no-build recommendation</li>
-          <li>Reliability mode for shipped systems</li>
-        </ul>
-        <div class="offer-price">$2,500 · KES 200K · 1–2 weeks</div>
-        <span class="offer-cta">Start with an assessment →</span>
+    <div class="offer-rows">
+      <a href="/services/#packages-section" class="offer-row" data-track="offer-assessment">
+        <div class="offer-num" aria-hidden="true">01</div>
+        <div class="offer-main">
+          <span class="offer-tag">Diagnose</span>
+          <h3 class="offer-name">Needs Assessment</h3>
+          <p class="offer-tagline">Know exactly what to build — and what to leave alone.</p>
+          <p class="offer-fit"><strong>Best for:</strong> teams with little or no AI in production — or shipped AI that breaks, drifts, or burns money.</p>
+          <span class="offer-go">Start with an assessment <span class="arr" aria-hidden="true">→</span></span>
+        </div>
+        <div class="offer-side">
+          <ul class="offer-spec">
+            <li>Workflow map &amp; data-readiness review</li>
+            <li>ROI-ranked opportunity map (5–10 use cases)</li>
+            <li>Build / no-build recommendation</li>
+            <li>Reliability mode for shipped systems</li>
+          </ul>
+          <div class="offer-price">$2,500 · KES 200K · 1–2 weeks</div>
+        </div>
       </a>
-      <a href="/services/#packages-section" class="offer-card spot-card offer-popular" data-track="offer-sprint">
-        <span class="offer-badge" aria-label="Most popular">★ Most popular</span>
-        <div class="offer-icon" aria-hidden="true">🚀</div>
-        <h3 class="offer-name">Starter Build</h3>
-        <p class="offer-tagline">Ship your first real AI tool, not a prototype.</p>
-        <p class="offer-fit"><strong>Best for:</strong> SMBs, solo founders, NGOs — one workflow with an owner.</p>
-        <ul class="offer-list">
-          <li>WhatsApp or web assistant + 1 automation</li>
-          <li>Knowledge base with citations (50 docs)</li>
-          <li>English + Swahili out of the box</li>
-          <li>Docs, handoff &amp; 30-day support</li>
-        </ul>
-        <div class="offer-price">$12,000 · KES 960K · 2–3 weeks<br><small style="font-weight:400;opacity:.85">or 3 instalments of $4,200 · care $1,400/mo</small></div>
-        <span class="offer-cta">Discuss a starter build →</span>
+      <a href="/services/#packages-section" class="offer-row" data-track="offer-sprint">
+        <div class="offer-num" aria-hidden="true">02</div>
+        <div class="offer-main">
+          <span class="offer-tag">Most commissioned</span>
+          <h3 class="offer-name">Starter Build</h3>
+          <p class="offer-tagline">Ship your first real AI tool, not a prototype.</p>
+          <p class="offer-fit"><strong>Best for:</strong> SMBs, solo founders, NGOs — one workflow with an owner.</p>
+          <span class="offer-go">Discuss a starter build <span class="arr" aria-hidden="true">→</span></span>
+        </div>
+        <div class="offer-side">
+          <ul class="offer-spec">
+            <li>WhatsApp or web assistant + 1 automation</li>
+            <li>Knowledge base with citations (50 docs)</li>
+            <li>English + Swahili out of the box</li>
+            <li>Docs, handoff &amp; 30-day support</li>
+          </ul>
+          <div class="offer-price">$12,000 · KES 960K · 2–3 weeks<br><small>or 3 instalments of $4,200 · care $1,400/mo</small></div>
+        </div>
       </a>
-      <a href="/services/#packages-section" class="offer-card spot-card" data-track="offer-audit">
-        <div class="offer-icon" aria-hidden="true">🏗️</div>
-        <h3 class="offer-name">Big Projects</h3>
-        <p class="offer-tagline">Production AI programs that run the business.</p>
-        <p class="offer-fit"><strong>Best for:</strong> companies commissioning serious systems — mid-market to enterprise.</p>
-        <ul class="offer-list">
-          <li>RAG platforms &amp; multi-agent orchestration</li>
-          <li>CRM/ERP integrations + predictive analytics</li>
-          <li>Compliance-reviewed, SLA-backed (99.5%)</li>
-          <li>Custom-scoped after a Needs Assessment</li>
-        </ul>
-        <div class="offer-price">From $35,000 · KES 2.8M · 6–24 weeks</div>
-        <span class="offer-cta">Scope a big project →</span>
+      <a href="/services/#packages-section" class="offer-row" data-track="offer-audit">
+        <div class="offer-num" aria-hidden="true">03</div>
+        <div class="offer-main">
+          <span class="offer-tag">Commission</span>
+          <h3 class="offer-name">Big Projects</h3>
+          <p class="offer-tagline">Production AI programs that run the business.</p>
+          <p class="offer-fit"><strong>Best for:</strong> companies commissioning serious systems — mid-market to enterprise.</p>
+          <span class="offer-go">Scope a big project <span class="arr" aria-hidden="true">→</span></span>
+        </div>
+        <div class="offer-side">
+          <ul class="offer-spec">
+            <li>RAG platforms &amp; multi-agent orchestration</li>
+            <li>CRM/ERP integrations + predictive analytics</li>
+            <li>Compliance-reviewed, SLA-backed (99.5%)</li>
+            <li>Custom-scoped after a Needs Assessment</li>
+          </ul>
+          <div class="offer-price">From $35,000 · KES 2.8M · 6–24 weeks</div>
+        </div>
       </a>
     </div>
 
@@ -385,7 +472,8 @@
     <div class="case-grid">
       <!-- Case 0: Keja AI — the flagship client platform -->
       <article class="case-card spot-card">
-        <div class="case-badge case-badge-client">🏢 Client engagement · Real estate</div>
+        <div class="case-tag">Client engagement · Real estate</div>
+        <span class="case-stamp" aria-hidden="true">In production</span>
         <h3 class="case-name">Keja AI <span class="case-org">· CHACADOM INVESTMENTS</span></h3>
         <p class="case-outcome">A 7-stage real-estate intelligence platform — <strong>live in public trial with 87+ listings across 12 Kenyan counties</strong>.</p>
         <p class="case-body">Verified titles &amp; documents, investment scoring on every listing, market data, tokenized assets, and the "Ask Keja AI" assistant — across dedicated workspaces for 8 stakeholder types, in English, Kiswahili, and Français. Nominated for an Africa AI Future Award.</p>
@@ -401,7 +489,8 @@
       </article>
       <!-- Case 1: Tapi Learn — the only third-party-validated engagement -->
       <article class="case-card spot-card">
-        <div class="case-badge case-badge-client">🤝 Client engagement · EdTech</div>
+        <div class="case-tag">Client engagement · EdTech</div>
+        <span class="case-stamp" aria-hidden="true">In production</span>
         <h3 class="case-name">Tapi Learn <span class="case-org">· ACLA</span></h3>
         <p class="case-outcome">A multilingual AI learning product that reached <strong>11,000+ learners across 38 countries</strong>.</p>
         <p class="case-body">Africa-built climate-leadership platform. The AI Career Coach, the multilingual NLP pipeline (English · Français · Kiswahili), and personalized learning recommendations had to coach real learners in production.</p>
@@ -417,7 +506,7 @@
       </article>
       <!-- Case 2: Verxlite — reliability proven in public -->
       <article class="case-card spot-card">
-        <div class="case-badge case-badge-automation">⚡ Workflow automation · SaaS</div>
+        <div class="case-tag case-tag-automation">Workflow automation · SaaS</div>
         <h3 class="case-name">Verxlite</h3>
         <p class="case-outcome">A sales &amp; ops AI agent that automates follow-ups, CRM logging, and approvals — <strong>with its reliability proven in a public 281-defect code review</strong>.</p>
         <p class="case-body">Multi-tenant SaaS with real OAuth (Google, HubSpot), encrypted tokens, Celery workers, and Langfuse observability. Every P0/P1 finding was remediated within one week of the review.</p>
@@ -433,7 +522,7 @@
       </article>
       <!-- Case 3: Fraud Detection — measurable, explainable fintech -->
       <article class="case-card spot-card">
-        <div class="case-badge case-badge-fintech">🛡️ Fintech · Regulated finance</div>
+        <div class="case-tag case-tag-fintech">Fintech · Regulated finance</div>
         <h3 class="case-name">Fraud Detection System</h3>
         <p class="case-outcome">Real-time transaction scoring at <strong>84% recall and a 1.37% false-positive rate — ~33 µs per decision</strong>.</p>
         <p class="case-body">Seven statistical detectors fused by a weighted-vote ensemble, calibrated by logistic regression, overlaid with a deterministic rules engine — every score explainable and auditable. Validated on 1,000 labelled transactions; methodology published with the code. Designed with controls relevant to PCI-DSS, PSD2, and GDPR automated-decision requirements — formal compliance is deployment-specific.</p>
@@ -479,10 +568,10 @@
 
     <!-- Guarantee / risk-reversal strip -->
     <div class="guarantee-strip" role="list" aria-label="Engagement guarantees">
-      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">📌</span><div><strong>Fixed scope, fixed price.</strong><span>What we signed is what you pay. No surprise invoices, ever.</span></div></div>
-      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">🧾</span><div><strong>You own everything.</strong><span>Code, prompts, data, infrastructure accounts — transferred at handover.</span></div></div>
-      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">🚧</span><div><strong>Milestone delivery.</strong><span>Big builds run 30/40/30 — you see working software at every gate.</span></div></div>
-      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">🔓</span><div><strong>No lock-in.</strong><span>Leave anytime — with a running, documented system. Care is a service, not a hostage.</span></div></div>
+      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">01</span><div><strong>Fixed scope, fixed price.</strong><span>What we signed is what you pay. No surprise invoices, ever.</span></div></div>
+      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">02</span><div><strong>You own everything.</strong><span>Code, prompts, data, infrastructure accounts — transferred at handover.</span></div></div>
+      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">03</span><div><strong>Milestone delivery.</strong><span>Big builds run 30/40/30 — you see working software at every gate.</span></div></div>
+      <div class="guarantee-item spot-card" role="listitem"><span class="g-icon" aria-hidden="true">04</span><div><strong>No lock-in.</strong><span>Leave anytime — with a running, documented system. Care is a service, not a hostage.</span></div></div>
     </div>
   </div>
 </section>
@@ -513,22 +602,22 @@
       </div>
       <div class="about-cards">
         <div class="about-card spot-card">
-          <div class="card-icon">🤝</div>
+          <div class="card-icon" aria-hidden="true">01</div>
           <h4>End-to-End Builds</h4>
           <p>From scoping audit to production deployment. Full-stack: Next.js, FastAPI, Flutter, PostgreSQL, Docker, Kubernetes.</p>
         </div>
         <div class="about-card spot-card">
-          <div class="card-icon">🧠</div>
+          <div class="card-icon" aria-hidden="true">02</div>
           <h4>Multi-Agent & RAG</h4>
           <p>Multi-agent DAG orchestration, RAG with pgvector/Pinecone, hybrid search, reranking. LangChain, LangGraph, CrewAI.</p>
         </div>
         <div class="about-card spot-card">
-          <div class="card-icon">📊</div>
+          <div class="card-icon" aria-hidden="true">03</div>
           <h4>Statistical Foundations</h4>
           <p>Holt-Winters forecasting, GARCH/VaR, K-Means++, OLS regression, Granger causality — implemented from scratch.</p>
         </div>
         <div class="about-card spot-card">
-          <div class="card-icon">🌍</div>
+          <div class="card-icon" aria-hidden="true">04</div>
           <h4>Built for Africa</h4>
           <p>Offline-first, low-bandwidth, Swahili-capable. Systems that work on $80 phones and over SMS/USSD.</p>
         </div>
@@ -550,7 +639,7 @@
       <div class="work-card featured work-card-flagship">
         <div class="flagship-grid">
           <div class="flagship-main">
-            <div class="work-badge keja">🏢 Client Platform · Award Nominee</div>
+            <div class="work-badge keja">Client Platform · Award Nominee</div>
             <h3>Keja AI</h3>
             <p>Real-estate intelligence and trust infrastructure for African property — one ecosystem covering the full transaction lifecycle. Verified titles &amp; documents, investment scoring on every listing, market data, tokenized assets, and an "Ask Keja AI" assistant, with dedicated workspaces for buyers, sellers, landlords, tenants, investors, developers, banks, and institutions. Built for CHACADOM INVESTMENTS; live in public trial at <strong>keja.app</strong>. Nominated for an <strong>Africa AI Future Award</strong> — ceremony 27 Nov 2026, Nairobi.</p>
             <div class="work-tags">
@@ -594,7 +683,7 @@
 
       <!-- Tapi Learn — live client platform, third-party-validated reach -->
       <div class="work-card featured">
-        <div class="work-badge tapi">🤝 Client Platform · EdTech</div>
+        <div class="work-badge tapi">Client Platform · EdTech</div>
         <h3>Tapi Learn</h3>
         <p>The multilingual AI learning product behind ACLA's climate-leadership academy — a 24/7 <strong>AI Career Coach</strong> (CV reviews, interview prep, career advice), a personalized recommendation engine, and an <strong>EN · FR · SW NLP pipeline</strong> coaching real learners in production: <strong>11,000+ learners across 38 countries</strong> (client-reported, Oct 2026) at a 4.8/5 average rating.</p>
         <div class="work-metrics">
@@ -614,7 +703,7 @@
 
       <!-- FirstLight — newest launch -->
       <div class="work-card featured">
-        <div class="work-badge firstlight">🔦 Geo-AI · Disaster Response · New</div>
+        <div class="work-badge firstlight">Geo-AI · Disaster Response · New</div>
         <h3>FirstLight</h3>
         <p>A Geo-AI decision layer for the first six hours after a disaster — damage &amp; flood detection fused with road networks, population grids, and critical facilities: <strong>Uber H3 need-score zoning</strong>, Dijkstra routing on the post-event road graph, hospital isochrones, isolation analysis, a human-in-the-loop review queue, and hash-verified situation reports. Fully client-side public demo — every artifact simulated and provenance-labeled.</p>
         <div class="work-tags">
@@ -628,7 +717,7 @@
 
       <!-- AgentReplay -->
       <div class="work-card featured">
-        <div class="work-badge research">🔄 Open-Source · Agent Reliability</div>
+        <div class="work-badge research">Open-Source · Agent Reliability</div>
         <h3>AgentReplay</h3>
         <p>Deterministic replay and counterfactual debugging for AI agents. Captures every LLM call, tool response, clock read, and RNG draw — then replays the run bit-exact with <strong>zero model calls</strong>. 0.67% overhead, 100% reproduction fidelity, 99 tests. LangGraph-first. Backed by a research whitepaper.</p>
         <div class="work-tags">
@@ -642,7 +731,7 @@
 
       <!-- Fraud Detection System -->
       <div class="work-card featured">
-        <div class="work-badge fraud">🛡️ Enterprise · Regulated Finance</div>
+        <div class="work-badge fraud">Enterprise · Regulated Finance</div>
         <h3>Fraud Detection System</h3>
         <p>A real-time transaction fraud scoring engine in Go — <strong>7 statistical detectors</strong> (Z-Score, IQR, Velocity, Geo-Distance, Device Fingerprint, Merchant Risk, Behavioral Anomaly) fused by a weighted-vote ensemble, calibrated by logistic regression, and overlaid with a deterministic rules engine. Scores in <strong>~33 µs</strong> per transaction. Full case-management workflow, RBAC auth, Prometheus metrics, OTel tracing, and Slack alerts. 84% recall, 1.37% false-positive rate on 1,000 labelled transactions. Designed with controls relevant to PCI-DSS, PSD2, and GDPR Article 22 — formal compliance is deployment-specific.</p>
         <div class="work-metrics">
@@ -662,7 +751,7 @@
 
       <!-- Verxlite -->
       <div class="work-card featured">
-        <div class="work-badge verxlite">⚡ Sales & Ops Automation</div>
+        <div class="work-badge verxlite">Sales & Ops Automation</div>
         <h3>Verxlite</h3>
         <p>A universal AI workflow agent for sales & ops teams. Automates post-meeting followups, lead assignment, support triage, approval routing, and weekly summaries across Gmail, Google Calendar, and HubSpot. Multi-tenant SaaS with real auth, OAuth, encrypted tokens, Celery workers, and Langfuse observability. Shipped with a transparent <strong>281-defect code review</strong> and full P0/P1 remediation in one week — 83 backend tests passing.</p>
         <div class="work-tags">
@@ -676,7 +765,7 @@
 
       <!-- Busara AI — owned product, live platform -->
       <div class="work-card featured">
-        <div class="work-badge busara">🚀 Data Intelligence Platform · Live</div>
+        <div class="work-badge busara">Data Intelligence Platform · Live</div>
         <h3>Busara AI</h3>
         <p>A multi-agent data intelligence PWA running a <strong>6-stage parallel DAG pipeline</strong> (v7.0) — Ingest → Engineer → Detect → Forecast → Infer → Report. Statistical algorithms implemented from scratch: Holt-Winters, OLS, K-Means++, Granger causality, GARCH. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA target); the <a href="https://github.com/gadda00/IntelliFlow" target="_blank" rel="noopener noreferrer">IntelliFlow foundation</a> is open-source.</p>
         <div class="work-tags">
@@ -690,7 +779,7 @@
 
       <!-- KilimoPRO -->
       <div class="work-card featured">
-        <div class="work-badge kilimo">🌱 Agricultural Intelligence</div>
+        <div class="work-badge kilimo">Agricultural Intelligence</div>
         <h3>KilimoPRO</h3>
         <p>AI-powered agricultural intelligence for smallholder farmers across <strong>8 IGAD countries</strong> — a 300M+ person market. On-device crop disease detection (TFLite) for 15 crops, market forecasting with GARCH/VaR, multi-LLM advisory council in Swahili + English, 9 free keyless API endpoints, SMS webhook for feature phones. $0/month to operate on free data sources.</p>
         <div class="work-tags">
@@ -732,7 +821,7 @@
       <div class="work-card spot-card">
         <h4>Hazina Assist</h4>
         <p>Early-stage project now in development — details will be published at the first public milestone.</p>
-        <div class="work-tags"><span>In Development</span><span>🚧</span></div>
+        <div class="work-tags"><span>In Development</span></div>
         <a href="/projects/" class="work-link">Follow the archive →</a>
       </div>
     </div>
@@ -778,71 +867,71 @@
     </div>
     <div class="techstack-grid">
       <!-- Languages -->
-      <div class="tech-item" data-cat="lang"><div class="tech-item-icon">🐍</div><div class="tech-item-name">Python</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:95%"></div></div></div>
-      <div class="tech-item" data-cat="lang"><div class="tech-item-icon">🔷</div><div class="tech-item-name">TypeScript</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:95%"></div></div></div>
-      <div class="tech-item" data-cat="lang"><div class="tech-item-icon">🟨</div><div class="tech-item-name">JavaScript</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:92%"></div></div></div>
-      <div class="tech-item" data-cat="lang"><div class="tech-item-icon">🎯</div><div class="tech-item-name">Dart</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:82%"></div></div></div>
-      <div class="tech-item" data-cat="lang"><div class="tech-item-icon">🗄️</div><div class="tech-item-name">SQL</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
-      <div class="tech-item" data-cat="lang"><div class="tech-item-icon">💻</div><div class="tech-item-name">Bash</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:80%"></div></div></div>
-      <div class="tech-item" data-cat="lang"><div class="tech-item-icon">🐹</div><div class="tech-item-name">Go</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:78%"></div></div></div>
+      <div class="tech-item" data-cat="lang"><div class="tech-item-icon" aria-hidden="true">PY</div><div class="tech-item-name">Python</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:95%"></div></div></div>
+      <div class="tech-item" data-cat="lang"><div class="tech-item-icon" aria-hidden="true">TS</div><div class="tech-item-name">TypeScript</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:95%"></div></div></div>
+      <div class="tech-item" data-cat="lang"><div class="tech-item-icon" aria-hidden="true">JS</div><div class="tech-item-name">JavaScript</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:92%"></div></div></div>
+      <div class="tech-item" data-cat="lang"><div class="tech-item-icon" aria-hidden="true">DA</div><div class="tech-item-name">Dart</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:82%"></div></div></div>
+      <div class="tech-item" data-cat="lang"><div class="tech-item-icon" aria-hidden="true">SQ</div><div class="tech-item-name">SQL</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
+      <div class="tech-item" data-cat="lang"><div class="tech-item-icon" aria-hidden="true">SH</div><div class="tech-item-name">Bash</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:80%"></div></div></div>
+      <div class="tech-item" data-cat="lang"><div class="tech-item-icon" aria-hidden="true">GO</div><div class="tech-item-name">Go</div><div class="tech-item-cat">Language</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:78%"></div></div></div>
 
       <!-- LLMs & Foundation Models -->
-      <div class="tech-item" data-cat="llm"><div class="tech-item-icon">🧠</div><div class="tech-item-name">GPT (OpenAI)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:93%"></div></div></div>
-      <div class="tech-item" data-cat="llm"><div class="tech-item-icon">🤖</div><div class="tech-item-name">Claude (Anthropic)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:92%"></div></div></div>
-      <div class="tech-item" data-cat="llm"><div class="tech-item-icon">✨</div><div class="tech-item-name">Gemini (Google)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
-      <div class="tech-item" data-cat="llm"><div class="tech-item-icon">⚡</div><div class="tech-item-name">GLM-4.6/4.5 (Zhipu)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:95%"></div></div></div>
-      <div class="tech-item" data-cat="llm"><div class="tech-item-icon">🌙</div><div class="tech-item-name">Kimi K2 (Moonshot)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
-      <div class="tech-item" data-cat="llm"><div class="tech-item-icon">📱</div><div class="tech-item-name">MiMo (Xiaomi)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:78%"></div></div></div>
-      <div class="tech-item" data-cat="llm"><div class="tech-item-icon">🌬️</div><div class="tech-item-name">Mistral</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
-      <div class="tech-item" data-cat="llm"><div class="tech-item-icon">🌐</div><div class="tech-item-name">Qwen (Alibaba)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:83%"></div></div></div>
-      <div class="tech-item" data-cat="llm"><div class="tech-item-icon">🔍</div><div class="tech-item-name">DeepSeek</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:82%"></div></div></div>
-      <div class="tech-item" data-cat="llm"><div class="tech-item-icon">🦙</div><div class="tech-item-name">Llama (Meta)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
+      <div class="tech-item" data-cat="llm"><div class="tech-item-icon" aria-hidden="true">GP</div><div class="tech-item-name">GPT (OpenAI)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:93%"></div></div></div>
+      <div class="tech-item" data-cat="llm"><div class="tech-item-icon" aria-hidden="true">CL</div><div class="tech-item-name">Claude (Anthropic)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:92%"></div></div></div>
+      <div class="tech-item" data-cat="llm"><div class="tech-item-icon" aria-hidden="true">GE</div><div class="tech-item-name">Gemini (Google)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
+      <div class="tech-item" data-cat="llm"><div class="tech-item-icon" aria-hidden="true">RD</div><div class="tech-item-name">GLM-4.6/4.5 (Zhipu)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:95%"></div></div></div>
+      <div class="tech-item" data-cat="llm"><div class="tech-item-icon" aria-hidden="true">KM</div><div class="tech-item-name">Kimi K2 (Moonshot)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
+      <div class="tech-item" data-cat="llm"><div class="tech-item-icon" aria-hidden="true">TL</div><div class="tech-item-name">MiMo (Xiaomi)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:78%"></div></div></div>
+      <div class="tech-item" data-cat="llm"><div class="tech-item-icon" aria-hidden="true">MS</div><div class="tech-item-name">Mistral</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
+      <div class="tech-item" data-cat="llm"><div class="tech-item-icon" aria-hidden="true">QW</div><div class="tech-item-name">Qwen (Alibaba)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:83%"></div></div></div>
+      <div class="tech-item" data-cat="llm"><div class="tech-item-icon" aria-hidden="true">DS</div><div class="tech-item-name">DeepSeek</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:82%"></div></div></div>
+      <div class="tech-item" data-cat="llm"><div class="tech-item-icon" aria-hidden="true">LL</div><div class="tech-item-name">Llama (Meta)</div><div class="tech-item-cat">Foundation Model</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
 
       <!-- Agent Frameworks & Orchestration -->
-      <div class="tech-item" data-cat="agent"><div class="tech-item-icon">🔗</div><div class="tech-item-name">LangChain</div><div class="tech-item-cat">Agent Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
-      <div class="tech-item" data-cat="agent"><div class="tech-item-icon">🕸️</div><div class="tech-item-name">LangGraph</div><div class="tech-item-cat">Agent Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
-      <div class="tech-item" data-cat="agent"><div class="tech-item-icon">📚</div><div class="tech-item-name">LlamaIndex</div><div class="tech-item-cat">Agent Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
-      <div class="tech-item" data-cat="agent"><div class="tech-item-icon">👥</div><div class="tech-item-name">CrewAI</div><div class="tech-item-cat">Agent Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:83%"></div></div></div>
-      <div class="tech-item" data-cat="agent"><div class="tech-item-icon">🔄</div><div class="tech-item-name">AutoGen</div><div class="tech-item-cat">Agent Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:80%"></div></div></div>
-      <div class="tech-item" data-cat="agent"><div class="tech-item-icon">⚙️</div><div class="tech-item-name">Custom Multi-Agent DAG</div><div class="tech-item-cat">Orchestration</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:95%"></div></div></div>
+      <div class="tech-item" data-cat="agent"><div class="tech-item-icon" aria-hidden="true">GC</div><div class="tech-item-name">LangChain</div><div class="tech-item-cat">Agent Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
+      <div class="tech-item" data-cat="agent"><div class="tech-item-icon" aria-hidden="true">LG</div><div class="tech-item-name">LangGraph</div><div class="tech-item-cat">Agent Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
+      <div class="tech-item" data-cat="agent"><div class="tech-item-icon" aria-hidden="true">LI</div><div class="tech-item-name">LlamaIndex</div><div class="tech-item-cat">Agent Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
+      <div class="tech-item" data-cat="agent"><div class="tech-item-icon" aria-hidden="true">CR</div><div class="tech-item-name">CrewAI</div><div class="tech-item-cat">Agent Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:83%"></div></div></div>
+      <div class="tech-item" data-cat="agent"><div class="tech-item-icon" aria-hidden="true">CI</div><div class="tech-item-name">AutoGen</div><div class="tech-item-cat">Agent Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:80%"></div></div></div>
+      <div class="tech-item" data-cat="agent"><div class="tech-item-icon" aria-hidden="true">DG</div><div class="tech-item-name">Custom Multi-Agent DAG</div><div class="tech-item-cat">Orchestration</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:95%"></div></div></div>
 
       <!-- RAG & Retrieval -->
-      <div class="tech-item" data-cat="rag"><div class="tech-item-icon">🐘</div><div class="tech-item-name">pgvector</div><div class="tech-item-cat">Vector DB</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:92%"></div></div></div>
-      <div class="tech-item" data-cat="rag"><div class="tech-item-icon">🍍</div><div class="tech-item-name">Pinecone</div><div class="tech-item-cat">Vector DB</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
-      <div class="tech-item" data-cat="rag"><div class="tech-item-icon">🌾</div><div class="tech-item-name">Weaviate</div><div class="tech-item-cat">Vector DB</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:82%"></div></div></div>
-      <div class="tech-item" data-cat="rag"><div class="tech-item-icon">🔀</div><div class="tech-item-name">Hybrid Search (BM25 + Vector)</div><div class="tech-item-cat">Retrieval</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
-      <div class="tech-item" data-cat="rag"><div class="tech-item-icon">📈</div><div class="tech-item-name">Reranking</div><div class="tech-item-cat">Retrieval</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
-      <div class="tech-item" data-cat="rag"><div class="tech-item-icon">🧩</div><div class="tech-item-name">Chunking Strategies</div><div class="tech-item-cat">Retrieval</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
+      <div class="tech-item" data-cat="rag"><div class="tech-item-icon" aria-hidden="true">PS</div><div class="tech-item-name">pgvector</div><div class="tech-item-cat">Vector DB</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:92%"></div></div></div>
+      <div class="tech-item" data-cat="rag"><div class="tech-item-icon" aria-hidden="true">PC</div><div class="tech-item-name">Pinecone</div><div class="tech-item-cat">Vector DB</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
+      <div class="tech-item" data-cat="rag"><div class="tech-item-icon" aria-hidden="true">WV</div><div class="tech-item-name">Weaviate</div><div class="tech-item-cat">Vector DB</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:82%"></div></div></div>
+      <div class="tech-item" data-cat="rag"><div class="tech-item-icon" aria-hidden="true">HS</div><div class="tech-item-name">Hybrid Search (BM25 + Vector)</div><div class="tech-item-cat">Retrieval</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
+      <div class="tech-item" data-cat="rag"><div class="tech-item-icon" aria-hidden="true">RR</div><div class="tech-item-name">Reranking</div><div class="tech-item-cat">Retrieval</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
+      <div class="tech-item" data-cat="rag"><div class="tech-item-icon" aria-hidden="true">CK</div><div class="tech-item-name">Chunking Strategies</div><div class="tech-item-cat">Retrieval</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
 
       <!-- ML & Statistics -->
-      <div class="tech-item" data-cat="ml"><div class="tech-item-icon">🔬</div><div class="tech-item-name">TensorFlow</div><div class="tech-item-cat">Deep Learning</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
-      <div class="tech-item" data-cat="ml"><div class="tech-item-icon">📱</div><div class="tech-item-name">TensorFlow Lite</div><div class="tech-item-cat">On-Device ML</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
-      <div class="tech-item" data-cat="ml"><div class="tech-item-icon">📐</div><div class="tech-item-name">scikit-learn</div><div class="tech-item-cat">Machine Learning</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:92%"></div></div></div>
-      <div class="tech-item" data-cat="ml"><div class="tech-item-icon">📊</div><div class="tech-item-name">Holt-Winters</div><div class="tech-item-cat">Forecasting</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
-      <div class="tech-item" data-cat="ml"><div class="tech-item-icon">💹</div><div class="tech-item-name">GARCH / VaR</div><div class="tech-item-cat">Quant Finance</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
-      <div class="tech-item" data-cat="ml"><div class="tech-item-icon">🔢</div><div class="tech-item-name">K-Means++</div><div class="tech-item-cat">Clustering</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
-      <div class="tech-item" data-cat="ml"><div class="tech-item-icon">📏</div><div class="tech-item-name">OLS Regression</div><div class="tech-item-cat">Statistics</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
-      <div class="tech-item" data-cat="ml"><div class="tech-item-icon">🔗</div><div class="tech-item-name">Granger Causality</div><div class="tech-item-cat">Statistics</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
+      <div class="tech-item" data-cat="ml"><div class="tech-item-icon" aria-hidden="true">TF</div><div class="tech-item-name">TensorFlow</div><div class="tech-item-cat">Deep Learning</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
+      <div class="tech-item" data-cat="ml"><div class="tech-item-icon" aria-hidden="true">TL</div><div class="tech-item-name">TensorFlow Lite</div><div class="tech-item-cat">On-Device ML</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
+      <div class="tech-item" data-cat="ml"><div class="tech-item-icon" aria-hidden="true">SK</div><div class="tech-item-name">scikit-learn</div><div class="tech-item-cat">Machine Learning</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:92%"></div></div></div>
+      <div class="tech-item" data-cat="ml"><div class="tech-item-icon" aria-hidden="true">HW</div><div class="tech-item-name">Holt-Winters</div><div class="tech-item-cat">Forecasting</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
+      <div class="tech-item" data-cat="ml"><div class="tech-item-icon" aria-hidden="true">GA</div><div class="tech-item-name">GARCH / VaR</div><div class="tech-item-cat">Quant Finance</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
+      <div class="tech-item" data-cat="ml"><div class="tech-item-icon" aria-hidden="true">KM</div><div class="tech-item-name">K-Means++</div><div class="tech-item-cat">Clustering</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
+      <div class="tech-item" data-cat="ml"><div class="tech-item-icon" aria-hidden="true">OL</div><div class="tech-item-name">OLS Regression</div><div class="tech-item-cat">Statistics</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
+      <div class="tech-item" data-cat="ml"><div class="tech-item-icon" aria-hidden="true">GC</div><div class="tech-item-name">Granger Causality</div><div class="tech-item-cat">Statistics</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
 
       <!-- Web & Mobile -->
-      <div class="tech-item" data-cat="web"><div class="tech-item-icon">▲</div><div class="tech-item-name">Next.js</div><div class="tech-item-cat">Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:93%"></div></div></div>
-      <div class="tech-item" data-cat="web"><div class="tech-item-icon">⚛️</div><div class="tech-item-name">React</div><div class="tech-item-cat">Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
-      <div class="tech-item" data-cat="web"><div class="tech-item-icon">🟢</div><div class="tech-item-name">Node.js</div><div class="tech-item-cat">Backend</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
-      <div class="tech-item" data-cat="web"><div class="tech-item-icon">⚡</div><div class="tech-item-name">FastAPI</div><div class="tech-item-cat">Backend</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:87%"></div></div></div>
-      <div class="tech-item" data-cat="web"><div class="tech-item-icon">🐦</div><div class="tech-item-name">Flutter</div><div class="tech-item-cat">Mobile</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:82%"></div></div></div>
+      <div class="tech-item" data-cat="web"><div class="tech-item-icon" aria-hidden="true">NX</div><div class="tech-item-name">Next.js</div><div class="tech-item-cat">Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:93%"></div></div></div>
+      <div class="tech-item" data-cat="web"><div class="tech-item-icon" aria-hidden="true">RE</div><div class="tech-item-name">React</div><div class="tech-item-cat">Framework</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
+      <div class="tech-item" data-cat="web"><div class="tech-item-icon" aria-hidden="true">ND</div><div class="tech-item-name">Node.js</div><div class="tech-item-cat">Backend</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
+      <div class="tech-item" data-cat="web"><div class="tech-item-icon" aria-hidden="true">RD</div><div class="tech-item-name">FastAPI</div><div class="tech-item-cat">Backend</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:87%"></div></div></div>
+      <div class="tech-item" data-cat="web"><div class="tech-item-icon" aria-hidden="true">FL</div><div class="tech-item-name">Flutter</div><div class="tech-item-cat">Mobile</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:82%"></div></div></div>
 
       <!-- Infra & DevOps -->
-      <div class="tech-item" data-cat="infra"><div class="tech-item-icon">🐘</div><div class="tech-item-name">PostgreSQL</div><div class="tech-item-cat">Database</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
-      <div class="tech-item" data-cat="infra"><div class="tech-item-icon">⚡</div><div class="tech-item-name">Redis</div><div class="tech-item-cat">Cache</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
-      <div class="tech-item" data-cat="infra"><div class="tech-item-icon">🐳</div><div class="tech-item-name">Docker</div><div class="tech-item-cat">Containers</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
-      <div class="tech-item" data-cat="infra"><div class="tech-item-icon">☸️</div><div class="tech-item-name">Kubernetes</div><div class="tech-item-cat">Orchestration</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:78%"></div></div></div>
-      <div class="tech-item" data-cat="infra"><div class="tech-item-icon">☁️</div><div class="tech-item-name">Google Cloud Platform</div><div class="tech-item-cat">Cloud</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:82%"></div></div></div>
-      <div class="tech-item" data-cat="infra"><div class="tech-item-icon">🔄</div><div class="tech-item-name">CI/CD</div><div class="tech-item-cat">DevOps</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
-      <div class="tech-item" data-cat="infra"><div class="tech-item-icon">🐙</div><div class="tech-item-name">Git / GitHub</div><div class="tech-item-cat">Version Control</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:95%"></div></div></div>
+      <div class="tech-item" data-cat="infra"><div class="tech-item-icon" aria-hidden="true">PS</div><div class="tech-item-name">PostgreSQL</div><div class="tech-item-cat">Database</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:90%"></div></div></div>
+      <div class="tech-item" data-cat="infra"><div class="tech-item-icon" aria-hidden="true">RD</div><div class="tech-item-name">Redis</div><div class="tech-item-cat">Cache</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
+      <div class="tech-item" data-cat="infra"><div class="tech-item-icon" aria-hidden="true">DK</div><div class="tech-item-name">Docker</div><div class="tech-item-cat">Containers</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
+      <div class="tech-item" data-cat="infra"><div class="tech-item-icon" aria-hidden="true">K8</div><div class="tech-item-name">Kubernetes</div><div class="tech-item-cat">Orchestration</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:78%"></div></div></div>
+      <div class="tech-item" data-cat="infra"><div class="tech-item-icon" aria-hidden="true">GC</div><div class="tech-item-name">Google Cloud Platform</div><div class="tech-item-cat">Cloud</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:82%"></div></div></div>
+      <div class="tech-item" data-cat="infra"><div class="tech-item-icon" aria-hidden="true">CI</div><div class="tech-item-name">CI/CD</div><div class="tech-item-cat">DevOps</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:88%"></div></div></div>
+      <div class="tech-item" data-cat="infra"><div class="tech-item-icon" aria-hidden="true">GT</div><div class="tech-item-name">Git / GitHub</div><div class="tech-item-cat">Version Control</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:95%"></div></div></div>
 
       <!-- Other -->
-      <div class="tech-item" data-cat="other"><div class="tech-item-icon">🌍</div><div class="tech-item-name">Google Earth Engine</div><div class="tech-item-cat">Geospatial</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
-      <div class="tech-item" data-cat="other"><div class="tech-item-icon">📋</div><div class="tech-item-name">Evals &amp; Observability</div><div class="tech-item-cat">LLM-as-Judge, Tracing</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:83%"></div></div></div>
+      <div class="tech-item" data-cat="other"><div class="tech-item-icon" aria-hidden="true">EE</div><div class="tech-item-name">Google Earth Engine</div><div class="tech-item-cat">Geospatial</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:85%"></div></div></div>
+      <div class="tech-item" data-cat="other"><div class="tech-item-icon" aria-hidden="true">EV</div><div class="tech-item-name">Evals &amp; Observability</div><div class="tech-item-cat">LLM-as-Judge, Tracing</div><div class="tech-item-level"><div class="tech-item-level-fill" style="width:83%"></div></div></div>
     </div>
   </div>
 </section>
@@ -1000,13 +1089,19 @@
     </div>
     <div class="footer-bottom">
       <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
-      <p class="v7-foot-stamp">ui v7 &#8220;signal&#8221; &#183; sw vnd-v24 &#183; deployed 2026-10-31</p>
+      <p class="v7-foot-stamp">ui v12 &#8220;field draft&#8221; &#183; sw vnd-v28 &#183; deployed 2026-11-02</p>
       <p><a href="https://victorndunda.com" style="color:var(--v6-text-dim)">victorndunda.com</a> · <a href="https://busaraai.com" style="color:var(--v6-text-dim)">busaraai.com</a> · <a href="https://github.com/gadda00/verxlite" style="color:var(--v6-text-dim)">verxlite</a></p>
+    </div>
+    <div class="footer-draft-strip">
+      <span>DWG № VND-28 — VICTOR NDUNDA</span>
+      <span>NAIROBI · 1.2921° S · 36.8219° E</span>
+      <span class="fds-a">DRAWN 2026 · SCALE 1:1</span>
     </div>
   </div>
 </footer>
 
 <script src="app.js?v=12.0.0" defer></script>
+<script src="/schematic.js?v=12.0.0" defer></script>
 <script src="/availability.js?v=12.0.0" defer></script>
 <script src="/proof-chip.js?v=18.0.0" defer></script>
 <script src="/liquid.js?v=11.0.0" defer></script>

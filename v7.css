@@ -29,96 +29,46 @@
 
 /* ─── 00. Tokens ─────────────────────────────────────────────────── */
 :root {
-  --v7-bg-0: #05070f;
-  --v7-bg-1: #0a0e1c;
-  --v7-surface-1: linear-gradient(180deg, rgba(148,163,216,.062), rgba(148,163,216,.024));
-  --v7-surface-hi: linear-gradient(180deg, rgba(148,163,216,.10), rgba(148,163,216,.04));
-  --v7-stroke: rgba(148,163,216,.14);
-  --v7-stroke-hi: rgba(148,163,216,.32);
-  --v7-text-hi: #f5f8ff;
-  --v7-text-mid: #adb9d6;
-  --v7-text-dim: #7d88a8;
-  --v7-cyan: #22d3ee;
-  --v7-violet: #818cf8;
-  --v7-emerald: #34d399;
-  --v7-amber: #fbbf24;
-  --v7-grad: linear-gradient(120deg, #22d3ee 0%, #818cf8 52%, #34d399 100%);
-  --v7-grad-line: linear-gradient(90deg, transparent, rgba(34,211,238,.55), rgba(129,140,248,.55), transparent);
-  --v7-radius: 20px;
-  --v7-radius-sm: 12px;
-  --v7-shadow-1: 0 1px 0 rgba(255,255,255,.04) inset, 0 10px 30px -14px rgba(2,6,20,.7);
-  --v7-shadow-2: 0 1px 0 rgba(255,255,255,.06) inset, 0 24px 60px -20px rgba(2,6,20,.85);
-  --v7-ease: cubic-bezier(.22,1,.36,1);
-  --v7-font-display: 'Space Grotesk', 'Inter', -apple-system, sans-serif;
-  --v7-font-body: 'Inter', -apple-system, sans-serif;
-  --v7-font-mono: 'JetBrains Mono', ui-monospace, monospace;
-}
-html.light {
-  --v7-bg-0: #f5f7fe;
-  --v7-bg-1: #edf0fb;
-  --v7-surface-1: linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.66));
-  --v7-surface-hi: linear-gradient(180deg, #ffffff, rgba(255,255,255,.8));
-  --v7-stroke: rgba(30,41,82,.13);
-  --v7-stroke-hi: rgba(30,41,82,.28);
-  --v7-text-hi: #0c1230;
-  --v7-text-mid: #3f4968;
-  --v7-text-dim: #5d6684;
-  --v7-cyan: #0e7490;
-  --v7-violet: #4f46e5;
-  --v7-emerald: #047857;
-  --v7-amber: #b45309;
-  --v7-grad: linear-gradient(120deg, #0e7490 0%, #4f46e5 52%, #047857 100%);
-  --v7-grad-line: linear-gradient(90deg, transparent, rgba(14,116,144,.5), rgba(79,70,229,.5), transparent);
-  --v7-shadow-1: 0 1px 0 rgba(255,255,255,.8) inset, 0 10px 30px -14px rgba(30,41,82,.25);
-  --v7-shadow-2: 0 1px 0 rgba(255,255,255,.9) inset, 0 24px 60px -20px rgba(30,41,82,.32);
+  --v7-bg-0: #12100b;
+  --v7-bg-1: #181510;
+  --v7-surface-1: linear-gradient(180deg, rgba(236,214,166,.062), rgba(236,214,166,.024));
+  --v7-surface-hi: linear-gradient(180deg, rgba(236,214,166,.10), rgba(236,214,166,.04));
+  --v7-stroke: rgba(236,214,166,.14);
+  --v7-stroke-hi: rgba(236,214,166,.30);
+  --v7-text-hi: #f2ecde;
+  --v7-text-mid: #b5a98f;
+  --v7-text-dim: #9a9078;
+  --v7-cyan: #e8a33d;
+  --v7-violet: #c96f45;
+  --v7-emerald: #8fb98f;
+  --v7-amber: #e8a33d;
+  --v7-grad: linear-gradient(120deg, #e8a33d 0%, #c96f45 55%, #8fb98f 100%);
+  --v7-grad-line: linear-gradient(90deg, transparent, rgba(232,163,61,.55), rgba(201,111,69,.55), transparent);
+  --v7-radius: 10px;
+  --v7-radius-sm: 6px;
 }
 
-/* ─── 01. Atmosphere — every page gets the aurora field ──────────── */
-body {
-  background: var(--v7-bg-0);
-  color: var(--v7-text-mid);
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
+html.light {
+  --v7-bg-0: #f5f0e4;
+  --v7-bg-1: #efe8d8;
+  --v7-surface-1: linear-gradient(180deg, rgba(255,253,247,.92), rgba(255,253,247,.66));
+  --v7-surface-hi: linear-gradient(180deg, #fffdf7, rgba(255,253,247,.8));
+  --v7-stroke: rgba(52,40,16,.15);
+  --v7-stroke-hi: rgba(52,40,16,.30);
+  --v7-text-hi: #221b0d;
+  --v7-text-mid: #57503e;
+  --v7-text-dim: #6b6350;
+  --v7-cyan: #96590a;
+  --v7-violet: #a34a21;
+  --v7-emerald: #47713f;
+  --v7-amber: #96590a;
+  --v7-grad: linear-gradient(120deg, #96590a 0%, #a34a21 55%, #47713f 100%);
+  --v7-grad-line: linear-gradient(90deg, transparent, rgba(150,89,10,.5), rgba(163,74,33,.5), transparent);
 }
-/* Aurora: three breathing light sources + vignette (fixed = no repaint on scroll) */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -3;
-  background:
-    radial-gradient(58rem 36rem at 10% -6%, rgba(34,211,238,.14), transparent 62%),
-    radial-gradient(52rem 34rem at 92% 2%, rgba(129,140,248,.15), transparent 62%),
-    radial-gradient(46rem 32rem at 55% 108%, rgba(52,211,153,.11), transparent 62%),
-    radial-gradient(30rem 22rem at 78% 88%, rgba(251,191,36,.05), transparent 60%),
-    var(--v7-bg-0);
-}
-html.light body::before {
-  background:
-    radial-gradient(58rem 36rem at 10% -6%, rgba(14,116,144,.10), transparent 62%),
-    radial-gradient(52rem 34rem at 92% 2%, rgba(79,70,229,.11), transparent 62%),
-    radial-gradient(46rem 32rem at 55% 108%, rgba(4,120,87,.08), transparent 62%),
-    radial-gradient(30rem 22rem at 78% 88%, rgba(180,83,9,.05), transparent 60%),
-    var(--v7-bg-0);
-}
-/* Engineering grid, faded at the edges — "systems" texture */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: -2;
-  background-image:
-    linear-gradient(var(--v7-stroke) 1px, transparent 1px),
-    linear-gradient(90deg, var(--v7-stroke) 1px, transparent 1px);
-  background-size: 76px 76px;
-  opacity: .16;
-  -webkit-mask-image: radial-gradient(ellipse 95% 62% at 50% 0%, black 25%, transparent 78%);
-  mask-image: radial-gradient(ellipse 95% 62% at 50% 0%, black 25%, transparent 78%);
-  pointer-events: none;
-}
+
 /* Selection + scrollbar */
-::selection { background: rgba(34,211,238,.32); color: #fff; }
-html.light ::selection { background: rgba(14,116,144,.22); color: #0c1230; }
+::selection { background: #e8a33d; color: #17130b; }
+html.light ::selection { background: #96590a; color: #fff8ec; }
 /* True horizontal-overflow guard: `clip` (unlike `hidden`) creates no
    scroll container, so position:sticky TOCs keep working. Fixes the
    pre-existing liquid-bg + cert-card mobile overflow for good.      */
@@ -127,7 +77,7 @@ html, body { overflow-x: clip; }
 ::-webkit-scrollbar { width: 10px; }
 ::-webkit-scrollbar-track { background: var(--v7-bg-0); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--v7-cyan), var(--v7-violet));
+  background: var(--v7-amber);
   border-radius: 6px;
   border: 2px solid var(--v7-bg-0);
 }
@@ -407,95 +357,6 @@ html.light .cm-lbl { color: #4a5473 !important; }
 html.light .booking-cta-body { color: #37415f !important; }
 .booking-cta-eyebrow { color: var(--v7-text-mid) !important; }
 
-/* ─── 07. Homepage hero — asymmetric split + live console ─────────── */
-.hero { padding: 7rem 2rem 4.5rem; }
-.hero-badge {
-  border-radius: 12px;
-  font-family: var(--v7-font-mono);
-  font-size: .78rem;
-  letter-spacing: .02em;
-  color: var(--v7-text-mid);
-  background: rgba(148,163,216,.07);
-  border: 1px solid var(--v7-stroke);
-  box-shadow: 0 0 30px -12px rgba(34,211,238,.4);
-}
-.hero-badge .pulse-dot { background: var(--v7-emerald); box-shadow: 0 0 12px var(--v7-emerald); }
-.hero-kicker {
-  font-family: var(--v7-font-mono);
-  font-size: .8rem;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-  color: var(--v7-text-dim);
-  margin-bottom: 1.1rem;
-  animation: fadeInUp .8s ease both;
-}
-.hero-title {
-  font-size: clamp(2.6rem, 5.6vw, 4.6rem);
-  line-height: 1.04;
-  letter-spacing: -.035em;
-  color: var(--v7-text-hi);
-  margin-bottom: 1.6rem;
-}
-/* the accent phrase: calmer than the old infinite-rainbow — one hue pair + glow */
-.hero-title .gradient-animated {
-  background: linear-gradient(112deg, #2ee6ff 5%, #93a0ff 60%, #6ee7b7 110%);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  filter: drop-shadow(0 6px 30px rgba(34,211,238,.22));
-  animation: gradShift 9s ease-in-out infinite;
-}
-html.light .hero-title .gradient-animated {
-  background: linear-gradient(112deg, #0e7490 5%, #4f46e5 60%, #047857 110%);
-  background-size: 200% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero-sub { color: #c2cee9; font-size: clamp(1rem, 1.9vw, 1.2rem); line-height: 1.75; }
-html.light .hero-sub { color: #37415f; }
-/* stats become tactile tiles */
-.hero-stats { gap: 1rem; }
-.hero-stat {
-  min-width: 168px;
-  padding: 1.05rem 1.35rem;
-  border-radius: 16px;
-  background-image: var(--v7-surface-1);
-  border: 1px solid var(--v7-stroke);
-  box-shadow: var(--v7-shadow-1);
-  text-align: left;
-  position: relative;
-  overflow: hidden;
-}
-.hero-stat::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 1.35rem; right: 1.35rem;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(34,211,238,.5), transparent);
-}
-.hero-stat .num {
-  font-family: var(--v7-font-display);
-  font-size: 1.9rem;
-  font-weight: 700;
-  background: linear-gradient(120deg, var(--v7-cyan), var(--v7-violet));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-html.light .hero-stat .num {
-  background: linear-gradient(120deg, #0e7490, #4f46e5);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-.hero-stat .label {
-  font-size: .72rem;
-  color: var(--v7-text-dim);
-  line-height: 1.45;
-  letter-spacing: .01em;
-}
 .hero-proof-chip {
   border-radius: 13px;
   font-family: var(--v7-font-mono);
@@ -505,124 +366,6 @@ html.light .hero-stat .num {
   box-shadow: 0 0 28px -12px rgba(52,211,153,.5);
 }
 .hero-proof-chip .pulse-dot { background: var(--v7-emerald); box-shadow: 0 0 10px var(--v7-emerald); }
-
-/* ── desktop: hero becomes a two-column stage (text ⇄ console) ──
-   Column-1 children AUTO-FLOW into successive rows (never share a
-   cell → no overlap); the console spans the full column 2.        */
-@media (min-width: 1120px) {
-  .hero-content {
-    display: grid;
-    grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
-    align-items: center;
-    column-gap: 4rem;
-    max-width: 1160px;
-    text-align: left;
-  }
-  .hero-content > *:not(.v7-console) { grid-column: 1; }
-  .hero-content > .v7-console { grid-column: 2; grid-row: 1 / span 40; align-self: center; }
-  .hero-cta { justify-content: flex-start; }
-  .hero-stats { justify-content: flex-start; }
-  .hero-cta .btn { padding: .85rem 1.6rem; font-size: .95rem; }
-}
-
-/* ── the signature piece: live production console ── */
-.v7-console {
-  grid-area: console;
-  width: 100%;
-  max-width: 520px;
-  justify-self: end;
-  border-radius: 18px;
-  background:
-    linear-gradient(180deg, rgba(10,16,32,.88), rgba(7,11,24,.92));
-  border: 1px solid var(--v7-stroke-hi);
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.07) inset,
-    0 40px 80px -30px rgba(2,8,26,.9),
-    0 0 60px -22px rgba(34,211,238,.35);
-  overflow: hidden;
-  font-family: var(--v7-font-mono);
-  font-size: .78rem;
-  line-height: 1.9;
-  color: #b9c5e4;
-  position: relative;
-  animation: fadeInUp 1s ease .55s both;
-}
-html.light .v7-console {
-  background: linear-gradient(180deg, #ffffff, #f2f5fd);
-  color: #3f4968;
-  box-shadow: 0 1px 0 #fff inset, 0 30px 60px -28px rgba(30,41,82,.4), 0 0 50px -22px rgba(14,116,144,.25);
-}
-/* faint scanlines — CRT memory, 3% so it never fights the text */
-.v7-console::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(0deg, rgba(255,255,255,.028) 0 1px, transparent 1px 3px);
-  pointer-events: none;
-}
-.v7-console-bar {
-  display: flex;
-  align-items: center;
-  gap: .45rem;
-  padding: .68rem 1rem;
-  border-bottom: 1px solid var(--v7-stroke);
-  background: rgba(148,163,216,.05);
-}
-.v7-dot { width: 10px; height: 10px; border-radius: 50%; }
-.v7-dot.r { background: #ff5f57; } .v7-dot.y { background: #febc2e; } .v7-dot.g { background: #28c840; }
-.v7-console-title {
-  margin-left: .5rem;
-  font-size: .68rem;
-  letter-spacing: .08em;
-  color: var(--v7-text-dim);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.v7-live-pill {
-  margin-left: auto;
-  display: inline-flex;
-  align-items: center;
-  gap: .4rem;
-  font-size: .62rem;
-  font-weight: 700;
-  letter-spacing: .18em;
-  color: var(--v7-emerald);
-  border: 1px solid rgba(52,211,153,.35);
-  background: rgba(52,211,153,.08);
-  border-radius: 7px;
-  padding: .16rem .5rem;
-}
-.v7-live-pill .pulse-dot {
-  width: 6px; height: 6px;
-  background: var(--v7-emerald);
-  box-shadow: 0 0 8px var(--v7-emerald);
-  animation: pulse 2s infinite;
-}
-.v7-console-body {
-  padding: 1.05rem 1.15rem 1.15rem;
-  min-height: 172px;
-  display: flex;
-  flex-direction: column;
-  gap: .15rem;
-}
-.v7-cl { white-space: pre-wrap; word-break: break-word; }
-.v7-cl .v7-p { color: var(--v7-cyan); }            /* prompt */
-.v7-cl .v7-ok { color: var(--v7-emerald); }         /* ok marker */
-.v7-cl .v7-hl { color: #eaf0ff; font-weight: 600; } /* highlight */
-html.light .v7-cl .v7-hl { color: #0c1230; }
-.v7-cl .v7-am { color: var(--v7-amber); }           /* amber accent */
-.v7-caret {
-  display: inline-block;
-  width: .55em;
-  color: var(--v7-cyan);
-  animation: v7blink 1.05s steps(1) infinite;
-}
-@keyframes v7blink { 50% { opacity: 0; } }
-/* mobile: console sits under the stats, centered */
-@media (max-width: 1119.5px) {
-  .v7-console { margin: 2.4rem auto 0; }
-}
 
 /* ─── 08. Subpage heroes — one shared pattern ────────────────────── */
 .blog-hero, .svc-hero, .projects-hero, .resume-hero, .case-hero,
@@ -961,7 +704,6 @@ html.v7js .section-head.text-left::after { left: 0; transform: none; }
 @media (prefers-reduced-motion: reduce) {
   html.v7js .v7-reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
   html.v7js .bento-card { animation: none !important; }
-  .hero-title .gradient-animated { animation: none !important; }
   .v7-caret { animation: none !important; }
   html.v7js .section-head::after { transition: none !important; width: min(320px, 60%); }
 }
@@ -990,125 +732,6 @@ html.v7js .section-head.text-left::after { left: 0; transform: none; }
    G. Focus rings, icon sizing, radius unification
    Everything degrades safely: reduced-motion, print, old browsers.
    ═══════════════════════════════════════════════════════════════════ */
-
-/* ─── A1. Hero headline — weight contrast (editorial prestige) ──── */
-.hero-title { margin-bottom: 1.45rem; }
-.hero-title .ht-strong {
-  font-weight: 700;
-  color: var(--v7-text-hi);
-  letter-spacing: -.04em;
-}
-.hero-title .ht-soft {
-  font-weight: 300;
-  color: var(--v7-text-mid);
-  letter-spacing: -.015em;
-}
-html.light .hero-title .ht-soft { color: var(--v7-text-mid); }
-/* kicker whispers: smaller, wider, dimmer */
-.hero-kicker {
-  font-size: .68rem;
-  letter-spacing: .26em;
-  opacity: .8;
-  margin-bottom: 1.35rem;
-}
-.hero-sub { line-height: 1.8; max-width: 56ch; }
-
-/* ─── A2. Signature console — supersized, co-equal hero element ──── */
-@media (min-width: 1120px) {
-  .hero-content {
-    grid-template-columns: minmax(0, 1.04fr) minmax(0, .96fr);
-    column-gap: 3.4rem;
-    max-width: 1220px;
-  }
-}
-.v7-console {
-  max-width: 600px;
-  font-size: .84rem;
-  line-height: 2;
-  border-radius: 20px;
-  box-shadow:
-    0 1px 0 rgba(255,255,255,.07) inset,
-    0 48px 100px -32px rgba(2,8,26,.95),
-    0 0 90px -18px rgba(34,211,238,.3),
-    0 0 200px -60px rgba(129,140,248,.25);
-}
-.v7-console-body { min-height: 205px; padding: 1.2rem 1.3rem 1.3rem; gap: .2rem; }
-/* softer, less macOS-clone traffic lights */
-.v7-dot.r { background: #e0685e; }
-.v7-dot.y { background: #d9a83c; }
-.v7-dot.g { background: #3fb950; }
-.v7-dot { box-shadow: 0 0 6px rgba(148,163,216,.18); }
-/* console footer strip — system readout row */
-.v7-console-foot {
-  display: flex;
-  gap: 1.1rem;
-  flex-wrap: wrap;
-  padding: .55rem 1.3rem;
-  border-top: 1px solid var(--v7-stroke);
-  background: rgba(148,163,216,.04);
-  font-size: .62rem;
-  letter-spacing: .06em;
-  color: var(--v7-text-dim);
-}
-.v7-console-foot b { color: var(--v7-text-mid); font-weight: 600; }
-.v7-console-foot .foot-ok { color: var(--v7-emerald); }
-/* ambient glow pool behind the console (hero only) */
-.hero-content::after {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  width: 46rem; height: 30rem;
-  right: -8rem; top: -4rem;
-  background:
-    radial-gradient(50% 50% at 60% 40%, rgba(34,211,238,.13), transparent 70%),
-    radial-gradient(40% 45% at 35% 65%, rgba(129,140,248,.12), transparent 70%);
-  filter: blur(10px);
-  pointer-events: none;
-}
-.hero-content { position: relative; }
-@media (max-width: 1119.5px) { .hero-content::after { display: none; } }
-/* language sparkbars inside the console */
-.v7-spark { color: var(--v7-text-dim); letter-spacing: .04em; }
-.v7-spark b { color: var(--v7-cyan); font-weight: 400; }
-
-/* ─── B1. CTA hierarchy — ONE solid button per view ─────────────── */
-/* nav "Book an Assessment" becomes a quiet ghost chip: the hero
-   button owns the solid fill, nav stops competing with it.        */
-.nav-link-cta {
-  background: transparent;
-  border: 1px solid var(--v7-stroke-hi);
-  color: var(--v7-text-mid);
-  box-shadow: none;
-}
-.nav-link-cta:hover {
-  background: rgba(148,163,216,.08);
-  border-color: rgba(34,211,238,.5);
-  color: var(--v7-text-hi);
-  box-shadow: 0 0 24px -8px rgba(34,211,238,.35);
-}
-html.light .nav-link-cta { border-color: rgba(30,41,82,.3); }
-html.light .nav-link-cta:hover {
-  background: rgba(30,41,82,.05);
-  border-color: rgba(14,116,144,.55);
-  box-shadow: 0 0 24px -10px rgba(14,116,144,.3);
-}
-/* hero secondary: readable glass fill, not a fading ghost */
-.hero-cta .btn.btn-ghost {
-  background: rgba(148,163,216,.07);
-  border: 1px solid var(--v7-stroke-hi);
-  color: var(--v7-text-hi);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-.hero-cta .btn.btn-ghost:hover {
-  background: rgba(148,163,216,.13);
-  border-color: rgba(129,140,248,.55);
-  box-shadow: 0 0 30px -10px rgba(129,140,248,.4);
-}
-html.light .hero-cta .btn.btn-ghost { background: rgba(255,255,255,.75); }
-/* magnetic buttons get a transition spring */
-.v7-magnetic { transition: transform .45s var(--v7-ease); will-change: transform; }
-.v7-magnetic.v7-mag-on { transition: transform .12s ease-out; }
 
 /* ─── C1. Cross-document view transitions (progressive) ─────────── */
 @view-transition { navigation: auto; }
@@ -1331,22 +954,9 @@ html.light .work-card, html.light .contact-card {
 html.light .blog-card:hover, html.light .offer-card:hover {
   box-shadow: 0 2px 4px rgba(30,41,82,.06), 0 20px 44px -20px rgba(30,41,82,.3);
 }
-/* light hero gets a whisper of mesh warmth */
-html.light .hero-content::after {
-  background:
-    radial-gradient(50% 50% at 60% 40%, rgba(14,116,144,.1), transparent 70%),
-    radial-gradient(40% 45% at 35% 65%, rgba(79,70,229,.09), transparent 70%);
-}
 
 /* ─── F1. Mobile refinements ────────────────────────────────────── */
 @media (max-width: 480px) {
-  .hero-title { line-height: 1.13; }
-  .hero-stat .num { font-size: 1.6rem; }
-  .hero-stats { margin-top: 2.6rem; gap: .8rem; }
-  .v7-console { font-size: .72rem; }
-  .v7-console-body { min-height: 160px; }
-  /* room for the thumb: CTAs never hug the fold */
-  .hero-cta { gap: .8rem; }
 }
 /* nav icon buttons: 40px targets, air between */
 .nav-actions { gap: .75rem; }
@@ -1429,9 +1039,6 @@ html.light .v7-live-pill {
 html.light .v7-dot.r { background: #c9493f; }
 html.light .v7-dot.y { background: #b4832a; }
 html.light .v7-dot.g { background: #2f8f46; }
-/* light kicker + badge: contrast floor */
-html.light .hero-kicker { color: var(--v7-text-mid); opacity: 1; }
-html.light .hero-badge { color: var(--v7-text-mid); border-color: rgba(30,41,82,.2); }
 /* light nav active pill: clearly present */
 html.light .nav-links .nav-link.active {
   background: rgba(14,116,144,.12);
@@ -1465,11 +1072,6 @@ html.light .nav-link-cta {
 html.light .nav-link-cta:hover {
   background: rgba(14,116,144,.08);
   border-color: rgba(14,116,144,.6);
-  color: var(--v7-text-hi);
-}
-/* light: the glass secondary button needs a crisper edge */
-html.light .hero-cta .btn.btn-ghost {
-  border-color: rgba(30,41,82,.35);
   color: var(--v7-text-hi);
 }
 
@@ -1670,10 +1272,3 @@ html.light .v7-shell-chip:hover { border-color: rgba(14,116,144,.55); box-shadow
 /* Measured at 390x844: CTA bottom sat at 895px (51px below fold).
    Trim the hero's vertical overhead so the primary CTA is visible
    without scrolling — the single highest-value mobile fix.        */
-@media (max-width: 640px) {
-  .hero { padding-top: 5.2rem !important; }
-  .hero-badge { margin-bottom: .7rem; }
-  .hero-title { margin-bottom: 1.05rem; }
-  .hero-sub { margin-bottom: 1.3rem; line-height: 1.7; }
-  .hero-kicker { margin-bottom: .95rem; }
-}

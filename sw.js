@@ -15,7 +15,7 @@
  * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v27.0.0';
+const CACHE_VERSION = 'vnd-v28.0.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -33,6 +33,7 @@ const SHELL_URLS = [
   '/liquid.css',
   '/liquid.js',
   '/app.js',
+  '/schematic.js',
   '/effects.js',
   '/i18n.js',
   '/enhancements.js',

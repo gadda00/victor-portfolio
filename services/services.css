@@ -42,10 +42,10 @@
 .svc-package .price-block { margin: 1rem 0; padding: 1rem 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
 .svc-package .price-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.375rem; }
 .svc-package .price-row:last-child { margin-bottom: 0; }
-.svc-package .price-label { font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; }
+.svc-package .price-label { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
 .svc-package .price-value { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.0625rem; }
 .svc-package .price-value.usd { color: var(--pkg-color, var(--accent)); }
-.svc-package .price-note { font-size: 0.7rem; color: var(--text-dim); margin-top: 0.5rem; line-height: 1.4; }
+.svc-package .price-note { font-size: 0.7rem; color: var(--text-muted); margin-top: 0.5rem; line-height: 1.4; }
 .svc-package .best-for { font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1rem; line-height: 1.5; }
 .svc-package .best-for strong { color: var(--text); }
 .svc-package ul.deliverables { list-style: none; padding: 0; margin: 0 0 1.5rem; flex: 1; }
@@ -53,7 +53,7 @@
 .svc-package ul.deliverables li::before { content: '✓'; position: absolute; left: 0; color: var(--pkg-color, var(--accent)); font-weight: 700; }
 .svc-package .outcome { font-size: 0.75rem; padding: 0.625rem 0.875rem; background: var(--glass); border-radius: 8px; color: var(--text); margin-bottom: 1rem; line-height: 1.5; }
 .svc-package .outcome strong { color: var(--pkg-color, var(--accent)); }
-.svc-package .timeline { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 1rem; }
+.svc-package .timeline { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem; }
 .svc-package .pkg-cta { display: block; text-align: center; padding: 0.75rem 1rem; border-radius: 10px; font-weight: 600; font-size: 0.875rem; text-decoration: none; background: linear-gradient(135deg, var(--pkg-color, var(--accent)), var(--accent-2)); color: #fff; transition: transform 0.2s var(--ease, ease), box-shadow 0.2s var(--ease, ease); }
 .svc-package .pkg-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--glow); color: #fff; }
 .svc-package .pkg-cta:active { transform: translateY(0) scale(0.98); }
@@ -66,9 +66,9 @@
 .svc-service h3 { font-size: 1.125rem; font-weight: 700; margin-bottom: 0.5rem; }
 .svc-service p { color: var(--text-muted); font-size: 0.875rem; line-height: 1.6; margin-bottom: 1rem; }
 .svc-service .examples { display: flex; gap: 0.375rem; flex-wrap: wrap; margin-bottom: 1rem; }
-.svc-service .example-tag { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; background: var(--glass); border: 1px solid var(--border); color: var(--text-dim); }
+.svc-service .example-tag { font-size: 0.7rem; padding: 0.15rem 0.5rem; border-radius: 4px; background: var(--glass); border: 1px solid var(--border); color: var(--text-muted); }
 .svc-service .from-price { font-size: 0.8125rem; color: var(--accent); font-weight: 600; font-family: 'JetBrains Mono', monospace; }
-.svc-service .from-price small { color: var(--text-dim); font-weight: 400; }
+.svc-service .from-price small { color: var(--text-muted); font-weight: 400; }
 
 /* ─── Case studies ─────────────────────────────────────────── */
 .svc-cases { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; }
@@ -81,10 +81,10 @@
 .svc-case-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; padding: 1rem 1.5rem; background: var(--glass); }
 .svc-case-stat { text-align: center; }
 .svc-case-stat .v { font-family: 'JetBrains Mono', monospace; font-weight: 700; font-size: 1.125rem; color: var(--accent); }
-.svc-case-stat .l { font-size: 0.65rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.125rem; }
+.svc-case-stat .l { font-size: 0.65rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.125rem; }
 .svc-case-body { padding: 1.25rem 1.5rem; }
 .svc-case-body p { color: var(--text-muted); font-size: 0.875rem; line-height: 1.6; margin-bottom: 1rem; }
-.svc-case-body .what-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 0.5rem; font-weight: 700; }
+.svc-case-body .what-title { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.5rem; font-weight: 700; }
 .svc-case-body ul { list-style: none; padding: 0; margin: 0 0 1rem; }
 .svc-case-body ul li { font-size: 0.8125rem; color: var(--text-muted); padding: 0.25rem 0 0.25rem 1.25rem; position: relative; line-height: 1.5; }
 .svc-case-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
@@ -97,26 +97,30 @@
 .svc-train-card:hover { border-color: var(--accent); transform: translateY(-3px); }
 .svc-train-card .duration { display: inline-block; font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.625rem; border-radius: 4px; background: rgba(168,85,247,0.14); color: #b16aff; /* v21: 4.6:1 on tinted cards (axe) */ margin-bottom: 0.75rem; }
 .svc-train-card h3 { font-size: 1.0625rem; font-weight: 700; margin-bottom: 0.375rem; }
-.svc-train-card .audience { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 1rem; }
+.svc-train-card .audience { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem; }
 .svc-train-card ul { list-style: none; padding: 0; margin: 0 0 1rem; }
 .svc-train-card ul li { font-size: 0.8125rem; color: var(--text-muted); padding: 0.25rem 0 0.25rem 1.25rem; position: relative; }
 .svc-train-card ul li::before { content: '•'; position: absolute; left: 0.25rem; color: var(--accent); }
 .svc-train-card .price-from { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--accent); font-size: 1rem; margin-bottom: 0.25rem; }
-.svc-train-card .format { font-size: 0.7rem; color: var(--text-dim); }
+.svc-train-card .format { font-size: 0.7rem; color: var(--text-muted); }
 
 /* ─── Guides ───────────────────────────────────────────────── */
 .svc-guides { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1.25rem; }
 .svc-guide { padding: 1.5rem; border-radius: 14px; background: var(--bg-card); border: 1px solid var(--border); transition: all 0.3s; text-decoration: none; color: inherit; display: block; cursor: pointer; }
 .svc-guide:hover { border-color: var(--accent); transform: translateY(-3px); }
 .svc-guide .cat-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem; }
-.svc-guide .cat { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.2rem 0.5rem; border-radius: 4px; background: rgba(0,212,255,0.1); color: var(--accent); }
-.svc-guide .cat.Sector { background: rgba(16,185,129,0.1); color: #10b981; }
-.svc-guide .cat.Intermediate { background: rgba(245,158,11,0.1); color: #f59e0b; }
-.svc-guide .cat.Builder { background: rgba(168,85,247,0.14); color: #b16aff; /* v21: 4.6:1 on tinted cards (axe) */ }
-.svc-guide .duration { font-size: 0.7rem; color: var(--text-dim); font-family: 'JetBrains Mono', monospace; }
+.svc-guide .cat { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; padding: 0.2rem 0.5rem; border-radius: 3px; background: rgba(232,163,61,0.13); color: #f2b45c; }
+.svc-guide .cat.Sector { background: rgba(143,185,143,0.14); color: #a5cdb0; }
+.svc-guide .cat.Intermediate { background: rgba(201,111,69,0.15); color: #e59a77; }
+.svc-guide .cat.Builder { background: rgba(201,111,69,0.18); color: #ecab8e; }
+html.light .svc-guide .cat { background: rgba(150,89,10,0.12); color: #8a4f06; }
+html.light .svc-guide .cat.Sector { background: rgba(71,113,63,0.12); color: #3c6136; }
+html.light .svc-guide .cat.Intermediate { background: rgba(163,74,33,0.12); color: #8f3f1a; }
+html.light .svc-guide .cat.Builder { background: rgba(163,74,33,0.14); color: #8f3f1a; }
+.svc-guide .duration { font-size: 0.7rem; color: var(--text-muted); font-family: 'JetBrains Mono', monospace; }
 .svc-guide h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; line-height: 1.3; }
 .svc-guide p { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.75rem; }
-.svc-guide .audience { font-size: 0.7rem; color: var(--text-dim); margin-bottom: 0.75rem; }
+.svc-guide .audience { font-size: 0.7rem; color: var(--text-muted); margin-bottom: 0.75rem; }
 .svc-guide .price-row { display: flex; justify-content: space-between; align-items: center; }
 .svc-guide .free { font-size: 0.75rem; font-weight: 700; color: #10b981; }
 .svc-guide .paid { font-size: 0.75rem; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; }
@@ -124,9 +128,10 @@
 /* ─── Pricing models ───────────────────────────────────────── */
 .svc-models { max-width: 1100px; margin: 0 auto; padding: 0 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
 .svc-model { padding: 1.5rem; border-radius: 12px; background: var(--bg-card); border: 1px solid var(--border); }
-.svc-model h4 { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--accent); }
+.svc-model h4 { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.5rem; color: #f2b45c; }
+html.light .svc-model h4 { color: #7a4506; }
 .svc-model p { font-size: 0.8125rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.75rem; }
-.svc-model .best-for { font-size: 0.7rem; color: var(--text-dim); }
+.svc-model .best-for { font-size: 0.7rem; color: var(--text-muted); }
 .svc-model .best-for strong { color: var(--text); }
 
 /* ─── FAQ ──────────────────────────────────────────────────── */
@@ -143,18 +148,18 @@
 .svc-calc { max-width: 800px; margin: 0 auto; padding: 0 2rem; }
 .svc-calc-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: 18px; padding: 2rem; }
 .svc-calc-row { margin-bottom: 1.5rem; }
-.svc-calc-row label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-dim); margin-bottom: 0.5rem; }
+.svc-calc-row label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text-muted); margin-bottom: 0.5rem; }
 .svc-calc-options { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .svc-calc-opt { padding: 0.625rem 1rem; border-radius: 9px; background: var(--glass); border: 1px solid var(--border); color: var(--text-muted); font-size: 0.8125rem; font-weight: 600; cursor: pointer; transition: all 0.2s; font-family: inherit; }
 .svc-calc-opt:hover { border-color: var(--accent); color: var(--text); }
 .svc-calc-opt.active { background: linear-gradient(135deg, rgba(0,212,255,0.15), rgba(168,85,247,0.15)); border-color: var(--accent); color: var(--accent); }
 .svc-calc-result { margin-top: 1.5rem; padding: 1.5rem; background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(168,85,247,0.05)); border: 1px solid rgba(0,212,255,0.2); border-radius: 12px; text-align: center; }
-.svc-calc-result .est-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-dim); margin-bottom: 0.5rem; }
+.svc-calc-result .est-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); margin-bottom: 0.5rem; }
 .svc-calc-result .est-value { font-size: 2rem; font-weight: 700; font-family: 'JetBrains Mono', monospace; background: linear-gradient(135deg, var(--accent), var(--accent-2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 0.25rem; }
 .svc-calc-result .est-detail { font-size: 0.8125rem; color: var(--text-muted); margin-bottom: 1rem; }
 .svc-calc-result .est-cta { display: inline-block; padding: 0.625rem 1.5rem; border-radius: 9px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #fff; font-weight: 600; font-size: 0.875rem; text-decoration: none; transition: all 0.2s; }
 .svc-calc-result .est-cta:hover { transform: translateY(-2px); box-shadow: 0 6px 20px var(--glow); color: #fff; }
-.svc-calc-disclaimer { font-size: 0.7rem; color: var(--text-dim); margin-top: 1rem; text-align: center; line-height: 1.5; }
+.svc-calc-disclaimer { font-size: 0.7rem; color: var(--text-muted); margin-top: 1rem; text-align: center; line-height: 1.5; }
 
 /* ─── CTA banner ───────────────────────────────────────────── */
 .svc-cta-banner { max-width: 1000px; margin: 4rem auto 0; padding: 3rem 2rem; text-align: center; background: linear-gradient(135deg, rgba(0,212,255,0.08), rgba(168,85,247,0.08)); border: 1px solid rgba(0,212,255,0.2); border-radius: 24px; }

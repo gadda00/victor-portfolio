@@ -13,8 +13,11 @@
   // 1. PARTICLE BACKGROUND CANVAS — Spatial grid optimization (was O(n²))
   // ═══════════════════════════════════════════════════════════════════
   const canvas = document.getElementById('bgCanvas');
-  if (!canvas) return; // Only on home page
-  const ctx = canvas.getContext('2d');
+  // v12 "field draft": the background constellation canvas was retired — the
+  // foreground production-line schematic (schematic.js) replaced it. Do NOT
+  // early-return here: theme toggle, nav, menu, toast and copy-clipboard live
+  // in the sections below and must keep working on canvas-less pages.
+  const ctx = canvas ? canvas.getContext('2d') : null;
   let particles = [];
   let mouse = { x: null, y: null };
   let animationId = null;
@@ -196,46 +199,48 @@
     if (!REDUCED_MOTION) animationId = requestAnimationFrame(animate);
   }
 
-  resizeCanvas();
-  initParticles();
-  if (REDUCED_MOTION) {
-    // Draw a single static frame
-    const w = canvas.clientWidth, h = canvas.clientHeight;
-    const isDark = document.documentElement.classList.contains('dark');
-    particles.forEach(p => { p.draw(isDark); });
-    connectParticles(w, h);
-  } else {
-    animate();
+  if (canvas) {
+    resizeCanvas();
+    initParticles();
+    if (REDUCED_MOTION) {
+      // Draw a single static frame
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      const isDark = document.documentElement.classList.contains('dark');
+      particles.forEach(p => { p.draw(isDark); });
+      connectParticles(w, h);
+    } else {
+      animate();
+    }
+
+    // Pause animation when canvas off-screen (performance)
+    if ('IntersectionObserver' in window) {
+      const heroObserver = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && !isVisible && !REDUCED_MOTION) {
+            isVisible = true;
+            animate();
+          } else if (!entry.isIntersecting && isVisible) {
+            isVisible = false;
+            if (animationId) cancelAnimationFrame(animationId);
+          }
+        });
+      }, { threshold: 0 });
+      heroObserver.observe(canvas);
+    }
+
+    canvas.addEventListener('mousemove', e => {
+      const rect = canvas.getBoundingClientRect();
+      mouse.x = e.clientX - rect.left;
+      mouse.y = e.clientY - rect.top;
+    });
+    canvas.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(() => { resizeCanvas(); initParticles(); }, 200);
+    });
   }
-
-  // Pause animation when canvas off-screen (performance)
-  if ('IntersectionObserver' in window) {
-    const heroObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !isVisible && !REDUCED_MOTION) {
-          isVisible = true;
-          animate();
-        } else if (!entry.isIntersecting && isVisible) {
-          isVisible = false;
-          if (animationId) cancelAnimationFrame(animationId);
-        }
-      });
-    }, { threshold: 0 });
-    heroObserver.observe(canvas);
-  }
-
-  canvas.addEventListener('mousemove', e => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-  });
-  canvas.addEventListener('mouseleave', () => { mouse.x = null; mouse.y = null; });
-
-  let resizeTimer;
-  window.addEventListener('resize', () => {
-    clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => { resizeCanvas(); initParticles(); }, 200);
-  });
 
   // ═══════════════════════════════════════════════════════════════════
   // 2. TYPEWRITER EFFECT — Reduced-motion aware
