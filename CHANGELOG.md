@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 14: v12 "FIELD DRAFT" — bespoke art direction (2026-11-02)
+
+**The brief:** the client judged the UI/UX "below 4/10" — the terminal-console hero and
+glassmorphic pricing grid read as a Vercel/SaaS template ("the definitive 2023-24 AI-engineer
+cliché" per the design audit). The mandate: make it unique, memorable, 10/10, and ship it.
+
+**The direction — a Nairobi engineer's drafting room:** warm-ink charcoal / cream-paper
+palette with solar amber (the Nairobi sun), terracotta and sage; Fraunces expressive serif
+for display against Space Grotesk body and JetBrains Mono data labels; everything framed
+as engineering documentation — sheet numbers, hairline rules, registration marks, a DWG
+title block, and coordinates in the footer.
+
+**The signature piece — the production line:** the terminal console is gone. In its place
+a live engineering schematic of an actual production AI pipeline: LISTINGS / DOCS / TXNS
+sources feed INGEST → EMBED → RETRIEVE → GENERATE → EVAL → USERS. Amber packets stream
+the line; ~18% fail the EVAL gate, turn terracotta and ride the dashed eval loop back
+through RETRIEVE — failures caught before users ever see them. Hover / focus / tap any
+stage and the readout bar shows its real evidence (87+ listings · 12 counties; 11K+
+learners · 38 countries; 84% recall · 1.37% FPR; 281 defects caught in public review).
+Click for a traffic burst. Inline SVG with a fully readable no-JS baseline;
+reduced-motion, keyboard and screen-reader safe.
+
+**De-templating the rest:** services pricing grid → numbered editorial rows with
+dotted-leader spec sheets; case cards → case files with drafting tags and rotated
+"IN PRODUCTION" stamps on the live client platforms; every emoji badge/icon → mono
+drafting tags and 2-letter codes; section labels → `├ 01 ──` sheet rules; nav CTA →
+outlined amber so the hero button owns the solid fill; footer drafting strip with
+1.2921° S · 36.8219° E.
+
+**Under the hood:** --v6-*/--v7-*/root token layers all re-mapped to the warm palette
+(one namespace each, zero renaming — every surface across every page follows);
+app.js particle canvas retired without killing theme/nav/menu/toast (guarded init);
+~480 lines of dead v7 console/hero CSS removed, including the load-order rule that had
+been pinning hero children to grid column 1; v7 light-token block un-nested from a
+missing-brace bug; services.css guide chips re-skinned off the old cyan/purple;
+sw vnd-v28 precaches /schematic.js.
+
+**QA (all green before push):** syntax 39/39 · validate_site 8/8 · sw-precache 46/46 ·
+smoke zero console errors · verify_order 53/53 · overflow sweep 80/80 clean · axe a11y
+every page 0 serious · VLM design audit: hero 9→9.5/10 "bespoke, memorable, senior",
+light 9.5/10, mobile 8.5/10, services 9/10 — no template patterns remaining.
+Live-verified on victorndunda.com (commit d8096ff, SW vnd-v28 serving).
+
+
 ### Cycle 13: v21 "TRUTH & CONTAINMENT" — security/honesty hardening (2026-11-01)
 
 **The brief:** the 2026-11-01 deep technical re-review found the public portfolio strong (validator/smoke/structure all passing) but the private tooling overstated its protections: a browser-only dashboard described as authenticated/private, an AES vault key persisted in remember-me storage, unsigned forgeable share codes feeding a client-set `paid` state, unescaped innerHTML surfaces, an unreproducible test command, and compliance claims (OWASP/GDPR/WCAG) without evidence. This cycle implements the review's Phase 0–2 core: label the truth, enforce the truth in code, make every gate reproducible.
