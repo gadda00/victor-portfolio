@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Financial Forecasting Suite — Production-grade forecasting, built for decisions.</title>
+<meta name="description" content="A time-series forecasting toolkit: Holt-Winters, ARIMA and ensemble methods with real validation — the statistical engines behind Busara AI&#x27;s forecasts, pa">
+<meta property="og:title" content="Financial Forecasting Suite — a system by Victor Ndunda">
+<meta property="og:description" content="A time-series forecasting toolkit: Holt-Winters, ARIMA and ensemble methods with real validation — the statistical engines behind Busara AI&#x27;s forecasts, pa">
+<meta property="og:type" content="website">
+<link rel="icon" href="https://victorndunda.vercel.app/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --base:#070808; --raised:#0c0e0d; --panel:#121514;
+  --ink:#eceee9; --dim:#9aa29a; --faint:#646c64;
+  --line:rgba(236,238,233,.09); --acid:#c8f24f; --accent:#10b981;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--base);color:var(--ink);font-family:Inter,system-ui,sans-serif;overflow-x:clip;-webkit-font-smoothing:antialiased}
+::selection{background:var(--acid);color:var(--base)}
+a{color:inherit;text-decoration:none}
+.mono{font-family:'JetBrains Mono',ui-monospace,monospace}
+.wrap{max-width:72rem;margin-inline:auto;padding-inline:1.25rem}
+@media(min-width:640px){.wrap{padding-inline:2rem}}
+.grain{position:fixed;inset:0;z-index:50;pointer-events:none;opacity:.055;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:240px}
+.dots{position:fixed;inset:0;pointer-events:none;background-image:radial-gradient(rgba(236,238,233,.06) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,black,transparent 80%)}
+/* header */
+.top{position:fixed;inset-x:0;top:0;z-index:40;border-bottom:1px solid transparent;transition:.5s}
+.top.scrolled{background:rgba(7,8,8,.85);backdrop-filter:blur(12px);border-color:var(--line)}
+.top-in{display:flex;align-items:center;justify-content:space-between;height:64px}
+.mark{display:flex;align-items:center;gap:12px}
+.mark .v{display:grid;place-items:center;width:28px;height:28px;border-radius:7px;background:var(--acid);color:var(--base);font-family:'Bricolage Grotesque',sans-serif;font-weight:800}
+.mark .nm{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.22em;color:var(--ink)}
+.top-cta{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--dim);border:1px solid var(--line);padding:9px 16px;border-radius:99px;transition:.3s}
+.top-cta:hover{border-color:var(--acid);color:var(--acid)}
+/* hero */
+.hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;padding-top:96px;padding-bottom:56px}
+.kicker{display:flex;flex-wrap:wrap;align-items:center;gap:12px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--dim)}
+.kicker .dot{width:6px;height:6px;border-radius:99px;background:var(--acid);box-shadow:0 0 0 0 rgba(200,242,79,.45);animation:pulse 2.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(200,242,79,.45)}75%{box-shadow:0 0 0 8px rgba(200,242,79,0)}100%{box-shadow:0 0 0 0 rgba(200,242,79,0)}}
+h1{margin-top:36px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;text-transform:uppercase;letter-spacing:-.02em;line-height:.95;font-size:clamp(2.6rem,8vw,6.4rem);max-width:16ch}
+h1 .hl{color:var(--accent)}
+.hero p.sub{margin-top:28px;max-width:38rem;font-size:15px;line-height:1.75;color:var(--dim)}
+.ctas{margin-top:36px;display:flex;flex-wrap:wrap;gap:14px}
+.btn{display:inline-flex;align-items:center;gap:12px;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:16px 26px;transition:.3s}
+.btn.p{background:var(--acid);color:var(--base)}
+.btn.p:hover{background:#d8ff6e;transform:translateY(-2px)}
+.btn.o{border:1px solid var(--line);color:var(--ink)}
+.btn.o:hover{border-color:var(--acid);color:var(--acid)}
+.btn .ar{transition:.3s}
+.btn:hover .ar{transform:translate(2px,-2px)}
+/* metrics */
+.metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);margin-top:56px}
+@media(min-width:768px){.metrics{grid-template-columns:repeat(4,1fr)}}
+.metric{background:rgba(7,8,8,.8);backdrop-filter:blur(4px);padding:22px 20px}
+.metric .v{font-family:'Bricolage Grotesque',sans-serif;font-size:2.1rem;font-weight:700;color:var(--accent)}
+.metric .l{margin-top:8px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+/* sections */
+section.block{padding:88px 0 0}
+.slabel{display:flex;align-items:center;gap:16px}
+.slabel .n{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--acid)}
+.slabel .t{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:var(--dim)}
+.slabel .ln{flex:1;height:1px;background:var(--line)}
+h2{margin-top:26px;font-family:'Bricolage Grotesque',sans-serif;font-weight:700;letter-spacing:-.01em;line-height:1.05;font-size:clamp(1.9rem,4.5vw,3.4rem)}
+/* features */
+.feats{margin-top:52px;display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+@media(min-width:768px){.feats{grid-template-columns:1fr 1fr}}
+.feat{background:var(--base);padding:30px;transition:background .3s}
+.feat:hover{background:var(--raised)}
+.feat .fn{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--acid)}
+.feat h3{margin-top:16px;font-family:'Bricolage Grotesque',sans-serif;font-size:1.28rem;font-weight:700}
+.feat p{margin-top:10px;font-size:14px;line-height:1.7;color:var(--dim)}
+/* flow */
+.flow{margin-top:44px;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.chip{border:1px solid #10b98144;border-radius:10px;padding:11px 15px;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.12em;text-transform:uppercase}
+.far{color:var(--faint);font-family:'JetBrains Mono',monospace}
+/* stack */
+.stack{margin-top:44px;display:flex;flex-wrap:wrap;gap:8px}
+.stack span{border:1px solid var(--line);border-radius:99px;padding:7px 14px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);transition:.3s}
+.stack span:hover{border-color:var(--accent);color:var(--ink)}
+/* cta band */
+.band{margin-top:96px;border-top:1px solid var(--line);padding:72px 0}
+.band h2{max-width:22ch}
+.band .ctas{margin-top:34px}
+/* footer */
+footer{border-top:1px solid var(--line)}
+.f-in{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px;padding:22px 0;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.f-in a:hover{color:var(--acid)}
+/* reveal */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s cubic-bezier(.22,1,.36,1),transform .9s cubic-bezier(.22,1,.36,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.kicker .dot{animation:none}}
+</style>
+</head>
+<body>
+<div class="grain"></div>
+<div class="dots"></div>
+
+<header class="top" id="top">
+  <div class="wrap top-in">
+    <a class="mark" href="https://victorndunda.vercel.app">
+      <span class="v">V</span>
+      <span class="nm">Financial Forecasting Suite</span>
+    </a>
+    <a class="top-cta" href="https://victorndunda.vercel.app">victorndunda.com</a>
+  </div>
+</header>
+
+<main>
+  <section class="hero wrap">
+    <p class="kicker"><span class="dot"></span> Data Science · Time Series · 2026 · Shipped</p>
+    <h1>Production-grade forecasting, built for decisions.</h1>
+    <p class="sub">A time-series forecasting toolkit: Holt-Winters, ARIMA and ensemble methods with real validation — the statistical engines behind Busara AI&#x27;s forecasts, packaged to be reused wherever forecasts drive decisions.</p>
+    <div class="ctas">
+      <a class="btn p" href="https://github.com/gadda00/financial-forecasting-suite" target="_blank" rel="noopener noreferrer">View source on GitHub <span class="ar">↗</span></a>
+      <a class="btn o" href="https://victorndunda.vercel.app/work/forecasting-suite">Case study <span class="ar">→</span></a>
+    </div>
+    <dl class="metrics">
+      <div class="metric"><dd class="v">3</dd><dt class="l">forecasting families</dt></div>
+      <div class="metric"><dd class="v">95%</dd><dt class="l">of codebase in Python</dt></div>
+      <div class="metric"><dd class="v">1</dd><dt class="l">shared validation harness</dt></div>
+      <div class="metric"><dd class="v">0</dd><dt class="l">black-box dependencies</dt></div>
+    </dl>
+  </section>
+
+  <section class="block wrap">
+    <div class="slabel rv"><span class="n">01</span><span class="t">What it does</span><span class="ln"></span></div>
+    <h2 class="rv">The system, piece by piece.</h2>
+    <div class="feats">
+      <article class="feat rv"><span class="fn">01</span><h3>Holt-Winters</h3><p>Triple exponential smoothing for seasonality and trend — implemented, tested, owned.</p></article>
+      <article class="feat rv"><span class="fn">02</span><h3>ARIMA</h3><p>Classical autoregressive integrated moving-average models with proper order selection.</p></article>
+      <article class="feat rv"><span class="fn">03</span><h3>Ensemble combination</h3><p>Methods combined with learned weights — better than any single model, honest about uncertainty.</p></article>
+      <article class="feat rv"><span class="fn">04</span><h3>Validation harness</h3><p>Backtesting with walk-forward splits; the numbers that survive stakeholders.</p></article>
+    </div>
+  </section>
+
+  <section class="block wrap">
+    <div class="slabel rv"><span class="n">02</span><span class="t">How it runs</span><span class="ln"></span></div>
+    <h2 class="rv">One loop, end to end.</h2>
+    <div class="flow rv">
+      <span class="chip">Ingest</span>
+      <span class="far">→</span><span class="chip">Fit</span>
+      <span class="far">→</span><span class="chip">Validate</span>
+      <span class="far">→</span><span class="chip">Ensemble</span>
+      <span class="far">→</span><span class="chip">Deliver</span>
+    </div>
+    <div class="stack rv">
+      <span>Python</span>
+      <span>Holt-Winters</span>
+      <span>ARIMA</span>
+      <span>Ensemble Methods</span>
+    </div>
+  </section>
+
+  <section class="band wrap">
+    <div class="slabel rv"><span class="n">03</span><span class="t">The engineer behind it</span><span class="ln"></span></div>
+    <h2 class="rv">Built by Victor Ndunda — AI systems engineer, Nairobi.</h2>
+    <p class="sub rv" style="margin-top:22px;max-width:38rem;font-size:15px;line-height:1.75;color:var(--dim)">
+      Financial Forecasting Suite is one of thirteen production systems — client platforms in public trial,
+      owned products and open-source tools. See the full portfolio and the case study
+      behind this one.
+    </p>
+    <div class="ctas rv">
+      <a class="btn p" href="https://victorndunda.vercel.app/work/forecasting-suite">Read the case study <span class="ar">→</span></a>
+      <a class="btn o" href="https://github.com/gadda00">GitHub <span class="ar">↗</span></a>
+      <a class="btn o" href="https://www.linkedin.com/in/victor-ndunda">LinkedIn <span class="ar">↗</span></a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap f-in">
+    <span>© 2026 Victor Ndunda · Nairobi, Kenya</span>
+    <span><a href="https://victorndunda.vercel.app">victorndunda.com</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var top=document.getElementById('top');
+  var on=function(){top.classList.toggle('scrolled',window.scrollY>24)};
+  on();window.addEventListener('scroll',on,{passive:true});
+  var els=document.querySelectorAll('.rv');
+  if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){els.forEach(function(e){e.classList.add('in')});return}
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target)}})},{threshold:.1});
+  els.forEach(function(e){io.observe(e)});
+})();
+</script>
+</body>
+</html>

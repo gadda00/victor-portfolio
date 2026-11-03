@@ -1,0 +1,216 @@
+{
+  "portfolio_base": "https://victorndunda.vercel.app",
+  "github": "https://github.com/gadda00",
+  "linkedin": "https://www.linkedin.com/in/victor-ndunda",
+  "sites": [
+    {
+      "dir": "agentreplay",
+      "name": "AgentReplay",
+      "domain": "Developer Tools · Agent Reliability",
+      "year": "2026",
+      "status": "Open source · MIT",
+      "accent": "#fbbf24",
+      "tagline": "Record once. Replay bit-exact. Zero model calls.",
+      "summary": "Deterministic replay and counterfactual debugging for AI agents. Record a live run, then replay it exactly — without spending another token — and branch it to ask what-if. Born from a year of shipping agents in production.",
+      "features": [
+        {"title": "Bit-exact replay", "body": "Every recorded run reproduces with 100% fidelity and zero model calls — the bug you saw is the bug you get back."},
+        {"title": "Counterfactual branching", "body": "Fork a recorded run, change one prompt or parameter, and observe exactly where the trajectories diverge."},
+        {"title": "Call-site canonicalization", "body": "Every external call is recorded against a stable identity, so replay survives refactors and retries."},
+        {"title": "Content-addressed blob store", "body": "Recorded runs deduplicate naturally — storage stays small even across thousands of traces."},
+        {"title": "SDK interceptors", "body": "OpenAI and Anthropic SDKs and LangGraph supported out of the box. No forking, no wrappers rewrites."},
+        {"title": "CI regression for agents", "body": "Replay saved runs on every commit and fail the build on behavioral drift — testing, finally, for nondeterministic software."}
+      ],
+      "flow": ["Record", "Canonicalize", "Store", "Replay", "Branch"],
+      "metrics": [
+        {"value": "0.67%", "label": "runtime overhead (5% budget)"},
+        {"value": "100%", "label": "reproduction fidelity"},
+        {"value": "0", "label": "model calls on replay"},
+        {"value": "MIT", "label": "license, fully open"}
+      ],
+      "stack": ["Python", "LangGraph", "OpenAI SDK", "Anthropic SDK", "Deterministic Replay", "Counterfactual", "CI Regression"],
+      "github_repo": "https://github.com/gadda00/agentreplay",
+      "extra_link": {"label": "Read the whitepaper", "url": "https://victorndunda.vercel.app/blog/agentreplay-deterministic-replay"}
+    },
+    {
+      "dir": "verxlite",
+      "name": "Verxlite",
+      "domain": "Sales & Ops Automation",
+      "year": "2026",
+      "status": "Open source",
+      "accent": "#a855f7",
+      "tagline": "The AI workflow agent for teams with no ML team.",
+      "summary": "A universal AI workflow agent for sales and operations. Connect your Google and HubSpot accounts, compose workflows, and let the agent run — with every step traced and every credential encrypted.",
+      "features": [
+        {"title": "Workflow engine on Celery", "body": "Long-running, retryable, observable pipelines — automation that survives Monday morning, not just the demo."},
+        {"title": "Native CRM integrations", "body": "Google and HubSpot OAuth out of the box; tokens stored with Fernet encryption, never in plaintext."},
+        {"title": "Langfuse tracing on every step", "body": "The full chain from trigger to outcome — not just the final answer. Debug what actually happened."},
+        {"title": "FastAPI + SQLAlchemy 2 + Alembic", "body": "A grown-up backend: typed, migrated, and versioned from day one."},
+        {"title": "Next.js 14 front end", "body": "Compose, monitor and iterate workflows from a single dashboard."}
+      ],
+      "flow": ["Connect", "Compose", "Run", "Trace", "Iterate"],
+      "metrics": [
+        {"value": "2", "label": "native CRM integrations"},
+        {"value": "100%", "label": "steps traced in Langfuse"},
+        {"value": "AES", "label": "Fernet-encrypted credentials"},
+        {"value": "0", "label": "ML team required"}
+      ],
+      "stack": ["Python", "FastAPI", "Celery", "Next.js 14", "SQLAlchemy 2", "Alembic", "Google OAuth", "HubSpot OAuth", "Langfuse", "Fernet"],
+      "github_repo": "https://github.com/gadda00/verxlite"
+    },
+    {
+      "dir": "fraud-detection-system",
+      "name": "Fraud Detection System",
+      "domain": "Fintech · Real-Time Risk",
+      "year": "2026",
+      "status": "Open source",
+      "accent": "#ef4444",
+      "tagline": "Regulated-grade fraud scoring in Go, in real time.",
+      "summary": "An enterprise-grade real-time fraud scoring engine: seven independent detectors fused into one calibrated score, wrapped in the full production surface — case management, RBAC, observability and Kubernetes manifests.",
+      "features": [
+        {"title": "7 independent detectors", "body": "Each detector is explainable on its own — velocity, anomaly, graph and behavioral signals composed, not black-boxed."},
+        {"title": "Weighted ensemble + logistic calibration", "body": "Detector outputs fuse into one calibrated probability that risk teams can actually threshold."},
+        {"title": "Rules engine", "body": "Hard business constraints that must never wait on a model — sanctions, limits, geography — evaluated first."},
+        {"title": "Case management", "body": "Full investigation workflow with immutable event history: every score, override and outcome is auditable."},
+        {"title": "RBAC + JWT", "body": "Role-based access control with token auth across every surface."},
+        {"title": "Observability & deployment", "body": "Prometheus metrics, OpenTelemetry tracing, Slack alerting, and Kubernetes manifests — deployable, not just runnable."}
+      ],
+      "flow": ["Ingest", "Rules", "Detectors", "Ensemble", "Calibrate", "Case"],
+      "metrics": [
+        {"value": "7→1", "label": "detectors fused to one score"},
+        {"value": "92%", "label": "of codebase in Go"},
+        {"value": "3", "label": "observability layers"},
+        {"value": "K8s", "label": "deployment ready"}
+      ],
+      "stack": ["Go 1.22", "Gin", "Weighted Ensemble", "Logistic Calibration", "Rules Engine", "Case Management", "RBAC + JWT", "Prometheus", "OpenTelemetry", "Kubernetes"],
+      "github_repo": "https://github.com/gadda00/fraud-detection-system"
+    },
+    {
+      "dir": "kilimopro",
+      "name": "KilimoPRO",
+      "domain": "Agricultural AI · Offline-First",
+      "year": "2026",
+      "status": "Open source",
+      "accent": "#10b981",
+      "tagline": "Agritech that works on a $50 Android phone, offline.",
+      "summary": "Offline-first agricultural intelligence for 8 IGAD countries: on-device crop-disease detection, a five-persona AI council for complex decisions, 22 verified data sources, and SMS delivery for farmers without smartphones.",
+      "features": [
+        {"title": "On-device disease detection", "body": "MobileNetV3 trained on PlantVillage, quantized to int8, running offline on low-end Android — no connectivity required."},
+        {"title": "Multi-LLM Council", "body": "Five expert personas — agronomist, economist, climate scientist, extension officer, risk manager — deliberate complex farming decisions."},
+        {"title": "22 verified data sources", "body": "KilimoSTAT, FAOSTAT, KALRO, Google Earth Engine, Sentinel-2, CHIRPS, ICPAC and more — every source operational, not aspirational."},
+        {"title": "Quant finance for commodity prices", "body": "EWMA volatility, GARCH(1,1), Value at Risk and RSI applied to agricultural markets — forecasting with real statistics."},
+        {"title": "SMS delivery", "body": "Advice reaches farmers with feature phones, not just smartphones."}
+      ],
+      "flow": ["Photo", "Detect", "Deliberate", "Advise", "SMS/App"],
+      "metrics": [
+        {"value": "8", "label": "IGAD countries targeted"},
+        {"value": "22", "label": "verified data sources"},
+        {"value": "int8", "label": "on-device inference"},
+        {"value": "5", "label": "council personas"}
+      ],
+      "stack": ["Next.js 14", "Drizzle ORM", "TensorFlow Lite", "MobileNetV3", "Multi-LLM Council", "Open-Meteo", "FAOSTAT", "ICPAC", "SMS", "Offline-First"],
+      "github_repo": "https://github.com/gadda00/kilimopro"
+    },
+    {
+      "dir": "intelliflow",
+      "name": "IntelliFlow",
+      "domain": "Multi-Agent Research",
+      "year": "2026",
+      "status": "Open source",
+      "accent": "#00d4ff",
+      "tagline": "33 self-evolving agents on one backbone.",
+      "summary": "A research platform for self-improving agent architectures: 33 agents that evolve their own prompts, orchestrated on a Turborepo + Next.js 15 backbone — built to test how far agents can go when they own their improvement loop.",
+      "features": [
+        {"title": "33-agent architecture", "body": "Specialized agents with distinct roles, sharing one orchestration backbone."},
+        {"title": "Self-evolving prompts", "body": "Agents propose and test improvements to their own instructions — evolution with evaluation gates."},
+        {"title": "Turborepo monorepo", "body": "Typed, cached and composed across packages; TypeScript throughout."},
+        {"title": "Next.js 15 surface", "body": "Observe the swarm, inspect evolutions, replay decisions."}
+      ],
+      "flow": ["Spawn", "Task", "Evolve", "Evaluate", "Promote"],
+      "metrics": [
+        {"value": "33", "label": "agents"},
+        {"value": "1", "label": "shared Turborepo backbone"},
+        {"value": "90%", "label": "TypeScript"},
+        {"value": "∞", "label": "evolution loops"}
+      ],
+      "stack": ["TypeScript", "Multi-Agent", "Self-Evolving", "Turborepo", "Next.js 15"],
+      "github_repo": "https://github.com/gadda00/IntelliFlow"
+    },
+    {
+      "dir": "forecasting-suite",
+      "name": "Financial Forecasting Suite",
+      "domain": "Data Science · Time Series",
+      "year": "2026",
+      "status": "Shipped",
+      "accent": "#10b981",
+      "tagline": "Production-grade forecasting, built for decisions.",
+      "summary": "A time-series forecasting toolkit: Holt-Winters, ARIMA and ensemble methods with real validation — the statistical engines behind Busara AI's forecasts, packaged to be reused wherever forecasts drive decisions.",
+      "features": [
+        {"title": "Holt-Winters", "body": "Triple exponential smoothing for seasonality and trend — implemented, tested, owned."},
+        {"title": "ARIMA", "body": "Classical autoregressive integrated moving-average models with proper order selection."},
+        {"title": "Ensemble combination", "body": "Methods combined with learned weights — better than any single model, honest about uncertainty."},
+        {"title": "Validation harness", "body": "Backtesting with walk-forward splits; the numbers that survive stakeholders."}
+      ],
+      "flow": ["Ingest", "Fit", "Validate", "Ensemble", "Deliver"],
+      "metrics": [
+        {"value": "3", "label": "forecasting families"},
+        {"value": "95%", "label": "of codebase in Python"},
+        {"value": "1", "label": "shared validation harness"},
+        {"value": "0", "label": "black-box dependencies"}
+      ],
+      "stack": ["Python", "Holt-Winters", "ARIMA", "Ensemble Methods"],
+      "github_repo": "https://github.com/gadda00/financial-forecasting-suite"
+    },
+    {
+      "dir": "segmentation-engine",
+      "name": "Customer Segmentation Engine",
+      "domain": "Data Science · Growth",
+      "year": "2026",
+      "status": "Shipped",
+      "accent": "#a855f7",
+      "tagline": "Transaction noise in, actionable cohorts out.",
+      "summary": "RFM analysis fused with K-Means and Gaussian Mixture Models: turns raw transaction histories into segments a growth team can act on — with the statistical honesty to say when a cluster is not a cluster.",
+      "features": [
+        {"title": "RFM core", "body": "Recency, frequency and monetary scoring — the foundation that always earns its place."},
+        {"title": "K-Means with silhouette validation", "body": "Clusters validated, not assumed; the engine says when structure is absent."},
+        {"title": "Gaussian Mixture Models", "body": "Soft assignments and probabilistic membership for the customers who live between segments."},
+        {"title": "Actionable output", "body": "Segments exported with profiles a growth team can target on Monday morning."}
+      ],
+      "flow": ["Ingest", "RFM", "Cluster", "Validate", "Activate"],
+      "metrics": [
+        {"value": "3", "label": "segmentation methods fused"},
+        {"value": "RFM", "label": "recency · frequency · money"},
+        {"value": "2", "label": "clustering model families"},
+        {"value": "100%", "label": "validated outputs"}
+      ],
+      "stack": ["Python", "RFM", "K-Means", "GMM", "Silhouette Validation"],
+      "github_repo": "https://github.com/gadda00/customer-segmentation-engine"
+    },
+    {
+      "dir": "firstlight",
+      "name": "FirstLight",
+      "domain": "Geo-AI · Disaster Response",
+      "year": "2026",
+      "status": "Public demo",
+      "accent": "#f59e0b",
+      "tagline": "Geo-AI decision layer for the first 72 hours after a flood.",
+      "summary": "Damage and flood detection from SAR imagery, H3 priority zoning with need scoring, routing with isochrones, and hash-verified situation reports — every data layer provenance-labeled so responders know exactly what they are looking at.",
+      "features": [
+        {"title": "SAR damage & flood detection", "body": "Satellite-derived damage layers rendered on an interactive MapLibre GL map."},
+        {"title": "H3 priority zoning", "body": "Res-8 hexagonal zoning with per-cell need scoring — transparent prioritization, not a black box."},
+        {"title": "Dijkstra routing + isochrones", "body": "Reachability, not just distance — where can help actually get, and how fast."},
+        {"title": "Hash-verified sitreps", "body": "Situation reports sealed with FNV-1a hashes; tampering is detectable."},
+        {"title": "Provenance labeling", "body": "Simulated layers are labeled simulated — the demo never lies about its data."}
+      ],
+      "flow": ["Detect", "Zone", "Prioritize", "Route", "Report"],
+      "metrics": [
+        {"value": "72h", "label": "decision window targeted"},
+        {"value": "res-8", "label": "H3 zoning granularity"},
+        {"value": "FNV-1a", "label": "hash-verified sitreps"},
+        {"value": "0", "label": "unlabeled data layers"}
+      ],
+      "stack": ["Next.js", "TypeScript", "MapLibre GL", "Uber H3", "Geo-AI", "SAR", "Dijkstra", "Isochrones"],
+      "github_repo": "https://github.com/gadda00/firstlight",
+      "extra_link": {"label": "Open the interactive demo", "url": "https://gadda00.github.io/firstlight/"}
+    }
+  ]
+}
