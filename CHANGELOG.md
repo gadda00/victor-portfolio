@@ -7,6 +7,53 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 15: v2 — full TypeScript rebuild on Vercel (2026-11-03)
+
+**The brief:** GitHub Pages had capped the ceiling — "pretty basic ui/ux". The call: rebuild
+the whole portfolio in TypeScript, research and apply a world-class way to present projects
+and case studies, host on Vercel, stand up live sites for every project that had none, and
+update every project description.
+
+**The platform move:** the site is now a **Next.js 16 (App Router) + TypeScript 5 + Tailwind
+CSS 4** application, statically generating all 35 routes and deployed to Vercel at
+**victorndunda.vercel.app** (branch: `v2`; `main` keeps serving the legacy static site until
+the DNS switch — apex A `76.76.21.21`, www CNAME `cname.vercel-dns.com`, both domains
+already attached and verified on the Vercel project). This lands the 2026-11-01 review's
+hosting recommendation: a header-capable platform with a public-only surface — no
+client-side "authentication" theater ships with v2 by design.
+
+**The presentation research, applied:** the winning patterns from award-portfolio and
+case-study research — outcome before process, narrative over timeline, real impact with
+labeled provenance — are baked into a bespoke case-study template: **mandate → what I
+built → stage-flow diagram → outcomes grid → client quote**, with a sticky meta rail
+(client, domain, year, status, stack) and next-system navigation. All 13 project
+descriptions were rewritten outcome-first.
+
+**The design system:** dark equatorial editorial — near-black ink with a green cast,
+acid-chartreuse accent, film grain, dotted survey grid; Bricolage Grotesque display
+against Inter body and JetBrains Mono labels; numbered sections with hairline rules;
+outlined giant type and index numerals; custom cursor, magnetic CTAs, scroll progress,
+underline sweeps, count-up stats and a living "agent field" canvas in the hero (particles
+that connect and wake around the cursor; static under reduced-motion). EN · FR · SW
+trilingual UI carries over.
+
+**Every project now has a live URL.** Eight systems that had no site — AgentReplay,
+Verxlite, Fraud Detection System, KilimoPRO, IntelliFlow, Financial Forecasting Suite,
+Customer Segmentation Engine, FirstLight — each got a matching mini-site deployed as its
+own Vercel project (agentreplay, verxlite, fraud-detection-vn, kilimopro-ai, intelliflow,
+forecasting-suite, segmentation-engine, firstlight — all `*.vercel.app`, live and linked
+from the portfolio).
+
+**Content:** all 13 field notes migrated verbatim (with URL remapping) into the new
+article template with JSON-LD `BlogPosting`; approved CHACADOM and ACLA client quotes
+headline the home page; about/contact/404 rebuilt editorially; sitemap and robots
+generated from the data layer.
+
+**QA:** `tsc --noEmit` clean; 34 local routes verified 200/404 as expected with zero
+console errors; 10 Playwright screenshots + VLM defect inspection (one real bug found and
+fixed: a missing space in the Kiswahili headline split); Vercel production build passed
+(35/35 static pages); all 9 live URLs curl-verified 200.
+
 ### Cycle 14: v12 "FIELD DRAFT" — bespoke art direction (2026-11-02)
 
 **The brief:** the client judged the UI/UX "below 4/10" — the terminal-console hero and
