@@ -8,7 +8,7 @@
 const { chromium } = require('playwright');
 const { startServer } = require('./lib/static_server');
 
-const EXPECTED = 13;
+const EXPECTED = 16;
 
 (async () => {
   // v21: self-contained run — starts its own static server unless BASE is set.
@@ -66,7 +66,7 @@ const EXPECTED = 13;
   const afterClick = await page.$$eval('.proj-filter', els => els.map(e => e.getAttribute('aria-pressed')));
   check('aria-pressed updates on click', afterClick.filter(p => p === 'true').length === 1 && afterClick[2] === 'true');
   const liveMsg = await page.textContent('#projectsLive');
-  check('results announced to screen readers: "' + liveMsg + '"', /Showing \d+ of 13 projects/.test(liveMsg));
+  check('results announced to screen readers: "' + liveMsg + '"', /Showing \d+ of 16 projects/.test(liveMsg));
 
   // search narrows results + announces
   await page.fill('#projectsSearch', 'firstlight');
@@ -93,13 +93,13 @@ const EXPECTED = 13;
   await page.goto(BASE + '/', { waitUntil: 'domcontentloaded', timeout: 20000 });
   await page.waitForTimeout(800);
   const home = await page.content();
-  check('homepage archive wording says 13', home.includes('13 projects'));
+  check('homepage archive wording says 16', home.includes('16 projects'));
   check('homepage FirstLight row links to its case study', home.includes('/projects/firstlight/'));
   check('no duplicated aria-current in rendered nav', (home.match(/aria-current="page" aria-current="page"/g) || []).length === 0);
 
   // static-first: cards must exist in the RAW html before any JS runs
   const rawHtml = await page.evaluate(() => fetch('/projects/').then(r => r.text()));
-  check('projects cards present in raw HTML (no JS needed)', (rawHtml.match(/class="bento-card/g) || []).length === 13);
+  check('projects cards present in raw HTML (no JS needed)', (rawHtml.match(/class="bento-card/g) || []).length === 16);
   check('no Loading placeholder in raw HTML', !rawHtml.includes('Loading projects'));
   // blog index too
   const rawBlog = await page.evaluate(() => fetch('/blog/').then(r => r.text()));

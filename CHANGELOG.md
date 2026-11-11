@@ -7,6 +7,57 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 19: GITHUB AUDIT — the 3 best missing repos become case studies (2026-11-11)
+
+**The brief:** check all projects on GitHub and include the best ones. All 22 public repos
+audited against what the portfolio already carries. 13 of them were already on the site;
+the strongest 3 missing ones are now full citizens of the archive (16 projects total):
+
+- **KIP College System** — website + management platform for Kitui Institute of
+  Professionals: admissions with reference numbers, student portal (fees, results,
+  timetable, materials), lecturer workspace (rosters, marks draft→publish), admin console
+  (finance, results moderation, CMS) and an AI study assistant. Next.js 16, TypeScript
+  strict, Prisma, PostgreSQL/SQLite. Live public demo (verified 200, 11 Nov 2026) on a
+  labelled demo dataset (3 campuses · 28 courses · 12 students — stated as demo data,
+  never as production metrics). Unit tests for money math/grading/rate-limiting + 24
+  integration smoke checks, per the repo README.
+- **Kingston Printing & Branding** — full-stack e-commerce for a Nairobi print shop: live
+  product customizer, M-Pesa STK Push/Till checkout, guest ordering, shareable 5-stage
+  order tracking, admin dashboard. Next.js 16, Prisma, NextAuth, Netlify Blobs.
+  **Honesty check caught:** the README's live URL (kingstonbranding.netlify.app) returns
+  404 — status is "delivered; live URL currently offline (checked 11 Nov 2026)", not
+  "live". The README also publishes live admin credentials — NOT reproduced on the site;
+  owner action queued: rotate/remove them.
+- **Defence Africa** — digital presence + lead-gen for a strategic-intelligence
+  consultancy on China-Africa security dynamics. React 19, Tailwind 4, shadcn/ui, Vite.
+  Live on GitHub Pages (verified 200, 11 Nov 2026).
+
+**Deliberately excluded:** pulsefit (university coursework for a module — solid, 150
+tests, but below the production-systems bar of the archive), ai-job-hunter (personal
+automation notebook), keja-assets (covered by the Keja AI case study), gadda00 profile
+README, two forks (poly-sdk, adk-python), 2023 UML coursework and a 2018 test repo.
+
+**Mechanics:** projects.json 13→16 (priorities renumbered); 3 static bento cards +
+noscript entries (KIP + Kingston placed in the client-work cluster after Tapi Learn);
+3 case-study pages on the standard template (hero, stats band, meta rail, numbered
+narrative, ring prev/next); ring re-linked on 4 existing pages; homepage readout
+"15 SYSTEMS LIVE OR SHIPPED · 16 BUILT" + hero stat 12→15 + archive wording + 3 new
+strip rows; resume gains 2 client bullets; sitemap +3 URLs; sw vnd-v32.0.0 (68 precache
+URLs). Counts reconciled everywhere the old 13/12 appeared (meta description included).
+
+**Bugs caught & fixed in QA:** (1) my card insertion split AgentReplay's opening HTML
+tag — cards were crossed; repaired and verified 16/16 in order. (2) Defence card landed
+outside #bentoGrid — moved inside. (3) A pre-existing corrupted selector in
+smoke_test.js (`:not(idden])` — shipped broken in cycle 17) fixed to `:not([hidden])`.
+(4) validate_site.py noscript check couldn't match HTML-escaped names (`&amp;`) — now
+unescapes before comparing.
+
+**QA (all run, all passing):** validate 8/8 (1187 links, 16 cards, noscript 16) · smoke
+(16/16 visible cards, filters announce "Showing 4 of 16", zero console errors) · a11y 0
+violations on projects index, all 3 new case pages + homepage · syntax 39 · sw-precache
+68/68 · Client-Work filter shows the 6 client projects · VLM-verified screenshots of new
+cards, KIP case page and mobile grid.
+
 ### Cycle 18: 8-LANGUAGE UI — global reach, honest partial coverage (2026-11-11)
 
 **The brief:** more missed improvements + more languages. Audit first: three real defects

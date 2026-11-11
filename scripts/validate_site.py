@@ -18,6 +18,7 @@ import json
 import os
 import re
 import sys
+import html as html_mod
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 failures = []
@@ -109,7 +110,7 @@ noscript_m = re.search(r"<noscript>(.*?)</noscript>", projects_page, re.S)
 if not noscript_m:
     warnings.append("projects/index.html: no <noscript> plain-links fallback (optional now that cards are static)")
 else:
-    block = noscript_m.group(1)
+    block = html_mod.unescape(noscript_m.group(1))
     missing = [p["name"] for p in projects if p["name"].split(" (")[0] not in block]
     if missing:
         warnings.append("noscript plain-links fallback missing: %s" % ", ".join(missing))

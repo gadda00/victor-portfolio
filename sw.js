@@ -15,7 +15,7 @@
  * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v31.0.0';
+const CACHE_VERSION = 'vnd-v32.0.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -82,6 +82,9 @@ const SHELL_URLS = [
   '/projects/financial-forecasting-suite/',
   '/projects/customer-segmentation-engine/',
   '/projects/hazina-assist/',
+  '/projects/kip-college-system/',
+  '/projects/kingston-branding/',
+  '/projects/defence-africa-site/',
   '/projects/case-study.css',
   '/blog/',
   '/blog/posts.json',

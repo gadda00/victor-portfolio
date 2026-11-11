@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>KIP College System Case Study — A Whole College on One Platform | Victor Ndunda</title>
+<meta name="description" content="Website + management platform for Kitui Institute of Professionals: admissions, student portal, lecturer workspace, admin console and an AI study assistant. Next.js 16, TypeScript, Prisma, PostgreSQL." />
+<meta name="author" content="Victor Ndunda" />
+<link rel="canonical" href="https://victorndunda.com/projects/kip-college-system/" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="KIP College System Case Study — A Whole College on One Platform" />
+<meta property="og:description" content="Website + management platform for Kitui Institute of Professionals: admissions, student portal, lecturer workspace, admin console and an AI study assistant. Next.js 16, TypeScript, Prisma, PostgreSQL." />
+<meta property="og:url" content="https://victorndunda.com/projects/kip-college-system/" />
+<meta property="og:site_name" content="Victor Ndunda" />
+<meta property="og:locale" content="en_US" />
+<meta property="og:image" content="https://victorndunda.com/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="KIP College System Case Study — A Whole College on One Platform" />
+<meta name="twitter:description" content="Website + management platform for Kitui Institute of Professionals: admissions, student portal, lecturer workspace, admin console and an AI study assistant." />
+<meta name="twitter:image" content="https://victorndunda.com/og-image.png" />
+<meta name="theme-color" content="#0a0e1a" />
+<meta name="color-scheme" content="dark light" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="manifest" href="/manifest.webmanifest" />
+<link rel="stylesheet" href="/fonts/fonts.css?v=1.0.0" />
+<link rel="stylesheet" href="/styles.css?v=14.0.0" />
+<link rel="stylesheet" href="/projects/case-study.css?v=2.0.0" />
+<link rel="stylesheet" href="/v7.css?v=7.0.0" />
+<meta name="view-transition" content="same-origin" />
+<meta http-equiv="X-Content-Type-Options" content="nosniff" />
+<meta name="referrer" content="strict-origin-when-cross-origin" />
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "KIP College System Case Study — A Whole College on One Platform",
+  "description": "Website + management platform for Kitui Institute of Professionals: admissions, student portal, lecturer workspace, admin console and an AI study assistant. Next.js 16, TypeScript, Prisma, PostgreSQL.",
+  "author": { "@type": "Person", "name": "Victor Ndunda", "url": "https://victorndunda.com" },
+  "publisher": { "@type": "Person", "name": "Victor Ndunda", "url": "https://victorndunda.com" },
+  "mainEntityOfPage": "https://victorndunda.com/projects/kip-college-system/",
+  "image": "https://victorndunda.com/og-image.png"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://victorndunda.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Case Studies", "item": "https://victorndunda.com/projects/" },
+    { "@type": "ListItem", "position": 3, "name": "KIP College System", "item": "https://victorndunda.com/projects/kip-college-system/" }
+  ]
+}
+</script>
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<script>try{var l=localStorage.getItem("vn_lang");if(l)document.documentElement.lang=l;}catch(e){}</script>
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<nav id="nav" aria-label="Primary navigation">
+  <div class="container nav-inner">
+    <a href="/" class="logo" aria-label="Victor Ndunda — home">
+      <svg width="30" height="30" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <defs><linearGradient id="logoG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs>
+        <circle cx="50" cy="50" r="14" fill="url(#logoG)"/>
+        <circle cx="20" cy="25" r="5" fill="url(#logoG)"/><circle cx="80" cy="25" r="5" fill="url(#logoG)"/>
+        <circle cx="20" cy="75" r="5" fill="url(#logoG)"/><circle cx="80" cy="75" r="5" fill="url(#logoG)"/>
+        <line x1="50" y1="50" x2="20" y2="25" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="80" y2="25" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="20" y2="75" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+        <line x1="50" y1="50" x2="80" y2="75" stroke="url(#logoG)" stroke-width="2" opacity="0.5"/>
+      </svg>
+      <span>Victor Ndunda</span>
+    </a>
+    <div class="nav-links" id="navLinks">
+      <a href="/" class="nav-link">Home</a>
+      <a href="/services/" class="nav-link">Services</a>
+      <a href="/projects/" class="nav-link active" aria-current="page">Case Studies</a>
+      <a href="/blog/" class="nav-link">Writing</a>
+      <a href="/#about" class="nav-link">About</a>
+      <a href="/resume/" class="nav-link">Resume</a>
+      <a href="/book/" class="nav-link nav-link-cta">Book a Free Call</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" id="themeToggle" title="Toggle theme" aria-label="Toggle dark/light theme">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="mobile-toggle" id="mobileToggle" title="Menu" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ================= HERO ================= -->
+<header class="cs-hero">
+  <div class="cs-wrap cs-wrap-wide">
+    <p class="cs-crumbs"><a href="/">Home</a><span class="sep">/</span><a href="/projects/">Case Studies</a><span class="sep">/</span>KIP College System</p>
+    <span class="cs-eyebrow"><span class="pulse-dot"></span> Client engagement · Education · 2026</span>
+    <h1>A whole college on <span class="grad-text">one platform.</span></h1>
+    <p class="cs-lede">Kitui Institute of Professionals (KIP College) needed more than a website — it needed the college to run online. I built the public site, online admissions with reference numbers, the student portal (fees, results, timetable, materials), the lecturer workspace, the admin console, and an AI study assistant — one system, one codebase.</p>
+    <div class="cs-meta-row">
+      <span class="cs-meta-chip"><strong>Role:</strong> Creator &amp; Lead Engineer — client engagement for KIP College</span>
+      <span class="cs-meta-chip"><strong>Status:</strong> Live public demo (demo dataset) — source public on GitHub</span>
+      <span class="cs-meta-chip"><strong>Year:</strong> 2026</span>
+    </div>
+    <div class="cs-actions"><a href="https://kip-college-system.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Live Demo ↗</a><a href="https://github.com/gadda00/kip-college-system" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">GitHub ↗</a></div>
+  </div>
+</header>
+
+<section class="cs-stats-band">
+  <div class="cs-wrap cs-wrap-wide">
+    <div class="cs-stats">
+      <div class="cs-stat"><div class="n">5</div><div class="l">surfaces — public · admissions · student · lecturer · admin</div></div><div class="cs-stat"><div class="n">22</div><div class="l">auto-provisioned DB tables</div></div><div class="cs-stat"><div class="n">24</div><div class="l">integration smoke checks</div></div><div class="cs-stat"><div class="n">AI</div><div class="l">study assistant</div></div>
+      <p class="cs-stat-note">Next.js 16 · TypeScript strict · Prisma · PostgreSQL (production) / SQLite (dev) · Tailwind 4 + shadcn/ui · Vercel.</p>
+    </div>
+  </div>
+</section>
+
+<article class="cs-body">
+  <div class="cs-wrap cs-wrap-wide">
+    <div class="cs-layout">
+
+      <aside class="cs-meta-rail" aria-label="Project facts">
+        <div class="cs-rail-block">
+          <h3>Client</h3>
+          <p>Kitui Institute of Professionals (KIP College), Kitui, Kenya</p>
+        </div>
+        <div class="cs-rail-block">
+          <h3>Domain</h3>
+          <p>Education · Full-stack platform</p>
+        </div>
+        <div class="cs-rail-block">
+          <h3>Year</h3>
+          <p>2026</p>
+        </div>
+        <div class="cs-rail-block">
+          <h3>Status</h3>
+          <p>Live public demo on a labelled demo dataset — source public on GitHub</p>
+        </div>
+        <div class="cs-rail-block"><h3>Stack</h3><div class="cs-rail-tags"><span>Next.js 16</span><span>TypeScript</span><span>Prisma</span><span>PostgreSQL</span><span>SQLite</span><span>Tailwind 4</span><span>shadcn/ui</span><span>Vercel</span></div></div>
+        <div class="cs-rail-block"><h3>Links</h3><div class="cs-rail-links"><a href="https://kip-college-system.vercel.app" target="_blank" rel="noopener noreferrer">Live Demo ↗</a><a href="https://github.com/gadda00/kip-college-system" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div></div>
+      </aside>
+
+      <div class="cs-content">
+        <h2><span class="sn">01</span> What this system is</h2>
+        <p>Most colleges run on a website plus three disconnected tools — a Google form for admissions, a WhatsApp group for timetables, a spreadsheet for fees. KIP College got one platform instead: the public website, online admissions that issue reference numbers, a student portal covering fees, results, timetable and learning materials, a lecturer workspace with rosters and a draft→publish marks workflow, and an admin console for students, applications, courses, finance, results moderation and content management — plus an AI study assistant for the students.</p>
+        <p>Everything a college does day-to-day, in one strict-TypeScript codebase, with one database as the single source of truth.</p>
+
+        <h2><span class="sn">02</span> What I built</h2>
+        <p><strong>Admissions with reference numbers.</strong> Every application gets a trackable reference — the applicant can be told exactly where they stand, and the registry office can find them in seconds.</p>
+        <p><strong>Student portal.</strong> Fees statements and payment history, semester results, the timetable, and course materials — the four things students actually log in for.</p>
+        <p><strong>Lecturer workspace.</strong> Class rosters and a marks workflow that enforces draft → publish, so half-finished grades can never leak to students.</p>
+        <p><strong>Admin console.</strong> Students, applications, courses and full unit curricula, finance, results moderation, and a CMS for the public site — with the AI study assistant alongside.</p>
+
+        <h2><span class="sn">03</span> Engineering notes</h2>
+        <p><strong>Zero-migration databases.</strong> The app provisions all 22 tables on first request against a fresh database, under an advisory lock — there is no migration step to forget. Production uses PostgreSQL; local dev uses SQLite, with the Prisma client generated automatically from the connection string.</p>
+        <p><strong>Demo-mode safety.</strong> The public demo runs on a labelled demo dataset (3 campuses, 28 courses with full unit curricula, 12 students with fees, payments and results). Production deploys do not auto-seed that dataset — a fresh production database starts empty, so demo credentials never sit next to real student data.</p>
+        <p><strong>Tested where it hurts.</strong> Unit tests cover money math, grading and rate limiting — the three places where a college system fails embarrassingly — plus 24 integration smoke checks against the running app.</p>
+
+        <h2><span class="sn">04</span> Where it stands</h2>
+        <p>The platform is live as a public demo at kip-college-system.vercel.app with the labelled demo dataset, and the full source is public on GitHub. Verification status: live URL checked 11 Nov 2026; demo-dataset figures and test counts are from the repository README.</p>
+
+        <div class="cs-cta">
+          <h3>Need a platform like this?</h3>
+          <p>Book a free 30-minute scoping call. Bring your workflow or your data — you'll leave with an honest read on what's buildable, what it takes, and the smallest useful first step.</p>
+          <div class="actions">
+            <a href="/book/" class="btn btn-primary" data-track="cta-book-case-kip-college-system">Book the free assessment</a>
+            <a href="https://kip-college-system.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">Live Demo ↗</a><a href="https://github.com/gadda00/kip-college-system" target="_blank" rel="noopener noreferrer" class="btn btn-ghost">GitHub ↗</a>
+          </div>
+          <div class="cs-next">
+            <a href="/projects/tapi-learn/"><span class="flag">Previous case study</span><span class="name">← Tapi Learn — 11,000+ learners across 38 countries</span></a>
+            <a href="/projects/"><span class="flag">All projects</span><span class="name">Back to the archive</span></a>
+            <a href="/projects/kingston-branding/"><span class="flag">Next case study</span><span class="name">Kingston Printing &amp; Branding — print-shop e-commerce, M-Pesa checkout →</span></a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</article>
+
+</main>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo">
+          <svg width="28" height="28" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+            <defs><linearGradient id="footG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".5" stop-color="#818cf8"/><stop offset="1" stop-color="#34d399"/></linearGradient></defs>
+            <circle cx="50" cy="50" r="14" fill="url(#footG)"/>
+            <circle cx="20" cy="25" r="5" fill="url(#footG)"/><circle cx="80" cy="25" r="5" fill="url(#footG)"/>
+            <circle cx="20" cy="75" r="5" fill="url(#footG)"/><circle cx="80" cy="75" r="5" fill="url(#footG)"/>
+          </svg>
+          <span>Victor Ndunda</span>
+        </div>
+        <p>AI Engineer building multi-agent intelligence systems in Nairobi, Kenya.</p>
+      </div>
+      <div class="footer-links">
+        <div><h5>Navigate</h5><a href="/services/">Services</a><a href="/projects/">Case Studies</a><a href="/blog/">Writing</a><a href="/resume/">Resume</a><a href="/book/">Book a Free Call</a></div>
+        <div><h5>Projects</h5><a href="https://keja.app">Keja AI</a><a href="https://acla.io/tapi-learn">Tapi Learn</a><a href="https://busaraai.com">Busara AI</a><a href="https://github.com/gadda00/agentreplay">AgentReplay</a><a href="https://github.com/gadda00/fraud-detection-system">Fraud Detection</a></div>
+        <div><h5>Legal</h5><a href="/ai-policy.html">AI Policy</a><a href="/terms-of-service.html">Terms of Service</a><a href="/privacy-policy.html">Privacy Policy</a></div>
+        <div><h5>Connect</h5><a href="mailto:mututandunda@gmail.com">Email</a><a href="https://wa.me/254724346971">WhatsApp</a><a href="https://github.com/gadda00">GitHub</a><a href="https://www.linkedin.com/in/victor-ndunda">LinkedIn</a></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
+      <p><a href="https://victorndunda.com" style="color:var(--text-dim)">victorndunda.com</a> · <a href="https://keja.app" style="color:var(--text-dim)">keja.app</a> · <a href="https://github.com/gadda00/agentreplay" style="color:var(--text-dim)">agentreplay</a></p>
+    </div>
+  </div>
+</footer>
+
+<script src="/app.js?v=12.0.0" defer></script>
+<script src="/enhancements.js?v=11.0.0" defer></script>
+<script src="/effects.js?v=7.1.0" defer></script>
+<script>
+  // Inline minimal theme+nav for resilience if app.js doesn't load
+  (function(){
+    var t = localStorage.getItem('theme') || (document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    document.documentElement.classList.remove('dark','light'); document.documentElement.classList.add(t);
+    var tt = document.getElementById('themeToggle');
+    if (tt) tt.addEventListener('click', function(){
+      var cur = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      var nxt = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.classList.remove(cur); document.documentElement.classList.add(nxt);
+      localStorage.setItem('theme', nxt);
+    });
+    var mt = document.getElementById('mobileToggle');
+    if (mt) mt.addEventListener('click', function(){
+      document.getElementById('navLinks').classList.toggle('open');
+      mt.setAttribute('aria-expanded', mt.getAttribute('aria-expanded') === 'true' ? 'false' : 'true');
+    });
+  })();
+</script>
+<script src="/v7.js?v=7.0.0" defer></script>
+<script src="/i18n.js?v=8.0.0" defer></script>
+</body>
+</html>
