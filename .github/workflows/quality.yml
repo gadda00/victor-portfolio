@@ -37,8 +37,19 @@ jobs:
       - name: Install dependencies (npm ci — reproducible via lockfile)
         run: npm ci
 
-      - name: Install Playwright browser
-        run: npx playwright install --with-deps chromium
+      - name: Install Playwright browser (3 attempts — runner download stalls happen)
+        run: |
+          for i in 1 2 3; do
+            echo "--- playwright install: attempt $i of 3"
+            if npx playwright install --with-deps chromium; then
+              echo "installed on attempt $i"
+              exit 0
+            fi
+            echo "attempt $i failed; retrying in 20s"
+            sleep 20
+          done
+          echo "playwright install failed after 3 attempts"
+          exit 1
 
       - name: 1. Static site validator (JSON, links, a11y metadata, content sync)
         run: python3 scripts/validate_site.py

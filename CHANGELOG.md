@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 19b: CI RESILIENCE — retry the Playwright browser install (2026-11-11)
+
+**What happened:** cycles 18+19 were pushed together (307b665..dc1b810). The Pages
+deploy was blocked: in Quality Gates run 12, the "Install Playwright browser" step
+stalled for ~10 minutes and failed on GitHub's runner — a transient Chromium-download
+flake, not a code defect. All 8 quality gates were skipped as a consequence. The same
+8 gates were re-verified green locally from a clean `git archive` of dc1b810 with a
+fresh `npm ci` (validate 8/8 · syntax 39 · inventory · sw-precache 68/68 · smoke 16/16
+zero console errors · xss · trust · a11y 0 violations), proving the site code is
+deploy-ready.
+
+**Fix:** the install step now retries up to 3 times (20s pause between attempts) before
+failing, so one bad download no longer blocks a deploy. No site code, content or
+versions changed — workflow-only.
+
 ### Cycle 19: GITHUB AUDIT — the 3 best missing repos become case studies (2026-11-11)
 
 **The brief:** check all projects on GitHub and include the best ones. All 22 public repos
