@@ -212,7 +212,8 @@
 <script>
 const themeToggle=document.getElementById('themeToggle');const html=document.documentElement;html.className=localStorage.getItem('theme')||'dark';themeToggle.addEventListener('click',()=>{const isDark=html.classList.contains('dark');html.className=isDark?'light':'dark';localStorage.setItem('theme',isDark?'light':'dark');themeToggle.setAttribute('aria-label',isDark?'Switch to light theme':'Switch to dark theme');});document.getElementById('mobileToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',window.scrollY>50));
 </script>
-<script src="/palette.js?v=12.0.0" defer></script>
+<script src="/palette.js?v=12.1.0" defer></script>
 <script src="/v7.js?v=7.0.0" defer></script>
+<script src="/i18n.js?v=8.0.0" defer></script>
 </body>
 </html>

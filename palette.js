@@ -90,7 +90,11 @@
       } },
     { i: '📋', t: 'Copy email address', d: 'Copies ' + EMAIL + ' to clipboard', a: function () { copy(EMAIL); } },
     { i: '🔗', t: 'Copy this page link', d: 'Copies the current URL', a: function () { copy(window.location.href); } },
-    { i: '🌓', t: 'Toggle theme', d: 'Switch dark / light mode', a: toggleTheme }
+    { i: '🌓', t: 'Toggle theme', d: 'Switch dark / light mode', a: toggleTheme },
+    { i: '🌐', t: 'Change language', d: '8 languages — menus & key UI', a: function () {
+        var tr = document.querySelector('[data-lang-trigger]');
+        if (tr) { tr.click(); } else { window.vnToast('Language menu is not available on this page'); }
+      } }
   ];
 
   function copy(text) {

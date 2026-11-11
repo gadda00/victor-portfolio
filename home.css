@@ -268,8 +268,7 @@ nav#nav a.logo {
 }
 
 .nav-links { display: flex; align-items: center; gap: .35rem; }
-/* v15 a11y: mobile-only language selector (shown inside open menu <1080px) */
-.nav-lang-mobile { display: none; }
+/* Language menu now self-injects from /i18n.js into .nav-actions (v8) */
 
 .nav-link {
   position: relative;
@@ -307,28 +306,6 @@ nav#nav a.logo {
 }
 
 .nav-actions { display: flex; align-items: center; gap: .6rem; }
-
-.lang-toggle {
-  display: inline-flex;
-  border: 1px solid var(--v6-stroke);
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--v6-surface);
-}
-
-.lang-toggle button {
-  background: transparent;
-  border: none;
-  color: var(--v6-text-dim);
-  font-family: var(--v6-font-mono);
-  font-size: .7rem;
-  font-weight: 600;
-  padding: .45rem .6rem;
-  cursor: pointer;
-  transition: background .25s, color .25s;
-}
-
-.lang-toggle button.active { background: rgba(34,211,238,.16); color: var(--v6-cyan); }
 
 .cmd-trigger, .theme-toggle, .mobile-toggle {
   display: inline-flex;
@@ -1390,29 +1367,7 @@ html.light footer { background: rgba(230,234,248,.4); }
   }
   html.light .nav-links.open { background: rgba(246,248,254,.97); }
   .nav-links.open .nav-link { padding: .8rem 1rem; font-size: 1rem; }
-  /* v15 a11y: language toggle reachable inside the mobile menu */
-  .nav-lang-mobile { display: none; }
-  .nav-links.open .nav-lang-mobile {
-    display: flex;
-    gap: .5rem;
-    padding: .6rem 1rem .2rem;
-    border-top: 1px solid var(--v6-stroke);
-    margin-top: .5rem;
-  }
-  .nav-lang-mobile button {
-    background: none;
-    border: 1px solid var(--v6-stroke);
-    color: var(--v6-text-mid);
-    font: 600 .78rem/1 inherit;
-    padding: .55rem .8rem;
-    border-radius: 8px;
-    cursor: pointer;
-    min-height: 44px;
-  }
-  .nav-lang-mobile button[aria-pressed="true"] {
-    border-color: var(--v6-cyan);
-    color: var(--v6-cyan);
-  }
+  /* Language trigger stays in .nav-actions at every width (i18n v8) */
   .newsletter-form { flex-direction: column; }
   .booking-cta-band { padding: 2.4rem 1.5rem; }
   .dag-stages { gap: .4rem; }

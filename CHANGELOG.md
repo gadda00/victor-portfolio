@@ -7,6 +7,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 18: 8-LANGUAGE UI — global reach, honest partial coverage (2026-11-11)
+
+**The brief:** more missed improvements + more languages. Audit first: three real defects
+found in the old 2-language system — (1) `/projects/` carried EN/SW buttons with no
+`i18n.js` include, i.e. dead controls; (2) the *English* dictionary's `nav.book` value was
+Swahili ("Weka Nafasi ya Ongea"), so EN users got a Swahili nav CTA; (3) the language
+switcher existed on only 2 of ~47 public pages.
+
+**8 languages.** English · Kiswahili · Français · Español · Português · Deutsch ·
+中文（简体） · العربية — chosen for a Nairobi engineer with a global client base
+(Francophone + Lusophone Africa, Europe, LatAm, China, MENA/Gulf). Arabic switches the
+document to full RTL (`dir="rtl"`, logical CSS properties, `unicode-bidi: plaintext` for
+English paragraphs so punctuation lands correctly; `pre`/`code`/`kbd` stay LTR).
+
+**One self-injecting component, no per-page markup.** `i18n.js` v8 injects a globe-button
+language menu into every page's `.nav-actions` (the palette.js pattern), translates the
+main nav by href match + any `[data-i18n-key]` element, persists the choice in
+`localStorage('vn_lang')`, and on first visit only follows the browser language when it
+matches a supported one. Rolled out to all 47 deployed pages with a nav (46 newly added +
+home). Command palette gained a "Change language" action.
+
+**Honest coverage, stated up front.** Non-English languages cover navigation and key
+interface only; articles, case studies and service copy remain in English. Every
+non-English row in the menu carries a translated "partial" tag and the menu footnote says
+what stays in English — in the active language. No hreflang/og:locale claims (single-URL
+client-side i18n would make them false signals).
+
+**A11y:** role=menu/menuitemradio, arrow + Home/End keys, Esc closes and restores focus,
+click-outside close, aria-live switch announcement, coarse-pointer touch targets,
+viewport-clamped popover (fixes a mobile clipping bug caught in QA — popover ran 36px off
+the left edge at 390px; now clamped to 8px margins). Dead CSS for the old tile toggle
+removed from `styles.css`/`home.css`; dead markup removed from home + projects.
+
+**QA (all run, all passing):** validate_site 8/8 (1106 links) · smoke 22/22 incl. raw-HTML
+assertions · a11y 0 violations on 14 page/viewport combos **plus** new checks on the
+interactive states (open popover, AR RTL full page, ZH mobile popover, FR services) ·
+syntax 39 files · sw-precache 65 URLs · FR-stored console-error sweep across 15 pages:
+zero errors, menu present and applied everywhere. VLM-verified screenshots: EN menu, FR
+applied, AR RTL, mobile menu. Service worker bumped to `vnd-v31.0.0`; palette.js
+cache-busted to v12.1.0 sitewide.
+
 ### Cycle 16: CASE STUDY RING — every project gets its case-study page (2026-11-11)
 
 **The brief:** the live portfolio on victorndunda.com stays where it is (GitHub Pages — no
