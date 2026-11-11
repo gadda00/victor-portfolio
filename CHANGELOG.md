@@ -943,3 +943,31 @@ Live-verified on victorndunda.com (commit d8096ff, SW vnd-v28 serving).
 - Book page 3 tabs work correctly
 - All JS syntax validated
 - All pages return HTTP 200
+
+## Cycle 17 — PORTFOLIO OVERHAUL (2026-11-11)
+
+**Direction:** radical improvement in place — audit → positioning → IA → visual/systems cleanup → QA → ship. Full evidence ledger and rationale in `Victor-Ndunda-Portfolio-Overhaul-Report.docx` (delivered separately).
+
+### Home (curated)
+- 12 sections → 7: hero (honest proof strip: 12 live-or-shipped of 13 built, learners labeled client-reported) · compact services teaser (no price tables on home — single source on /services/) · 4 flagship cases + approved quotes · how-I-work · about · 9-row more-systems index (replaces the 8-card #work duplication) · contact/book.
+- Removed: tech marquee, 40-item techstack wall with skill bars, GitHub API widget, home newsletter.
+- CTA renamed site-wide to "free 30-minute scoping call" (no longer collides with the paid $2,500 Needs Assessment).
+
+### Static-first indices
+- /projects/ and /blog/ now ship all 13 cards in initial HTML; filters/search enhance the DOM. No fetch, no GitHub API (kills the 403 console errors), no "Loading…" for crawlers/extractors.
+- Status taxonomy: + `demo` (FirstLight — simulated data), Tapi Learn → `production`; legend updated.
+
+### Claims reconciled (see ledger)
+6→12 systems (meta desc) · 10→13 articles, word-count claim dropped (unverifiable) · resume $50,000+→$35,000+ · Busara ~40% labeled internal benchmark · AgentReplay fidelity labeled synthetic validation set · Segmentation 23% lift labeled evaluation dataset · "compliance-reviewed, SLA-backed" → "compliance-aware design, support SLA in writing". ATS resume PDF regenerated.
+
+### Performance
+All fonts self-hosted (`/fonts/` incl. Fraunces variable; render-blocking Google `@import` + stylesheet links removed; CSP tightened to first-party fonts). sw v30 precaches fonts.
+
+### Deploy hygiene
+`deploy-exclude.txt` + rsync assembly: internal docs, marketing packs, owner-dashboard suite (admin/dashboard/jobs/guide), dashboard-only scripts and repo metadata are no longer publicly served (verified 404 live after the tar→rsync exclusion-semantics fix). robots.txt + privacy policy updated to match.
+
+### IA
+"Insights" → "Writing" site-wide; rich standard footer on projects + blog; nav CTA = "Book a Free Call".
+
+### QA (all run, all green)
+validate 8/8 (1106 links) · smoke 22/22 incl. new raw-HTML static-first assertions · a11y 0 violations (1 real defect found+fixed: underlined RSS link) · syntax 39 files · sw-precache 65 URLs · xss/data-inventory/trust-boundaries · live: 12 public routes 200, 14 internal paths 404, zero console errors, reduced-motion honored.
