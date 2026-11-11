@@ -2091,3 +2091,14 @@ html.light nav#nav { background: rgba(245,240,228,.9); }
   border-radius: 3px;
   background: none;
 }
+
+/* ═══ Cycle 17 — compact more-systems index (replaces 8-card duplication) ═══ */
+.more-grid{display:grid;grid-template-columns:1fr;gap:0.75rem;max-width:960px;margin:0 auto}
+.more-row{display:flex;align-items:center;gap:0.9rem;padding:0.95rem 1.15rem;background:var(--bg-card);border:1px solid var(--border);border-radius:12px;text-decoration:none;color:inherit;transition:border-color .25s ease,transform .25s ease}
+.more-row:hover,.more-row:focus-visible{border-color:var(--accent);transform:translateY(-2px)}
+.more-dot{width:9px;height:9px;border-radius:50%;flex:none}
+.more-name{font-weight:700;font-size:0.95rem;white-space:nowrap}
+.more-desc{color:var(--text-muted);font-size:0.85rem;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.more-link{color:var(--accent);font-size:0.8rem;font-weight:600;white-space:nowrap}
+@media (max-width:680px){.more-desc{display:none}.more-row{justify-content:space-between}}
+@media (prefers-reduced-motion:reduce){.more-row{transition:none}.more-row:hover{transform:none}}

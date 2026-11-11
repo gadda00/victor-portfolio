@@ -31,16 +31,14 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/fonts/fonts.css?v=1.0.0" />
 <link rel="stylesheet" href="/styles.css?v=14.0.0" />
 <link rel="stylesheet" href="/v7.css?v=7.0.0" />
 <meta name="view-transition" content="same-origin" />
 <meta http-equiv="X-Content-Type-Options" content="nosniff" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="referrer" content="strict-origin-when-cross-origin" />
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com data:; img-src 'self' data: https:; connect-src 'self' https://api.github.com; object-src 'none'; base-uri 'self'; form-action 'self'" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data: https:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'" />
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
 <!-- Structured Data -->
@@ -662,6 +660,10 @@
   color: var(--text-muted);
 }
 
+/* ─── Status dots (cycle 17: +demo) ─────────────────────────────── */
+.card-status-dot.demo{background:#a78bfa;box-shadow:0 0 8px rgba(167,139,250,.5)}
+.bento-card[hidden]{display:none}
+
 /* ─── Loading ────────────────────────────────────────────────────── */
 .projects-loading {
   text-align: center;
@@ -771,10 +773,10 @@
       <a href="/" class="nav-link">Home</a>
       <a href="/services/" class="nav-link">Services</a>
       <a href="/projects/" class="nav-link active" aria-current="page">Case Studies</a>
-      <a href="/blog/" class="nav-link">Insights</a>
+      <a href="/blog/" class="nav-link">Writing</a>
       <a href="/#about" class="nav-link">About</a>
       <a href="/resume/" class="nav-link">Resume</a>
-      <a href="/book/" class="nav-link nav-link-cta">Book an Assessment</a>
+      <a href="/book/" class="nav-link nav-link-cta">Book a Free Call</a>
     </div>
     <div class="nav-actions">
       <div class="lang-toggle" role="group" aria-label="Language selector">
@@ -810,10 +812,10 @@
 
 <!-- Stats -->
 <section class="projects-stats cv-auto" id="projectsStats">
-  <div class="proj-stat"><span class="num" id="statTotal">—</span><span class="lbl">Projects</span></div>
-  <div class="proj-stat"><span class="num" id="statProduction">—</span><span class="lbl">Live Products</span></div>
-  <div class="proj-stat"><span class="num" id="statOpenSource">—</span><span class="lbl">Open-Source</span></div>
-  <div class="proj-stat"><span class="num" id="statTech">—</span><span class="lbl">Technologies</span></div>
+  <div class="proj-stat"><span class="num" id="statTotal">13</span><span class="lbl">Projects</span></div>
+  <div class="proj-stat"><span class="num" id="statProduction">4</span><span class="lbl">Live Products / Trials</span></div>
+  <div class="proj-stat"><span class="num" id="statOpenSource">9</span><span class="lbl">Open-Source</span></div>
+  <div class="proj-stat"><span class="num" id="statTech">70</span><span class="lbl">Technologies</span></div>
 </section>
 
 <!-- Search -->
@@ -831,6 +833,7 @@
   <span><span class="card-status-dot active" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>Active / maintained</span>
   <span><span class="card-status-dot trial" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>Public trial</span>
   <span><span class="card-status-dot shipped" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>Shipped</span>
+  <span><span class="card-status-dot demo" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>Public demo (simulated data)</span>
   <span><span class="card-status-dot dev" style="display:inline-block;margin-right:0.35rem;vertical-align:middle"></span>In development</span>
 </div>
 
@@ -839,16 +842,25 @@
 
 <!-- Bento Grid -->
 <div class="bento-grid" id="bentoGrid">
-  <div class="projects-loading">
-    <div class="spinner"></div>
-    <p>Loading projects...</p>
-  </div>
-</div>
+      <article class="bento-card wide" style="--card-accent:#38bdf8" tabindex="0" role="article" data-cat="Client Work" data-search="Keja AI Real-estate intelligence &amp; trust infrastructure for African property Client platform for CHACADOM INVESTMENTS: one ecosystem covering the full transaction lifecycle — Discover, Verify, Analyse, Finance, Invest, Transact, Manage. Verified titles &amp; documents, investment scoring on every listing, market data, tokenized assets, and the &#x27;Ask Keja AI&#x27; assistant, with dedicated workspaces for buyers, sellers, landlords, tenants, investors, developers, banks, and institutions. Live in public trial at keja.app. Nominated for an Africa AI Future Award (ceremony 27 Nov 2026, Nairobi). Next.js AI Assistant Investment Scoring Title Verification Market Data Tokenization "><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-building"><div class="bld-floor" style="height:22%"></div><div class="bld-floor" style="height:44%"></div><div class="bld-floor" style="height:66%"></div><div class="bld-floor" style="height:88%"></div><div class="bld-floor" style="height:100%"></div></div></div><div class="card-body"><div class="card-header"><span class="card-badge award">Client Platform · Award Nominee</span><span class="card-status-dot trial" title="trial"></span></div><div class="card-title">🏢 Keja AI</div><div class="card-role">Client engagement for CHACADOM INVESTMENTS — built the AI assistant, investment scoring, and verification tooling</div><div class="card-tagline">Real-estate intelligence &amp; trust infrastructure for African property</div><div class="card-desc">Client platform for CHACADOM INVESTMENTS: one ecosystem covering the full transaction lifecycle — Discover, Verify, Analyse, Finance, Invest, Transact, Manage. Verified titles &amp; documents, investment scoring on every listing, market data, tokenized assets, and the &#x27;Ask Keja AI&#x27; assistant, with dedicated workspaces for buyers, sellers, landlords, tenants, investors, developers, banks, and institutions. Live in public trial at keja.app. Nominated for an Africa AI Future Award (ceremony 27 Nov 2026, Nairobi).</div><div class="card-metrics"><span class="metric-chip"><b>lifecycle:</b> 7 stages — Discover → Manage</span><span class="metric-chip"><b>workspaces:</b> 8 stakeholder types</span><span class="metric-chip"><b>listings:</b> 87+ live (Oct 2026)</span><span class="metric-chip"><b>trust:</b> 70 with Trust Score ≥ 80</span><span class="metric-chip"><b>counties:</b> 12 Kenyan counties</span><span class="metric-chip"><b>award:</b> Africa AI Future Awards nominee</span></div><div class="card-tags"><span>Next.js</span><span>AI Assistant</span><span>Investment Scoring</span><span>Title Verification</span><span>Market Data</span><span>Tokenization</span></div><div class="card-footer"><div class="card-links"><a href="/projects/keja-ai/" class="case-study">Read the full case study →</a><a href="https://keja.app" target="_blank" rel="noopener noreferrer" class="primary">Live Platform</a><a href="/book/" class="discuss">Discuss a similar system →</a></div></div></div></article>
+      <article class="bento-card narrow" style="--card-accent:#f59e0b" tabindex="0" role="article" data-cat="AI Platform" data-search="FirstLight Geo-AI decision layer for disaster response — damage &amp; flood detection, H3 priority zoning, grounded sitreps From raw imagery to a prioritized, routable response map — for the first six hours after a disaster. Fuses simulated damage &amp; flood detections with road networks, population grids, and critical facilities: Uber H3 need-score zoning (tunable weights), Dijkstra routing on the post-event graph, hospital isochrones, isolation analysis, a human-in-the-loop review queue for low-confidence detections, and provenance-labeled, hash-verified situation reports. Fully client-side demo platform — every artifact is procedurally simulated and labeled with its provenance; no operational data is processed. Next.js MapLibre GL Uber H3 Geo-AI SAR TypeScript "><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-hex"><div class="hex-row"><span class="hx"></span><span class="hx"></span><span class="hx dim"></span></div><div class="hex-row"><span class="hx"></span><span class="hx hot" style="animation-delay:0.7s"></span><span class="hx"></span><span class="hx dim"></span></div><div class="hex-row"><span class="hx dim"></span><span class="hx"></span><span class="hx hot"></span><span class="hx"></span></div><div class="hex-label">H3 need-score grid · simulated cells</div></div></div><div class="card-body"><div class="card-header"><span class="card-badge oss">New · Public Demo</span><span class="card-status-dot demo" title="demo"></span></div><div class="card-title">🔦 FirstLight</div><div class="card-role">Self-initiated project — architecture, Geo-AI pipeline, H3 scoring engine, and the full EOC interface</div><div class="card-tagline">Geo-AI decision layer for disaster response — damage &amp; flood detection, H3 priority zoning, grounded sitreps</div><div class="card-desc">From raw imagery to a prioritized, routable response map — for the first six hours after a disaster. Fuses simulated damage &amp; flood detections with road networks, population grids, and critical facilities: Uber H3 need-score zoning (tunable weights), Dijkstra routing on the post-event graph, hospital isochrones, isolation analysis, a human-in-the-loop review queue for low-confidence detections, and provenance-labeled, hash-verified situation reports. Fully client-side demo platform — every artifact is procedurally simulated and labeled with its provenance; no operational data is processed.</div><div class="card-metrics"><span class="metric-chip"><b>zoning:</b> H3 res-8 need scoring</span><span class="metric-chip"><b>routing:</b> Dijkstra + isochrones</span><span class="metric-chip"><b>sitreps:</b> FNV-1a hash-verified</span><span class="metric-chip"><b>data:</b> simulated, provenance-labeled</span></div><div class="card-tags"><span>Next.js</span><span>MapLibre GL</span><span>Uber H3</span><span>Geo-AI</span><span>SAR</span><span>TypeScript</span></div><div class="card-footer"><div class="card-links"><a href="/projects/firstlight/" class="case-study">Read the full case study →</a><a href="https://gadda00.github.io/firstlight/" target="_blank" rel="noopener noreferrer" class="primary">Live Demo</a><a href="https://firstlight.vercel.app" target="_blank" rel="noopener noreferrer" class="secondary">Vercel Mirror</a><a href="https://github.com/gadda00/firstlight" target="_blank" rel="noopener noreferrer" class="secondary">GitHub</a><a href="/book/" class="discuss">Discuss a similar system →</a></div><div class="card-gh-stats" data-repo="gadda00/firstlight"><span class="gh-stat" title="Stars">⭐ <span class="gh-stars">—</span></span><span class="gh-stat" title="Forks">🍴 <span class="gh-forks">—</span></span><span class="gh-lang-donut" style="background: conic-gradient(var(--card-accent) 0%, var(--border) 0%)" title="Languages"></span></div></div></div></article>
+      <article class="bento-card " style="--card-accent:#34d399" tabindex="0" role="article" data-cat="Client Work" data-search="Tapi Learn (ACLA) Multilingual AI learning product — 11K+ learners (client-reported), 38 countries Client engagement for ACLA: a free, Africa-built, multilingual mobile learning platform for climate leadership. Built the 24/7 AI Career Coach (CV reviews, interview prep, career advice), the multilingual NLP pipeline (English · Français · Kiswahili), personalized learning recommendations, and the opportunities board. Live at acla.io/tapi-learn. Multilingual NLP EN·FR·SW AI Career Coach Recommendations Mobile "><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-spark"><div class="spark-bar" style="height:35%"></div><div class="spark-bar" style="height:55%"></div><div class="spark-bar" style="height:40%"></div><div class="spark-bar" style="height:70%"></div><div class="spark-bar" style="height:60%"></div><div class="spark-bar" style="height:85%"></div><div class="spark-bar" style="height:75%"></div><div class="spark-bar" style="height:95%"></div></div></div><div class="card-body"><div class="card-header"><span class="card-badge client">Client Engagement</span><span class="card-status-dot production" title="production"></span></div><div class="card-title">🤝 Tapi Learn (ACLA)</div><div class="card-role">AI engineer for client ACLA — built the 24/7 AI Career Coach, the multilingual NLP pipeline (EN·FR·SW), and the recommendation engine</div><div class="card-tagline">Multilingual AI learning product — 11K+ learners (client-reported), 38 countries</div><div class="card-desc">Client engagement for ACLA: a free, Africa-built, multilingual mobile learning platform for climate leadership. Built the 24/7 AI Career Coach (CV reviews, interview prep, career advice), the multilingual NLP pipeline (English · Français · Kiswahili), personalized learning recommendations, and the opportunities board. Live at acla.io/tapi-learn.</div><div class="card-metrics"><span class="metric-chip"><b>learners:</b> 11,000+ (client-reported, Oct 2026)</span><span class="metric-chip"><b>countries:</b> 38</span><span class="metric-chip"><b>rating:</b> 4.8/5 (client-reported)</span><span class="metric-chip"><b>languages:</b> EN · FR · SW</span></div><div class="card-tags"><span>Multilingual NLP</span><span>EN·FR·SW</span><span>AI Career Coach</span><span>Recommendations</span><span>Mobile</span></div><div class="card-footer"><div class="card-links"><a href="/projects/tapi-learn/" class="case-study">Read the full case study →</a><a href="https://acla.io/tapi-learn" target="_blank" rel="noopener noreferrer" class="primary">Live Product</a><a href="/book/" class="discuss">Discuss a similar system →</a></div></div></div></article>
+      <article class="bento-card " style="--card-accent:#fbbf24" tabindex="0" role="article" data-cat="Open-Source · Developer Tools" data-search="AgentReplay Deterministic replay for AI agents — zero model calls Deterministic replay and counterfactual debugging for AI agents. Captures every LLM call, tool response, clock read, and RNG draw — then replays the run bit-exact with zero model calls. 0.67% overhead and 100% reproduction fidelity on the synthetic validation set; 99 tests. LangGraph-first. Backed by a research whitepaper. Python LangGraph OpenAI SDK Anthropic SDK Deterministic Replay Counterfactual CI Regression 0.67% overhead, 100% reproduction fidelity 99 tests, MIT-licensed Counterfactual mutation + CI regression corpus LangGraph-first with adapters for OpenAI, Anthropic, CrewAI, AutoGen Backed by a research whitepaper"><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-replay"><div class="visual-replay-icon">🔄</div><div style="font-size:0.7rem;color:var(--text-dim);font-family:monospace">replay(0 model calls)</div></div></div><div class="card-body"><div class="card-header"><span class="card-badge research">Open-Source · Agent Reliability</span><span class="card-status-dot shipped" title="shipped"></span></div><div class="card-title">🔄 AgentReplay</div><div class="card-role">Creator &amp; maintainer — research-backed, MIT-licensed (2026–present)</div><div class="card-tagline">Deterministic replay for AI agents — zero model calls</div><div class="card-desc">Deterministic replay and counterfactual debugging for AI agents. Captures every LLM call, tool response, clock read, and RNG draw — then replays the run bit-exact with zero model calls. 0.67% overhead and 100% reproduction fidelity on the synthetic validation set; 99 tests. LangGraph-first. Backed by a research whitepaper.</div><div class="card-metrics"><span class="metric-chip"><b>stars:</b> 0</span><span class="metric-chip"><b>forks:</b> 0</span><span class="metric-chip"><b>languages:</b> {&#x27;Python&#x27;: 95, &#x27;Other&#x27;: 5}</span></div><ul class="card-highlights"><li>0.67% overhead, 100% reproduction fidelity</li><li>99 tests, MIT-licensed</li><li>Counterfactual mutation + CI regression corpus</li><li>LangGraph-first with adapters for OpenAI, Anthropic, CrewAI, AutoGen</li></ul><div class="card-tags"><span>Python</span><span>LangGraph</span><span>OpenAI SDK</span><span>Anthropic SDK</span><span>Deterministic Replay</span><span>Counterfactual</span><span>CI Regression</span></div><div class="card-footer"><div class="card-links"><a href="/projects/agentreplay/" class="case-study">Read the full case study →</a><a href="https://github.com/gadda00/agentreplay" target="_blank" rel="noopener noreferrer" class="primary">GitHub</a><a href="https://agentreplay.vercel.app" target="_blank" rel="noopener noreferrer" class="secondary">Docs &amp; Demo</a><a href="/blog/articles/agentreplay-deterministic-replay.html" target="_blank" rel="noopener noreferrer" class="secondary">Whitepaper</a><a href="/book/" class="discuss">Discuss a similar system →</a></div><div class="card-gh-stats" data-repo="gadda00/agentreplay"><span class="gh-stat" title="Stars">⭐ <span class="gh-stars">2</span></span><span class="gh-stat" title="Forks">🍴 <span class="gh-forks">0</span></span><span class="gh-lang-donut" style="background: conic-gradient(#00d4ff 0% 100.0%)" title="Languages"></span></div></div></div></article>
+      <article class="bento-card " style="--card-accent:#a855f7" tabindex="0" role="article" data-cat="SaaS · Sales &amp; Ops" data-search="Verxlite Universal AI workflow agent for sales &amp; ops A universal AI workflow agent for sales &amp; ops teams. Automates post-meeting followups, lead assignment, support triage, approval routing, and weekly summaries across Gmail, Google Calendar, and HubSpot. Multi-tenant SaaS with real auth, OAuth, encrypted tokens, Celery workers, and Langfuse observability. Shipped with a transparent 281-defect code review and full P0/P1 remediation — 83 backend tests passing. Python FastAPI Celery Next.js 14 SQLAlchemy 2 Alembic Google OAuth HubSpot OAuth Langfuse Fernet Multi-tenant SaaS with real auth (JWT + Clerk) Google Workspace + HubSpot OAuth with token refresh Fernet encryption for tokens at rest Langfuse observability for every workflow step 281-defect code review + full P0/P1 remediation 83 backend tests, CI/CD all green"><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-workflow"><div class="visual-wf-step">📡</div><div class="visual-wf-line"></div><div class="visual-wf-step">🔍</div><div class="visual-wf-line"></div><div class="visual-wf-step">🤖</div><div class="visual-wf-line"></div><div class="visual-wf-step">📝</div><div class="visual-wf-line"></div><div class="visual-wf-step">✅</div></div></div><div class="card-body"><div class="card-header"><span class="card-badge verxlite">Open-Source · Sales &amp; Ops Automation</span><span class="card-status-dot active" title="active"></span></div><div class="card-title">⚡ Verxlite</div><div class="card-role">Builder &amp; maintainer — self-initiated SaaS build with a public 281-defect code review</div><div class="card-tagline">Universal AI workflow agent for sales &amp; ops</div><div class="card-desc">A universal AI workflow agent for sales &amp; ops teams. Automates post-meeting followups, lead assignment, support triage, approval routing, and weekly summaries across Gmail, Google Calendar, and HubSpot. Multi-tenant SaaS with real auth, OAuth, encrypted tokens, Celery workers, and Langfuse observability. Shipped with a transparent 281-defect code review and full P0/P1 remediation — 83 backend tests passing.</div><div class="card-metrics"><span class="metric-chip"><b>stars:</b> 0</span><span class="metric-chip"><b>forks:</b> 0</span><span class="metric-chip"><b>languages:</b> {&#x27;Python&#x27;: 60, &#x27;TypeScript&#x27;: 30, &#x27;CSS&#x27;: 7, &#x27;Other&#x27;: 3}</span></div><ul class="card-highlights"><li>Multi-tenant SaaS with real auth (JWT + Clerk)</li><li>Google Workspace + HubSpot OAuth with token refresh</li><li>Fernet encryption for tokens at rest</li><li>Langfuse observability for every workflow step</li></ul><div class="card-tags"><span>Python</span><span>FastAPI</span><span>Celery</span><span>Next.js 14</span><span>SQLAlchemy 2</span><span>Alembic</span><span>Google OAuth</span><span>HubSpot OAuth</span><span>Langfuse</span><span>Fernet</span></div><div class="card-footer"><div class="card-links"><a href="/projects/verxlite/" class="case-study">Read the full case study →</a><a href="https://github.com/gadda00/verxlite" target="_blank" rel="noopener noreferrer" class="primary">GitHub</a><a href="https://verxlite.vercel.app" target="_blank" rel="noopener noreferrer" class="secondary">Live Demo</a><a href="https://github.com/gadda00/verxlite/blob/main/COMPREHENSIVE_CODE_REVIEW.md" target="_blank" rel="noopener noreferrer" class="secondary">Code Review</a><a href="/book/" class="discuss">Discuss a similar system →</a></div><div class="card-gh-stats" data-repo="gadda00/verxlite"><span class="gh-stat" title="Stars">⭐ <span class="gh-stars">0</span></span><span class="gh-stat" title="Forks">🍴 <span class="gh-forks">0</span></span><span class="gh-lang-donut" style="background: conic-gradient(#00d4ff 0% 66.53533504962795%, #a855f7 66.53533504962795% 97.55543520388912%, #10b981 97.55543520388912% 98.707645553505%, #fbbf24 98.707645553505% 99.33213380937835%, #ef4444 99.33213380937835% 99.80236088901664%, #64748b 99.80236088901664% 99.9291579290501%, #64748b 99.9291579290501% 100%)" title="Languages"></span></div></div></div></article>
+      <article class="bento-card " style="--card-accent:#ef4444" tabindex="0" role="article" data-cat="Enterprise · Fintech" data-search="Fraud Detection System Enterprise-grade real-time fraud scoring in Go A real-time transaction fraud scoring engine in Go — 7 statistical detectors (Z-Score, IQR, Velocity, Geo-Distance, Device Fingerprint, Merchant Risk, Behavioral Anomaly) fused by a weighted-vote ensemble, calibrated by logistic regression, overlaid with a deterministic rules engine. Scores in ~33 µs per transaction; validated on 1,000 labelled transactions with the methodology published alongside the code. Full case-management workflow, RBAC auth, Prometheus metrics, OTel tracing, and Slack alerts. 84% recall, 1.37% false-positive rate. Built for PCI-DSS / PSD2 / GDPR Article 22 compliance. Go 1.22 Gin 7 Detectors Weighted Ensemble Logistic Calibration Rules Engine Case Management RBAC + JWT Prometheus OpenTelemetry Slack Alerts Kubernetes 7 statistical detectors with weighted-vote ensemble ~33 µs per-transaction scoring latency 84% recall, 1.37% false-positive rate Full case management + RBAC + Prometheus + OTel Designed for PCI-DSS / PSD2 / GDPR Article 22 — formal compliance is deployment-specific Postgres + Kafka + Stripe + Email/SMS + Grafana + retraining pipeline"><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-architecture"><div class="visual-arch-row"><div class="visual-arch-box">HTTP/API</div></div><div class="visual-arch-arrow">↓</div><div class="visual-arch-row"><div class="visual-arch-box">Ensemble (7 detectors)</div></div><div class="visual-arch-arrow">↓</div><div class="visual-arch-row"><div class="visual-arch-box">Calibrator</div><div class="visual-arch-box">Rules</div></div><div class="visual-arch-arrow">↓</div><div class="visual-arch-row"><div class="visual-arch-box">Store</div><div class="visual-arch-box">Cases</div><div class="visual-arch-box">Webhooks</div></div></div></div><div class="card-body"><div class="card-header"><span class="card-badge fraud">Open-Source · Regulated-Grade Fintech</span><span class="card-status-dot active" title="active"></span></div><div class="card-title">🛡️ Fraud Detection System</div><div class="card-role">Builder — self-initiated; code and methodology public</div><div class="card-tagline">Enterprise-grade real-time fraud scoring in Go</div><div class="card-desc">A real-time transaction fraud scoring engine in Go — 7 statistical detectors (Z-Score, IQR, Velocity, Geo-Distance, Device Fingerprint, Merchant Risk, Behavioral Anomaly) fused by a weighted-vote ensemble, calibrated by logistic regression, overlaid with a deterministic rules engine. Scores in ~33 µs per transaction; validated on 1,000 labelled transactions with the methodology published alongside the code. Full case-management workflow, RBAC auth, Prometheus metrics, OTel tracing, and Slack alerts. 84% recall, 1.37% false-positive rate. Built for PCI-DSS / PSD2 / GDPR Article 22 compliance.</div><div class="card-metrics"><span class="metric-chip"><b>stars:</b> 0</span><span class="metric-chip"><b>forks:</b> 0</span><span class="metric-chip"><b>languages:</b> {&#x27;Go&#x27;: 92, &#x27;Dockerfile&#x27;: 4, &#x27;Other&#x27;: 4}</span></div><ul class="card-highlights"><li>7 statistical detectors with weighted-vote ensemble</li><li>~33 µs per-transaction scoring latency</li><li>84% recall, 1.37% false-positive rate</li><li>Full case management + RBAC + Prometheus + OTel</li></ul><div class="card-tags"><span>Go 1.22</span><span>Gin</span><span>7 Detectors</span><span>Weighted Ensemble</span><span>Logistic Calibration</span><span>Rules Engine</span><span>Case Management</span><span>RBAC + JWT</span><span>Prometheus</span><span>OpenTelemetry</span><span>Slack Alerts</span><span>Kubernetes</span></div><div class="card-footer"><div class="card-links"><a href="/projects/fraud-detection-system/" class="case-study">Read the full case study →</a><a href="https://github.com/gadda00/fraud-detection-system" target="_blank" rel="noopener noreferrer" class="primary">GitHub</a><a href="https://fraud-detection-vn.vercel.app" target="_blank" rel="noopener noreferrer" class="secondary">Live Demo</a><a href="https://github.com/gadda00/fraud-detection-system/blob/main/README.md" target="_blank" rel="noopener noreferrer" class="secondary">Architecture</a><a href="/book/" class="discuss">Discuss a similar system →</a></div><div class="card-gh-stats" data-repo="gadda00/fraud-detection-system"><span class="gh-stat" title="Stars">⭐ <span class="gh-stars">0</span></span><span class="gh-stat" title="Forks">🍴 <span class="gh-forks">0</span></span><span class="gh-lang-donut" style="background: conic-gradient(#00d4ff 0% 99.59936337193348%, #a855f7 99.59936337193348% 99.86782650055795%, #10b981 99.86782650055795% 99.99999999999999%, #64748b 99.99999999999999% 100%)" title="Languages"></span></div></div></div></article>
+      <article class="bento-card " style="--card-accent:#64748b" tabindex="0" role="article" data-cat="AI Platform" data-search="Hazina Assist In early development — public details will be published when the project reaches its first milestone A new AI product currently in early development. Full methodology, scope, and access details will be published on this page when the project reaches its first public milestone. This entry is a placeholder until the repository and demo go live.  "><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-spark"><div class="spark-bar" style="height:35%"></div><div class="spark-bar" style="height:55%"></div><div class="spark-bar" style="height:40%"></div><div class="spark-bar" style="height:70%"></div><div class="spark-bar" style="height:60%"></div><div class="spark-bar" style="height:85%"></div><div class="spark-bar" style="height:75%"></div><div class="spark-bar" style="height:95%"></div></div></div><div class="card-body"><div class="card-header"><span class="card-badge oss">In Development</span><span class="card-status-dot dev" title="dev"></span></div><div class="card-title">🚧 Hazina Assist</div><div class="card-role">Early-stage project — details to be announced</div><div class="card-tagline">In early development — public details will be published when the project reaches its first milestone</div><div class="card-desc">A new AI product currently in early development. Full methodology, scope, and access details will be published on this page when the project reaches its first public milestone. This entry is a placeholder until the repository and demo go live.</div><div class="card-tags"></div><div class="card-footer"><div class="card-links"><a href="/projects/hazina-assist/" class="case-study">Read the full case study →</a><a href="/book/" class="discuss">Discuss a similar system →</a></div></div></div></article>
+      <article class="bento-card " style="--card-accent:#00d4ff" tabindex="0" role="article" data-cat="AI Platform" data-search="Busara AI Multi-agent data intelligence platform A multi-agent data intelligence PWA running a multi-agent system across a 6-stage parallel DAG pipeline (v7.0). Ingest → Engineer → Detect → Forecast → Infer → Report. Real statistical algorithms, not wrapper code. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA target). TypeScript Next.js 15 Multi-Agent System 6-Stage DAG GLM-4.6 PostgreSQL PWA Flutterwave 50 AI agents across 6 parallel DAG stages Real statistical algorithms (Holt-Winters, OLS, K-Means++, GARCH) 4 pricing tiers with 99.9% SLA target Africa Market Intelligence agent (M-Pesa, AfCFTA, forex)"><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-dag"><div class="dag-node">Ingest</div><span class="dag-arrow">→</span><div class="dag-node">Engineer</div><span class="dag-arrow">→</span><div class="dag-node">Detect</div><span class="dag-arrow">→</span><div class="dag-node">Forecast</div><span class="dag-arrow">→</span><div class="dag-node">Infer</div><span class="dag-arrow">→</span><div class="dag-node">Report</div></div></div><div class="card-body"><div class="card-header"><span class="card-badge busara">Owned Product · Data Intelligence</span><span class="card-status-dot production" title="production"></span></div><div class="card-title">🚀 Busara AI</div><div class="card-role">Creator &amp; lead engineer — designed and built end-to-end (2023–present)</div><div class="card-tagline">Multi-agent data intelligence platform</div><div class="card-desc">A multi-agent data intelligence PWA running a multi-agent system across a 6-stage parallel DAG pipeline (v7.0). Ingest → Engineer → Detect → Forecast → Infer → Report. Real statistical algorithms, not wrapper code. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA target).</div><div class="card-metrics"><span class="metric-chip"><b>stars:</b> </span><span class="metric-chip"><b>forks:</b> </span><span class="metric-chip"><b>languages:</b> {&#x27;TypeScript&#x27;: 85, &#x27;CSS&#x27;: 10, &#x27;Other&#x27;: 5}</span></div><ul class="card-highlights"><li>50 AI agents across 6 parallel DAG stages</li><li>Real statistical algorithms (Holt-Winters, OLS, K-Means++, GARCH)</li><li>4 pricing tiers with 99.9% SLA target</li><li>Africa Market Intelligence agent (M-Pesa, AfCFTA, forex)</li></ul><div class="card-tags"><span>TypeScript</span><span>Next.js 15</span><span>Multi-Agent System</span><span>6-Stage DAG</span><span>GLM-4.6</span><span>PostgreSQL</span><span>PWA</span><span>Flutterwave</span></div><div class="card-footer"><div class="card-links"><a href="/projects/busara-ai/" class="case-study">Read the full case study →</a><a href="https://busaraai.com" target="_blank" rel="noopener noreferrer" class="primary">Live Platform</a><a href="https://github.com/gadda00/IntelliFlow" target="_blank" rel="noopener noreferrer" class="secondary">GitHub — IntelliFlow foundation</a><a href="/book/" class="discuss">Discuss a similar system →</a></div></div></div></article>
+      <article class="bento-card " style="--card-accent:#10b981" tabindex="0" role="article" data-cat="Agricultural AI" data-search="KilimoPRO AI agricultural intelligence for 8 IGAD countries AI-powered agricultural intelligence for smallholder farmers across 8 IGAD countries — a 300M+ person market. On-device crop disease detection (TFLite) for 15 crops, market forecasting with GARCH/VaR, multi-LLM advisory council in Swahili + English, 9 free keyless API endpoints, SMS webhook for feature phones. $0/month to operate on free data sources. Next.js 14 Drizzle ORM TFLite Open-Meteo FAOSTAT ICPAC Multi-LLM Council SMS Offline-First A 300M+ person market across 8 IGAD countries On-device crop disease detection for 15 crops (TFLite) GARCH/VaR market price forecasting Multi-LLM advisory council in Swahili + English $0/month operating cost — all data sources free"><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-crop"><span class="crop-emoji">🌾</span><span class="crop-emoji">📱</span><span class="crop-emoji">🌱</span></div></div><div class="card-body"><div class="card-header"><span class="card-badge kilimo">Open-Source · Agricultural Intelligence</span><span class="card-status-dot active" title="active"></span></div><div class="card-title">🌱 KilimoPRO</div><div class="card-role">Creator &amp; lead engineer — open-sourced; designed for East African smallholders</div><div class="card-tagline">AI agricultural intelligence for 8 IGAD countries</div><div class="card-desc">AI-powered agricultural intelligence for smallholder farmers across 8 IGAD countries — a 300M+ person market. On-device crop disease detection (TFLite) for 15 crops, market forecasting with GARCH/VaR, multi-LLM advisory council in Swahili + English, 9 free keyless API endpoints, SMS webhook for feature phones. $0/month to operate on free data sources.</div><div class="card-metrics"><span class="metric-chip"><b>stars:</b> 1</span><span class="metric-chip"><b>forks:</b> 0</span><span class="metric-chip"><b>languages:</b> {&#x27;TypeScript&#x27;: 70, &#x27;Python&#x27;: 20, &#x27;Dart&#x27;: 5, &#x27;Other&#x27;: 5}</span></div><ul class="card-highlights"><li>A 300M+ person market across 8 IGAD countries</li><li>On-device crop disease detection for 15 crops (TFLite)</li><li>GARCH/VaR market price forecasting</li><li>Multi-LLM advisory council in Swahili + English</li></ul><div class="card-tags"><span>Next.js 14</span><span>Drizzle ORM</span><span>TFLite</span><span>Open-Meteo</span><span>FAOSTAT</span><span>ICPAC</span><span>Multi-LLM Council</span><span>SMS</span><span>Offline-First</span></div><div class="card-footer"><div class="card-links"><a href="/projects/kilimopro/" class="case-study">Read the full case study →</a><a href="https://github.com/gadda00/kilimopro" target="_blank" rel="noopener noreferrer" class="primary">GitHub</a><a href="https://kilimopro-ai.vercel.app" target="_blank" rel="noopener noreferrer" class="secondary">Live Demo</a><a href="/blog/articles/kilimopro-ai-for-farmers.html" target="_blank" rel="noopener noreferrer" class="secondary">Case Study</a><a href="/book/" class="discuss">Discuss a similar system →</a></div><div class="card-gh-stats" data-repo="gadda00/kilimopro"><span class="gh-stat" title="Stars">⭐ <span class="gh-stars">1</span></span><span class="gh-stat" title="Forks">🍴 <span class="gh-forks">0</span></span><span class="gh-lang-donut" style="background: conic-gradient(#00d4ff 0% 95.95186710346128%, #a855f7 95.95186710346128% 99.14290345838756%, #10b981 99.14290345838756% 99.88846252486003%, #fbbf24 99.88846252486003% 100.0%)" title="Languages"></span></div></div></div></article>
+      <article class="bento-card " style="--card-accent:#00d4ff" tabindex="0" role="article" data-cat="AI Platform" data-search="IntelliFlow 33-agent self-evolving multi-agent platform 33-agent self-evolving multi-agent data intelligence platform. 7-stage pipeline (Ingest → Engineer → Detect → Forecast → Infer → Cluster → Report) with trajectory-based learning inspired by the AReaL paper. Turborepo monorepo, Next.js 15, TypeScript, 18 passing tests. TypeScript Multi-Agent Self-Evolving Turborepo Next.js 15 33 specialized agents in a 7-stage pipeline Trajectory-based learning inspired by AReaL Turborepo monorepo with Next.js 15 Foundation of the Busara AI platform"><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-agent-graph"><div class="visual-agent-node" style="animation-delay:0.0s"></div><div class="visual-agent-node" style="animation-delay:0.15s"></div><div class="visual-agent-node" style="animation-delay:0.3s"></div><div class="visual-agent-node" style="animation-delay:0.44999999999999996s"></div><div class="visual-agent-node" style="animation-delay:0.6s"></div><div class="visual-agent-node" style="animation-delay:0.75s"></div><div class="visual-agent-node" style="animation-delay:0.8999999999999999s"></div><div class="visual-agent-node" style="animation-delay:1.05s"></div></div></div><div class="card-body"><div class="card-header"><span class="card-badge busara">Open-Source · Multi-Agent Platform</span><span class="card-status-dot active" title="active"></span></div><div class="card-title">🧠 IntelliFlow</div><div class="card-role">Builder — the open-source foundation beneath Busara AI</div><div class="card-tagline">33-agent self-evolving multi-agent platform</div><div class="card-desc">33-agent self-evolving multi-agent data intelligence platform. 7-stage pipeline (Ingest → Engineer → Detect → Forecast → Infer → Cluster → Report) with trajectory-based learning inspired by the AReaL paper. Turborepo monorepo, Next.js 15, TypeScript, 18 passing tests.</div><div class="card-metrics"><span class="metric-chip"><b>stars:</b> 0</span><span class="metric-chip"><b>forks:</b> 0</span><span class="metric-chip"><b>languages:</b> {&#x27;TypeScript&#x27;: 90, &#x27;Python&#x27;: 5, &#x27;Other&#x27;: 5}</span></div><ul class="card-highlights"><li>33 specialized agents in a 7-stage pipeline</li><li>Trajectory-based learning inspired by AReaL</li><li>Turborepo monorepo with Next.js 15</li><li>Foundation of the Busara AI platform</li></ul><div class="card-tags"><span>TypeScript</span><span>Multi-Agent</span><span>Self-Evolving</span><span>Turborepo</span><span>Next.js 15</span></div><div class="card-footer"><div class="card-links"><a href="/projects/intelliflow/" class="case-study">Read the full case study →</a><a href="https://github.com/gadda00/IntelliFlow" target="_blank" rel="noopener noreferrer" class="primary">GitHub</a><a href="https://intelliflow.vercel.app" target="_blank" rel="noopener noreferrer" class="secondary">Live Demo</a><a href="/book/" class="discuss">Discuss a similar system →</a></div><div class="card-gh-stats" data-repo="gadda00/IntelliFlow"><span class="gh-stat" title="Stars">⭐ <span class="gh-stars">1</span></span><span class="gh-stat" title="Forks">🍴 <span class="gh-forks">0</span></span><span class="gh-lang-donut" style="background: conic-gradient(#00d4ff 0% 95.96287069331414%, #a855f7 95.96287069331414% 98.46721659377364%, #10b981 98.46721659377364% 99.10450460425547%, #fbbf24 99.10450460425547% 99.57913967779437%, #ef4444 99.57913967779437% 99.99999999999999%, #64748b 99.99999999999999% 100%)" title="Languages"></span></div></div></div></article>
+      <article class="bento-card " style="--card-accent:#34d399" tabindex="0" role="article" data-cat="Client Work" data-search="Eco Africa Awards Awards platform for African climate leadership — an initiative of ACLA The awards platform celebrating climate leadership across Africa — an initiative of ACLA, the organization behind Tapi Learn. Built with Next.js, Three.js and AI; the platform shipped to ACLA and the source is public on GitHub. TypeScript Next.js Three.js AI Client engagement — an ACLA initiative Next.js + Three.js awards platform"><div class="card-glow-bar"></div><div class="card-body"><div class="card-header"><span class="card-badge client">Client Engagement · Nonprofit</span><span class="card-status-dot active" title="active"></span></div><div class="card-title">🌍 Eco Africa Awards</div><div class="card-role">Built for ACLA (client engagement) — platform build with AI features</div><div class="card-tagline">Awards platform for African climate leadership — an initiative of ACLA</div><div class="card-desc">The awards platform celebrating climate leadership across Africa — an initiative of ACLA, the organization behind Tapi Learn. Built with Next.js, Three.js and AI; the platform shipped to ACLA and the source is public on GitHub.</div><div class="card-metrics"><span class="metric-chip"><b>stars:</b> 0</span><span class="metric-chip"><b>forks:</b> 0</span><span class="metric-chip"><b>languages:</b> {&#x27;TypeScript&#x27;: 90, &#x27;Other&#x27;: 10}</span><span class="metric-chip"><b>client:</b> ACLA initiative</span><span class="metric-chip"><b>stack:</b> Next.js · Three.js · AI</span></div><ul class="card-highlights"><li>Client engagement — an ACLA initiative</li><li>Next.js + Three.js awards platform</li></ul><div class="card-tags"><span>TypeScript</span><span>Next.js</span><span>Three.js</span><span>AI</span></div><div class="card-footer"><div class="card-links"><a href="/projects/eco-africa-awards/" class="case-study">Read the full case study →</a><a href="https://github.com/gadda00/eco-africa-awards" target="_blank" rel="noopener noreferrer" class="primary">GitHub — source</a><a href="/book/" class="discuss">Discuss a similar system →</a></div><div class="card-gh-stats" data-repo="gadda00/eco-africa-awards"><span class="gh-stat" title="Stars">⭐ <span class="gh-stars">0</span></span><span class="gh-stat" title="Forks">🍴 <span class="gh-forks">0</span></span><span class="gh-lang-donut" style="background: conic-gradient(#00d4ff 0% 97.45348420407717%, #a855f7 97.45348420407717% 98.85575845088863%, #10b981 98.85575845088863% 99.77247363109205%, #fbbf24 99.77247363109205% 100.0%)" title="Languages"></span></div></div></div></article>
+      <article class="bento-card " style="--card-accent:#10b981" tabindex="0" role="article" data-cat="Data Science" data-search="Financial Forecasting Suite Production-grade time series forecasting toolkit Production-grade time series forecasting toolkit for financial metrics. Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition, ensemble forecasting with automatic model selection. 87.3% mean accuracy (1-MAPE) across 12 financial metrics with 12–24 month forecast horizons (from delivered client systems). Python Holt-Winters ARIMA Ensemble 87.3% mean accuracy (1-MAPE) across 12 metrics Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition Automatic model selection + ensemble forecasting 12-24 month forecast horizons"><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-chart"><div class="bar" style="height:30%"></div><div class="bar" style="height:45%"></div><div class="bar" style="height:35%"></div><div class="bar" style="height:60%"></div><div class="bar" style="height:50%"></div><div class="bar" style="height:75%"></div><div class="bar" style="height:65%"></div><div class="bar" style="height:85%"></div></div></div><div class="card-body"><div class="card-header"><span class="card-badge kilimo">Client Work · Quant Finance</span><span class="card-status-dot shipped" title="shipped"></span></div><div class="card-title">📊 Financial Forecasting Suite</div><div class="card-role">Built for retirement-benefits and fintech clients (2019–2022); open-sourced as a toolkit</div><div class="card-tagline">Production-grade time series forecasting toolkit</div><div class="card-desc">Production-grade time series forecasting toolkit for financial metrics. Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition, ensemble forecasting with automatic model selection. 87.3% mean accuracy (1-MAPE) across 12 financial metrics with 12–24 month forecast horizons (from delivered client systems).</div><div class="card-metrics"><span class="metric-chip"><b>stars:</b> 0</span><span class="metric-chip"><b>forks:</b> 0</span><span class="metric-chip"><b>languages:</b> {&#x27;Python&#x27;: 95, &#x27;Other&#x27;: 5}</span></div><ul class="card-highlights"><li>87.3% mean accuracy (1-MAPE) across 12 metrics</li><li>Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition</li><li>Automatic model selection + ensemble forecasting</li><li>12-24 month forecast horizons</li></ul><div class="card-tags"><span>Python</span><span>Holt-Winters</span><span>ARIMA</span><span>Ensemble</span></div><div class="card-footer"><div class="card-links"><a href="/projects/financial-forecasting-suite/" class="case-study">Read the full case study →</a><a href="https://github.com/gadda00/financial-forecasting-suite" target="_blank" rel="noopener noreferrer" class="primary">GitHub</a><a href="https://forecasting-suite.vercel.app" target="_blank" rel="noopener noreferrer" class="secondary">Live Demo</a><a href="/book/" class="discuss">Discuss a similar system →</a></div><div class="card-gh-stats" data-repo="gadda00/financial-forecasting-suite"><span class="gh-stat" title="Stars">⭐ <span class="gh-stars">0</span></span><span class="gh-stat" title="Forks">🍴 <span class="gh-forks">0</span></span><span class="gh-lang-donut" style="background: conic-gradient(#00d4ff 0% 98.56441782077927%, #a855f7 98.56441782077927% 99.74501825040605%, #10b981 99.74501825040605% 100.0%)" title="Languages"></span></div></div></div></article>
+      <article class="bento-card " style="--card-accent:#a855f7" tabindex="0" role="article" data-cat="Data Science" data-search="Customer Segmentation Engine RFM + K-Means + GMM for actionable segmentation RFM analysis + K-Means + Gaussian Mixture Models for actionable customer segmentation. 6 optimal clusters (silhouette 0.42), 89% month-over-month stability, 23% increase in targeted campaign response rate. Built for financial services with 3D PCA/t-SNE visualizations. Python K-Means GMM RFM 6 optimal clusters (silhouette 0.42) 89% month-over-month stability 23% lift in campaign response rate 3D PCA/t-SNE visualizations"><div class="card-glow-bar"></div><div class="card-visual"><div class="visual-cluster"><div class="visual-cluster-dot" style="background:#a855f7;animation-delay:0.0s"></div><div class="visual-cluster-dot" style="background:#a855f7;animation-delay:0.3s"></div><div class="visual-cluster-dot" style="background:#10b981;animation-delay:0.6s"></div><div class="visual-cluster-dot" style="background:#fbbf24;animation-delay:0.8999999999999999s"></div><div class="visual-cluster-dot" style="background:#a855f7;animation-delay:1.2s"></div><div class="visual-cluster-dot" style="background:#a855f7;animation-delay:1.5s"></div></div></div><div class="card-body"><div class="card-header"><span class="card-badge verxlite">Client Work · Data Science</span><span class="card-status-dot shipped" title="shipped"></span></div><div class="card-title">🎯 Customer Segmentation Engine</div><div class="card-role">Built for financial-services clients (2019–2022); open-sourced</div><div class="card-tagline">RFM + K-Means + GMM for actionable segmentation</div><div class="card-desc">RFM analysis + K-Means + Gaussian Mixture Models for actionable customer segmentation. 6 optimal clusters (silhouette 0.42), 89% month-over-month stability, 23% increase in targeted campaign response rate. Built for financial services with 3D PCA/t-SNE visualizations.</div><div class="card-metrics"><span class="metric-chip"><b>stars:</b> 0</span><span class="metric-chip"><b>forks:</b> 0</span><span class="metric-chip"><b>languages:</b> {&#x27;Python&#x27;: 95, &#x27;Other&#x27;: 5}</span></div><ul class="card-highlights"><li>6 optimal clusters (silhouette 0.42)</li><li>89% month-over-month stability</li><li>23% lift in campaign response rate</li><li>3D PCA/t-SNE visualizations</li></ul><div class="card-tags"><span>Python</span><span>K-Means</span><span>GMM</span><span>RFM</span></div><div class="card-footer"><div class="card-links"><a href="/projects/customer-segmentation-engine/" class="case-study">Read the full case study →</a><a href="https://github.com/gadda00/customer-segmentation-engine" target="_blank" rel="noopener noreferrer" class="primary">GitHub</a><a href="https://segmentation-engine.vercel.app" target="_blank" rel="noopener noreferrer" class="secondary">Live Demo</a><a href="/book/" class="discuss">Discuss a similar system →</a></div><div class="card-gh-stats" data-repo="gadda00/customer-segmentation-engine"><span class="gh-stat" title="Stars">⭐ <span class="gh-stars">0</span></span><span class="gh-stat" title="Forks">🍴 <span class="gh-forks">0</span></span><span class="gh-lang-donut" style="background: conic-gradient(#00d4ff 0% 99.41543722909293%, #a855f7 99.41543722909293% 99.78526265558516%, #10b981 99.78526265558516% 100.0%)" title="Languages"></span></div></div></div></article>
+    </div>
 
 <noscript>
   <div style="max-width:1000px;margin:1rem auto 4rem;padding:1.5rem;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;text-align:left">
     <h2 style="font-size:1.1rem;margin:0 0 0.25rem">All systems</h2>
-    <p style="color:var(--text-muted);font-size:0.875rem;margin:0 0 1rem">The interactive grid needs JavaScript — these links work without it.</p>
+    <p style="color:var(--text-muted);font-size:0.875rem;margin:0 0 1rem">The grid above is static HTML — filters and search below need JavaScript; these plain links never do.</p>
     <ul style="list-style:none;padding:0;margin:0;display:grid;gap:0.6rem;color:var(--text-muted);font-size:0.925rem">
       <li>🏢 <strong>Keja AI</strong> — real-estate intelligence &amp; trust infrastructure (public trial · Africa AI Future Awards nominee) · <a href="/projects/keja-ai/" style="color:var(--accent)">Case study</a> · <a href="https://keja.app" style="color:var(--accent)">keja.app</a></li>
       <li>🔦 <strong>FirstLight</strong> — Geo-AI disaster-response decision layer (public demo) · <a href="/projects/firstlight/" style="color:var(--accent)">Case study</a> · <a href="https://gadda00.github.io/firstlight/" style="color:var(--accent)">Live demo</a></li>
@@ -864,7 +876,7 @@
       <li>📊 <strong>Financial Forecasting Suite</strong> — Holt-Winters, ARIMA, ensembles · <a href="/projects/financial-forecasting-suite/" style="color:var(--accent)">Case study</a> · <a href="https://forecasting-suite.vercel.app" style="color:var(--accent)">Live demo</a> · <a href="https://github.com/gadda00/financial-forecasting-suite" style="color:var(--accent)">GitHub</a></li>
       <li>📊 <strong>Customer Segmentation Engine</strong> — RFM + K-Means + GMM · <a href="/projects/customer-segmentation-engine/" style="color:var(--accent)">Case study</a> · <a href="https://segmentation-engine.vercel.app" style="color:var(--accent)">Live demo</a> · <a href="https://github.com/gadda00/customer-segmentation-engine" style="color:var(--accent)">GitHub</a></li>
     </ul>
-    <p style="margin:1.25rem 0 0;font-size:0.9rem">Want a system like one of these? <a href="/book/" style="color:var(--accent)">Book a free 30-minute assessment</a>.</p>
+    <p style="margin:1.25rem 0 0;font-size:0.9rem">Want a system like one of these? <a href="/book/" style="color:var(--accent)">Book a free 30-minute scoping call</a>.</p>
   </div>
 </noscript>
 
@@ -873,6 +885,17 @@
 <!-- Footer -->
 <footer>
   <div class="container">
+    <div class="footer-content">
+      <div class="footer-brand">
+        <p>Production AI systems engineer — multilingual, low-bandwidth, high-stakes. Built in Nairobi, shipped worldwide.</p>
+      </div>
+      <div class="footer-links">
+        <div><h5>Navigate</h5><a href="/">Home</a><a href="/projects/">Case Studies</a><a href="/blog/">Writing</a><a href="/services/">Services</a><a href="/resume/">Resume</a><a href="/book/">Book a Free Call</a></div>
+        <div><h5>Projects</h5><a href="/projects/keja-ai/">Keja AI</a><a href="/projects/tapi-learn/">Tapi Learn</a><a href="/projects/busara-ai/">Busara AI</a><a href="/projects/agentreplay/">AgentReplay</a><a href="/projects/fraud-detection-system/">Fraud Detection</a><a href="/projects/">All 13 →</a></div>
+        <div><h5>Legal</h5><a href="/ai-policy.html">AI Policy</a><a href="/terms-of-service.html">Terms of Service</a><a href="/privacy-policy.html">Privacy Policy</a></div>
+        <div><h5>Connect</h5><a href="mailto:mututandunda@gmail.com">Email</a><a href="https://wa.me/254724346971">WhatsApp</a><a href="https://github.com/gadda00">GitHub</a><a href="https://www.linkedin.com/in/victor-ndunda">LinkedIn</a></div>
+      </div>
+    </div>
     <div class="footer-bottom">
       <p>© 2026 Victor Ndunda · Built in Nairobi, Kenya 🇰🇪</p>
       <p><a href="/" style="color:var(--accent);">← Back to Home</a></p>
@@ -883,7 +906,9 @@
 <script src="/enhancements.js?v=11.0.0" defer></script>
 <script>
 // ═══════════════════════════════════════════════════════════════════
-// Projects page logic
+// Projects page logic — cycle 17: static-first. The 13 cards are baked
+// into the HTML above (crawler/no-JS safe); this script only adds the
+// filter/search/tilt enhancements. No fetches, no third-party APIs.
 // ═══════════════════════════════════════════════════════════════════
 (function() {
   'use strict';
@@ -906,390 +931,68 @@
     mobileToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   });
 
-  // Nav scroll
   window.addEventListener('scroll', function() {
     document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
   });
 
-  // ─── Data ───────────────────────────────────────────────────────
-  var allProjects = [];
-  var categories = [];
+  // ─── Data: read from the static DOM ─────────────────────────────
+  var allCards = Array.prototype.slice.call(document.querySelectorAll('#bentoGrid .bento-card'));
   var activeFilter = 'all';
   var searchTerm = '';
 
-  // ─── Fetch projects ─────────────────────────────────────────────
-  fetch('projects.json')
-    .then(function(r) { return r.json(); })
-    .then(function(data) {
-      allProjects = data.projects || [];
-      categories = data.categories || [];
-      renderStats();
-      renderFilters();
-      renderGrid();
-      // Fetch live GitHub data for repos
-      fetchGitHubData();
-    })
-    .catch(function(err) {
-      console.error('Failed to load projects:', err);
-      document.getElementById('bentoGrid').innerHTML = '<div class="projects-empty">Failed to load projects. <button type="button" id="projRetry" style="margin:0.8rem auto 0;display:inline-block;padding:0.55rem 1.2rem;border-radius:10px;border:1px solid var(--accent);background:transparent;color:var(--accent);cursor:pointer;font-size:0.9rem">Retry loading</button><br><a href="/#work" style="color:var(--accent)">or browse project highlights on the homepage</a></div>';
-      document.getElementById('projRetry').addEventListener('click', function() { window.location.reload(); });
-    });
-
-  // ─── Stats ──────────────────────────────────────────────────────
-  function renderStats() {
-    var techSet = {};
-    allProjects.forEach(function(p) {
-      (p.technologies || []).forEach(function(t) { techSet[t] = true; });
-    });
-    document.getElementById('statTotal').textContent = allProjects.length;
-    document.getElementById('statProduction').textContent = allProjects.filter(function(p) { return p.liveUrl; }).length;
-    document.getElementById('statOpenSource').textContent = allProjects.filter(function(p) { return p.github; }).length;
-    document.getElementById('statTech').textContent = Object.keys(techSet).length;
-  }
-
-  // ─── Filters ────────────────────────────────────────────────────
-  function renderFilters() {
-    var container = document.getElementById('projectsFilters');
-    container.innerHTML = categories.map(function(c) {
-      var pressed = c.id === 'all';
-      return '<button type="button" class="proj-filter' + (pressed ? ' active' : '') + '" data-cat="' + c.id + '" aria-pressed="' + pressed + '">' + c.icon + ' ' + c.label + '</button>';
-    }).join('');
-    container.querySelectorAll('.proj-filter').forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        container.querySelectorAll('.proj-filter').forEach(function(b) {
-          b.classList.remove('active');
-          b.setAttribute('aria-pressed', 'false');
-        });
-        btn.classList.add('active');
-        btn.setAttribute('aria-pressed', 'true');
-        activeFilter = btn.getAttribute('data-cat');
-        renderGrid();
+  var CATS = [{"id": "all", "label": "All Projects", "icon": "✨"}, {"id": "Client Work", "label": "Client Work", "icon": "🤝"}, {"id": "AI Platform", "label": "AI Platforms", "icon": "🧠"}, {"id": "Enterprise · Fintech", "label": "Enterprise & Fintech", "icon": "🛡️"}, {"id": "SaaS · Sales & Ops", "label": "SaaS & Automation", "icon": "⚡"}, {"id": "Agricultural AI", "label": "Agricultural AI", "icon": "🌱"}, {"id": "Open-Source · Developer Tools", "label": "Open-Source Tools", "icon": "🔄"}, {"id": "Data Science", "label": "Data Science", "icon": "📊"}];
+  var container = document.getElementById('projectsFilters');
+  container.innerHTML = CATS.map(function(c, i) {
+    var pressed = i === 0;
+    return '<button type="button" class="proj-filter' + (pressed ? ' active' : '') + '" data-cat="' + c.id + '" aria-pressed="' + pressed + '">' + c.icon + ' ' + c.label + '</button>';
+  }).join('');
+  container.querySelectorAll('.proj-filter').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      container.querySelectorAll('.proj-filter').forEach(function(b) {
+        b.classList.remove('active');
+        b.setAttribute('aria-pressed', 'false');
       });
+      btn.classList.add('active');
+      btn.setAttribute('aria-pressed', 'true');
+      activeFilter = btn.getAttribute('data-cat');
+      applyFilter();
     });
-  }
-
-  // ─── Search ─────────────────────────────────────────────────────
-  document.getElementById('projectsSearch').addEventListener('input', function(e) {
-    searchTerm = e.target.value.toLowerCase();
-    renderGrid();
   });
 
-  // ─── Render grid ────────────────────────────────────────────────
-  function renderGrid() {
-    var filtered = allProjects.filter(function(p) {
-      var catMatch = activeFilter === 'all' || p.category === activeFilter;
-      if (!catMatch) return false;
-      if (!searchTerm) return true;
-      var haystack = (p.name + ' ' + p.tagline + ' ' + p.description + ' ' + (p.technologies || []).join(' ') + ' ' + (p.highlights || []).join(' ')).toLowerCase();
-      return haystack.indexOf(searchTerm) !== -1;
+  document.getElementById('projectsSearch').addEventListener('input', function(e) {
+    searchTerm = e.target.value.toLowerCase();
+    applyFilter();
+  });
+
+  function applyFilter() {
+    var shown = 0;
+    allCards.forEach(function(card) {
+      var catMatch = activeFilter === 'all' || card.getAttribute('data-cat') === activeFilter;
+      var hay = (card.getAttribute('data-search') || '').toLowerCase();
+      var searchMatch = !searchTerm || hay.indexOf(searchTerm) !== -1;
+      var visible = catMatch && searchMatch;
+      card.hidden = !visible;
+      if (visible) shown++;
     });
-
-    if (filtered.length === 0) {
-      document.getElementById('bentoGrid').innerHTML = '<div class="projects-empty"><div style="font-size:3rem;margin-bottom:1rem">🔍</div>No projects found. Try a different filter or search term.</div>';
-      document.getElementById('projectsLive').textContent = 'No projects match the current filter and search. Showing 0 of ' + allProjects.length + ' projects.';
-      return;
-    }
-
-    document.getElementById('bentoGrid').innerHTML = filtered.map(function(p, i) {
-      var span = p.featured ? (i === 0 ? 'wide' : (i === 1 ? 'narrow' : '')) : '';
-      return renderCard(p, span);
-    }).join('');
-    document.getElementById('projectsLive').textContent = 'Showing ' + filtered.length + ' of ' + allProjects.length + ' projects.';
-
-    // Attach 3D tilt handlers
-    attachTilt();
+    document.getElementById('projectsLive').textContent =
+      'Showing ' + shown + ' of ' + allCards.length + ' projects.';
   }
 
-  // ─── Render one card ────────────────────────────────────────────
-  // Data comes from the repo's own projects.json, but escape everything
-  // anyway (defense-in-depth) and validate link protocols before they
-  // reach an href attribute.
-  function esc(s) {
-    return String(s == null ? '' : s).replace(/[&<>"']/g, function(ch) {
-      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
-    });
-  }
-  function safeUrl(u) {
-    var s = String(u == null ? '' : u);
-    if (/^(https?:\/\/|mailto:|tel:|\/#)/i.test(s)) return esc(s);
-    return '#';
-  }
-
-  function renderCard(p, span) {
-    var accentStyle = p.accentColor ? 'style="--card-accent:' + p.accentColor + '"' : '';
-    var visualHTML = renderVisual(p.visual, p.accentColor);
-
-    var ghStats = '';
-    if (p.github) {
-      // Static seeds from projects.json (v16): real numbers on first paint —
-      // the GitHub API is only a background refresh, so the page never
-      // depends on it (and rate-limit failures change nothing).
-      var seed = p.ghStats || {};
-      var seedStars = seed.stars !== undefined ? seed.stars : '—';
-      var seedForks = seed.forks !== undefined ? seed.forks : '—';
-      var seedDonut = '';
-      if (seed.langs) {
-        var slTotal = 0; for (var sl in seed.langs) slTotal += seed.langs[sl];
-        if (slTotal > 0) {
-          var slColors = ['#00d4ff', '#a855f7', '#10b981', '#fbbf24', '#ef4444', '#64748b'];
-          var slGrad = []; var slCum = 0;
-          Object.keys(seed.langs).sort(function(a, b) { return seed.langs[b] - seed.langs[a]; }).slice(0, 6).forEach(function(lang, i) {
-            var pct = (seed.langs[lang] / slTotal) * 100;
-            slGrad.push(slColors[i] + ' ' + slCum + '% ' + (slCum + pct) + '%');
-            slCum += pct;
-          });
-          if (slCum < 100) slGrad.push('#64748b ' + slCum + '% 100%');
-          seedDonut = 'background: conic-gradient(' + slGrad.join(', ') + ')';
-        }
-      }
-      ghStats = '<div class="card-gh-stats" data-repo="' + p.github + '">' +
-        '<span class="gh-stat" title="Stars">⭐ <span class="gh-stars">' + seedStars + '</span></span>' +
-        '<span class="gh-stat" title="Forks">🍴 <span class="gh-forks">' + seedForks + '</span></span>' +
-        '<span class="gh-lang-donut"' + (seedDonut ? ' style="' + seedDonut + '"' : ' style="background: conic-gradient(var(--card-accent) 0%, var(--border) 0%)"') + ' title="Languages"></span>' +
-        '</div>';
-    }
-
-    var metricsHTML = '';
-    if (p.metrics && Object.keys(p.metrics).length > 0) {
-      metricsHTML = '<div class="card-metrics">' + Object.keys(p.metrics).map(function(k) {
-        return '<span class="metric-chip"><b>' + esc(k) + ':</b> ' + esc(p.metrics[k]) + '</span>';
-      }).join('') + '</div>';
-    }
-
-    var linksHTML = '';
-    if (p.caseStudy) {
-      // Internal long-form case study — first-class link, opens in same tab
-      linksHTML += '<a href="' + esc(p.caseStudy) + '" class="case-study">Read the full case study →</a>';
-    }
-    linksHTML += (p.links || []).map(function(l) {
-      return '<a href="' + safeUrl(l.url) + '" target="_blank" rel="noopener noreferrer" class="' + esc(l.type) + '">' + esc(l.label) + '</a>';
-    }).join('');
-
-    var highlightsHTML = '';
-    if (p.highlights && p.highlights.length > 0) {
-      highlightsHTML = '<ul class="card-highlights">' + p.highlights.slice(0, 4).map(function(h) {
-        return '<li>' + esc(h) + '</li>';
-      }).join('') + '</ul>';
-    }
-
-    return '<article class="bento-card ' + span + '" ' + accentStyle + ' tabindex="0" role="article">' +
-      '<div class="card-glow-bar"></div>' +
-      (visualHTML ? '<div class="card-visual">' + visualHTML + '</div>' : '') +
-      '<div class="card-body">' +
-        '<div class="card-header">' +
-          '<span class="card-badge ' + (p.badgeClass || '') + '">' + esc(p.badge) + '</span>' +
-          '<span class="card-status-dot ' + esc(p.status) + '" title="' + esc(p.status) + '"></span>' +
-        '</div>' +
-        '<div class="card-title">' + (p.icon ? p.icon + ' ' : '') + esc(p.name) + '</div>' +
-        (p.role ? '<div class="card-role">' + esc(p.role) + '</div>' : '') +
-        '<div class="card-tagline">' + esc(p.tagline) + '</div>' +
-        '<div class="card-desc">' + esc(p.description) + '</div>' +
-        metricsHTML +
-        highlightsHTML +
-        '<div class="card-tags">' + (p.technologies || []).map(function(t) { return '<span>' + esc(t) + '</span>'; }).join('') + '</div>' +
-        '<div class="card-footer">' +
-          '<div class="card-links">' + linksHTML + '<a href="/book/" class="discuss">Discuss a similar system →</a></div>' +
-          ghStats +
-        '</div>' +
-      '</div>' +
-    '</article>';
-  }
-
-  // ─── Visual treatments ──────────────────────────────────────────
-  function renderVisual(type, color) {
-    var c = color || 'var(--accent)';
-    switch (type) {
-      case 'geo-hex':
-        return '<div class="visual-hex">' +
-          '<div class="hex-row"><span class="hx"></span><span class="hx"></span><span class="hx dim"></span></div>' +
-          '<div class="hex-row"><span class="hx"></span><span class="hx hot" style="animation-delay:0.7s"></span><span class="hx"></span><span class="hx dim"></span></div>' +
-          '<div class="hex-row"><span class="hx dim"></span><span class="hx"></span><span class="hx hot"></span><span class="hx"></span></div>' +
-          '<div class="hex-label">H3 need-score grid · simulated cells</div>' +
-        '</div>';
-      case 'dag-pipeline':
-        return '<div class="visual-dag">' +
-          '<div class="dag-node">Ingest</div><span class="dag-arrow">→</span>' +
-          '<div class="dag-node">Engineer</div><span class="dag-arrow">→</span>' +
-          '<div class="dag-node">Detect</div><span class="dag-arrow">→</span>' +
-          '<div class="dag-node">Forecast</div><span class="dag-arrow">→</span>' +
-          '<div class="dag-node">Infer</div><span class="dag-arrow">→</span>' +
-          '<div class="dag-node">Report</div>' +
-        '</div>';
-      case 'architecture-wireframe':
-        return '<div class="visual-architecture">' +
-          '<div class="visual-arch-row"><div class="visual-arch-box">HTTP/API</div></div>' +
-          '<div class="visual-arch-arrow">↓</div>' +
-          '<div class="visual-arch-row"><div class="visual-arch-box">Ensemble (7 detectors)</div></div>' +
-          '<div class="visual-arch-arrow">↓</div>' +
-          '<div class="visual-arch-row"><div class="visual-arch-box">Calibrator</div><div class="visual-arch-box">Rules</div></div>' +
-          '<div class="visual-arch-arrow">↓</div>' +
-          '<div class="visual-arch-row"><div class="visual-arch-box">Store</div><div class="visual-arch-box">Cases</div><div class="visual-arch-box">Webhooks</div></div>' +
-        '</div>';
-      case 'workflow-pipeline':
-        return '<div class="visual-workflow">' +
-          '<div class="visual-wf-step">📡</div><div class="visual-wf-line"></div>' +
-          '<div class="visual-wf-step">🔍</div><div class="visual-wf-line"></div>' +
-          '<div class="visual-wf-step">🤖</div><div class="visual-wf-line"></div>' +
-          '<div class="visual-wf-step">📝</div><div class="visual-wf-line"></div>' +
-          '<div class="visual-wf-step">✅</div>' +
-        '</div>';
-      case 'building':
-        return '<div class="visual-building">' +
-          '<div class="bld-floor" style="height:22%"></div>' +
-          '<div class="bld-floor" style="height:44%"></div>' +
-          '<div class="bld-floor" style="height:66%"></div>' +
-          '<div class="bld-floor" style="height:88%"></div>' +
-          '<div class="bld-floor" style="height:100%"></div>' +
-        '</div>';
-      case 'replay-loop':
-        return '<div class="visual-replay">' +
-          '<div class="visual-replay-icon">🔄</div>' +
-          '<div style="font-size:0.7rem;color:var(--text-dim);font-family:monospace">replay(0 model calls)</div>' +
-        '</div>';
-      case 'crop-scan':
-        return '<div class="visual-crop">' +
-          '<span class="crop-emoji">🌾</span>' +
-          '<span class="crop-emoji">📱</span>' +
-          '<span class="crop-emoji">🌱</span>' +
-        '</div>';
-      case 'chart-line':
-        var bars = '';
-        var heights = [30, 45, 35, 60, 50, 75, 65, 85];
-        heights.forEach(function(h) { bars += '<div class="bar" style="height:' + h + '%"></div>'; });
-        return '<div class="visual-chart">' + bars + '</div>';
-      case 'agent-graph':
-        var nodes = '';
-        for (var i = 0; i < 8; i++) {
-          nodes += '<div class="visual-agent-node" style="animation-delay:' + (i * 0.15) + 's"></div>';
-        }
-        return '<div class="visual-agent-graph">' + nodes + '</div>';
-      case 'cluster-scatter':
-        var dots = '';
-        var colors = [c, '#a855f7', '#10b981', '#fbbf24'];
-        for (var j = 0; j < 6; j++) {
-          dots += '<div class="visual-cluster-dot" style="background:' + colors[j % 4] + ';animation-delay:' + (j * 0.3) + 's"></div>';
-        }
-        return '<div class="visual-cluster">' + dots + '</div>';
-      default:
-        return '';
-    }
-  }
-
-  // ─── 3D tilt effect ─────────────────────────────────────────────
-  function attachTilt() {
-    var cards = document.querySelectorAll('.bento-card');
-    cards.forEach(function(card) {
+  // ─── 3D tilt (pointer-enhancement only) ─────────────────────────
+  if (matchMedia('(hover:hover) and (prefers-reduced-motion: no-preference)').matches) {
+    allCards.forEach(function(card) {
       card.addEventListener('mousemove', function(e) {
         var rect = card.getBoundingClientRect();
-        var x = e.clientX - rect.left;
-        var y = e.clientY - rect.top;
-        var cx = rect.width / 2;
-        var cy = rect.height / 2;
-        var rx = ((y - cy) / cy) * -5; // max 5deg
-        var ry = ((x - cx) / cx) * 5;
+        var x = e.clientX - rect.left, y = e.clientY - rect.top;
+        var rx = ((y - rect.height / 2) / (rect.height / 2)) * -5;
+        var ry = ((x - rect.width / 2) / (rect.width / 2)) * 5;
         card.style.transform = 'perspective(1000px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
-        // Spotlight position
         card.style.setProperty('--mx', (x / rect.width * 100) + '%');
         card.style.setProperty('--my', (y / rect.height * 100) + '%');
       });
-      card.addEventListener('mouseleave', function() {
-        card.style.transform = '';
-      });
+      card.addEventListener('mouseleave', function() { card.style.transform = ''; });
     });
   }
-
-  // ─── Live GitHub data ───────────────────────────────────────────
-  // Unauthenticated GitHub API allows only 60 req/hr per IP — a handful of
-  // visitors exhaust it, which used to spray 403 console errors. v16:
-  // cache every success in localStorage for 6h, check r.ok, fail silently
-  // to the static fallback values from projects.json.
-  function fetchGitHubData() {
-    var GH_CACHE_TTL = 6 * 60 * 60 * 1000;
-    function ghCacheGet(key) {
-      try {
-        var hit = JSON.parse(localStorage.getItem('gh_' + key) || 'null');
-        if (hit && (Date.now() - hit.t) < GH_CACHE_TTL) return hit.d;
-      } catch (e) { /* corrupt cache = miss */ }
-      return null;
-    }
-    function ghCacheSet(key, data) {
-      try { localStorage.setItem('gh_' + key, JSON.stringify({ t: Date.now(), d: data })); } catch (e) {}
-    }
-    function ghFetch(path, key) {
-      var cached = ghCacheGet(key);
-      if (cached) return Promise.resolve(cached);
-      return fetch('https://api.github.com' + path)
-        .then(function(r) {
-          if (!r.ok) throw new Error('HTTP ' + r.status); // 403 rate-limit etc.
-          return r.json();
-        })
-        .then(function(data) {
-          ghCacheSet(key, data);
-          return data;
-        });
-    }
-    // Backoff: if any GitHub request fails (e.g. shared rate limit),
-    // skip ALL gh fetches for an hour — one failed request, not sixteen.
-    try {
-      if (Date.now() - JSON.parse(localStorage.getItem('gh_backoff') || '0') < 60 * 60 * 1000) return;
-    } catch (e) {}
-    var ghStats = document.querySelectorAll('[data-repo]');
-    // Sequential (v16): one rate-limit failure stops the whole run — the
-    // remaining repos keep their static seeds instead of spraying 403s.
-    var ghList = Array.from(ghStats);
-    function ghNext(i) {
-      if (i >= ghList.length) return;
-      try {
-        if (Date.now() - JSON.parse(localStorage.getItem('gh_backoff') || '0') < 60 * 60 * 1000) return;
-      } catch (e) {}
-      var el = ghList[i];
-      var repo = el.getAttribute('data-repo');
-      // Repo stats (stars/forks) — cached 6h, silent fallback to static seed
-      ghFetch('/repos/' + repo, 'repo_' + repo)
-        .then(function(data) {
-          if (data && data.stargazers_count !== undefined) {
-            el.querySelector('.gh-stars').textContent = data.stargazers_count;
-            el.querySelector('.gh-forks').textContent = data.forks_count;
-          }
-        })
-        .catch(function() {
-          try { localStorage.setItem('gh_backoff', String(Date.now())); } catch (e) {}
-          // keep the static seed values — already rendered
-        })
-        .then(function() { ghNext(i + 1); });
-      // Languages for the donut — cached 6h
-      ghFetch('/repos/' + repo + '/languages', 'lang_' + repo)
-        .then(function(langs) {
-          var total = 0;
-          var entries = [];
-          for (var lang in langs) {
-            total += langs[lang];
-            entries.push({ lang: lang, bytes: langs[lang] });
-          }
-          if (total === 0) return;
-          entries.sort(function(a, b) { return b.bytes - a.bytes; });
-          var colors = ['#00d4ff', '#a855f7', '#10b981', '#fbbf24', '#ef4444', '#64748b'];
-          var gradient = [];
-          var cumPct = 0;
-          entries.slice(0, 6).forEach(function(e, i) {
-            var pct = (e.bytes / total) * 100;
-            gradient.push(colors[i] + ' ' + cumPct + '% ' + (cumPct + pct) + '%');
-            cumPct += pct;
-          });
-          if (cumPct < 100) {
-            gradient.push('#64748b ' + cumPct + '% 100%');
-          }
-          var donut = el.querySelector('.gh-lang-donut');
-          if (donut) {
-            donut.style.background = 'conic-gradient(' + gradient.join(', ') + ')';
-            donut.title = entries.slice(0, 3).map(function(e) { return e.lang + ' ' + Math.round(e.bytes / total * 100) + '%'; }).join(', ');
-          }
-        })
-        .catch(function() {});
-    }
-    ghNext(0);
-  }
-
 })();
 </script>
 <script src="/palette.js?v=12.0.0" defer></script>

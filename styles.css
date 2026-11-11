@@ -5,7 +5,7 @@
 /* v12 "FIELD DRAFT" — typefaces for the whole site (cached by the service
    worker's font runtime cache). Fraunces: expressive editorial serif for
    display; Space Grotesk: characterful UI/body grotesque. */
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500..700;1,9..144,400..600&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+/* Fonts self-hosted in /fonts/fonts.css since cycle 17 (no third-party origin, no render-blocking @import) */
 
 :root {
   --bg: #12100b; --bg-elev: #191610; --bg-card: rgba(236,214,166,0.04);

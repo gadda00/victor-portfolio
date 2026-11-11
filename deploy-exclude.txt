@@ -1,0 +1,35 @@
+# Cycle 17 — public-site publish allowlist (exclusions).
+# The GitHub Pages deploy publishes everything EXCEPT these paths.
+# Internal docs, personal dashboards, marketing packs and repo tooling stay
+# in the repository — they are not part of the public website.
+.github/
+.git/
+.gitignore
+git-credentials*
+scripts/
+marketing/
+admin/
+dashboard/
+jobs/
+guide/
+_site/
+node_modules/
+qa/
+# internal notes & repo metadata (repo-only, never served)
+*.md
+data-inventory.json
+package.json
+package-lock.json
+package-lock.json.*
+bun.lock
+yarn.lock
+pnpm-lock.yaml
+tsconfig.json
+next.config.ts
+postcss.config.mjs
+jest.config.*
+playwright.config.*
+# dashboard-only scripts (no public page references them)
+auth.js
+totp.js
+qr-lib.js

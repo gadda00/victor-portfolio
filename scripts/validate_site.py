@@ -60,7 +60,7 @@ for p in projects:
     missing = required - set(p.keys())
     if missing:
         fail("projects.json: project '%s' missing fields: %s" % (p.get("id"), sorted(missing)))
-valid_status = {"production", "active", "trial", "shipped", "dev"}
+valid_status = {"production", "active", "trial", "demo", "shipped", "dev"}
 for p in projects:
     if p.get("status") not in valid_status:
         fail("projects.json: project '%s' has unknown status '%s'" % (p.get("id"), p.get("status")))
@@ -94,19 +94,27 @@ for path in html_files():
 if not any("duplicate id" in f for f in failures):
     ok("none found")
 
-# ---------- 4. noscript sync ----------
-print("[4/8] noscript fallback lists every project")
+# ---------- 4. static-first project cards ----------
+print("[4/8] projects index ships all cards in static HTML (no-JS/crawler safe)")
 projects_page = open(os.path.join(ROOT, "projects", "index.html"), encoding="utf-8").read()
+static_cards = projects_page.count('class="bento-card')
+if static_cards != len(projects):
+    fail("projects/index.html has %d static .bento-card elements, projects.json has %d" % (static_cards, len(projects)))
+elif "Loading projects" in projects_page:
+    fail("projects/index.html still contains a 'Loading projects' placeholder")
+else:
+    ok("all %d project cards are baked into the initial HTML" % len(projects))
+# noscript belt-and-suspenders: every project still listed
 noscript_m = re.search(r"<noscript>(.*?)</noscript>", projects_page, re.S)
 if not noscript_m:
-    fail("projects/index.html: <noscript> fallback block missing")
+    warnings.append("projects/index.html: no <noscript> plain-links fallback (optional now that cards are static)")
 else:
     block = noscript_m.group(1)
-    for p in projects:
-        if p["name"].split(" (")[0] not in block:
-            fail("noscript fallback does not mention project '%s' (%s)" % (p["name"], p["id"]))
-    if not any("noscript fallback does not mention" in f for f in failures):
-        ok("all %d projects present in the no-JS fallback" % len(projects))
+    missing = [p["name"] for p in projects if p["name"].split(" (")[0] not in block]
+    if missing:
+        warnings.append("noscript plain-links fallback missing: %s" % ", ".join(missing))
+    else:
+        ok("noscript plain-links fallback lists all %d projects" % len(projects))
 
 # ---------- 5. internal links ----------
 print("[5/8] internal link targets exist")
@@ -128,22 +136,25 @@ for path in html_files():
 if broken == 0:
     ok("%d internal links checked, none broken" % checked)
 
-# ---------- 6. fetch path ----------
-print("[6/8] projects data fetch is relative")
-if "fetch('projects.json')" in projects_page or 'fetch("./projects.json")' in projects_page:
-    ok("relative fetch path"
-    )
+# ---------- 6. no runtime data fetching on the projects index ----------
+print("[6/8] projects index requires no runtime fetch (static-first)")
+if "fetch(" in projects_page:
+    fail("projects/index.html still calls fetch() — the index must be self-contained")
+elif "api.github.com" in projects_page:
+    fail("projects/index.html still references the GitHub API (403 spray source)")
 else:
-    fail("projects/index.html: fetch path is not relative (breaks under sub-path hosting)")
+    ok("no fetch(), no third-party API — filters enhance the static DOM")
 
 # ---------- 7. homepage count sync ----------
 print("[7/8] homepage project-count wording matches projects.json")
 home = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
-m = re.search(r"(?:full|rest of the) archive — (\d+) projects", home)
+m = re.search(r"(?:archive — (\d+) projects|(\d+)-project archive)", home)
+if m:
+    m = m.group(1) or m.group(2)
 if not m:
     warnings.append("index.html: archive-count sentence not found — update the validator if wording changed")
 else:
-    stated = int(m.group(1))
+    stated = int(m)
     if stated != len(projects):
         fail("index.html says '%d projects' but projects.json has %d — update the wording" % (stated, len(projects)))
     else:

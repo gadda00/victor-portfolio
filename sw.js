@@ -15,7 +15,7 @@
  * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v29.0.0';
+const CACHE_VERSION = 'vnd-v30.0.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -26,6 +26,14 @@ const SHELL_URLS = [
   '/',
   '/index.html',
   '/404.html',
+  '/fonts/fonts.css',
+  '/fonts/inter-400.woff2',
+  '/fonts/inter-600.woff2',
+  '/fonts/inter-700.woff2',
+  '/fonts/space-grotesk-600.woff2',
+  '/fonts/space-grotesk-700.woff2',
+  '/fonts/jetbrains-mono-400.woff2',
+  '/fonts/jetbrains-mono-600.woff2',
   '/styles.css',
   '/v7.css',
   '/v7.js',

@@ -43,8 +43,8 @@ const EXPECTED = 13;
   // ---- projects page ----
   await page.goto(BASE + '/projects/', { waitUntil: 'domcontentloaded', timeout: 20000 });
   await page.waitForTimeout(1500); // let client-side render + GitHub seed stats settle
-  const cards = await page.$$('.bento-card');
-  check('projects page renders ' + cards.length + ' cards (expected ' + EXPECTED + ')', cards.length === EXPECTED);
+  const cards = await page.$$('.bento-card:not([hidden])');
+  check('projects page renders ' + cards.length + ' visible cards (expected ' + EXPECTED + ')', cards.length === EXPECTED);
 
   const stats = await page.evaluate(() => ({
     total: document.getElementById('statTotal').textContent,
@@ -71,8 +71,8 @@ const EXPECTED = 13;
   // search narrows results + announces
   await page.fill('#projectsSearch', 'firstlight');
   await page.waitForTimeout(250);
-  const searchCards = await page.$$('.bento-card');
-  check('search "firstlight" narrows to 1 card', searchCards.length === 1);
+  const searchCards = await page.$$('.bento-card:not([hidden])');
+  check('search "firstlight" narrows to 1 visible card', searchCards.length === 1);
   await page.fill('#projectsSearch', '');
   await filters[0].click();
   await page.waitForTimeout(250);
@@ -94,14 +94,17 @@ const EXPECTED = 13;
   await page.waitForTimeout(800);
   const home = await page.content();
   check('homepage archive wording says 13', home.includes('13 projects'));
-  check('homepage FirstLight spot-card present', home.includes('gadda00.github.io/firstlight'));
+  check('homepage FirstLight row links to its case study', home.includes('/projects/firstlight/'));
   check('no duplicated aria-current in rendered nav', (home.match(/aria-current="page" aria-current="page"/g) || []).length === 0);
 
-  // noscript fallback content is in source (not rendered by JS but must exist)
-  await page.goto(BASE + '/projects/', { waitUntil: 'domcontentloaded', timeout: 20000 });
-  await page.waitForTimeout(500);
-  const pageSrc = await page.content();
-  check('noscript fallback exists in DOM', pageSrc.includes('these links work without it'));
+  // static-first: cards must exist in the RAW html before any JS runs
+  const rawHtml = await page.evaluate(() => fetch('/projects/').then(r => r.text()));
+  check('projects cards present in raw HTML (no JS needed)', (rawHtml.match(/class="bento-card/g) || []).length === 13);
+  check('no Loading placeholder in raw HTML', !rawHtml.includes('Loading projects'));
+  // blog index too
+  const rawBlog = await page.evaluate(() => fetch('/blog/').then(r => r.text()));
+  check('blog cards present in raw HTML (no JS needed)', (rawBlog.match(/class="blog-card"/g) || []).length === 13);
+  check('no Loading placeholder in blog raw HTML', !rawBlog.includes('Loading articles'));
 
   // console errors: drop the bare "Failed to load resource 40x" duplicates of
   // already-counted GitHub API rate-limit responses; everything else is real.

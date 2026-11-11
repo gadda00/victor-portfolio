@@ -4,15 +4,11 @@
 User-agent: *
 Allow: /
 
-# Note: JS and CSS are intentionally crawlable — Google needs them to render
-# the JavaScript-loaded content on /blog/, /services/ and /projects/.
+# Note: JS and CSS are intentionally crawlable. Since cycle 17 the project
+# and article indices are static HTML — no JavaScript needed to read them.
 
-# Disallow the private gated area (consolidated in v8: /admin/ and /jobs/
-# are redirect stubs; /dashboard/ is the only gated page)
-Disallow: /dashboard/
-Disallow: /guide/
-Disallow: /auth.js
-Disallow: /totp.js
+# The owner dashboard suite (/dashboard/, /guide/, /admin/, /jobs/) and
+# internal docs are not part of the public deploy (see deploy-exclude.txt).
 
 # Crawl delay (be respectful)
 Crawl-delay: 1

@@ -1,805 +1,805 @@
 {
-  "projects": [
+ "projects": [
+  {
+   "id": "keja-ai",
+   "name": "Keja AI",
+   "tagline": "Real-estate intelligence & trust infrastructure for African property",
+   "description": "Client platform for CHACADOM INVESTMENTS: one ecosystem covering the full transaction lifecycle — Discover, Verify, Analyse, Finance, Invest, Transact, Manage. Verified titles & documents, investment scoring on every listing, market data, tokenized assets, and the 'Ask Keja AI' assistant, with dedicated workspaces for buyers, sellers, landlords, tenants, investors, developers, banks, and institutions. Live in public trial at keja.app. Nominated for an Africa AI Future Award (ceremony 27 Nov 2026, Nairobi).",
+   "category": "Client Work",
+   "status": "trial",
+   "featured": true,
+   "priority": 0,
+   "github": null,
+   "liveUrl": "https://keja.app",
+   "caseStudy": "/projects/keja-ai/",
+   "repo": null,
+   "technologies": [
+    "Next.js",
+    "AI Assistant",
+    "Investment Scoring",
+    "Title Verification",
+    "Market Data",
+    "Tokenization"
+   ],
+   "metrics": {
+    "lifecycle": "7 stages — Discover → Manage",
+    "workspaces": "8 stakeholder types",
+    "listings": "87+ live (Oct 2026)",
+    "trust": "70 with Trust Score ≥ 80",
+    "counties": "12 Kenyan counties",
+    "award": "Africa AI Future Awards nominee"
+   },
+   "visual": "building",
+   "accentColor": "#38bdf8",
+   "icon": "🏢",
+   "badge": "Client Platform · Award Nominee",
+   "badgeClass": "award",
+   "links": [
     {
-      "id": "keja-ai",
-      "name": "Keja AI",
-      "tagline": "Real-estate intelligence & trust infrastructure for African property",
-      "description": "Client platform for CHACADOM INVESTMENTS: one ecosystem covering the full transaction lifecycle — Discover, Verify, Analyse, Finance, Invest, Transact, Manage. Verified titles & documents, investment scoring on every listing, market data, tokenized assets, and the 'Ask Keja AI' assistant, with dedicated workspaces for buyers, sellers, landlords, tenants, investors, developers, banks, and institutions. Live in public trial at keja.app. Nominated for an Africa AI Future Award (ceremony 27 Nov 2026, Nairobi).",
-      "category": "Client Work",
-      "status": "trial",
-      "featured": true,
-      "priority": 0,
-      "github": null,
-      "liveUrl": "https://keja.app",
-      "caseStudy": "/projects/keja-ai/",
-      "repo": null,
-      "technologies": [
-        "Next.js",
-        "AI Assistant",
-        "Investment Scoring",
-        "Title Verification",
-        "Market Data",
-        "Tokenization"
-      ],
-      "metrics": {
-        "lifecycle": "7 stages — Discover → Manage",
-        "workspaces": "8 stakeholder types",
-        "listings": "87+ live (Oct 2026)",
-        "trust": "70 with Trust Score ≥ 80",
-        "counties": "12 Kenyan counties",
-        "award": "Africa AI Future Awards nominee"
-      },
-      "visual": "building",
-      "accentColor": "#38bdf8",
-      "icon": "🏢",
-      "badge": "Client Platform · Award Nominee",
-      "badgeClass": "award",
-      "links": [
-        {
-          "label": "Live Platform",
-          "url": "https://keja.app",
-          "type": "primary"
-        }
-      ],
-      "role": "Client engagement for CHACADOM INVESTMENTS — built the AI assistant, investment scoring, and verification tooling"
-    },
-    {
-      "id": "firstlight",
-      "name": "FirstLight",
-      "tagline": "Geo-AI decision layer for disaster response — damage & flood detection, H3 priority zoning, grounded sitreps",
-      "description": "From raw imagery to a prioritized, routable response map — for the first six hours after a disaster. Fuses simulated damage & flood detections with road networks, population grids, and critical facilities: Uber H3 need-score zoning (tunable weights), Dijkstra routing on the post-event graph, hospital isochrones, isolation analysis, a human-in-the-loop review queue for low-confidence detections, and provenance-labeled, hash-verified situation reports. Fully client-side demo platform — every artifact is procedurally simulated and labeled with its provenance; no operational data is processed.",
-      "category": "AI Platform",
-      "status": "trial",
-      "featured": true,
-      "priority": 1,
-      "github": "gadda00/firstlight",
-      "liveUrl": "https://gadda00.github.io/firstlight/",
-      "repo": "https://github.com/gadda00/firstlight",
-      "technologies": [
-        "Next.js",
-        "MapLibre GL",
-        "Uber H3",
-        "Geo-AI",
-        "SAR",
-        "TypeScript"
-      ],
-      "metrics": {
-        "zoning": "H3 res-8 need scoring",
-        "routing": "Dijkstra + isochrones",
-        "sitreps": "FNV-1a hash-verified",
-        "data": "simulated, provenance-labeled"
-      },
-      "visual": "geo-hex",
-      "accentColor": "#f59e0b",
-      "icon": "🔦",
-      "badge": "New · Public Demo",
-      "badgeClass": "oss",
-      "links": [
-        {
-          "label": "Live Demo",
-          "url": "https://gadda00.github.io/firstlight/",
-          "type": "primary"
-        },
-        {
-          "label": "Vercel Mirror",
-          "url": "https://firstlight.vercel.app",
-          "type": "secondary"
-        },
-        {
-          "label": "GitHub",
-          "url": "https://github.com/gadda00/firstlight",
-          "type": "secondary"
-        }
-      ],
-      "role": "Self-initiated project — architecture, Geo-AI pipeline, H3 scoring engine, and the full EOC interface",
-      "caseStudy": "/projects/firstlight/"
-    },
-    {
-      "id": "tapi-learn",
-      "name": "Tapi Learn (ACLA)",
-      "tagline": "Multilingual AI learning product — 11K+ learners (client-reported), 38 countries",
-      "description": "Client engagement for ACLA: a free, Africa-built, multilingual mobile learning platform for climate leadership. Built the 24/7 AI Career Coach (CV reviews, interview prep, career advice), the multilingual NLP pipeline (English · Français · Kiswahili), personalized learning recommendations, and the opportunities board. Live at acla.io/tapi-learn.",
-      "category": "Client Work",
-      "status": "active",
-      "featured": true,
-      "priority": 2,
-      "github": null,
-      "liveUrl": "https://acla.io/tapi-learn",
-      "caseStudy": "/projects/tapi-learn/",
-      "repo": null,
-      "technologies": [
-        "Multilingual NLP",
-        "EN·FR·SW",
-        "AI Career Coach",
-        "Recommendations",
-        "Mobile"
-      ],
-      "metrics": {
-        "learners": "11,000+ (client-reported, Oct 2026)",
-        "countries": "38",
-        "rating": "4.8/5 (client-reported)",
-        "languages": "EN · FR · SW"
-      },
-      "visual": "spark-line",
-      "accentColor": "#34d399",
-      "icon": "🤝",
-      "badge": "Client Engagement",
-      "badgeClass": "client",
-      "links": [
-        {
-          "label": "Live Product",
-          "url": "https://acla.io/tapi-learn",
-          "type": "primary"
-        }
-      ],
-      "role": "AI engineer for client ACLA — built the 24/7 AI Career Coach, the multilingual NLP pipeline (EN·FR·SW), and the recommendation engine"
-    },
-    {
-      "id": "agentreplay",
-      "name": "AgentReplay",
-      "tagline": "Deterministic replay for AI agents — zero model calls",
-      "description": "Deterministic replay and counterfactual debugging for AI agents. Captures every LLM call, tool response, clock read, and RNG draw — then replays the run bit-exact with zero model calls. 0.67% overhead and 100% reproduction fidelity on the synthetic validation set; 99 tests. LangGraph-first. Backed by a research whitepaper.",
-      "category": "Open-Source · Developer Tools",
-      "status": "shipped",
-      "featured": true,
-      "priority": 3,
-      "github": "gadda00/agentreplay",
-      "liveUrl": null,
-      "repo": "https://github.com/gadda00/agentreplay",
-      "technologies": [
-        "Python",
-        "LangGraph",
-        "OpenAI SDK",
-        "Anthropic SDK",
-        "Deterministic Replay",
-        "Counterfactual",
-        "CI Regression"
-      ],
-      "metrics": {
-        "stars": 0,
-        "forks": 0,
-        "languages": {
-          "Python": 95,
-          "Other": 5
-        }
-      },
-      "visual": "replay-loop",
-      "accentColor": "#fbbf24",
-      "icon": "🔄",
-      "badge": "Open-Source · Agent Reliability",
-      "badgeClass": "research",
-      "links": [
-        {
-          "label": "GitHub",
-          "url": "https://github.com/gadda00/agentreplay",
-          "type": "primary"
-        },
-        {
-          "label": "Docs & Demo",
-          "url": "https://agentreplay.vercel.app",
-          "type": "secondary"
-        },
-        {
-          "label": "Whitepaper",
-          "url": "/blog/articles/agentreplay-deterministic-replay.html",
-          "type": "secondary"
-        }
-      ],
-      "highlights": [
-        "0.67% overhead, 100% reproduction fidelity",
-        "99 tests, MIT-licensed",
-        "Counterfactual mutation + CI regression corpus",
-        "LangGraph-first with adapters for OpenAI, Anthropic, CrewAI, AutoGen",
-        "Backed by a research whitepaper"
-      ],
-      "role": "Creator & maintainer — research-backed, MIT-licensed (2026–present)",
-      "ghStats": {
-        "stars": 2,
-        "forks": 0,
-        "langs": {
-          "Python": 351680
-        }
-      },
-      "caseStudy": "/projects/agentreplay/"
-    },
-    {
-      "id": "verxlite",
-      "name": "Verxlite",
-      "tagline": "Universal AI workflow agent for sales & ops",
-      "description": "A universal AI workflow agent for sales & ops teams. Automates post-meeting followups, lead assignment, support triage, approval routing, and weekly summaries across Gmail, Google Calendar, and HubSpot. Multi-tenant SaaS with real auth, OAuth, encrypted tokens, Celery workers, and Langfuse observability. Shipped with a transparent 281-defect code review and full P0/P1 remediation — 83 backend tests passing.",
-      "category": "SaaS · Sales & Ops",
-      "status": "active",
-      "featured": true,
-      "priority": 4,
-      "github": "gadda00/verxlite",
-      "liveUrl": null,
-      "repo": "https://github.com/gadda00/verxlite",
-      "technologies": [
-        "Python",
-        "FastAPI",
-        "Celery",
-        "Next.js 14",
-        "SQLAlchemy 2",
-        "Alembic",
-        "Google OAuth",
-        "HubSpot OAuth",
-        "Langfuse",
-        "Fernet"
-      ],
-      "metrics": {
-        "stars": 0,
-        "forks": 0,
-        "languages": {
-          "Python": 60,
-          "TypeScript": 30,
-          "CSS": 7,
-          "Other": 3
-        }
-      },
-      "visual": "workflow-pipeline",
-      "accentColor": "#a855f7",
-      "icon": "⚡",
-      "badge": "Open-Source · Sales & Ops Automation",
-      "badgeClass": "verxlite",
-      "links": [
-        {
-          "label": "GitHub",
-          "url": "https://github.com/gadda00/verxlite",
-          "type": "primary"
-        },
-        {
-          "label": "Live Demo",
-          "url": "https://verxlite.vercel.app",
-          "type": "secondary"
-        },
-        {
-          "label": "Code Review",
-          "url": "https://github.com/gadda00/verxlite/blob/main/COMPREHENSIVE_CODE_REVIEW.md",
-          "type": "secondary"
-        }
-      ],
-      "highlights": [
-        "Multi-tenant SaaS with real auth (JWT + Clerk)",
-        "Google Workspace + HubSpot OAuth with token refresh",
-        "Fernet encryption for tokens at rest",
-        "Langfuse observability for every workflow step",
-        "281-defect code review + full P0/P1 remediation",
-        "83 backend tests, CI/CD all green"
-      ],
-      "role": "Builder & maintainer — self-initiated SaaS build with a public 281-defect code review",
-      "ghStats": {
-        "stars": 0,
-        "forks": 0,
-        "langs": {
-          "Python": 259221,
-          "TypeScript": 120854,
-          "Dockerfile": 4489,
-          "CSS": 2433,
-          "Makefile": 1832,
-          "Mako": 494,
-          "JavaScript": 276
-        }
-      },
-      "caseStudy": "/projects/verxlite/"
-    },
-    {
-      "id": "fraud-detection-system",
-      "name": "Fraud Detection System",
-      "tagline": "Enterprise-grade real-time fraud scoring in Go",
-      "description": "A real-time transaction fraud scoring engine in Go — 7 statistical detectors (Z-Score, IQR, Velocity, Geo-Distance, Device Fingerprint, Merchant Risk, Behavioral Anomaly) fused by a weighted-vote ensemble, calibrated by logistic regression, overlaid with a deterministic rules engine. Scores in ~33 µs per transaction; validated on 1,000 labelled transactions with the methodology published alongside the code. Full case-management workflow, RBAC auth, Prometheus metrics, OTel tracing, and Slack alerts. 84% recall, 1.37% false-positive rate. Built for PCI-DSS / PSD2 / GDPR Article 22 compliance.",
-      "category": "Enterprise · Fintech",
-      "status": "active",
-      "featured": true,
-      "priority": 5,
-      "github": "gadda00/fraud-detection-system",
-      "liveUrl": null,
-      "repo": "https://github.com/gadda00/fraud-detection-system",
-      "technologies": [
-        "Go 1.22",
-        "Gin",
-        "7 Detectors",
-        "Weighted Ensemble",
-        "Logistic Calibration",
-        "Rules Engine",
-        "Case Management",
-        "RBAC + JWT",
-        "Prometheus",
-        "OpenTelemetry",
-        "Slack Alerts",
-        "Kubernetes"
-      ],
-      "metrics": {
-        "stars": 0,
-        "forks": 0,
-        "languages": {
-          "Go": 92,
-          "Dockerfile": 4,
-          "Other": 4
-        }
-      },
-      "visual": "architecture-wireframe",
-      "accentColor": "#ef4444",
-      "icon": "🛡️",
-      "badge": "Open-Source · Regulated-Grade Fintech",
-      "badgeClass": "fraud",
-      "links": [
-        {
-          "label": "GitHub",
-          "url": "https://github.com/gadda00/fraud-detection-system",
-          "type": "primary"
-        },
-        {
-          "label": "Live Demo",
-          "url": "https://fraud-detection-vn.vercel.app",
-          "type": "secondary"
-        },
-        {
-          "label": "Architecture",
-          "url": "https://github.com/gadda00/fraud-detection-system/blob/main/README.md",
-          "type": "secondary"
-        }
-      ],
-      "highlights": [
-        "7 statistical detectors with weighted-vote ensemble",
-        "~33 µs per-transaction scoring latency",
-        "84% recall, 1.37% false-positive rate",
-        "Full case management + RBAC + Prometheus + OTel",
-        "Designed for PCI-DSS / PSD2 / GDPR Article 22 — formal compliance is deployment-specific",
-        "Postgres + Kafka + Stripe + Email/SMS + Grafana + retraining pipeline"
-      ],
-      "role": "Builder — self-initiated; code and methodology public",
-      "ghStats": {
-        "stars": 0,
-        "forks": 0,
-        "langs": {
-          "Go": 217776,
-          "Dockerfile": 587,
-          "Makefile": 289
-        }
-      },
-      "caseStudy": "/projects/fraud-detection-system/"
-    },
-    {
-      "id": "hazina-assist",
-      "name": "Hazina Assist",
-      "tagline": "In early development — public details will be published when the project reaches its first milestone",
-      "description": "A new AI product currently in early development. Full methodology, scope, and access details will be published on this page when the project reaches its first public milestone. This entry is a placeholder until the repository and demo go live.",
-      "category": "AI Platform",
-      "status": "dev",
-      "featured": false,
-      "priority": 6,
-      "github": null,
-      "liveUrl": null,
-      "repo": null,
-      "technologies": [],
-      "metrics": {},
-      "visual": "spark-line",
-      "accentColor": "#64748b",
-      "icon": "🚧",
-      "badge": "In Development",
-      "badgeClass": "oss",
-      "links": [],
-      "role": "Early-stage project — details to be announced",
-      "caseStudy": "/projects/hazina-assist/"
-    },
-    {
-      "id": "busara-ai",
-      "name": "Busara AI",
-      "tagline": "Multi-agent data intelligence platform",
-      "description": "A multi-agent data intelligence PWA running a multi-agent system across a 6-stage parallel DAG pipeline (v7.0). Ingest → Engineer → Detect → Forecast → Infer → Report. Real statistical algorithms, not wrapper code. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA target).",
-      "category": "AI Platform",
-      "status": "production",
-      "featured": true,
-      "priority": 7,
-      "github": null,
-      "liveUrl": "https://busaraai.com",
-      "repo": null,
-      "technologies": [
-        "TypeScript",
-        "Next.js 15",
-        "Multi-Agent System",
-        "6-Stage DAG",
-        "GLM-4.6",
-        "PostgreSQL",
-        "PWA",
-        "Flutterwave"
-      ],
-      "metrics": {
-        "stars": null,
-        "forks": null,
-        "languages": {
-          "TypeScript": 85,
-          "CSS": 10,
-          "Other": 5
-        }
-      },
-      "visual": "dag-pipeline",
-      "accentColor": "#00d4ff",
-      "icon": "🚀",
-      "badge": "Owned Product · Data Intelligence",
-      "badgeClass": "busara",
-      "links": [
-        {
-          "label": "Live Platform",
-          "url": "https://busaraai.com",
-          "type": "primary"
-        },
-        {
-          "label": "GitHub — IntelliFlow foundation",
-          "url": "https://github.com/gadda00/IntelliFlow",
-          "type": "secondary"
-        }
-      ],
-      "highlights": [
-        "50 AI agents across 6 parallel DAG stages",
-        "Real statistical algorithms (Holt-Winters, OLS, K-Means++, GARCH)",
-        "4 pricing tiers with 99.9% SLA target",
-        "Africa Market Intelligence agent (M-Pesa, AfCFTA, forex)"
-      ],
-      "role": "Creator & lead engineer — designed and built end-to-end (2023–present)",
-      "caseStudy": "/projects/busara-ai/"
-    },
-    {
-      "id": "kilimopro",
-      "name": "KilimoPRO",
-      "tagline": "AI agricultural intelligence for 8 IGAD countries",
-      "description": "AI-powered agricultural intelligence for smallholder farmers across 8 IGAD countries — a 300M+ person market. On-device crop disease detection (TFLite) for 15 crops, market forecasting with GARCH/VaR, multi-LLM advisory council in Swahili + English, 9 free keyless API endpoints, SMS webhook for feature phones. $0/month to operate on free data sources.",
-      "category": "Agricultural AI",
-      "status": "active",
-      "featured": true,
-      "priority": 8,
-      "github": "gadda00/kilimopro",
-      "liveUrl": null,
-      "repo": "https://github.com/gadda00/kilimopro",
-      "technologies": [
-        "Next.js 14",
-        "Drizzle ORM",
-        "TFLite",
-        "Open-Meteo",
-        "FAOSTAT",
-        "ICPAC",
-        "Multi-LLM Council",
-        "SMS",
-        "Offline-First"
-      ],
-      "metrics": {
-        "stars": 1,
-        "forks": 0,
-        "languages": {
-          "TypeScript": 70,
-          "Python": 20,
-          "Dart": 5,
-          "Other": 5
-        }
-      },
-      "visual": "crop-scan",
-      "accentColor": "#10b981",
-      "icon": "🌱",
-      "badge": "Open-Source · Agricultural Intelligence",
-      "badgeClass": "kilimo",
-      "links": [
-        {
-          "label": "GitHub",
-          "url": "https://github.com/gadda00/kilimopro",
-          "type": "primary"
-        },
-        {
-          "label": "Live Demo",
-          "url": "https://kilimopro-ai.vercel.app",
-          "type": "secondary"
-        },
-        {
-          "label": "Case Study",
-          "url": "/blog/articles/kilimopro-ai-for-farmers.html",
-          "type": "secondary"
-        }
-      ],
-      "highlights": [
-        "A 300M+ person market across 8 IGAD countries",
-        "On-device crop disease detection for 15 crops (TFLite)",
-        "GARCH/VaR market price forecasting",
-        "Multi-LLM advisory council in Swahili + English",
-        "$0/month operating cost — all data sources free"
-      ],
-      "role": "Creator & lead engineer — open-sourced; designed for East African smallholders",
-      "ghStats": {
-        "stars": 1,
-        "forks": 0,
-        "langs": {
-          "TypeScript": 793165,
-          "JavaScript": 26378,
-          "CSS": 6163,
-          "HTML": 922
-        }
-      },
-      "caseStudy": "/projects/kilimopro/"
-    },
-    {
-      "id": "intelliflow",
-      "name": "IntelliFlow",
-      "tagline": "33-agent self-evolving multi-agent platform",
-      "description": "33-agent self-evolving multi-agent data intelligence platform. 7-stage pipeline (Ingest → Engineer → Detect → Forecast → Infer → Cluster → Report) with trajectory-based learning inspired by the AReaL paper. Turborepo monorepo, Next.js 15, TypeScript, 18 passing tests.",
-      "category": "AI Platform",
-      "status": "active",
-      "featured": false,
-      "priority": 9,
-      "github": "gadda00/IntelliFlow",
-      "liveUrl": null,
-      "repo": "https://github.com/gadda00/IntelliFlow",
-      "technologies": [
-        "TypeScript",
-        "Multi-Agent",
-        "Self-Evolving",
-        "Turborepo",
-        "Next.js 15"
-      ],
-      "metrics": {
-        "stars": 0,
-        "forks": 0,
-        "languages": {
-          "TypeScript": 90,
-          "Python": 5,
-          "Other": 5
-        }
-      },
-      "visual": "agent-graph",
-      "accentColor": "#00d4ff",
-      "icon": "🧠",
-      "badge": "Open-Source · Multi-Agent Platform",
-      "badgeClass": "busara",
-      "links": [
-        {
-          "label": "GitHub",
-          "url": "https://github.com/gadda00/IntelliFlow",
-          "type": "primary"
-        },
-        {
-          "label": "Live Demo",
-          "url": "https://intelliflow.vercel.app",
-          "type": "secondary"
-        }
-      ],
-      "highlights": [
-        "33 specialized agents in a 7-stage pipeline",
-        "Trajectory-based learning inspired by AReaL",
-        "Turborepo monorepo with Next.js 15",
-        "Foundation of the Busara AI platform"
-      ],
-      "role": "Builder — the open-source foundation beneath Busara AI",
-      "ghStats": {
-        "stars": 1,
-        "forks": 0,
-        "langs": {
-          "TypeScript": 2600066,
-          "HTML": 67854,
-          "JavaScript": 17267,
-          "CSS": 12860,
-          "Shell": 11403
-        }
-      },
-      "caseStudy": "/projects/intelliflow/"
-    },
-    {
-      "id": "eco-africa-awards",
-      "name": "Eco Africa Awards",
-      "tagline": "Awards platform for African climate leadership — an initiative of ACLA",
-      "description": "The awards platform celebrating climate leadership across Africa — an initiative of ACLA, the organization behind Tapi Learn. Built with Next.js, Three.js and AI; the platform shipped to ACLA and the source is public on GitHub.",
-      "category": "Client Work",
-      "status": "active",
-      "featured": false,
-      "priority": 10,
-      "github": "gadda00/eco-africa-awards",
-      "liveUrl": null,
-      "repo": "https://github.com/gadda00/eco-africa-awards",
-      "technologies": [
-        "TypeScript",
-        "Next.js",
-        "Three.js",
-        "AI"
-      ],
-      "metrics": {
-        "stars": 0,
-        "forks": 0,
-        "languages": {
-          "TypeScript": 90,
-          "Other": 10
-        },
-        "client": "ACLA initiative",
-        "stack": "Next.js · Three.js · AI"
-      },
-      "visual": "chart-bars",
-      "accentColor": "#34d399",
-      "icon": "🌍",
-      "badge": "Client Engagement · Nonprofit",
-      "badgeClass": "client",
-      "role": "Built for ACLA (client engagement) — platform build with AI features",
-      "links": [
-        {
-          "label": "GitHub — source",
-          "url": "https://github.com/gadda00/eco-africa-awards",
-          "type": "primary"
-        }
-      ],
-      "highlights": [
-        "Client engagement — an ACLA initiative",
-        "Next.js + Three.js awards platform"
-      ],
-      "ghStats": {
-        "stars": 0,
-        "forks": 0,
-        "langs": {
-          "TypeScript": 766688,
-          "CSS": 11032,
-          "Python": 7212,
-          "JavaScript": 1790
-        }
-      },
-      "caseStudy": "/projects/eco-africa-awards/"
-    },
-    {
-      "id": "financial-forecasting-suite",
-      "name": "Financial Forecasting Suite",
-      "tagline": "Production-grade time series forecasting toolkit",
-      "description": "Production-grade time series forecasting toolkit for financial metrics. Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition, ensemble forecasting with automatic model selection. 87.3% mean accuracy (1-MAPE) across 12 financial metrics with 12–24 month forecast horizons (from delivered client systems).",
-      "category": "Data Science",
-      "status": "shipped",
-      "featured": false,
-      "priority": 11,
-      "github": "gadda00/financial-forecasting-suite",
-      "liveUrl": null,
-      "repo": "https://github.com/gadda00/financial-forecasting-suite",
-      "technologies": [
-        "Python",
-        "Holt-Winters",
-        "ARIMA",
-        "Ensemble"
-      ],
-      "metrics": {
-        "stars": 0,
-        "forks": 0,
-        "languages": {
-          "Python": 95,
-          "Other": 5
-        }
-      },
-      "visual": "chart-line",
-      "accentColor": "#10b981",
-      "icon": "📊",
-      "badge": "Client Work · Quant Finance",
-      "badgeClass": "kilimo",
-      "links": [
-        {
-          "label": "GitHub",
-          "url": "https://github.com/gadda00/financial-forecasting-suite",
-          "type": "primary"
-        },
-        {
-          "label": "Live Demo",
-          "url": "https://forecasting-suite.vercel.app",
-          "type": "secondary"
-        }
-      ],
-      "highlights": [
-        "87.3% mean accuracy (1-MAPE) across 12 metrics",
-        "Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition",
-        "Automatic model selection + ensemble forecasting",
-        "12-24 month forecast horizons"
-      ],
-      "role": "Built for retirement-benefits and fintech clients (2019–2022); open-sourced as a toolkit",
-      "ghStats": {
-        "stars": 0,
-        "forks": 0,
-        "langs": {
-          "TypeScript": 56437,
-          "CSS": 676,
-          "JavaScript": 146
-        }
-      },
-      "caseStudy": "/projects/financial-forecasting-suite/"
-    },
-    {
-      "id": "customer-segmentation-engine",
-      "name": "Customer Segmentation Engine",
-      "tagline": "RFM + K-Means + GMM for actionable segmentation",
-      "description": "RFM analysis + K-Means + Gaussian Mixture Models for actionable customer segmentation. 6 optimal clusters (silhouette 0.42), 89% month-over-month stability, 23% increase in targeted campaign response rate. Built for financial services with 3D PCA/t-SNE visualizations.",
-      "category": "Data Science",
-      "status": "shipped",
-      "featured": false,
-      "priority": 12,
-      "github": "gadda00/customer-segmentation-engine",
-      "liveUrl": null,
-      "repo": "https://github.com/gadda00/customer-segmentation-engine",
-      "technologies": [
-        "Python",
-        "K-Means",
-        "GMM",
-        "RFM"
-      ],
-      "metrics": {
-        "stars": 0,
-        "forks": 0,
-        "languages": {
-          "Python": 95,
-          "Other": 5
-        }
-      },
-      "visual": "cluster-scatter",
-      "accentColor": "#a855f7",
-      "icon": "🎯",
-      "badge": "Client Work · Data Science",
-      "badgeClass": "verxlite",
-      "links": [
-        {
-          "label": "GitHub",
-          "url": "https://github.com/gadda00/customer-segmentation-engine",
-          "type": "primary"
-        },
-        {
-          "label": "Live Demo",
-          "url": "https://segmentation-engine.vercel.app",
-          "type": "secondary"
-        }
-      ],
-      "highlights": [
-        "6 optimal clusters (silhouette 0.42)",
-        "89% month-over-month stability",
-        "23% lift in campaign response rate",
-        "3D PCA/t-SNE visualizations"
-      ],
-      "role": "Built for financial-services clients (2019–2022); open-sourced",
-      "ghStats": {
-        "stars": 0,
-        "forks": 0,
-        "langs": {
-          "TypeScript": 25000,
-          "JavaScript": 93,
-          "CSS": 54
-        }
-      },
-      "caseStudy": "/projects/customer-segmentation-engine/"
+     "label": "Live Platform",
+     "url": "https://keja.app",
+     "type": "primary"
     }
-  ],
-  "categories": [
+   ],
+   "role": "Client engagement for CHACADOM INVESTMENTS — built the AI assistant, investment scoring, and verification tooling"
+  },
+  {
+   "id": "firstlight",
+   "name": "FirstLight",
+   "tagline": "Geo-AI decision layer for disaster response — damage & flood detection, H3 priority zoning, grounded sitreps",
+   "description": "From raw imagery to a prioritized, routable response map — for the first six hours after a disaster. Fuses simulated damage & flood detections with road networks, population grids, and critical facilities: Uber H3 need-score zoning (tunable weights), Dijkstra routing on the post-event graph, hospital isochrones, isolation analysis, a human-in-the-loop review queue for low-confidence detections, and provenance-labeled, hash-verified situation reports. Fully client-side demo platform — every artifact is procedurally simulated and labeled with its provenance; no operational data is processed.",
+   "category": "AI Platform",
+   "status": "demo",
+   "featured": true,
+   "priority": 1,
+   "github": "gadda00/firstlight",
+   "liveUrl": "https://gadda00.github.io/firstlight/",
+   "repo": "https://github.com/gadda00/firstlight",
+   "technologies": [
+    "Next.js",
+    "MapLibre GL",
+    "Uber H3",
+    "Geo-AI",
+    "SAR",
+    "TypeScript"
+   ],
+   "metrics": {
+    "zoning": "H3 res-8 need scoring",
+    "routing": "Dijkstra + isochrones",
+    "sitreps": "FNV-1a hash-verified",
+    "data": "simulated, provenance-labeled"
+   },
+   "visual": "geo-hex",
+   "accentColor": "#f59e0b",
+   "icon": "🔦",
+   "badge": "New · Public Demo",
+   "badgeClass": "oss",
+   "links": [
     {
-      "id": "all",
-      "label": "All Projects",
-      "icon": "✨"
+     "label": "Live Demo",
+     "url": "https://gadda00.github.io/firstlight/",
+     "type": "primary"
     },
     {
-      "id": "Client Work",
-      "label": "Client Work",
-      "icon": "🤝"
+     "label": "Vercel Mirror",
+     "url": "https://firstlight.vercel.app",
+     "type": "secondary"
     },
     {
-      "id": "AI Platform",
-      "label": "AI Platforms",
-      "icon": "🧠"
-    },
-    {
-      "id": "Enterprise · Fintech",
-      "label": "Enterprise & Fintech",
-      "icon": "🛡️"
-    },
-    {
-      "id": "SaaS · Sales & Ops",
-      "label": "SaaS & Automation",
-      "icon": "⚡"
-    },
-    {
-      "id": "Agricultural AI",
-      "label": "Agricultural AI",
-      "icon": "🌱"
-    },
-    {
-      "id": "Open-Source · Developer Tools",
-      "label": "Open-Source Tools",
-      "icon": "🔄"
-    },
-    {
-      "id": "Data Science",
-      "label": "Data Science",
-      "icon": "📊"
+     "label": "GitHub",
+     "url": "https://github.com/gadda00/firstlight",
+     "type": "secondary"
     }
-  ],
-  "lastUpdated": "2026-10-29"
+   ],
+   "role": "Self-initiated project — architecture, Geo-AI pipeline, H3 scoring engine, and the full EOC interface",
+   "caseStudy": "/projects/firstlight/"
+  },
+  {
+   "id": "tapi-learn",
+   "name": "Tapi Learn (ACLA)",
+   "tagline": "Multilingual AI learning product — 11K+ learners (client-reported), 38 countries",
+   "description": "Client engagement for ACLA: a free, Africa-built, multilingual mobile learning platform for climate leadership. Built the 24/7 AI Career Coach (CV reviews, interview prep, career advice), the multilingual NLP pipeline (English · Français · Kiswahili), personalized learning recommendations, and the opportunities board. Live at acla.io/tapi-learn.",
+   "category": "Client Work",
+   "status": "production",
+   "featured": true,
+   "priority": 2,
+   "github": null,
+   "liveUrl": "https://acla.io/tapi-learn",
+   "caseStudy": "/projects/tapi-learn/",
+   "repo": null,
+   "technologies": [
+    "Multilingual NLP",
+    "EN·FR·SW",
+    "AI Career Coach",
+    "Recommendations",
+    "Mobile"
+   ],
+   "metrics": {
+    "learners": "11,000+ (client-reported, Oct 2026)",
+    "countries": "38",
+    "rating": "4.8/5 (client-reported)",
+    "languages": "EN · FR · SW"
+   },
+   "visual": "spark-line",
+   "accentColor": "#34d399",
+   "icon": "🤝",
+   "badge": "Client Engagement",
+   "badgeClass": "client",
+   "links": [
+    {
+     "label": "Live Product",
+     "url": "https://acla.io/tapi-learn",
+     "type": "primary"
+    }
+   ],
+   "role": "AI engineer for client ACLA — built the 24/7 AI Career Coach, the multilingual NLP pipeline (EN·FR·SW), and the recommendation engine"
+  },
+  {
+   "id": "agentreplay",
+   "name": "AgentReplay",
+   "tagline": "Deterministic replay for AI agents — zero model calls",
+   "description": "Deterministic replay and counterfactual debugging for AI agents. Captures every LLM call, tool response, clock read, and RNG draw — then replays the run bit-exact with zero model calls. 0.67% overhead and 100% reproduction fidelity on the synthetic validation set; 99 tests. LangGraph-first. Backed by a research whitepaper.",
+   "category": "Open-Source · Developer Tools",
+   "status": "shipped",
+   "featured": true,
+   "priority": 3,
+   "github": "gadda00/agentreplay",
+   "liveUrl": null,
+   "repo": "https://github.com/gadda00/agentreplay",
+   "technologies": [
+    "Python",
+    "LangGraph",
+    "OpenAI SDK",
+    "Anthropic SDK",
+    "Deterministic Replay",
+    "Counterfactual",
+    "CI Regression"
+   ],
+   "metrics": {
+    "stars": 0,
+    "forks": 0,
+    "languages": {
+     "Python": 95,
+     "Other": 5
+    }
+   },
+   "visual": "replay-loop",
+   "accentColor": "#fbbf24",
+   "icon": "🔄",
+   "badge": "Open-Source · Agent Reliability",
+   "badgeClass": "research",
+   "links": [
+    {
+     "label": "GitHub",
+     "url": "https://github.com/gadda00/agentreplay",
+     "type": "primary"
+    },
+    {
+     "label": "Docs & Demo",
+     "url": "https://agentreplay.vercel.app",
+     "type": "secondary"
+    },
+    {
+     "label": "Whitepaper",
+     "url": "/blog/articles/agentreplay-deterministic-replay.html",
+     "type": "secondary"
+    }
+   ],
+   "highlights": [
+    "0.67% overhead, 100% reproduction fidelity",
+    "99 tests, MIT-licensed",
+    "Counterfactual mutation + CI regression corpus",
+    "LangGraph-first with adapters for OpenAI, Anthropic, CrewAI, AutoGen",
+    "Backed by a research whitepaper"
+   ],
+   "role": "Creator & maintainer — research-backed, MIT-licensed (2026–present)",
+   "ghStats": {
+    "stars": 2,
+    "forks": 0,
+    "langs": {
+     "Python": 351680
+    }
+   },
+   "caseStudy": "/projects/agentreplay/"
+  },
+  {
+   "id": "verxlite",
+   "name": "Verxlite",
+   "tagline": "Universal AI workflow agent for sales & ops",
+   "description": "A universal AI workflow agent for sales & ops teams. Automates post-meeting followups, lead assignment, support triage, approval routing, and weekly summaries across Gmail, Google Calendar, and HubSpot. Multi-tenant SaaS with real auth, OAuth, encrypted tokens, Celery workers, and Langfuse observability. Shipped with a transparent 281-defect code review and full P0/P1 remediation — 83 backend tests passing.",
+   "category": "SaaS · Sales & Ops",
+   "status": "active",
+   "featured": true,
+   "priority": 4,
+   "github": "gadda00/verxlite",
+   "liveUrl": null,
+   "repo": "https://github.com/gadda00/verxlite",
+   "technologies": [
+    "Python",
+    "FastAPI",
+    "Celery",
+    "Next.js 14",
+    "SQLAlchemy 2",
+    "Alembic",
+    "Google OAuth",
+    "HubSpot OAuth",
+    "Langfuse",
+    "Fernet"
+   ],
+   "metrics": {
+    "stars": 0,
+    "forks": 0,
+    "languages": {
+     "Python": 60,
+     "TypeScript": 30,
+     "CSS": 7,
+     "Other": 3
+    }
+   },
+   "visual": "workflow-pipeline",
+   "accentColor": "#a855f7",
+   "icon": "⚡",
+   "badge": "Open-Source · Sales & Ops Automation",
+   "badgeClass": "verxlite",
+   "links": [
+    {
+     "label": "GitHub",
+     "url": "https://github.com/gadda00/verxlite",
+     "type": "primary"
+    },
+    {
+     "label": "Live Demo",
+     "url": "https://verxlite.vercel.app",
+     "type": "secondary"
+    },
+    {
+     "label": "Code Review",
+     "url": "https://github.com/gadda00/verxlite/blob/main/COMPREHENSIVE_CODE_REVIEW.md",
+     "type": "secondary"
+    }
+   ],
+   "highlights": [
+    "Multi-tenant SaaS with real auth (JWT + Clerk)",
+    "Google Workspace + HubSpot OAuth with token refresh",
+    "Fernet encryption for tokens at rest",
+    "Langfuse observability for every workflow step",
+    "281-defect code review + full P0/P1 remediation",
+    "83 backend tests, CI/CD all green"
+   ],
+   "role": "Builder & maintainer — self-initiated SaaS build with a public 281-defect code review",
+   "ghStats": {
+    "stars": 0,
+    "forks": 0,
+    "langs": {
+     "Python": 259221,
+     "TypeScript": 120854,
+     "Dockerfile": 4489,
+     "CSS": 2433,
+     "Makefile": 1832,
+     "Mako": 494,
+     "JavaScript": 276
+    }
+   },
+   "caseStudy": "/projects/verxlite/"
+  },
+  {
+   "id": "fraud-detection-system",
+   "name": "Fraud Detection System",
+   "tagline": "Enterprise-grade real-time fraud scoring in Go",
+   "description": "A real-time transaction fraud scoring engine in Go — 7 statistical detectors (Z-Score, IQR, Velocity, Geo-Distance, Device Fingerprint, Merchant Risk, Behavioral Anomaly) fused by a weighted-vote ensemble, calibrated by logistic regression, overlaid with a deterministic rules engine. Scores in ~33 µs per transaction; validated on 1,000 labelled transactions with the methodology published alongside the code. Full case-management workflow, RBAC auth, Prometheus metrics, OTel tracing, and Slack alerts. 84% recall, 1.37% false-positive rate. Built for PCI-DSS / PSD2 / GDPR Article 22 compliance.",
+   "category": "Enterprise · Fintech",
+   "status": "active",
+   "featured": true,
+   "priority": 5,
+   "github": "gadda00/fraud-detection-system",
+   "liveUrl": null,
+   "repo": "https://github.com/gadda00/fraud-detection-system",
+   "technologies": [
+    "Go 1.22",
+    "Gin",
+    "7 Detectors",
+    "Weighted Ensemble",
+    "Logistic Calibration",
+    "Rules Engine",
+    "Case Management",
+    "RBAC + JWT",
+    "Prometheus",
+    "OpenTelemetry",
+    "Slack Alerts",
+    "Kubernetes"
+   ],
+   "metrics": {
+    "stars": 0,
+    "forks": 0,
+    "languages": {
+     "Go": 92,
+     "Dockerfile": 4,
+     "Other": 4
+    }
+   },
+   "visual": "architecture-wireframe",
+   "accentColor": "#ef4444",
+   "icon": "🛡️",
+   "badge": "Open-Source · Regulated-Grade Fintech",
+   "badgeClass": "fraud",
+   "links": [
+    {
+     "label": "GitHub",
+     "url": "https://github.com/gadda00/fraud-detection-system",
+     "type": "primary"
+    },
+    {
+     "label": "Live Demo",
+     "url": "https://fraud-detection-vn.vercel.app",
+     "type": "secondary"
+    },
+    {
+     "label": "Architecture",
+     "url": "https://github.com/gadda00/fraud-detection-system/blob/main/README.md",
+     "type": "secondary"
+    }
+   ],
+   "highlights": [
+    "7 statistical detectors with weighted-vote ensemble",
+    "~33 µs per-transaction scoring latency",
+    "84% recall, 1.37% false-positive rate",
+    "Full case management + RBAC + Prometheus + OTel",
+    "Designed for PCI-DSS / PSD2 / GDPR Article 22 — formal compliance is deployment-specific",
+    "Postgres + Kafka + Stripe + Email/SMS + Grafana + retraining pipeline"
+   ],
+   "role": "Builder — self-initiated; code and methodology public",
+   "ghStats": {
+    "stars": 0,
+    "forks": 0,
+    "langs": {
+     "Go": 217776,
+     "Dockerfile": 587,
+     "Makefile": 289
+    }
+   },
+   "caseStudy": "/projects/fraud-detection-system/"
+  },
+  {
+   "id": "hazina-assist",
+   "name": "Hazina Assist",
+   "tagline": "In early development — public details will be published when the project reaches its first milestone",
+   "description": "A new AI product currently in early development. Full methodology, scope, and access details will be published on this page when the project reaches its first public milestone. This entry is a placeholder until the repository and demo go live.",
+   "category": "AI Platform",
+   "status": "dev",
+   "featured": false,
+   "priority": 6,
+   "github": null,
+   "liveUrl": null,
+   "repo": null,
+   "technologies": [],
+   "metrics": {},
+   "visual": "spark-line",
+   "accentColor": "#64748b",
+   "icon": "🚧",
+   "badge": "In Development",
+   "badgeClass": "oss",
+   "links": [],
+   "role": "Early-stage project — details to be announced",
+   "caseStudy": "/projects/hazina-assist/"
+  },
+  {
+   "id": "busara-ai",
+   "name": "Busara AI",
+   "tagline": "Multi-agent data intelligence platform",
+   "description": "A multi-agent data intelligence PWA running a multi-agent system across a 6-stage parallel DAG pipeline (v7.0). Ingest → Engineer → Detect → Forecast → Infer → Report. Real statistical algorithms, not wrapper code. Live at busaraai.com with a Free → Pro → Team → Enterprise tier (99.9% SLA target).",
+   "category": "AI Platform",
+   "status": "production",
+   "featured": true,
+   "priority": 7,
+   "github": null,
+   "liveUrl": "https://busaraai.com",
+   "repo": null,
+   "technologies": [
+    "TypeScript",
+    "Next.js 15",
+    "Multi-Agent System",
+    "6-Stage DAG",
+    "GLM-4.6",
+    "PostgreSQL",
+    "PWA",
+    "Flutterwave"
+   ],
+   "metrics": {
+    "stars": null,
+    "forks": null,
+    "languages": {
+     "TypeScript": 85,
+     "CSS": 10,
+     "Other": 5
+    }
+   },
+   "visual": "dag-pipeline",
+   "accentColor": "#00d4ff",
+   "icon": "🚀",
+   "badge": "Owned Product · Data Intelligence",
+   "badgeClass": "busara",
+   "links": [
+    {
+     "label": "Live Platform",
+     "url": "https://busaraai.com",
+     "type": "primary"
+    },
+    {
+     "label": "GitHub — IntelliFlow foundation",
+     "url": "https://github.com/gadda00/IntelliFlow",
+     "type": "secondary"
+    }
+   ],
+   "highlights": [
+    "50 AI agents across 6 parallel DAG stages",
+    "Real statistical algorithms (Holt-Winters, OLS, K-Means++, GARCH)",
+    "4 pricing tiers with 99.9% SLA target",
+    "Africa Market Intelligence agent (M-Pesa, AfCFTA, forex)"
+   ],
+   "role": "Creator & lead engineer — designed and built end-to-end (2023–present)",
+   "caseStudy": "/projects/busara-ai/"
+  },
+  {
+   "id": "kilimopro",
+   "name": "KilimoPRO",
+   "tagline": "AI agricultural intelligence for 8 IGAD countries",
+   "description": "AI-powered agricultural intelligence for smallholder farmers across 8 IGAD countries — a 300M+ person market. On-device crop disease detection (TFLite) for 15 crops, market forecasting with GARCH/VaR, multi-LLM advisory council in Swahili + English, 9 free keyless API endpoints, SMS webhook for feature phones. $0/month to operate on free data sources.",
+   "category": "Agricultural AI",
+   "status": "active",
+   "featured": true,
+   "priority": 8,
+   "github": "gadda00/kilimopro",
+   "liveUrl": null,
+   "repo": "https://github.com/gadda00/kilimopro",
+   "technologies": [
+    "Next.js 14",
+    "Drizzle ORM",
+    "TFLite",
+    "Open-Meteo",
+    "FAOSTAT",
+    "ICPAC",
+    "Multi-LLM Council",
+    "SMS",
+    "Offline-First"
+   ],
+   "metrics": {
+    "stars": 1,
+    "forks": 0,
+    "languages": {
+     "TypeScript": 70,
+     "Python": 20,
+     "Dart": 5,
+     "Other": 5
+    }
+   },
+   "visual": "crop-scan",
+   "accentColor": "#10b981",
+   "icon": "🌱",
+   "badge": "Open-Source · Agricultural Intelligence",
+   "badgeClass": "kilimo",
+   "links": [
+    {
+     "label": "GitHub",
+     "url": "https://github.com/gadda00/kilimopro",
+     "type": "primary"
+    },
+    {
+     "label": "Live Demo",
+     "url": "https://kilimopro-ai.vercel.app",
+     "type": "secondary"
+    },
+    {
+     "label": "Case Study",
+     "url": "/blog/articles/kilimopro-ai-for-farmers.html",
+     "type": "secondary"
+    }
+   ],
+   "highlights": [
+    "A 300M+ person market across 8 IGAD countries",
+    "On-device crop disease detection for 15 crops (TFLite)",
+    "GARCH/VaR market price forecasting",
+    "Multi-LLM advisory council in Swahili + English",
+    "$0/month operating cost — all data sources free"
+   ],
+   "role": "Creator & lead engineer — open-sourced; designed for East African smallholders",
+   "ghStats": {
+    "stars": 1,
+    "forks": 0,
+    "langs": {
+     "TypeScript": 793165,
+     "JavaScript": 26378,
+     "CSS": 6163,
+     "HTML": 922
+    }
+   },
+   "caseStudy": "/projects/kilimopro/"
+  },
+  {
+   "id": "intelliflow",
+   "name": "IntelliFlow",
+   "tagline": "33-agent self-evolving multi-agent platform",
+   "description": "33-agent self-evolving multi-agent data intelligence platform. 7-stage pipeline (Ingest → Engineer → Detect → Forecast → Infer → Cluster → Report) with trajectory-based learning inspired by the AReaL paper. Turborepo monorepo, Next.js 15, TypeScript, 18 passing tests.",
+   "category": "AI Platform",
+   "status": "active",
+   "featured": false,
+   "priority": 9,
+   "github": "gadda00/IntelliFlow",
+   "liveUrl": null,
+   "repo": "https://github.com/gadda00/IntelliFlow",
+   "technologies": [
+    "TypeScript",
+    "Multi-Agent",
+    "Self-Evolving",
+    "Turborepo",
+    "Next.js 15"
+   ],
+   "metrics": {
+    "stars": 0,
+    "forks": 0,
+    "languages": {
+     "TypeScript": 90,
+     "Python": 5,
+     "Other": 5
+    }
+   },
+   "visual": "agent-graph",
+   "accentColor": "#00d4ff",
+   "icon": "🧠",
+   "badge": "Open-Source · Multi-Agent Platform",
+   "badgeClass": "busara",
+   "links": [
+    {
+     "label": "GitHub",
+     "url": "https://github.com/gadda00/IntelliFlow",
+     "type": "primary"
+    },
+    {
+     "label": "Live Demo",
+     "url": "https://intelliflow.vercel.app",
+     "type": "secondary"
+    }
+   ],
+   "highlights": [
+    "33 specialized agents in a 7-stage pipeline",
+    "Trajectory-based learning inspired by AReaL",
+    "Turborepo monorepo with Next.js 15",
+    "Foundation of the Busara AI platform"
+   ],
+   "role": "Builder — the open-source foundation beneath Busara AI",
+   "ghStats": {
+    "stars": 1,
+    "forks": 0,
+    "langs": {
+     "TypeScript": 2600066,
+     "HTML": 67854,
+     "JavaScript": 17267,
+     "CSS": 12860,
+     "Shell": 11403
+    }
+   },
+   "caseStudy": "/projects/intelliflow/"
+  },
+  {
+   "id": "eco-africa-awards",
+   "name": "Eco Africa Awards",
+   "tagline": "Awards platform for African climate leadership — an initiative of ACLA",
+   "description": "The awards platform celebrating climate leadership across Africa — an initiative of ACLA, the organization behind Tapi Learn. Built with Next.js, Three.js and AI; the platform shipped to ACLA and the source is public on GitHub.",
+   "category": "Client Work",
+   "status": "active",
+   "featured": false,
+   "priority": 10,
+   "github": "gadda00/eco-africa-awards",
+   "liveUrl": null,
+   "repo": "https://github.com/gadda00/eco-africa-awards",
+   "technologies": [
+    "TypeScript",
+    "Next.js",
+    "Three.js",
+    "AI"
+   ],
+   "metrics": {
+    "stars": 0,
+    "forks": 0,
+    "languages": {
+     "TypeScript": 90,
+     "Other": 10
+    },
+    "client": "ACLA initiative",
+    "stack": "Next.js · Three.js · AI"
+   },
+   "visual": "chart-bars",
+   "accentColor": "#34d399",
+   "icon": "🌍",
+   "badge": "Client Engagement · Nonprofit",
+   "badgeClass": "client",
+   "role": "Built for ACLA (client engagement) — platform build with AI features",
+   "links": [
+    {
+     "label": "GitHub — source",
+     "url": "https://github.com/gadda00/eco-africa-awards",
+     "type": "primary"
+    }
+   ],
+   "highlights": [
+    "Client engagement — an ACLA initiative",
+    "Next.js + Three.js awards platform"
+   ],
+   "ghStats": {
+    "stars": 0,
+    "forks": 0,
+    "langs": {
+     "TypeScript": 766688,
+     "CSS": 11032,
+     "Python": 7212,
+     "JavaScript": 1790
+    }
+   },
+   "caseStudy": "/projects/eco-africa-awards/"
+  },
+  {
+   "id": "financial-forecasting-suite",
+   "name": "Financial Forecasting Suite",
+   "tagline": "Production-grade time series forecasting toolkit",
+   "description": "Production-grade time series forecasting toolkit for financial metrics. Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition, ensemble forecasting with automatic model selection. 87.3% mean accuracy (1-MAPE) across 12 financial metrics with 12–24 month forecast horizons (from delivered client systems).",
+   "category": "Data Science",
+   "status": "shipped",
+   "featured": false,
+   "priority": 11,
+   "github": "gadda00/financial-forecasting-suite",
+   "liveUrl": null,
+   "repo": "https://github.com/gadda00/financial-forecasting-suite",
+   "technologies": [
+    "Python",
+    "Holt-Winters",
+    "ARIMA",
+    "Ensemble"
+   ],
+   "metrics": {
+    "stars": 0,
+    "forks": 0,
+    "languages": {
+     "Python": 95,
+     "Other": 5
+    }
+   },
+   "visual": "chart-line",
+   "accentColor": "#10b981",
+   "icon": "📊",
+   "badge": "Client Work · Quant Finance",
+   "badgeClass": "kilimo",
+   "links": [
+    {
+     "label": "GitHub",
+     "url": "https://github.com/gadda00/financial-forecasting-suite",
+     "type": "primary"
+    },
+    {
+     "label": "Live Demo",
+     "url": "https://forecasting-suite.vercel.app",
+     "type": "secondary"
+    }
+   ],
+   "highlights": [
+    "87.3% mean accuracy (1-MAPE) across 12 metrics",
+    "Holt-Winters, ARIMA/SARIMA, Prophet-style decomposition",
+    "Automatic model selection + ensemble forecasting",
+    "12-24 month forecast horizons"
+   ],
+   "role": "Built for retirement-benefits and fintech clients (2019–2022); open-sourced as a toolkit",
+   "ghStats": {
+    "stars": 0,
+    "forks": 0,
+    "langs": {
+     "TypeScript": 56437,
+     "CSS": 676,
+     "JavaScript": 146
+    }
+   },
+   "caseStudy": "/projects/financial-forecasting-suite/"
+  },
+  {
+   "id": "customer-segmentation-engine",
+   "name": "Customer Segmentation Engine",
+   "tagline": "RFM + K-Means + GMM for actionable segmentation",
+   "description": "RFM analysis + K-Means + Gaussian Mixture Models for actionable customer segmentation. 6 optimal clusters (silhouette 0.42), 89% month-over-month stability, 23% increase in targeted campaign response rate. Built for financial services with 3D PCA/t-SNE visualizations.",
+   "category": "Data Science",
+   "status": "shipped",
+   "featured": false,
+   "priority": 12,
+   "github": "gadda00/customer-segmentation-engine",
+   "liveUrl": null,
+   "repo": "https://github.com/gadda00/customer-segmentation-engine",
+   "technologies": [
+    "Python",
+    "K-Means",
+    "GMM",
+    "RFM"
+   ],
+   "metrics": {
+    "stars": 0,
+    "forks": 0,
+    "languages": {
+     "Python": 95,
+     "Other": 5
+    }
+   },
+   "visual": "cluster-scatter",
+   "accentColor": "#a855f7",
+   "icon": "🎯",
+   "badge": "Client Work · Data Science",
+   "badgeClass": "verxlite",
+   "links": [
+    {
+     "label": "GitHub",
+     "url": "https://github.com/gadda00/customer-segmentation-engine",
+     "type": "primary"
+    },
+    {
+     "label": "Live Demo",
+     "url": "https://segmentation-engine.vercel.app",
+     "type": "secondary"
+    }
+   ],
+   "highlights": [
+    "6 optimal clusters (silhouette 0.42)",
+    "89% month-over-month stability",
+    "23% lift in campaign response rate",
+    "3D PCA/t-SNE visualizations"
+   ],
+   "role": "Built for financial-services clients (2019–2022); open-sourced",
+   "ghStats": {
+    "stars": 0,
+    "forks": 0,
+    "langs": {
+     "TypeScript": 25000,
+     "JavaScript": 93,
+     "CSS": 54
+    }
+   },
+   "caseStudy": "/projects/customer-segmentation-engine/"
+  }
+ ],
+ "categories": [
+  {
+   "id": "all",
+   "label": "All Projects",
+   "icon": "✨"
+  },
+  {
+   "id": "Client Work",
+   "label": "Client Work",
+   "icon": "🤝"
+  },
+  {
+   "id": "AI Platform",
+   "label": "AI Platforms",
+   "icon": "🧠"
+  },
+  {
+   "id": "Enterprise · Fintech",
+   "label": "Enterprise & Fintech",
+   "icon": "🛡️"
+  },
+  {
+   "id": "SaaS · Sales & Ops",
+   "label": "SaaS & Automation",
+   "icon": "⚡"
+  },
+  {
+   "id": "Agricultural AI",
+   "label": "Agricultural AI",
+   "icon": "🌱"
+  },
+  {
+   "id": "Open-Source · Developer Tools",
+   "label": "Open-Source Tools",
+   "icon": "🔄"
+  },
+  {
+   "id": "Data Science",
+   "label": "Data Science",
+   "icon": "📊"
+  }
+ ],
+ "lastUpdated": "2026-10-29"
 }
