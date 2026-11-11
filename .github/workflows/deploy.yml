@@ -51,10 +51,14 @@ jobs:
       - name: Assemble public site
         run: |
           mkdir -p _site
-          tar -cf - --exclude-from=deploy-exclude.txt . | (cd _site && tar -xf -)
+          rsync -a --exclude-from=deploy-exclude.txt ./ _site/
           touch _site/.nojekyll
           echo "--- public site manifest (top level) ---"
           ls -A _site
+          echo "--- excluded-path sanity checks (all must be absent) ---"
+          for p in admin dashboard jobs guide scripts marketing .github MARKETING-STRATEGY.md auth.js; do
+            test ! -e "_site/$p" && echo "ok  $p excluded" || echo "FAIL $p LEAKED"
+          done
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
