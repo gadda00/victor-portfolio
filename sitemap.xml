@@ -228,14 +228,80 @@
   </url>
   <url>
     <loc>https://victorndunda.com/projects/keja-ai/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>https://victorndunda.com/projects/tapi-learn/</loc>
-    <lastmod>2026-10-31</lastmod>
+    <lastmod>2026-11-11</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/firstlight/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/busara-ai/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/agentreplay/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/fraud-detection-system/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/kilimopro/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/verxlite/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/intelliflow/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/eco-africa-awards/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/financial-forecasting-suite/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/customer-segmentation-engine/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://victorndunda.com/projects/hazina-assist/</loc>
+    <lastmod>2026-11-11</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
   </url>
 </urlset>

@@ -1965,6 +1965,12 @@ html.light .case-tag-fintech { border-color: rgba(163,74,33,.55); }
 }
 html.light .case-stamp { opacity: .8; }
 
+/* cycle 16: keep the category tag clear of the corner stamp on wide cards —
+   the tag wraps instead of sliding under the rotated stamp */
+@media (min-width: 701px) {
+  .case-card .case-tag { max-width: calc(100% - 10.5rem); }
+}
+
 .case-verdict {
   font-family: var(--v6-font-display);
   font-style: italic;

@@ -15,7 +15,7 @@
  * the new SW activates without waiting for all tabs to close.
  * =================================================================== */
 
-const CACHE_VERSION = 'vnd-v28.0.0';
+const CACHE_VERSION = 'vnd-v29.0.0';
 const SHELL_CACHE = `shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `runtime-${CACHE_VERSION}`;
 
@@ -63,6 +63,17 @@ const SHELL_URLS = [
   '/services/faq.js',
   '/projects/keja-ai/',
   '/projects/tapi-learn/',
+  '/projects/firstlight/',
+  '/projects/busara-ai/',
+  '/projects/agentreplay/',
+  '/projects/fraud-detection-system/',
+  '/projects/kilimopro/',
+  '/projects/verxlite/',
+  '/projects/intelliflow/',
+  '/projects/eco-africa-awards/',
+  '/projects/financial-forecasting-suite/',
+  '/projects/customer-segmentation-engine/',
+  '/projects/hazina-assist/',
   '/projects/case-study.css',
   '/blog/',
   '/blog/posts.json',

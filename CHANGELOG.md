@@ -7,6 +7,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 16: CASE STUDY RING — every project gets its case-study page (2026-11-11)
+
+**The brief:** the live portfolio on victorndunda.com stays where it is (GitHub Pages — no
+Vercel migration), and gets better in place: latest projects on every page including the
+resume, a proper projects presence, the good patterns from the v2 Vercel deployment ported
+back, a world-class case-study presentation, and better arrangement of all elements.
+
+**Every project now has a case-study page.** Eleven new pages generated under `/projects/`
+(FirstLight, Busara AI, AgentReplay, Fraud Detection System, KilimoPRO, Verxlite,
+IntelliFlow, Eco Africa Awards, Financial Forecasting Suite, Customer Segmentation Engine,
+Hazina Assist) using the research-backed template proven on v2: hero with eyebrow, meta
+chips and CTAs → metrics band → **sticky meta rail** (client, domain, year, status, stack,
+links) beside a numbered narrative — *01 The mandate → 02 What I built → 03 stage-flow
+diagram → 04 outcomes grid with provenance notes* — then CTA and **prev/next ring
+navigation** through all 13 systems. Keja AI and Tapi Learn keep their hand-written
+flagship case studies, now linked into the ring. All copy is sourced from the v2 data
+layer and already-published site content — no invented facts, no invented quotes.
+
+**Verified demo URLs wired in.** The eight project mini-sites deployed during the v2 work
+(agentreplay, verxlite, fraud-detection-vn, kilimopro-ai, intelliflow, forecasting-suite,
+segmentation-engine, firstlight — all `*.vercel.app`) are curl-verified 200 and linked
+from the projects grid, home work cards, and case-study pages.
+
+**Honesty fix:** ecoafricaawards.com no longer resolves (NXDOMAIN via Google and
+Cloudflare DoH, checked 2026-11-11). Every "Live at ecoafricaawards.com" claim across
+projects.json, the home page, the projects page and the resume now points to the public
+GitHub source instead, with the description updated to "shipped to ACLA; source public."
+
+**Home:** the two **approved client quotes** (CHACADOM INVESTMENTS on Keja AI, ACLA on
+Tapi Learn) now headline the case-studies section as a testimonials band; every work card
+gained "Read the case study →" links and demo URLs; the FirstLight copy was corrected to
+the 72-hour decision window; and a real arrangement defect was fixed — the rotated
+"IN PRODUCTION" stamp overlapped the category tags on the Keja/Tapi cards (tags now wrap
+clear of the stamp zone).
+
+**Resume:** Eco Africa Awards and Hazina Assist added to Selected Projects; "Last
+updated November 2026"; the ATS 2-page PDF regenerated from its ReportLab builder with
+the same additions (still 2 pages — spacing tightened a notch).
+
+**Plumbing:** projects.json carries case-study links and demo URLs for all 13 systems;
+the no-JS fallback lists every case study; sw.js precaches all 13 case-study URLs
+(vnd-v29.0.0); sitemap.xml gains the 11 new pages; case-study.css v2.0.0 adds the
+layout/rail/flow/outcomes components (responsive down to 390px, reduced-motion safe).
+
+**QA:** validate_site 8/8 PASSED (1044 internal links, zero broken); sw-precache 57/57;
+a11y 0 violations desktop+mobile; smoke test 13/13 cards, zero console errors;
+Playwright screenshots of every new page + VLM defect inspection (one real defect found
+and fixed: the stamp/tag overlap; two false alarms traced to a local service-worker race
+and ruled out on clean re-runs).
+
 ### Cycle 15: v2 — full TypeScript rebuild on Vercel (2026-11-03)
 
 **The brief:** GitHub Pages had capped the ceiling — "pretty basic ui/ux". The call: rebuild

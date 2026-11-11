@@ -81,12 +81,18 @@
           "type": "primary"
         },
         {
+          "label": "Vercel Mirror",
+          "url": "https://firstlight.vercel.app",
+          "type": "secondary"
+        },
+        {
           "label": "GitHub",
           "url": "https://github.com/gadda00/firstlight",
           "type": "secondary"
         }
       ],
-      "role": "Self-initiated project — architecture, Geo-AI pipeline, H3 scoring engine, and the full EOC interface"
+      "role": "Self-initiated project — architecture, Geo-AI pipeline, H3 scoring engine, and the full EOC interface",
+      "caseStudy": "/projects/firstlight/"
     },
     {
       "id": "tapi-learn",
@@ -169,6 +175,11 @@
           "type": "primary"
         },
         {
+          "label": "Docs & Demo",
+          "url": "https://agentreplay.vercel.app",
+          "type": "secondary"
+        },
+        {
           "label": "Whitepaper",
           "url": "/blog/articles/agentreplay-deterministic-replay.html",
           "type": "secondary"
@@ -188,7 +199,8 @@
         "langs": {
           "Python": 351680
         }
-      }
+      },
+      "caseStudy": "/projects/agentreplay/"
     },
     {
       "id": "verxlite",
@@ -236,6 +248,11 @@
           "type": "primary"
         },
         {
+          "label": "Live Demo",
+          "url": "https://verxlite.vercel.app",
+          "type": "secondary"
+        },
+        {
           "label": "Code Review",
           "url": "https://github.com/gadda00/verxlite/blob/main/COMPREHENSIVE_CODE_REVIEW.md",
           "type": "secondary"
@@ -262,7 +279,8 @@
           "Mako": 494,
           "JavaScript": 276
         }
-      }
+      },
+      "caseStudy": "/projects/verxlite/"
     },
     {
       "id": "fraud-detection-system",
@@ -311,6 +329,11 @@
           "type": "primary"
         },
         {
+          "label": "Live Demo",
+          "url": "https://fraud-detection-vn.vercel.app",
+          "type": "secondary"
+        },
+        {
           "label": "Architecture",
           "url": "https://github.com/gadda00/fraud-detection-system/blob/main/README.md",
           "type": "secondary"
@@ -333,7 +356,8 @@
           "Dockerfile": 587,
           "Makefile": 289
         }
-      }
+      },
+      "caseStudy": "/projects/fraud-detection-system/"
     },
     {
       "id": "hazina-assist",
@@ -355,7 +379,8 @@
       "badge": "In Development",
       "badgeClass": "oss",
       "links": [],
-      "role": "Early-stage project — details to be announced"
+      "role": "Early-stage project — details to be announced",
+      "caseStudy": "/projects/hazina-assist/"
     },
     {
       "id": "busara-ai",
@@ -411,7 +436,8 @@
         "4 pricing tiers with 99.9% SLA target",
         "Africa Market Intelligence agent (M-Pesa, AfCFTA, forex)"
       ],
-      "role": "Creator & lead engineer — designed and built end-to-end (2023–present)"
+      "role": "Creator & lead engineer — designed and built end-to-end (2023–present)",
+      "caseStudy": "/projects/busara-ai/"
     },
     {
       "id": "kilimopro",
@@ -458,6 +484,11 @@
           "type": "primary"
         },
         {
+          "label": "Live Demo",
+          "url": "https://kilimopro-ai.vercel.app",
+          "type": "secondary"
+        },
+        {
           "label": "Case Study",
           "url": "/blog/articles/kilimopro-ai-for-farmers.html",
           "type": "secondary"
@@ -480,7 +511,8 @@
           "CSS": 6163,
           "HTML": 922
         }
-      }
+      },
+      "caseStudy": "/projects/kilimopro/"
     },
     {
       "id": "intelliflow",
@@ -520,6 +552,11 @@
           "label": "GitHub",
           "url": "https://github.com/gadda00/IntelliFlow",
           "type": "primary"
+        },
+        {
+          "label": "Live Demo",
+          "url": "https://intelliflow.vercel.app",
+          "type": "secondary"
         }
       ],
       "highlights": [
@@ -539,19 +576,20 @@
           "CSS": 12860,
           "Shell": 11403
         }
-      }
+      },
+      "caseStudy": "/projects/intelliflow/"
     },
     {
       "id": "eco-africa-awards",
       "name": "Eco Africa Awards",
       "tagline": "Awards platform for African climate leadership — an initiative of ACLA",
-      "description": "Celebrating climate leadership across Africa — an initiative of ACLA, the organization behind Tapi Learn. Built with Next.js, Three.js, and AI. Live at ecoafricaawards.com.",
+      "description": "The awards platform celebrating climate leadership across Africa — an initiative of ACLA, the organization behind Tapi Learn. Built with Next.js, Three.js and AI; the platform shipped to ACLA and the source is public on GitHub.",
       "category": "Client Work",
       "status": "active",
       "featured": false,
       "priority": 10,
       "github": "gadda00/eco-africa-awards",
-      "liveUrl": "https://ecoafricaawards.com",
+      "liveUrl": null,
       "repo": "https://github.com/gadda00/eco-africa-awards",
       "technologies": [
         "TypeScript",
@@ -565,7 +603,9 @@
         "languages": {
           "TypeScript": 90,
           "Other": 10
-        }
+        },
+        "client": "ACLA initiative",
+        "stack": "Next.js · Three.js · AI"
       },
       "visual": "chart-bars",
       "accentColor": "#34d399",
@@ -575,18 +615,12 @@
       "role": "Built for ACLA (client engagement) — platform build with AI features",
       "links": [
         {
-          "label": "Live Platform",
-          "url": "https://ecoafricaawards.com",
-          "type": "primary"
-        },
-        {
-          "label": "GitHub",
+          "label": "GitHub — source",
           "url": "https://github.com/gadda00/eco-africa-awards",
-          "type": "secondary"
+          "type": "primary"
         }
       ],
       "highlights": [
-        "Live at ecoafricaawards.com",
         "Client engagement — an ACLA initiative",
         "Next.js + Three.js awards platform"
       ],
@@ -599,7 +633,8 @@
           "Python": 7212,
           "JavaScript": 1790
         }
-      }
+      },
+      "caseStudy": "/projects/eco-africa-awards/"
     },
     {
       "id": "financial-forecasting-suite",
@@ -637,6 +672,11 @@
           "label": "GitHub",
           "url": "https://github.com/gadda00/financial-forecasting-suite",
           "type": "primary"
+        },
+        {
+          "label": "Live Demo",
+          "url": "https://forecasting-suite.vercel.app",
+          "type": "secondary"
         }
       ],
       "highlights": [
@@ -654,7 +694,8 @@
           "CSS": 676,
           "JavaScript": 146
         }
-      }
+      },
+      "caseStudy": "/projects/financial-forecasting-suite/"
     },
     {
       "id": "customer-segmentation-engine",
@@ -692,6 +733,11 @@
           "label": "GitHub",
           "url": "https://github.com/gadda00/customer-segmentation-engine",
           "type": "primary"
+        },
+        {
+          "label": "Live Demo",
+          "url": "https://segmentation-engine.vercel.app",
+          "type": "secondary"
         }
       ],
       "highlights": [
@@ -709,7 +755,8 @@
           "JavaScript": 93,
           "CSS": 54
         }
-      }
+      },
+      "caseStudy": "/projects/customer-segmentation-engine/"
     }
   ],
   "categories": [

@@ -177,11 +177,119 @@
 .cs-crumbs a:hover { color: var(--accent); }
 .cs-crumbs .sep { margin: 0 .45rem; opacity: .5; }
 
+/* ============================================================
+   v2.0.0 — CASE STUDY RING additions (cycle 16)
+   Sticky meta rail + flow chips + outcomes grid for the
+   generated case-study pages. Reuses tokens above.
+   ============================================================ */
+
+.cs-wrap-wide { max-width: 1100px; }
+
+/* ---------- Hero CTA row ---------- */
+.cs-actions {
+  display: flex; flex-wrap: wrap; gap: .8rem; margin: 0 0 .6rem;
+}
+.cs-actions .btn { padding: .7rem 1.3rem; font-size: .92rem; }
+
+/* ---------- Stats band ---------- */
+.cs-stats-band {
+  padding: 1.2rem 0 0;
+}
+.cs-stats-band .cs-stats { margin: 0; }
+
+/* ---------- Two-column layout: sticky rail + content ---------- */
+.cs-layout {
+  display: grid; grid-template-columns: 248px minmax(0, 1fr);
+  gap: 2.6rem; align-items: start;
+}
+.cs-meta-rail {
+  position: sticky; top: 92px;
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--glass); padding: 1.3rem 1.25rem;
+}
+.cs-rail-block + .cs-rail-block { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid var(--border); }
+.cs-rail-block h3 {
+  font-size: .68rem; font-weight: 700; text-transform: uppercase;
+  letter-spacing: .12em; color: var(--text-dim); margin: 0 0 .4rem;
+}
+.cs-rail-block p { font-size: .85rem; line-height: 1.5; color: var(--text); margin: 0; }
+.cs-rail-tags { display: flex; flex-wrap: wrap; gap: .35rem; }
+.cs-rail-tags span {
+  font-size: .7rem; padding: .18rem .55rem; border-radius: 999px;
+  border: 1px solid var(--border); color: var(--text-muted);
+  background: var(--bg-card);
+}
+.cs-rail-links { display: flex; flex-direction: column; gap: .4rem; }
+.cs-rail-links a { font-size: .82rem; color: var(--accent); text-decoration: none; }
+.cs-rail-links a:hover { text-decoration: underline; }
+
+/* ---------- Content column ---------- */
+.cs-content { min-width: 0; }
+.cs-content h2:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+
+/* ---------- Built list (accent-dot bullets) ---------- */
+.cs-built-list { list-style: none; margin: 1.2rem 0 1.6rem; padding: 0; }
+.cs-built-list li {
+  position: relative; padding-left: 1.35rem; margin-bottom: .75rem;
+  font-size: 1rem; line-height: 1.7; color: var(--text-muted);
+}
+.cs-built-list li::before {
+  content: ''; position: absolute; left: 0; top: .62em;
+  width: 7px; height: 7px; border-radius: 2px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+}
+
+/* ---------- Stage flow chips ---------- */
+.cs-flow {
+  display: flex; flex-wrap: wrap; align-items: center; gap: .55rem;
+  margin: 1.2rem 0 1.6rem;
+}
+.cs-flow-chip {
+  padding: .55rem 1rem; border-radius: 10px;
+  border: 1px solid var(--accent);
+  background: var(--glass);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: .78rem; font-weight: 600; letter-spacing: .04em;
+  color: var(--text); text-transform: uppercase;
+  box-shadow: 0 0 0 3px rgba(0, 212, 255, .05);
+}
+.cs-flow-arrow { color: var(--text-dim); font-size: .95rem; }
+
+/* ---------- Outcomes grid ---------- */
+.cs-outcomes {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: .9rem;
+  margin: 1.2rem 0 .6rem;
+}
+.cs-outcome {
+  border: 1px solid var(--border); border-radius: var(--radius);
+  background: var(--glass); padding: 1.05rem 1rem;
+}
+.cs-outcome .o-n {
+  font-size: 1.55rem; font-weight: 700; letter-spacing: -.02em;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.cs-outcome .o-l {
+  font-size: .72rem; color: var(--text-dim); margin-top: .3rem;
+  text-transform: uppercase; letter-spacing: .07em; line-height: 1.45;
+}
+.cs-outcome-note {
+  font-size: .78rem; color: var(--text-dim); margin: 0 0 1.4rem;
+}
+
 /* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .cs-layout { grid-template-columns: 1fr; gap: 1.6rem; }
+  .cs-meta-rail { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: .2rem 1.4rem; }
+  .cs-rail-block + .cs-rail-block { margin-top: .8rem; padding-top: .8rem; }
+  .cs-rail-block.wide, .cs-meta-rail > .cs-rail-block:last-child { grid-column: 1 / -1; }
+}
 @media (max-width: 780px) {
   .cs-stats { grid-template-columns: repeat(2, 1fr); }
   .cs-build-grid { grid-template-columns: 1fr; }
   .cs-hero { padding: 7rem 0 3rem; }
+  .cs-outcomes { grid-template-columns: 1fr 1fr; }
+  .cs-meta-rail { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   .cs-hero { background: none; }
