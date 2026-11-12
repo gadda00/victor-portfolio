@@ -11,6 +11,9 @@ Checks:
   6. The projects page fetch path is relative (no absolute /projects/... URL)
   7. Homepage project-count wording matches projects.json (count-sync guard)
   8. Main pages have <title> and meta description
+  9. Homepage links to every project (4 flagship cards + 12 archive rows)
+ 10. Footer version stamp matches the real sw.js CACHE_VERSION + styles.css version
+     (cycle 20 guard: a stale stamp shipped in cycle 19 — "vnd-v30" while sw was v32)
 
 Exit code 1 with a report on any failure. Intended to gate GitHub Pages deploys.
 """
@@ -178,6 +181,43 @@ for pg in main_pages:
 checked_meta = [p for p in main_pages if os.path.exists(os.path.join(ROOT, p))]
 if not any(": missing" in f for f in failures):
     ok("%d main pages have title + meta description" % len(checked_meta))
+
+# ---------- 9. homepage links to every project (cycle 20) ----------
+print("[9/10] homepage carries all projects (flagship cards + archive rows)")
+home_proj_links = set(re.findall(r'href="(/projects/[^"/]+/)"', home))
+json_slugs = set("/projects/%s/" % p["id"] for p in projects)
+missing_on_home = json_slugs - home_proj_links
+extra_on_home = home_proj_links - json_slugs
+if missing_on_home:
+    fail("index.html does not link to project page(s): %s" % ", ".join(sorted(missing_on_home)))
+else:
+    ok("homepage links all %d project case-study pages" % len(json_slugs))
+if extra_on_home:
+    warnings.append("index.html links to non-catalog project pages: %s" % ", ".join(sorted(extra_on_home)))
+
+# ---------- 10. version-stamp sync (cycle 20) ----------
+print("[10/10] footer stamp matches sw.js + styles.css versions")
+sw_src = open(os.path.join(ROOT, "sw.js"), encoding="utf-8").read()
+sw_ver = re.search(r"CACHE_VERSION = '([^']+)'", sw_src)
+stamp_m = re.search(r'v7-foot-stamp">ui v(\d+) [^<]*sw (vnd-v[\d.]+)', home)
+if not stamp_m:
+    warnings.append("index.html: footer version stamp not found — update validator if removed")
+else:
+    stamp_ui, stamp_sw = stamp_m.group(1), stamp_m.group(2)
+    css_m = re.search(r'styles\.css\?v=(\d+)\.0\.0', home)
+    css_major = css_m.group(1) if css_m else None
+    problems = []
+    if sw_ver:
+        # stamp may omit the patch part ("vnd-v33" == "vnd-v33.0.0")
+        sw_short = re.sub(r"\.0\.0$", "", sw_ver.group(1))
+        if stamp_sw not in (sw_ver.group(1), sw_short):
+            problems.append("stamp says sw %s but sw.js is %s" % (stamp_sw, sw_ver.group(1)))
+    if css_major and stamp_ui != css_major:
+        problems.append("stamp says ui v%s but styles.css is v%s" % (stamp_ui, css_major))
+    if problems:
+        fail("index.html footer stamp out of sync: %s" % "; ".join(problems))
+    else:
+        ok("stamp ui v%s / sw %s matches styles.css v%s and sw.js %s" % (stamp_ui, stamp_sw, css_major, sw_ver.group(1) if sw_ver else "?"))
 
 # ---------- report ----------
 print()

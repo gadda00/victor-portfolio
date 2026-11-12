@@ -7,6 +7,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Cycle 20: OWNER SUITE RESTORED + homepage de-duplicated + sitewide freshness (2026-11-11)
+
+**The brief:** the owner reported his dashboard/admin side missing, homepage wording and
+repetition problems, the Swahili "book a call" bug (already fixed by cycle 18 but stuck
+behind the failed deploy — now live), missing homepage projects (cycle 19, ditto), and
+stale info across pages. Full audit + fix cycle, all 8 QA gates green.
+
+**Owner suite restored to the public deploy** (per owner request): /dashboard/ (the
+13-section owner console), /admin/ and /jobs/ (redirect stubs) and /guide/ (owner
+manual) are published again — all noindex, client-side gated by auth.js (Google OAuth
+ID-token verification + PBKDF2 fallback + TOTP), and now explicitly listed in the
+service worker's NEVER_CACHE (guide/ added) so no stale offline copies exist. The
+deploy workflow's leak-check now asserts the suite IS present, and repo-internal paths
+(scripts/, marketing/, node_modules/, *.md, package files) stay excluded.
+
+**Homepage copy de-duplicated (owner feedback: "a lot of repetition"):**
+- Numbers no longer appear 3x per case card — outcome lines say what the system IS;
+  the metric chips carry the numbers once; bodies describe the build.
+- CTA language varied: hero "Book a scoping call" · band "Book a 30-Minute Scoping
+  Call" (free-ness stated once, in the eyebrow) · nav/FAB "Book a Free Call".
+- Overlapping section copy rewritten: services cards = what you buy; engagement steps
+  = how a project runs (workflow-definition wording de-overlapped).
+- "13 articles" now stated once (Writing section) instead of three times.
+
+**Staleness fixed:** homepage footer stamp was two majors behind (said ui v13 /
+sw vnd-v30; truth was v14 / v32 — now v33). Guide page: 9→13 articles, project
+archive added to its site map (was missing entirely), hero CTA descriptions updated,
+i18n.js described as the 8-language system it is, v1.0→v1.1. services/index.html
+meta and services/roi.html both said "scoping call call" — fixed.
+
+**New regression guards in validate_site.py (now 10 checks):** [9] homepage must link
+all 16 project case-study pages (4 flagship + 12 archive rows); [10] the footer
+version stamp must match sw.js CACHE_VERSION and the styles.css major — the stale
+stamp class of bug can no longer ship.
+
+**Verified along the way:** all 61 deployed routes render with zero console errors,
+correct nav and clean visible text (new sweep script); EN i18n dictionary contains no
+foreign-language values; the dashboard auth gate renders its honest demo disclaimer;
+13-article and 16-project claims match reality; historical dates are legitimate.
+
 ### Cycle 19b: CI RESILIENCE — retry the Playwright browser install (2026-11-11)
 
 **What happened:** cycles 18+19 were pushed together (307b665..dc1b810). The Pages

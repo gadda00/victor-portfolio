@@ -45,9 +45,10 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
-      # cycle 17: publish the public allowlist only — internal docs, the owner
-      # dashboard suite, marketing packs and repo tooling stay in the repo,
-      # off the public website (they were previously served at their paths).
+      # cycle 20: repo tooling, internal notes and marketing packs stay out;
+      # the owner dashboard suite (admin/ dashboard/ jobs/ guide/) is published
+      # again per owner request — noindex pages, client-side gated by auth.js,
+      # and kept out of the service-worker offline cache.
       - name: Assemble public site
         run: |
           mkdir -p _site
@@ -56,8 +57,12 @@ jobs:
           echo "--- public site manifest (top level) ---"
           ls -A _site
           echo "--- excluded-path sanity checks (all must be absent) ---"
-          for p in admin dashboard jobs guide scripts marketing .github MARKETING-STRATEGY.md auth.js; do
+          for p in scripts marketing .github node_modules qa MARKETING-STRATEGY.md data-inventory.json package.json; do
             test ! -e "_site/$p" && echo "ok  $p excluded" || echo "FAIL $p LEAKED"
+          done
+          echo "--- owner-suite presence checks (deployed, must exist) ---"
+          for p in dashboard/index.html admin/index.html jobs/index.html guide/index.html auth.js totp.js qr-lib.js; do
+            test -e "_site/$p" && echo "ok  $p present" || echo "FAIL $p MISSING"
           done
 
       - name: Upload artifact

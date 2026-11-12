@@ -1,17 +1,16 @@
-# Cycle 17 — public-site publish allowlist (exclusions).
+# Cycle 20 — public-site publish allowlist (exclusions).
 # The GitHub Pages deploy publishes everything EXCEPT these paths.
-# Internal docs, personal dashboards, marketing packs and repo tooling stay
-# in the repository — they are not part of the public website.
+# Repo tooling, internal notes and marketing packs stay in the repository.
+# The owner dashboard suite (admin/ dashboard/ jobs/ guide/) IS published
+# again per owner request (2026-11-12): all pages are noindex and gated
+# client-side by auth.js (Google OAuth ID-token verification + PBKDF2
+# fallback + TOTP). The service worker keeps them out of the offline cache.
 .github/
 .git/
 .gitignore
 git-credentials*
 scripts/
 marketing/
-admin/
-dashboard/
-jobs/
-guide/
 _site/
 node_modules/
 qa/
@@ -29,7 +28,5 @@ next.config.ts
 postcss.config.mjs
 jest.config.*
 playwright.config.*
-# dashboard-only scripts (no public page references them)
-auth.js
-totp.js
-qr-lib.js
+# No dashboard-only scripts remain unpublished — auth.js, totp.js and
+# qr-lib.js ship with the site because /dashboard/ references them.
